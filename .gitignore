@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 # Created by https://www.gitignore.io/api/cocos2dx
 # Edit at https://www.gitignore.io/?templates=cocos2dx
@@ -157,5 +158,9 @@ tests/cpp-tests/Resources/audio
 # End of https://www.gitignore.io/api/cocos2dx
 
 /cocos2d
+/proj.android
 /proj.ios_mac
 /proj.linux
+/proj.win32
+.cocos-project.json
+CMakeLists.txt
