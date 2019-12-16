@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+		<key>frames</key>
+		<dict>
+			<key>attack-C1.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,83},{39,15}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{41,81},{39,15}}</string>
+				<key>sourceSize</key>
+				<string>{128,96}</string>
+			</dict>
+
+			<key>attack-C2.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{36,99},{33,18}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{44,78},{33,18}}</string>
+				<key>sourceSize</key>
+				<string>{128,96}</string>
+			</dict>
+
+			<key>attack-C3.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{44,76},{28,21}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{47,75},{28,21}}</string>
+				<key>sourceSize</key>
+				<string>{128,96}</string>
+			</dict>
+
+			<key>attack-C4.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,46},{43,36}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{40,60},{43,36}}</string>
+				<key>sourceSize</key>
+				<string>{128,96}</string>
+			</dict>
+
+			<key>attack-C5.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,0},{60,45}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{33,51},{60,45}}</string>
+				<key>sourceSize</key>
+				<string>{128,96}</string>
+			</dict>
+
+			<key>attack-C6.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{44,46},{28,29}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{47,67},{28,29}}</string>
+				<key>sourceSize</key>
+				<string>{128,96}</string>
+			</dict>
+
+			<key>attack-C7.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{36,99},{33,18}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{44,78},{33,18}}</string>
+				<key>sourceSize</key>
+				<string>{128,96}</string>
+			</dict>
+
+			<key>attack-C8.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,99},{35,13}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{44,83},{35,13}}</string>
+				<key>sourceSize</key>
+				<string>{128,96}</string>
+			</dict>
+
+		</dict>
+
+		<key>metadata</key>
+		<dict>
+			<key>format</key>
+			<integer>2</integer>
+			<key>size</key>
+			<string>{128,128}</string>
+			<key>textureFileName</key>
+			<string>attackC.png</string>
+			</dict>
+		</dict>
+</plist>
