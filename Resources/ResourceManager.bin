@@ -1,0 +1,17 @@
+Sprite 1
+Player 15
+0 sprites/Player/Attacks/attackA.png  sprites/Player/Attacks/attackA.plist
+1 sprites/Player/Attacks/attackB.png  sprites/Player/Attacks/attackB.plist
+2 sprites/Player/Attacks/attackC.png  sprites/Player/Attacks/attackC.plist
+3 sprites/Player/Attacks/attackD.png  sprites/Player/Attacks/attackD.plist
+4 sprites/Player/Attacks/jumpAttack.png  sprites/Player/Attacks/jumpAttack.plist
+5 sprites/Player/Attacks/kick.png  sprites/Player/Attacks/kick.plist
+6 sprites/Player/Dead/dead.png  sprites/Player/Dead/dead.plist
+7 sprites/Player/Hit/hit-idle-behind.png  sprites/Player/Hit/hit-idle-behind.plist
+8 sprites/Player/Hit/hit-with-weapon-behind.png  sprites/Player/Hit/hit-with-weapon-behind.plist
+9 sprites/Player/Hit/hit-idle-front.png  sprites/Player/Hit/hit-idle-font.plist
+10 sprites/Player/Hit/hit-with-weapon-front.png  sprites/Player/Hit/hit-with-weapon-front.plist
+11 sprites/Player/Idle/idle.png  sprites/Player/Idle/idle.plist
+12 sprites/Player/Idle/idle-with-weapon.png  sprites/Player/Idle/idle-with-weapon.plist
+13 sprites/Player/Run/run.png  sprites/Player/Run/run.plist
+14 sprites/Player/Walk/walk-with-weapon.png  sprites/Player/Walk/walk-with-weapon.plist
