@@ -53,3 +53,7 @@ aMiniBoss 6
 3 sprites/aMiniBoss/Hit/hit.png sprites/aMiniBoss/Hit/hit.plist
 4 sprites/aMiniBoss/Idle/idle.png sprites/aMiniBoss/Idle/idle.plist
 5 sprites/aMiniBoss/Run/run.png sprites/aMiniBoss/Run/run.plist
+#Font 3
+0 fonts/arial.ttf
+1 fonts/Fool.ttf
+2 fonts/Marker Felt.ttf
