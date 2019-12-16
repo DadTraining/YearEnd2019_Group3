@@ -3,5 +3,7 @@
 /proj.win32/Debug.win32
 /proj.win32/Flame.VC.db
 /proj.win32/.vs
-proj.win32/Flame.opensdf
-proj.win32/Flame.sdf
+/proj.win32/Flame.opensdf
+/proj.win32/Flame.sdf
+/proj.win32/Flame.vcxproj.filters
+/proj.win32/Flame.vcxproj
