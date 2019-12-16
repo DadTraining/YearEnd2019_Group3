@@ -7,11 +7,17 @@ using namespace std;
 class Objects
 {
 private:
+	int hP;
+	int damage;
 	Sprite* sprite;
 	Animate *animateAttack, *animateIdle, *animateMove, *animateDead, *animateRun;
 public:
 	Objects();
 	~Objects();
+	void setHP(int hp);
+	int getHP();
+	void setDammage(int damage);
+	int getDamage();
 	void setSprite(Sprite* sprite);
 	Sprite* getSprite();
 	void setAnimateAttack(Animate* animateAttack);

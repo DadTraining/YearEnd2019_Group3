@@ -11,6 +11,26 @@ Objects::~Objects()
 {
 }
 
+void Objects::setHP(int hp)
+{
+	this->hP = hp;
+}
+
+int Objects::getHP()
+{
+	return hP;
+}
+
+void Objects::setDammage(int damage)
+{
+	this->damage = damage;
+}
+
+int Objects::getDamage()
+{
+	return damage;
+}
+
 void Objects::setSprite(Sprite * sprite)
 {
 	this->sprite = sprite;
@@ -23,7 +43,6 @@ Sprite * Objects::getSprite()
 void Objects::setAnimateAttack(Animate * animateAttack)
 {
 	this->animateAttack = animateAttack;
-	//this->animateAttack->retain();
 }
 Animate * Objects::getAnimateAttack()
 {
@@ -32,7 +51,6 @@ Animate * Objects::getAnimateAttack()
 void Objects::setAnimateIdle(Animate * animateIdle)
 {
 	this->animateIdle = animateIdle;
-	//this->animateIdle->retain();
 }
 Animate * Objects::getAnimateIdle()
 {
@@ -41,7 +59,6 @@ Animate * Objects::getAnimateIdle()
 void Objects::setAnimateMove(Animate * animateMove)
 {
 	this->animateMove = animateMove;
-	//this->animateMove->retain();
 }
 Animate * Objects::getAnimateMove()
 {
@@ -50,7 +67,6 @@ Animate * Objects::getAnimateMove()
 void Objects::setAnimateDead(Animate * animateDead)
 {
 	this->animateDead = animateDead;
-	//this->animateDead->retain();
 }
 Animate * Objects::getAnimateDead()
 {
@@ -59,7 +75,6 @@ Animate * Objects::getAnimateDead()
 void Objects::setAnimateRun(Animate * animateRun)
 {
 	this->animateRun = animateRun;
-	//this->animateRun->retain();
 }
 Animate * Objects::getAnimateRun()
 {
