@@ -21,7 +21,7 @@ bool LoadMapScene::init()
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 	// Init the tile map to the gameplay
 	// Adding the tile map to the child
-	m_tileMap = TMXTiledMap::create("Map/TileMap.tmx");
+	m_tileMap = TMXTiledMap::create("Resources/Map/TileMap.tmx");
 	addChild(m_tileMap);
 	// spawn the character at the SpawnPoint
 	SpawnPlayer();
@@ -50,7 +50,7 @@ void LoadMapScene::SpawnPlayer()
 	float x = spawnPoint.at("x").asFloat();
 	float y = spawnPoint.at("y").asFloat();
 	// create the player and add the x y to the player
-	m_player = Sprite::create("sprites/Player.png");
+	m_player = Sprite::create("Resources/sprites/Player.png");
 	m_player->setPosition(x, y);
 	addChild(m_player);
 }
