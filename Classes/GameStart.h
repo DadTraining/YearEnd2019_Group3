@@ -24,20 +24,16 @@
 
 #ifndef __GAME_START_H__
 #define __GAME_START_H__
-
+#pragma once
 #include "cocos2d.h"
+#include "ResourceManager.h"
 
 class GameStart : public cocos2d::Scene
 {
 public:
     static cocos2d::Scene* createScene();
-
     virtual bool init();
-    
-    // a selector callback
     void menuCloseCallback(cocos2d::Ref* pSender);
-    
-    // implement the "static create()" method manually
     CREATE_FUNC(GameStart);
 };
 

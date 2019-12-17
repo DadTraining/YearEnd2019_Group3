@@ -1,0 +1,61 @@
+#ANIMATION 7
+Player 14
+atkA 7 Resources/sprites/Player/Attacks/attackA.png  Resources/sprites/Player/Attacks/attackA.plist
+atkB 6 Resources/sprites/Player/Attacks/attackB.png  Resources/sprites/Player/Attacks/attackB.plist
+atkC 7 Resources/sprites/Player/Attacks/attackC.png  Resources/sprites/Player/Attacks/attackC.plist
+atkD 9 Resources/sprites/Player/Attacks/attackD.png  Resources/sprites/Player/Attacks/attackD.plist
+kick 4 Resources/sprites/Player/Attacks/kick.png  Resources/sprites/Player/Attacks/kick.plist
+dead 6 Resources/sprites/Player/Dead/dead.png  Resources/sprites/Player/Dead/dead.plist
+hit-idle-b 4 Resources/sprites/Player/Hit/hit-idle-behind.png  Resources/sprites/Player/Hit/hit-idle-behind.plist
+hit-wp-b 4 Resources/sprites/Player/Hit/hit-with-weapon-behind.png  Resources/sprites/Player/Hit/hit-with-weapon-behind.plist
+hit-idle-f 4 Resources/sprites/Player/Hit/hit-idle-front.png  Resources/sprites/Player/Hit/hit-idle-font.plist
+hit-wp-f 4 Resources/sprites/Player/Hit/hit-with-weapon-front.png  Resources/sprites/Player/Hit/hit-with-weapon-front.plist
+idle 6 Resources/sprites/Player/Idle/idle.png  Resources/sprites/Player/Idle/idle.plist
+idle-wp 6 Resources/sprites/Player/Idle/idle-with-weapon.png  Resources/sprites/Player/Idle/idle-with-weapon.plist
+run 9 Resources/sprites/Player/Run/run.png  Resources/sprites/Player/Run/run.plist
+walk-wp 9 Resources/sprites/Player/Walk/walk-with-weapon.png  Resources/sprites/Player/Walk/walk-with-weapon.plist
+Villager 2
+idle 3 Resources/sprites/Villager/Idle/villager-idle.png  Resources/sprites/Villager/Idle/villager-idle.plist
+run 7 Resources/sprites/Villager/Run/villager-run.png  Resources/sprites/Villager/Run/villager-run.plist
+Boss 7
+atkA 9 Resources/sprites/Boss/Attack/attackA.png Resources/sprites/Boss/Attack/attackA.plist
+atkB 9 Resources/sprites/Boss/Attack/attackb.png Resources/sprites/Boss/Attack/attackB.plist
+atkC 8 Resources/sprites/Boss/Attack/attackC.png Resources/sprites/Boss/Attack/attackA.plist
+dead 5 Resources/sprites/Boss/Dead/dead.png Resources/sprites/Boss/Dead/dead.plist
+hit 3 Resources/sprites/Boss/Hit/hit.png Resources/sprites/Boss/Hit/hit.png
+idle 4 Resources/sprites/Boss/Idle/idle.png Resources/sprites/Boss/Idle/idle.plist
+walk 4 Resources/sprites/Boss/Walk/walk.png Resources/sprites/Boss/Walk/walk.plist
+rEnemy 6
+atkA 6 Resources/sprites/rEnemy/Attack/attackA.png Resources/sprites/rEnemy/Attack/attackA.plist
+atkB 6 Resources/sprites/rEnemy/Attack/attackB.png Resources/sprites/rEnemy/Attack/attackB.plist
+dead 4 Resources/sprites/rEnemy/Dead/dead.png Resources/sprites/rEnemy/Dead/dead.plist
+hit 4 Resources/sprites/rEnemy/Hit/hit.png Resources/sprites/rEnemy/Hit/hit.plist
+idle 2 Resources/sprites/rEnemy/Idle/idle.png Resources/sprites/rEnemy/Idle/idle.plist
+run 9 Resources/sprites/rEnemy/Run/run.png Resources/sprites/rEnemy/Run/run.plist
+mEnemy 6
+atkA 6 Resources/sprites/mEnemy/Attack/attackA.png Resources/sprites/mEnemy/Attack/attackA.plist
+atkB 9 Resources/sprites/mEnemy/Attack/attackB.png Resources/sprites/mEnemy/Attack/attackB.plist
+dead 4 Resources/sprites/mEnemy/Dead/dead.png Resources/sprites/mEnemy/Dead/dead.plist
+hit 3 Resources/sprites/mEnemy/Hit/hit.png Resources/sprites/mEnemy/Hit/hit.plist
+idle 2 Resources/sprites/mEnemy/Idle/idle.png Resources/sprites/mEnemy/Idle/idle.plist
+walk 6 Resources/sprites/mEnemy/Walk/walk.png Resources/sprites/mEnemy/Walk/walk.plist
+dMiniBoss 6
+atkA 9 Resources/sprites/dMiniBoss/Attack/attackA.png Resources/sprites/dMiniBoss/Attack/attackA.plist
+atkB 7 Resources/sprites/dMiniBoss/Attack/attackB.png Resources/sprites/dMiniBoss/Attack/attackB.plist
+dead 4 Resources/sprites/dMiniBoss/Dead/dead.png Resources/sprites/dMiniBoss/Dead/dead.plist
+hit 3 Resources/sprites/dMiniBoss/Hit/hit.png Resources/sprites/dMiniBoss/Hit/hit.plist
+idle 4 Resources/sprites/dMiniBoss/Idle/idle.png Resources/sprites/dMiniBoss/Idle/idle.plist
+walk 6 Resources/sprites/dMiniBoss/Walk/walk.png Resources/sprites/dMiniBoss/Walk/walk.plist
+aMiniBoss 6
+atkA 8 Resources/sprites/aMiniBoss/Attack/attackA.png Resources/sprites/aMiniBoss/Attack/attackA.plist
+atkB 11 Resources/sprites/aMiniBoss/Attack/attackB.png Resources/sprites/aMiniBoss/Attack/attackB.plist
+dead 4 Resources/sprites/aMiniBoss/Dead/dead.png Resources/sprites/aMiniBoss/Dead/dead.plist
+idle 4 Resources/sprites/aMiniBoss/Idle/idle.png Resources/sprites/aMiniBoss/Idle/idle.plist
+hit 3 Resources/sprites/dMiniBoss/Hit/hit.png Resources/sprites/dMiniBoss/Hit/hit.plist
+walk 6 Resources/sprites/aMiniBoss/Walk/walk.png Resources/sprites/aMiniBoss/Walk/walk.plist
+#Font 5
+0 fonts/arial.ttf
+1 fonts/Fool.ttf
+2 fonts/Marker Felt.ttf
+3 fonts/8BIT WONDER.ttf
+4 fonts/VCR_OSD_MONO.ttf

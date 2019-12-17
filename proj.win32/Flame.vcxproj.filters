@@ -21,6 +21,9 @@
     <ClCompile Include="..\Classes\GameStart.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\ResourceManager.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -30,6 +33,9 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\GameStart.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ResourceManager.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

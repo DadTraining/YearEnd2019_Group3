@@ -21,9 +21,10 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
+#pragma once
 #include "AppDelegate.h"
 #include "GameStart.h"
+#include "ResourceManager.h"
 
 // #define USE_AUDIO_ENGINE 1
 // #define USE_SIMPLE_AUDIO_ENGINE 1
@@ -97,7 +98,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::NO_BORDER);
 
     register_all_packages();
-
+	ResourceManager::GetInstance()->Init("");
     // create a scene. it's an autorelease object
     auto scene = GameStart::createScene();
 
