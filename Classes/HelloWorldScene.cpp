@@ -1,4 +1,3 @@
-
 #include "HelloWorldScene.h"
 #include "SimpleAudioEngine.h"
 
@@ -29,7 +28,7 @@ bool HelloWorld::init()
 
 	player = new Player(this);
 
-	auto targetSizePlayer = Size(80, 80);
+	auto targetSizePlayer = Size(40, 40);
 	auto sizeOrigPlayer = player->getSprite()->getContentSize();
 
 	this->spPlayer = Sprite::createWithSpriteFrame(player->getSprite()->getSpriteFrame());
@@ -77,8 +76,7 @@ void HelloWorld::UpdateJoystick()
 		// GO UP
 		if (degree < 120 && degree > 60)
 		{
-			spPlayer->runAction(RepeatForever::create(moveUp));
-			log("ba");
+			spPlayer->stopAllActions();
 		}
 		// GO DOWN
 		else if (degree < -60 && degree > -120)
@@ -125,6 +123,6 @@ void HelloWorld::UpdateJoystick()
 	}
 	else
 	{
-		spPlayer->runAction(RepeatForever::create(player->getAnimateIdle()));
+		spPlayer->runAction(RepeatForever::create(player->getAnimateAttack()));
 	}
 }
