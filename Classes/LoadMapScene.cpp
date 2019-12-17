@@ -25,6 +25,8 @@ bool LoadMapScene::init()
 	addChild(m_tileMap);
 	// spawn the character at the SpawnPoint
 	SpawnPlayer();
+	// Set the keyboard to the character
+	setKeyBoard();
 	scheduleUpdate();
 	return true;
 }
@@ -69,6 +71,76 @@ void LoadMapScene::setViewPointCenter(Vec2 position)
 	auto viewPoint = Vec2(centerOfView.x - actualPosition.x, centerOfView.y - actualPosition.y);
 	this->setPosition(viewPoint);
 }
+
+// Key for the character to moving
+// When the key is pressed
+void LoadMapScene::onKeyPressed(EventKeyboard::KeyCode keyCode, cocos2d::Event* event)
+{
+	auto moveUp = MoveBy::create(0.1f, Vec2(0, 30));
+	auto moveRight = MoveBy::create(0.1f, Vec2(30, 0));
+	switch (keyCode) {
+	case EventKeyboard::KeyCode::KEY_UP_ARROW:
+	{
+		auto repeatForever = RepeatForever::create(moveUp);
+		repeatForever->setTag(1);
+		event->getCurrentTarget()->runAction(repeatForever);
+		break;
+	}
+	case EventKeyboard::KeyCode::KEY_DOWN_ARROW:
+	{
+		auto repeatForever = RepeatForever::create(moveUp->reverse());
+		repeatForever->setTag(2);
+		event->getCurrentTarget()->runAction(repeatForever);
+		break;
+	}
+	case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
+	{
+		auto repeatForever = RepeatForever::create(moveRight);
+		repeatForever->setTag(3);
+		event->getCurrentTarget()->runAction(repeatForever);
+		break;
+	}
+	case  EventKeyboard::KeyCode::KEY_LEFT_ARROW:
+	{
+		auto repeatForever = RepeatForever::create(moveRight->reverse());
+		repeatForever->setTag(4);
+		event->getCurrentTarget()->runAction(repeatForever);
+		break;
+	}
+	default:
+		break;
+	}
+}
+// When the key is released
+void LoadMapScene::onKeyReleased(EventKeyboard::KeyCode keyCode, cocos2d::Event* event)
+{
+	switch (keyCode) {
+	case EventKeyboard::KeyCode::KEY_UP_ARROW:
+		event->getCurrentTarget()->stopActionByTag(1);
+		break;
+	case EventKeyboard::KeyCode::KEY_DOWN_ARROW:
+		event->getCurrentTarget()->stopActionByTag(2);
+		break;
+	case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
+		event->getCurrentTarget()->stopActionByTag(3);
+		break;
+	case  EventKeyboard::KeyCode::KEY_LEFT_ARROW:
+		event->getCurrentTarget()->stopActionByTag(4);
+		break;
+	default:
+		break;
+	}
+}
+// Set all the keyboard code to the player
+void LoadMapScene::setKeyBoard()
+{
+	auto listenerKeyBoard = EventListenerKeyboard::create();
+	listenerKeyBoard->onKeyPressed = CC_CALLBACK_2(LoadMapScene::onKeyPressed, this);
+	listenerKeyBoard->onKeyReleased = CC_CALLBACK_2(LoadMapScene::onKeyReleased, this);
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(listenerKeyBoard, m_player);
+}
+
+
 
 void LoadMapScene::update(float dt)
 {

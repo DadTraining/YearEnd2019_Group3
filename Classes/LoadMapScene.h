@@ -20,6 +20,12 @@ public:
 	void SpawnPlayer();
 	void setViewPointCenter(Vec2 position);
 	// --------------------------------
+	// Extra methods to make the character moving around
+	// --------------------------------
+	void onKeyReleased(EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
+	void onKeyPressed(EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
+	void setKeyBoard();
+	// --------------------------------
 	void update(float dt);
 };
 
