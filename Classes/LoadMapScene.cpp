@@ -17,8 +17,15 @@ bool LoadMapScene::init()
         return false;
     }
 
+
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
+
+	player = new Player(this);
+	m_player = player->getSprite();
+	auto rFIdle = RepeatForever::create(player->getAnimateIdle());
+	rFIdle->setTag(0);
+	m_player->runAction(rFIdle);
 	// Init the tile map to the gameplay
 	// Adding the tile map to the child
 	m_tileMap = TMXTiledMap::create("Resources/Map/TileMap2.tmx");
@@ -57,9 +64,9 @@ void LoadMapScene::SpawnPlayer()
 	float x = spawnPoint.at("x").asFloat();
 	float y = spawnPoint.at("y").asFloat();
 	// create the player and add the x y to the player
-	m_player = Sprite::create("Resources/sprites/Player.png");
+	//m_player = Sprite::create("Resources/sprites/Player.png");
 	m_player->setPosition(x, y);
-	m_player->setScale(m_SCALE);
+	m_player->setScale(m_SCALE / 2);
 	addChild(m_player);
 }
 
@@ -82,62 +89,88 @@ void LoadMapScene::setViewPointCenter(Vec2 position)
 
 // Key for the character to moving
 // When the key is pressed
+
 void LoadMapScene::onKeyPressed(EventKeyboard::KeyCode keyCode, cocos2d::Event* event)
 {
 	auto moveUp = MoveBy::create(0.1f, Vec2(0, 30));
 	auto moveRight = MoveBy::create(0.1f, Vec2(30, 0));
+	auto runAnimate = player->getAnimateRun();
+
 	switch (keyCode) {
 	case EventKeyboard::KeyCode::KEY_UP_ARROW:
 	{
 		auto repeatForever = RepeatForever::create(moveUp);
 		repeatForever->setTag(1);
+		//
+		auto repeatForeverActionRun = RepeatForever::create(runAnimate);
+		repeatForeverActionRun->setTag(11);
 		event->getCurrentTarget()->runAction(repeatForever);
+		event->getCurrentTarget()->runAction(repeatForeverActionRun);
+		//
 		break;
 	}
 	case EventKeyboard::KeyCode::KEY_DOWN_ARROW:
 	{
+		auto repeatForeverActionRun = RepeatForever::create(runAnimate);
+		repeatForeverActionRun->setTag(12);
 		auto repeatForever = RepeatForever::create(moveUp->reverse());
 		repeatForever->setTag(2);
 		event->getCurrentTarget()->runAction(repeatForever);
+		event->getCurrentTarget()->runAction(repeatForeverActionRun);
 		break;
 	}
 	case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
 	{
+		auto repeatForeverActionRun = RepeatForever::create(runAnimate);
+		repeatForeverActionRun->setTag(13);
 		auto repeatForever = RepeatForever::create(moveRight);
 		repeatForever->setTag(3);
 		event->getCurrentTarget()->runAction(repeatForever);
+		event->getCurrentTarget()->runAction(repeatForeverActionRun);
 		break;
 	}
 	case  EventKeyboard::KeyCode::KEY_LEFT_ARROW:
 	{
+		auto repeatForeverActionRun = RepeatForever::create(runAnimate);
+		repeatForeverActionRun->setTag(14);
 		auto repeatForever = RepeatForever::create(moveRight->reverse());
 		repeatForever->setTag(4);
 		event->getCurrentTarget()->runAction(repeatForever);
+		event->getCurrentTarget()->runAction(repeatForeverActionRun);
 		break;
 	}
 	default:
 		break;
 	}
+	event->getCurrentTarget()->stopActionByTag(0);
 }
 // When the key is released
 void LoadMapScene::onKeyReleased(EventKeyboard::KeyCode keyCode, cocos2d::Event* event)
 {
-	switch (keyCode) {
+	auto idleAnimate = player->getAnimateIdle();
+	auto repeatForeverIdle = RepeatForever::create(idleAnimate);
+	repeatForeverIdle->setTag(0);
+ 	switch (keyCode) {
 	case EventKeyboard::KeyCode::KEY_UP_ARROW:
 		event->getCurrentTarget()->stopActionByTag(1);
+		event->getCurrentTarget()->stopActionByTag(11);
 		break;
 	case EventKeyboard::KeyCode::KEY_DOWN_ARROW:
 		event->getCurrentTarget()->stopActionByTag(2);
+		event->getCurrentTarget()->stopActionByTag(12);
 		break;
 	case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
 		event->getCurrentTarget()->stopActionByTag(3);
+		event->getCurrentTarget()->stopActionByTag(13);
 		break;
 	case  EventKeyboard::KeyCode::KEY_LEFT_ARROW:
 		event->getCurrentTarget()->stopActionByTag(4);
+		event->getCurrentTarget()->stopActionByTag(14);
 		break;
 	default:
 		break;
 	}
+	event->getCurrentTarget()->runAction(repeatForeverIdle->clone());
 }
 // Set all the keyboard code to the player
 void LoadMapScene::setKeyBoard()

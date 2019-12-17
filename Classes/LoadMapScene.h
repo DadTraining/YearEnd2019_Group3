@@ -1,14 +1,16 @@
 
 #ifndef __LOADMAP_SCENE_H__
 #define __LOADMAP_SCENE_H__
-#define m_SCALE 2.0f
+#define m_SCALE 4.0f
 #include "cocos2d.h"
+#include "Player.h"
 using namespace cocos2d;
 class LoadMapScene : public cocos2d::Scene
 {
 private:
 	TMXTiledMap* m_tileMap;
 	Sprite* m_player;
+	Player* player;
 public:
     static cocos2d::Scene* createScene();
     virtual bool init();

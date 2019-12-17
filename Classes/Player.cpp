@@ -23,13 +23,13 @@ Player::~Player()
 void Player::init()
 {
 	//Create sprite
-	Sprite* player = Sprite::create("sprites/Player/idle-with-weapon-1.png");
+	Sprite* player = Sprite::create("Resources/sprites/Player/idle-with-weapon-1.png");
 	Sprite* playerFrame = Sprite::createWithSpriteFrame(player->getSpriteFrame());
 	this->setSprite(playerFrame);
 
 	//Create animate attack
 	auto spriteCacheAttack = SpriteFrameCache::getInstance();
-	spriteCacheAttack->addSpriteFramesWithFile("sprites/Player/Attacks/attackA.plist", "sprites/Player/Attacks/attackA.png");
+	spriteCacheAttack->addSpriteFramesWithFile("Resources/sprites/Player/Attacks/attackA.plist", "Resources/sprites/Player/Attacks/attackA.png");
 	char nameAnimateAttack[50] = { 0 };
 	Vector<SpriteFrame*> animAttack;
 	for (int i = 1; i < 8; i++)
@@ -46,7 +46,7 @@ void Player::init()
 
 	//Create animate idle
 	auto spriteCacheIdle = SpriteFrameCache::getInstance();
-	spriteCacheIdle->addSpriteFramesWithFile("sprites/Player/Idle/idle-with-weapon.plist", "sprites/Player/Idle/idle-with-weapon.png");
+	spriteCacheIdle->addSpriteFramesWithFile("Resources/sprites/Player/Idle/idle-with-weapon.plist", "Resources/sprites/Player/Idle/idle-with-weapon.png");
 	char nameAnimateIdle[50] = { 0 };
 	Vector<SpriteFrame*> animIdle;
 	for (int i = 1; i < 7; i++)
@@ -62,7 +62,7 @@ void Player::init()
 
 	//Create animate move
 	auto spriteCacheMove = SpriteFrameCache::getInstance();
-	spriteCacheIdle->addSpriteFramesWithFile("sprites/Player/Walk/walk-with-weapon.plist", "sprites/Player/Walk/walk-with-weapon.png");
+	spriteCacheIdle->addSpriteFramesWithFile("Resources/sprites/Player/Walk/walk-with-weapon.plist", "Resources/sprites/Player/Walk/walk-with-weapon.png");
 	char nameAnimateMove[50] = { 0 };
 	Vector<SpriteFrame*> animMove;
 	for (int i = 1; i < 12; i++)
@@ -78,7 +78,7 @@ void Player::init()
 
 	//Create animate dead
 	auto spriteCacheDead = SpriteFrameCache::getInstance();
-	spriteCacheDead->addSpriteFramesWithFile("sprites/Player/Dead/dead.plist", "sprites/Player/Dead/dead.png");
+	spriteCacheDead->addSpriteFramesWithFile("Resources/sprites/Player/Dead/dead.plist", "Resources/sprites/Player/Dead/dead.png");
 	char nameAnimateDead[50] = { 0 };
 	Vector<SpriteFrame*> animDead;
 	for (int i = 1; i < 7; i++)
@@ -94,7 +94,7 @@ void Player::init()
 
 	//Create animate run
 	auto spriteCacheRun = SpriteFrameCache::getInstance();
-	spriteCacheRun->addSpriteFramesWithFile("sprites/Player/Run/run.plist", "sprites/Player/Run/run.png");
+	spriteCacheRun->addSpriteFramesWithFile("Resources/sprites/Player/Run/run.plist", "Resources/sprites/Player/Run/run.png");
 	char nameAnimateRun[50] = { 0 };
 	Vector<SpriteFrame*> animRun;
 	for (int i = 1; i < 13; i++)

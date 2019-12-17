@@ -46,7 +46,7 @@ void Objects::setAnimateAttack(Animate * animateAttack)
 }
 Animate * Objects::getAnimateAttack()
 {
-	return animateAttack;
+	return animateAttack->clone();
 }
 void Objects::setAnimateIdle(Animate * animateIdle)
 {
@@ -54,7 +54,7 @@ void Objects::setAnimateIdle(Animate * animateIdle)
 }
 Animate * Objects::getAnimateIdle()
 {
-	return animateIdle;
+	return animateIdle->clone();
 }
 void Objects::setAnimateMove(Animate * animateMove)
 {
@@ -62,7 +62,7 @@ void Objects::setAnimateMove(Animate * animateMove)
 }
 Animate * Objects::getAnimateMove()
 {
-	return animateMove;
+	return animateMove->clone();
 }
 void Objects::setAnimateDead(Animate * animateDead)
 {
@@ -70,7 +70,7 @@ void Objects::setAnimateDead(Animate * animateDead)
 }
 Animate * Objects::getAnimateDead()
 {
-	return animateDead;
+	return animateDead->clone();
 }
 void Objects::setAnimateRun(Animate * animateRun)
 {
@@ -78,5 +78,5 @@ void Objects::setAnimateRun(Animate * animateRun)
 }
 Animate * Objects::getAnimateRun()
 {
-	return animateRun;
+	return animateRun->clone();
 }
