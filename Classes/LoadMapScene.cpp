@@ -21,12 +21,12 @@ bool LoadMapScene::init()
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 	// Init the tile map to the gameplay
 	// Adding the tile map to the child
-	m_tileMap = TMXTiledMap::create("Resources/Map/TileMap.tmx");
+	m_tileMap = TMXTiledMap::create("Resources/Map/TileMap2.tmx");
 	m_tileMap->setScale(m_SCALE);
-	auto background = Sprite::create("Resources/test.png");
-	background->setPosition(500, 500);
-	background->setScale(m_SCALE * 2);
-	addChild(background);
+	//auto background = Sprite::create("Resources/test.png");
+	//background->setPosition(500, 500);
+	//background->setScale(m_SCALE * 2);
+	//addChild(background);
 	addChild(m_tileMap, -1);
 	// spawn the character at the SpawnPoint
 	SpawnPlayer();
