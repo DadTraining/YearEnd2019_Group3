@@ -92,8 +92,8 @@ void LoadMapScene::setViewPointCenter(Vec2 position)
 
 void LoadMapScene::onKeyPressed(EventKeyboard::KeyCode keyCode, cocos2d::Event* event)
 {
-	auto moveUp = MoveBy::create(0.1f, Vec2(0, 30));
-	auto moveRight = MoveBy::create(0.1f, Vec2(30, 0));
+	auto moveUp = MoveBy::create(0.1f, Vec2(0, 20));
+	auto moveRight = MoveBy::create(0.1f, Vec2(20, 0));
 	auto runAnimate = player->getAnimateRun();
 	auto repeatForeverActionRun = RepeatForever::create(runAnimate);
 
