@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-<?xml version="1.0" encoding="utf-8"?>
-=======
 ﻿<?xml version="1.0" encoding="utf-8"?>
->>>>>>> 2ccd6248cdb35bde1e0ef83aa828558ba3514a36
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -104,12 +100,8 @@
       </Command>
     </PostBuildEvent>
     <PreLinkEvent>
-<<<<<<< HEAD
-      <Command></Command>
-=======
       <Command>
       </Command>
->>>>>>> 2ccd6248cdb35bde1e0ef83aa828558ba3514a36
     </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup>
@@ -121,10 +113,6 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
       <Inputs>$(TargetFileName)</Inputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
-<<<<<<< HEAD
-
-=======
->>>>>>> 2ccd6248cdb35bde1e0ef83aa828558ba3514a36
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
@@ -155,30 +143,18 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
       </Command>
     </PostBuildEvent>
     <PreLinkEvent>
-<<<<<<< HEAD
-      <Command></Command>
-=======
       <Command>
       </Command>
->>>>>>> 2ccd6248cdb35bde1e0ef83aa828558ba3514a36
     </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
-<<<<<<< HEAD
-    <ClCompile Include="..\Classes\HelloWorldScene.cpp" />
-=======
     <ClCompile Include="..\Classes\GameStart.cpp" />
->>>>>>> 2ccd6248cdb35bde1e0ef83aa828558ba3514a36
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
-<<<<<<< HEAD
-    <ClInclude Include="..\Classes\HelloWorldScene.h" />
-=======
     <ClInclude Include="..\Classes\GameStart.h" />
->>>>>>> 2ccd6248cdb35bde1e0ef83aa828558ba3514a36
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>
@@ -196,8 +172,4 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
-<<<<<<< HEAD
 </Project>
-=======
-</Project>
->>>>>>> 2ccd6248cdb35bde1e0ef83aa828558ba3514a36
