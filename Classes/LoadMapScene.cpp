@@ -23,9 +23,9 @@ bool LoadMapScene::init()
 
 	player = new Player(this);
 	m_player = player->getSprite();
-	auto rFIdle = RepeatForever::create(player->getAnimateIdle());
-	rFIdle->setTag(0);
-	m_player->runAction(rFIdle);
+	//auto rFIdle = RepeatForever::create(player->getAnimateIdle());
+	//rFIdle->setTag(0);
+	//m_player->runAction(rFIdle);
 	// Init the tile map to the gameplay
 	// Adding the tile map to the child
 	m_tileMap = TMXTiledMap::create("Resources/Map/TileMap2.tmx");
@@ -106,6 +106,8 @@ void LoadMapScene::onKeyPressed(EventKeyboard::KeyCode keyCode, cocos2d::Event* 
 		repeatForeverActionRun->setTag(11);
 		event->getCurrentTarget()->runAction(repeatForever);
 		event->getCurrentTarget()->runAction(repeatForeverActionRun);
+		event->getCurrentTarget()->stopActionByTag(99);
+
 		//
 		break;
 	}
@@ -117,6 +119,8 @@ void LoadMapScene::onKeyPressed(EventKeyboard::KeyCode keyCode, cocos2d::Event* 
 		repeatForever->setTag(2);
 		event->getCurrentTarget()->runAction(repeatForever);
 		event->getCurrentTarget()->runAction(repeatForeverActionRun);
+		event->getCurrentTarget()->stopActionByTag(99);
+
 		break;
 	}
 	case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
@@ -127,6 +131,8 @@ void LoadMapScene::onKeyPressed(EventKeyboard::KeyCode keyCode, cocos2d::Event* 
 		repeatForever->setTag(3);
 		event->getCurrentTarget()->runAction(repeatForever);
 		event->getCurrentTarget()->runAction(repeatForeverActionRun);
+		event->getCurrentTarget()->stopActionByTag(99);
+
 		break;
 	}
 	case  EventKeyboard::KeyCode::KEY_LEFT_ARROW:
@@ -137,11 +143,14 @@ void LoadMapScene::onKeyPressed(EventKeyboard::KeyCode keyCode, cocos2d::Event* 
 		repeatForever->setTag(4);
 		event->getCurrentTarget()->runAction(repeatForever);
 		event->getCurrentTarget()->runAction(repeatForeverActionRun);
+		event->getCurrentTarget()->stopActionByTag(99);
+
 		break;
 	}
 	default:
 		break;
 	}
+	auto count = m_player->getNumberOfRunningActionsByTag(99);
 	event->getCurrentTarget()->stopActionByTag(0);
 }
 // When the key is released
@@ -149,7 +158,7 @@ void LoadMapScene::onKeyReleased(EventKeyboard::KeyCode keyCode, cocos2d::Event*
 {
 	auto idleAnimate = player->getAnimateIdle();
 	auto repeatForeverIdle = RepeatForever::create(idleAnimate);
-	repeatForeverIdle->setTag(0);
+	repeatForeverIdle->setTag(99);
  	switch (keyCode) {
 	case EventKeyboard::KeyCode::KEY_UP_ARROW:
 		event->getCurrentTarget()->stopActionByTag(1);
@@ -170,7 +179,7 @@ void LoadMapScene::onKeyReleased(EventKeyboard::KeyCode keyCode, cocos2d::Event*
 	default:
 		break;
 	}
-	event->getCurrentTarget()->runAction(repeatForeverIdle->clone());
+	event->getCurrentTarget()->runAction(repeatForeverIdle);
 }
 // Set all the keyboard code to the player
 void LoadMapScene::setKeyBoard()
