@@ -18,7 +18,11 @@
     <ClCompile Include="..\Classes\AppDelegate.cpp">
       <Filter>src</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="..\Classes\HelloWorldScene.cpp">
+=======
+    <ClCompile Include="..\Classes\GameStart.cpp">
+>>>>>>> 2ccd6248cdb35bde1e0ef83aa828558ba3514a36
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -29,7 +33,11 @@
     <ClInclude Include="..\Classes\AppDelegate.h">
       <Filter>src</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="..\Classes\HelloWorldScene.h">
+=======
+    <ClInclude Include="..\Classes\GameStart.h">
+>>>>>>> 2ccd6248cdb35bde1e0ef83aa828558ba3514a36
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

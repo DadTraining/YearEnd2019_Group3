@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+		<key>frames</key>
+		<dict>
+			<key>idle-1.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{96,0},{23,60}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{32,20},{23,60}}</string>
+				<key>sourceSize</key>
+				<string>{128,96}</string>
+			</dict>
+
+			<key>idle-2.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{72,0},{23,60}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{32,20},{23,60}}</string>
+				<key>sourceSize</key>
+				<string>{128,96}</string>
+			</dict>
+
+			<key>idle-3.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{24,0},{23,60}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{32,20},{23,60}}</string>
+				<key>sourceSize</key>
+				<string>{128,96}</string>
+			</dict>
+
+			<key>idle-4.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,0},{23,60}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{32,20},{23,60}}</string>
+				<key>sourceSize</key>
+				<string>{128,96}</string>
+			</dict>
+
+			<key>idle-5.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{48,0},{23,60}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{32,20},{23,60}}</string>
+				<key>sourceSize</key>
+				<string>{128,96}</string>
+			</dict>
+
+			<key>idle-6.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{72,0},{23,60}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{32,20},{23,60}}</string>
+				<key>sourceSize</key>
+				<string>{128,96}</string>
+			</dict>
+
+		</dict>
+
+		<key>metadata</key>
+		<dict>
+			<key>format</key>
+			<integer>2</integer>
+			<key>size</key>
+			<string>{128,64}</string>
+			<key>textureFileName</key>
+			<string>idle.png</string>
+			</dict>
+		</dict>
+</plist>
