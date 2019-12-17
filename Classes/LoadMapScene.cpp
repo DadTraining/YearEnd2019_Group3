@@ -95,63 +95,74 @@ void LoadMapScene::onKeyPressed(EventKeyboard::KeyCode keyCode, cocos2d::Event* 
 	auto moveUp = MoveBy::create(0.1f, Vec2(0, 30));
 	auto moveRight = MoveBy::create(0.1f, Vec2(30, 0));
 	auto runAnimate = player->getAnimateRun();
+	auto repeatForeverActionRun = RepeatForever::create(runAnimate);
 
 	switch (keyCode) {
 	case EventKeyboard::KeyCode::KEY_UP_ARROW:
 	{
 		auto repeatForever = RepeatForever::create(moveUp);
 		repeatForever->setTag(1);
-		//
-		auto repeatForeverActionRun = RepeatForever::create(runAnimate);
-		repeatForeverActionRun->setTag(11);
 		event->getCurrentTarget()->runAction(repeatForever);
+		//
+		repeatForeverActionRun->setTag(11);
 		event->getCurrentTarget()->runAction(repeatForeverActionRun);
-		event->getCurrentTarget()->stopActionByTag(99);
+		event->getCurrentTarget()->stopAllActionsByTag(99);
+
+		event->getCurrentTarget()->stopAllActionsByTag(12);
+		event->getCurrentTarget()->stopAllActionsByTag(13);
+		event->getCurrentTarget()->stopAllActionsByTag(14);
 
 		//
 		break;
 	}
 	case EventKeyboard::KeyCode::KEY_DOWN_ARROW:
 	{
-		auto repeatForeverActionRun = RepeatForever::create(runAnimate);
-		repeatForeverActionRun->setTag(12);
 		auto repeatForever = RepeatForever::create(moveUp->reverse());
 		repeatForever->setTag(2);
+		//
+		repeatForeverActionRun->setTag(12);
 		event->getCurrentTarget()->runAction(repeatForever);
 		event->getCurrentTarget()->runAction(repeatForeverActionRun);
-		event->getCurrentTarget()->stopActionByTag(99);
+		event->getCurrentTarget()->stopAllActionsByTag(99);
 
+		event->getCurrentTarget()->stopAllActionsByTag(11);
+		event->getCurrentTarget()->stopAllActionsByTag(13);
+		event->getCurrentTarget()->stopAllActionsByTag(14);
 		break;
 	}
 	case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
 	{
-		auto repeatForeverActionRun = RepeatForever::create(runAnimate);
 		repeatForeverActionRun->setTag(13);
 		auto repeatForever = RepeatForever::create(moveRight);
 		repeatForever->setTag(3);
+		event->getCurrentTarget()->setRotationY(0.0f);
 		event->getCurrentTarget()->runAction(repeatForever);
 		event->getCurrentTarget()->runAction(repeatForeverActionRun);
-		event->getCurrentTarget()->stopActionByTag(99);
-
+		event->getCurrentTarget()->stopAllActionsByTag(99);
+		//
+		event->getCurrentTarget()->stopAllActionsByTag(12);
+		event->getCurrentTarget()->stopAllActionsByTag(11);
+		event->getCurrentTarget()->stopAllActionsByTag(14);
 		break;
 	}
 	case  EventKeyboard::KeyCode::KEY_LEFT_ARROW:
 	{
-		auto repeatForeverActionRun = RepeatForever::create(runAnimate);
 		repeatForeverActionRun->setTag(14);
 		auto repeatForever = RepeatForever::create(moveRight->reverse());
 		repeatForever->setTag(4);
+		event->getCurrentTarget()->setRotationY(180.0f);
 		event->getCurrentTarget()->runAction(repeatForever);
 		event->getCurrentTarget()->runAction(repeatForeverActionRun);
-		event->getCurrentTarget()->stopActionByTag(99);
-
+		event->getCurrentTarget()->stopAllActionsByTag(99);
+		//
+		event->getCurrentTarget()->stopAllActionsByTag(12);
+		event->getCurrentTarget()->stopAllActionsByTag(11);
+		event->getCurrentTarget()->stopAllActionsByTag(13);
 		break;
 	}
 	default:
 		break;
 	}
-	auto count = m_player->getNumberOfRunningActionsByTag(99);
-	event->getCurrentTarget()->stopActionByTag(0);
 }
 // When the key is released
 void LoadMapScene::onKeyReleased(EventKeyboard::KeyCode keyCode, cocos2d::Event* event)
@@ -161,20 +172,20 @@ void LoadMapScene::onKeyReleased(EventKeyboard::KeyCode keyCode, cocos2d::Event*
 	repeatForeverIdle->setTag(99);
  	switch (keyCode) {
 	case EventKeyboard::KeyCode::KEY_UP_ARROW:
-		event->getCurrentTarget()->stopActionByTag(1);
-		event->getCurrentTarget()->stopActionByTag(11);
+		event->getCurrentTarget()->stopAllActionsByTag(1);
+		event->getCurrentTarget()->stopAllActionsByTag(11);
 		break;
 	case EventKeyboard::KeyCode::KEY_DOWN_ARROW:
-		event->getCurrentTarget()->stopActionByTag(2);
-		event->getCurrentTarget()->stopActionByTag(12);
+		event->getCurrentTarget()->stopAllActionsByTag(2);
+		event->getCurrentTarget()->stopAllActionsByTag(12);
 		break;
 	case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
-		event->getCurrentTarget()->stopActionByTag(3);
-		event->getCurrentTarget()->stopActionByTag(13);
+		event->getCurrentTarget()->stopAllActionsByTag(3);
+		event->getCurrentTarget()->stopAllActionsByTag(13);
 		break;
 	case  EventKeyboard::KeyCode::KEY_LEFT_ARROW:
-		event->getCurrentTarget()->stopActionByTag(4);
-		event->getCurrentTarget()->stopActionByTag(14);
+		event->getCurrentTarget()->stopAllActionsByTag(4);
+		event->getCurrentTarget()->stopAllActionsByTag(14);
 		break;
 	default:
 		break;
