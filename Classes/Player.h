@@ -4,7 +4,6 @@
 class Player : public Objects
 {
 public:
-public:
 	Player(cocos2d::Scene* scene);
 	~Player();
 	void init();

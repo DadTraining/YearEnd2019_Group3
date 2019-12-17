@@ -25,18 +25,22 @@
 #ifndef __HELLOWORLD_SCENE_H__
 #define __HELLOWORLD_SCENE_H__
 
+#include "Player.h"
 #include "cocos2d.h"
+#include "SneakyJoystickSkinnedBase.h"
 
 class HelloWorld : public cocos2d::Scene
 {
+private: 
+	SneakyJoystick *leftJoystick;
+	float activeRunRange;
+	Player* player;
+	Sprite* spPlayer;
 public:
     static cocos2d::Scene* createScene();
-
     virtual bool init();
-    
-    // a selector callback
-    void menuCloseCallback(cocos2d::Ref* pSender);
-    
+	void CreateJoystick(Scene * scene);
+	void UpdateJoystick();
     // implement the "static create()" method manually
     CREATE_FUNC(HelloWorld);
 };

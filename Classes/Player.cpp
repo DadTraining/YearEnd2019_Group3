@@ -12,42 +12,7 @@ Player::Player(cocos2d::Scene* scene) {
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 	this->scene = scene;
 
-	auto player1 = Sprite::createWithSpriteFrame(this->getSprite()->getSpriteFrame());
-	player1->setAnchorPoint(Vec2(0, 0));
-	player1->setPosition(Vec2(visibleSize.width*0.2, visibleSize.height*0.5));
-	auto targetSizePlayer = Size(80, 80);
-	auto sizeOrigPlayer = this->getSprite()->getContentSize();
-	player1->setScale((targetSizePlayer.width / sizeOrigPlayer.width), (targetSizePlayer.height / sizeOrigPlayer.height));
-	player1->runAction(RepeatForever::create(this->getAnimateAttack()));
-	this->scene->addChild(player1);
 
-	auto player2 = Sprite::createWithSpriteFrame(this->getSprite()->getSpriteFrame());
-	player2->setAnchorPoint(Vec2(0, 0));
-	player2->setPosition(Vec2(visibleSize.width*0.3, visibleSize.height*0.5));
-	player2->setScale((targetSizePlayer.width / sizeOrigPlayer.width), (targetSizePlayer.height / sizeOrigPlayer.height));
-	player2->runAction(RepeatForever::create(this->getAnimateRun()));
-	this->scene->addChild(player2);
-
-	auto player3 = Sprite::createWithSpriteFrame(this->getSprite()->getSpriteFrame());
-	player3->setAnchorPoint(Vec2(0, 0));
-	player3->setPosition(Vec2(visibleSize.width*0.4, visibleSize.height*0.5));
-	player3->setScale((targetSizePlayer.width / sizeOrigPlayer.width), (targetSizePlayer.height / sizeOrigPlayer.height));
-	player3->runAction(RepeatForever::create(this->getAnimateMove()));
-	this->scene->addChild(player3);
-
-	auto player4 = Sprite::createWithSpriteFrame(this->getSprite()->getSpriteFrame());
-	player4->setAnchorPoint(Vec2(0, 0));
-	player4->setPosition(Vec2(visibleSize.width*0.5, visibleSize.height*0.5));
-	player4->setScale((targetSizePlayer.width / sizeOrigPlayer.width), (targetSizePlayer.height / sizeOrigPlayer.height));
-	player4->runAction(RepeatForever::create(this->getAnimateDead()));
-	this->scene->addChild(player4);
-
-	auto player5 = Sprite::createWithSpriteFrame(this->getSprite()->getSpriteFrame());
-	player5->setAnchorPoint(Vec2(0, 0));
-	player5->setPosition(Vec2(visibleSize.width*0.6, visibleSize.height*0.5));
-	player5->setScale((targetSizePlayer.width / sizeOrigPlayer.width), (targetSizePlayer.height / sizeOrigPlayer.height));
-	player5->runAction(RepeatForever::create(this->getAnimateIdle()));
-	this->scene->addChild(player5);
 }
 
 Player::~Player()
@@ -136,7 +101,7 @@ void Player::init()
 		auto frame = spriteCacheRun->getSpriteFrameByName(nameAnimateRun);
 		animRun.pushBack(frame);
 	}
-	Animation* animationRun = Animation::createWithSpriteFrames(animRun, 0.1f);
+	Animation* animationRun = Animation::createWithSpriteFrames(animRun, 0.07f);
 	auto animateRun = Animate::create(animationRun);
 	animateRun->retain();
 	this->setAnimateRun(animateRun);
