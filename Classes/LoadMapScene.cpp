@@ -64,7 +64,6 @@ void LoadMapScene::SpawnPlayer()
 	float x = spawnPoint.at("x").asFloat();
 	float y = spawnPoint.at("y").asFloat();
 	// create the player and add the x y to the player
-	//m_player = Sprite::create("Resources/sprites/Player.png");
 	m_player->setPosition(x, y);
 	m_player->setScale(m_SCALE / 2);
 	addChild(m_player);
@@ -92,8 +91,8 @@ void LoadMapScene::setViewPointCenter(Vec2 position)
 
 void LoadMapScene::onKeyPressed(EventKeyboard::KeyCode keyCode, cocos2d::Event* event)
 {
-	auto moveUp = MoveBy::create(0.1f, Vec2(0, 20));
-	auto moveRight = MoveBy::create(0.1f, Vec2(20, 0));
+	auto moveUp = MoveBy::create(0.1f, Vec2(0, 30));
+	auto moveRight = MoveBy::create(0.1f, Vec2(30, 0));
 	auto runAnimate = player->getAnimateRun();
 	auto repeatForeverActionRun = RepeatForever::create(runAnimate);
 
