@@ -22,11 +22,10 @@ bool LoadMapScene::init()
 	// Init the tile map to the gameplay
 	// Adding the tile map to the child
 	m_tileMap = TMXTiledMap::create("Resources/Map/TileMap.tmx");
-	m_tileMap->setScale(1.5f);
+	m_tileMap->setScale(m_SCALE);
 	auto background = Sprite::create("Resources/test.png");
 	background->setPosition(500, 500);
-	background->setScale(2.0f);
-	this->setScale(2.0f);
+	background->setScale(m_SCALE * 2);
 	addChild(background);
 	addChild(m_tileMap, -1);
 	// spawn the character at the SpawnPoint
@@ -60,6 +59,7 @@ void LoadMapScene::SpawnPlayer()
 	// create the player and add the x y to the player
 	m_player = Sprite::create("Resources/sprites/Player.png");
 	m_player->setPosition(x, y);
+	m_player->setScale(m_SCALE);
 	addChild(m_player);
 }
 
@@ -69,8 +69,10 @@ void LoadMapScene::setViewPointCenter(Vec2 position)
 	int x = MAX(position.x, visibleSize.width / 2);
 	int y = MAX(position.y, visibleSize.height / 2);
 
-	x = MIN(x, (m_tileMap->getMapSize().width * this->m_tileMap->getTileSize().width) - visibleSize.width / 2);
-	y = MIN(y, (m_tileMap->getMapSize().height * this->m_tileMap->getTileSize().height) - visibleSize.height / 2);
+	auto borderX = m_tileMap->getMapSize().width * this->m_tileMap->getTileSize().width * m_SCALE;
+	auto borderY = m_tileMap->getMapSize().width * this->m_tileMap->getTileSize().height * m_SCALE;
+ 	x = MIN(x, borderX - visibleSize.width / 2);
+	y = MIN(y, borderY - visibleSize.height / 2);
 
 	auto actualPosition = Vec2(x, y);
 	auto centerOfView = Vec2(visibleSize.width / 2, visibleSize.height / 2);

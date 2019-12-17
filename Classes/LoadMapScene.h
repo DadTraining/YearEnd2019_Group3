@@ -1,7 +1,7 @@
 
 #ifndef __LOADMAP_SCENE_H__
 #define __LOADMAP_SCENE_H__
-
+#define m_SCALE 2.0f
 #include "cocos2d.h"
 using namespace cocos2d;
 class LoadMapScene : public cocos2d::Scene
