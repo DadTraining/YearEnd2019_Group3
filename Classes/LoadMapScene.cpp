@@ -22,7 +22,13 @@ bool LoadMapScene::init()
 	// Init the tile map to the gameplay
 	// Adding the tile map to the child
 	m_tileMap = TMXTiledMap::create("Resources/Map/TileMap.tmx");
-	addChild(m_tileMap);
+	m_tileMap->setScale(1.5f);
+	auto background = Sprite::create("Resources/test.png");
+	background->setPosition(500, 500);
+	background->setScale(2.0f);
+	this->setScale(2.0f);
+	addChild(background);
+	addChild(m_tileMap, -1);
 	// spawn the character at the SpawnPoint
 	SpawnPlayer();
 	// Set the keyboard to the character
