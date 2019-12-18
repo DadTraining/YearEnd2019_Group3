@@ -173,23 +173,46 @@ void LoadMapScene::onKeyReleased(EventKeyboard::KeyCode keyCode, cocos2d::Event*
 	case EventKeyboard::KeyCode::KEY_UP_ARROW:
 		event->getCurrentTarget()->stopAllActionsByTag(1);
 		event->getCurrentTarget()->stopAllActionsByTag(11);
+		if (event->getCurrentTarget()->getNumberOfRunningActionsByTag(99) == 0 &&
+			event->getCurrentTarget()->getNumberOfRunningActions() == 0)
+		{
+			event->getCurrentTarget()->runAction(repeatForeverIdle);
+
+		}
 		break;
 	case EventKeyboard::KeyCode::KEY_DOWN_ARROW:
 		event->getCurrentTarget()->stopAllActionsByTag(2);
 		event->getCurrentTarget()->stopAllActionsByTag(12);
+		if (event->getCurrentTarget()->getNumberOfRunningActionsByTag(99) == 0 &&
+			event->getCurrentTarget()->getNumberOfRunningActions() == 0)
+		{
+			event->getCurrentTarget()->runAction(repeatForeverIdle);
+
+		}
 		break;
 	case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
 		event->getCurrentTarget()->stopAllActionsByTag(3);
 		event->getCurrentTarget()->stopAllActionsByTag(13);
+		if (event->getCurrentTarget()->getNumberOfRunningActionsByTag(99) == 0 &&
+			event->getCurrentTarget()->getNumberOfRunningActions() == 0)
+		{
+			event->getCurrentTarget()->runAction(repeatForeverIdle);
+
+		}
 		break;
 	case  EventKeyboard::KeyCode::KEY_LEFT_ARROW:
 		event->getCurrentTarget()->stopAllActionsByTag(4);
 		event->getCurrentTarget()->stopAllActionsByTag(14);
+		if (event->getCurrentTarget()->getNumberOfRunningActionsByTag(99) == 0 &&
+			event->getCurrentTarget()->getNumberOfRunningActions() == 0)
+		{
+			event->getCurrentTarget()->runAction(repeatForeverIdle);
+
+		}
 		break;
 	default:
 		break;
 	}
-	event->getCurrentTarget()->runAction(repeatForeverIdle);
 }
 // Set all the keyboard code to the player
 void LoadMapScene::setKeyBoard()

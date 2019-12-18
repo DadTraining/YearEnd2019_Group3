@@ -52,7 +52,7 @@ bool GameStart::init()
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
 
-    auto label = Label::createWithTTF("Hello World", "fonts/Marker Felt.ttf", 24);
+    auto label = Label::create("Hello World", "fonts/Marker Felt.ttf", 24);
     if (label == nullptr)
     {
         problemLoading("'fonts/Marker Felt.ttf'");
