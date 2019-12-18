@@ -16,8 +16,6 @@ bool LoadMapScene::init()
     {
         return false;
     }
-
-
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
@@ -30,6 +28,10 @@ bool LoadMapScene::init()
 	// Adding the tile map to the child
 	m_tileMap = TMXTiledMap::create("Resources/Map/TileMap2.tmx");
 	m_tileMap->setScale(m_SCALE);
+	// Get the Meta layer for indicate collision and eaten
+	m_meta = m_tileMap->layerNamed("Meta");
+	m_meta->setVisible(false);
+
 	addChild(m_tileMap, -1);
 	// spawn the character at the SpawnPoint
 	SpawnPlayer();
@@ -44,7 +46,6 @@ void LoadMapScene::menuCloseCallback(Ref* pSender)
     Director::getInstance()->end();
 }
 
-
 // This method spawn the character at the coordinator of the player in
 // the Map
 void LoadMapScene::SpawnPlayer()
@@ -57,8 +58,8 @@ void LoadMapScene::SpawnPlayer()
 	}
 	// get the x y of the spawnPoint
 	auto spawnPoint = objectGroup->objectNamed("SpawnPoint");
-	float x = spawnPoint.at("x").asFloat();
-	float y = spawnPoint.at("y").asFloat();
+	float x = spawnPoint.at("x").asFloat() * m_SCALE;
+	float y = spawnPoint.at("y").asFloat() * m_SCALE;
 	// create the player and add the x y to the player
 	m_player->setPosition(x, y);
 	m_player->setScale(m_SCALE / 2);
@@ -81,10 +82,79 @@ void LoadMapScene::setViewPointCenter(Vec2 position)
 	auto viewPoint = Vec2(centerOfView.x - actualPosition.x, centerOfView.y - actualPosition.y);
 	this->setPosition(viewPoint);
 }
+// indicate collsion between player and object
+Vec2 LoadMapScene::tileCoordForPosition(Vec2 position)
+{
+	int x = position.x / (m_tileMap->getTileSize().width * m_SCALE);
+	int y = ((m_tileMap->getMapSize().height * m_tileMap->getTileSize().height * m_SCALE) - position.y)
+		/ (m_tileMap->getTileSize().height * m_SCALE);
+	return Vec2(x, y);
+}
+
+void LoadMapScene::isCollision(Vec2 position)
+{
+	auto tileCoord = this->tileCoordForPosition(position);
+	int tileGid = this->m_meta->tileGIDAt(tileCoord);
+	if (tileGid)
+	{
+		auto properties = m_tileMap->getPropertiesForGID(tileGid).asValueMap();
+		if (!properties.empty())
+		{
+			auto collision = properties["Collidable"].asString();
+			if (collision.empty() || (collision.compare("true") == 0))
+			{
+				if (stuck == false)
+				{
+					stuck = true;
+					for (int i = 1; i < 5; i++)
+					{
+						if (m_player->getActionByTag(i) != NULL)
+						{
+							auto moveUp = MoveBy::create(0.1f, Vec2(0, 10));
+							auto moveRight = MoveBy::create(0.1f, Vec2(10, 0));
+							switch (i)
+							{
+								// case when player move Up
+							case 1:
+							{
+								m_player->stopActionByTag(i);
+								m_player->runAction(moveUp->clone()->reverse());
+								break;
+							}
+							// case when player move Down, we have to move it up
+							case 2:
+							{
+								m_player->stopActionByTag(i);
+								m_player->runAction(moveUp->clone());
+								break;
+							}
+							// case when player move Right, we have to move it to left
+							case 3:
+							{
+								m_player->stopActionByTag(i);
+								m_player->runAction(moveRight->clone()->reverse());
+								break;
+							}
+							// case when player move Left, we have to move it to right
+							case 4:
+							{
+								m_player->stopActionByTag(i);
+								m_player->runAction(moveRight->clone());
+								break;
+							}
+							};
+						}
+					}
+					return;
+				}
+			}
+		}
+	}
+	stuck = false;
+}
 
 // Key for the character to moving
 // When the key is pressed
-
 void LoadMapScene::onKeyPressed(EventKeyboard::KeyCode keyCode, cocos2d::Event* event)
 {
 	auto moveUp = MoveBy::create(0.1f, Vec2(0, 30));
@@ -192,9 +262,8 @@ void LoadMapScene::setKeyBoard()
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(listenerKeyBoard, m_player);
 }
 
-
-
 void LoadMapScene::update(float dt)
 {
 	setViewPointCenter(this->m_player->getPosition());
+	isCollision(this->m_player->getPosition());
 }
