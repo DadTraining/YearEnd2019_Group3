@@ -23,17 +23,13 @@ bool LoadMapScene::init()
 
 	player = new Player(this);
 	m_player = player->getSprite();
-	//auto rFIdle = RepeatForever::create(player->getAnimateIdle());
-	//rFIdle->setTag(0);
-	//m_player->runAction(rFIdle);
+	auto rFIdle = RepeatForever::create(player->getAnimateIdle());
+	rFIdle->setTag(99);
+	m_player->runAction(rFIdle);
 	// Init the tile map to the gameplay
 	// Adding the tile map to the child
 	m_tileMap = TMXTiledMap::create("Resources/Map/TileMap2.tmx");
 	m_tileMap->setScale(m_SCALE);
-	//auto background = Sprite::create("Resources/test.png");
-	//background->setPosition(500, 500);
-	//background->setScale(m_SCALE * 2);
-	//addChild(background);
 	addChild(m_tileMap, -1);
 	// spawn the character at the SpawnPoint
 	SpawnPlayer();
@@ -95,7 +91,7 @@ void LoadMapScene::onKeyPressed(EventKeyboard::KeyCode keyCode, cocos2d::Event* 
 	auto moveRight = MoveBy::create(0.1f, Vec2(30, 0));
 	auto runAnimate = player->getAnimateRun();
 	auto repeatForeverActionRun = RepeatForever::create(runAnimate);
-
+	repeatForeverActionRun->setTag(11);
 	switch (keyCode) {
 	case EventKeyboard::KeyCode::KEY_UP_ARROW:
 	{
@@ -103,14 +99,10 @@ void LoadMapScene::onKeyPressed(EventKeyboard::KeyCode keyCode, cocos2d::Event* 
 		repeatForever->setTag(1);
 		event->getCurrentTarget()->runAction(repeatForever);
 		//
-		repeatForeverActionRun->setTag(11);
-		event->getCurrentTarget()->runAction(repeatForeverActionRun);
 		event->getCurrentTarget()->stopAllActionsByTag(99);
-
-		event->getCurrentTarget()->stopAllActionsByTag(12);
-		event->getCurrentTarget()->stopAllActionsByTag(13);
-		event->getCurrentTarget()->stopAllActionsByTag(14);
-
+		event->getCurrentTarget()->stopAllActionsByTag(11);
+		event->getCurrentTarget()->runAction(repeatForeverActionRun);
+		this->player->m_numberOfKeyPress++;
 		//
 		break;
 	}
@@ -119,44 +111,40 @@ void LoadMapScene::onKeyPressed(EventKeyboard::KeyCode keyCode, cocos2d::Event* 
 		auto repeatForever = RepeatForever::create(moveUp->reverse());
 		repeatForever->setTag(2);
 		//
-		repeatForeverActionRun->setTag(12);
 		event->getCurrentTarget()->runAction(repeatForever);
-		event->getCurrentTarget()->runAction(repeatForeverActionRun);
 		event->getCurrentTarget()->stopAllActionsByTag(99);
-
+		// --------------------------------------------
 		event->getCurrentTarget()->stopAllActionsByTag(11);
-		event->getCurrentTarget()->stopAllActionsByTag(13);
-		event->getCurrentTarget()->stopAllActionsByTag(14);
+		event->getCurrentTarget()->runAction(repeatForeverActionRun);
+		this->player->m_numberOfKeyPress++;
+
 		break;
 	}
 	case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
 	{
-		repeatForeverActionRun->setTag(13);
 		auto repeatForever = RepeatForever::create(moveRight);
 		repeatForever->setTag(3);
 		event->getCurrentTarget()->setRotationY(0.0f);
 		event->getCurrentTarget()->runAction(repeatForever);
-		event->getCurrentTarget()->runAction(repeatForeverActionRun);
 		event->getCurrentTarget()->stopAllActionsByTag(99);
 		//
-		event->getCurrentTarget()->stopAllActionsByTag(12);
 		event->getCurrentTarget()->stopAllActionsByTag(11);
-		event->getCurrentTarget()->stopAllActionsByTag(14);
+		event->getCurrentTarget()->runAction(repeatForeverActionRun);
+		this->player->m_numberOfKeyPress++;
+
 		break;
 	}
 	case  EventKeyboard::KeyCode::KEY_LEFT_ARROW:
 	{
-		repeatForeverActionRun->setTag(14);
 		auto repeatForever = RepeatForever::create(moveRight->reverse());
 		repeatForever->setTag(4);
 		event->getCurrentTarget()->setRotationY(180.0f);
 		event->getCurrentTarget()->runAction(repeatForever);
-		event->getCurrentTarget()->runAction(repeatForeverActionRun);
 		event->getCurrentTarget()->stopAllActionsByTag(99);
 		//
-		event->getCurrentTarget()->stopAllActionsByTag(12);
 		event->getCurrentTarget()->stopAllActionsByTag(11);
-		event->getCurrentTarget()->stopAllActionsByTag(13);
+		event->getCurrentTarget()->runAction(repeatForeverActionRun);
+		this->player->m_numberOfKeyPress++;
 		break;
 	}
 	default:
@@ -172,46 +160,27 @@ void LoadMapScene::onKeyReleased(EventKeyboard::KeyCode keyCode, cocos2d::Event*
  	switch (keyCode) {
 	case EventKeyboard::KeyCode::KEY_UP_ARROW:
 		event->getCurrentTarget()->stopAllActionsByTag(1);
-		event->getCurrentTarget()->stopAllActionsByTag(11);
-		if (event->getCurrentTarget()->getNumberOfRunningActionsByTag(99) == 0 &&
-			event->getCurrentTarget()->getNumberOfRunningActions() == 0)
-		{
-			event->getCurrentTarget()->runAction(repeatForeverIdle);
-
-		}
+		this->player->m_numberOfKeyPress--;
 		break;
 	case EventKeyboard::KeyCode::KEY_DOWN_ARROW:
 		event->getCurrentTarget()->stopAllActionsByTag(2);
-		event->getCurrentTarget()->stopAllActionsByTag(12);
-		if (event->getCurrentTarget()->getNumberOfRunningActionsByTag(99) == 0 &&
-			event->getCurrentTarget()->getNumberOfRunningActions() == 0)
-		{
-			event->getCurrentTarget()->runAction(repeatForeverIdle);
-
-		}
+		this->player->m_numberOfKeyPress--;
 		break;
 	case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
 		event->getCurrentTarget()->stopAllActionsByTag(3);
-		event->getCurrentTarget()->stopAllActionsByTag(13);
-		if (event->getCurrentTarget()->getNumberOfRunningActionsByTag(99) == 0 &&
-			event->getCurrentTarget()->getNumberOfRunningActions() == 0)
-		{
-			event->getCurrentTarget()->runAction(repeatForeverIdle);
-
-		}
+		this->player->m_numberOfKeyPress--;
 		break;
 	case  EventKeyboard::KeyCode::KEY_LEFT_ARROW:
 		event->getCurrentTarget()->stopAllActionsByTag(4);
-		event->getCurrentTarget()->stopAllActionsByTag(14);
-		if (event->getCurrentTarget()->getNumberOfRunningActionsByTag(99) == 0 &&
-			event->getCurrentTarget()->getNumberOfRunningActions() == 0)
-		{
-			event->getCurrentTarget()->runAction(repeatForeverIdle);
-
-		}
+		this->player->m_numberOfKeyPress--;
 		break;
 	default:
 		break;
+	}
+	// If the player is not pressed by key moving then player will stop moving action
+	if (player->m_numberOfKeyPress == 0) {
+		this->m_player->stopAllActionsByTag(11);
+		event->getCurrentTarget()->runAction(repeatForeverIdle);
 	}
 }
 // Set all the keyboard code to the player
