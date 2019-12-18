@@ -11,6 +11,8 @@ private:
 	// Map private object
 	TMXTiledMap* m_tileMap;
 	TMXLayer* m_meta;
+	TMXLayer* m_villagerLayer;
+	int _numCollected = 0;
 	bool stuck = false;
 	Sprite* m_player;
 	Player* player;
@@ -24,8 +26,9 @@ public:
 	// --------------------------------
 	void SpawnPlayer();
 	void setViewPointCenter(Vec2 position);
-	void isCollision(Vec2 position);
 	Vec2 tileCoordForPosition(Vec2 position);
+	void isCollision(Vec2 position);
+	void isCollectable(Vec2 position);
 	// --------------------------------
 	// Extra methods to make the character moving around
 	// --------------------------------

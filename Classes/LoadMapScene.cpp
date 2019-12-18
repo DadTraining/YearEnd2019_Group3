@@ -31,7 +31,8 @@ bool LoadMapScene::init()
 	// Get the Meta layer for indicate collision and eaten
 	m_meta = m_tileMap->layerNamed("Meta");
 	m_meta->setVisible(false);
-
+	// Get the m_villagerLayer  in the Map
+	m_villagerLayer = m_tileMap->layerNamed("Villagers");
 	addChild(m_tileMap, -1);
 	// spawn the character at the SpawnPoint
 	SpawnPlayer();
@@ -82,7 +83,7 @@ void LoadMapScene::setViewPointCenter(Vec2 position)
 	auto viewPoint = Vec2(centerOfView.x - actualPosition.x, centerOfView.y - actualPosition.y);
 	this->setPosition(viewPoint);
 }
-// indicate collsion between player and object
+
 Vec2 LoadMapScene::tileCoordForPosition(Vec2 position)
 {
 	int x = position.x / (m_tileMap->getTileSize().width * m_SCALE);
@@ -91,6 +92,7 @@ Vec2 LoadMapScene::tileCoordForPosition(Vec2 position)
 	return Vec2(x, y);
 }
 
+// indicate collsion between player and object
 void LoadMapScene::isCollision(Vec2 position)
 {
 	auto tileCoord = this->tileCoordForPosition(position);
@@ -151,6 +153,26 @@ void LoadMapScene::isCollision(Vec2 position)
 		}
 	}
 	stuck = false;
+}
+
+void LoadMapScene::isCollectable(Vec2 position)
+{
+	auto tileCoord = this->tileCoordForPosition(position);
+	auto tileGid = this->m_meta->tileGIDAt(tileCoord);
+	if (tileGid)
+	{
+		auto properties = m_tileMap->getPropertiesForGID(tileGid).asValueMap();
+		if (!properties.empty())
+		{
+			auto collect = properties["Collectable"].asString();
+			if ((collect.compare("true") == 0))
+			{
+				m_meta->removeTileAt(tileCoord);
+				m_villagerLayer->removeTileAt(tileCoord);
+				_numCollected++;
+			}
+		}
+	}
 }
 
 // Key for the character to moving
@@ -266,4 +288,5 @@ void LoadMapScene::update(float dt)
 {
 	setViewPointCenter(this->m_player->getPosition());
 	isCollision(this->m_player->getPosition());
+	isCollectable(this->m_player->getPosition());
 }
