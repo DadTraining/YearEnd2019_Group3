@@ -3,7 +3,7 @@
 
 USING_NS_CC;
 
-
+PhysicsBody* physicsBody;
 Scene* HelloWorld::createScene()
 {
     return HelloWorld::create();
@@ -18,10 +18,8 @@ static void problemLoading(const char* filename)
 
 bool HelloWorld::init()
 {
-    if ( !Scene::init() )
-    {
-        return false;
-    }
+	if (!Scene::initWithPhysics())
+		return false;
 
     auto visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
@@ -35,6 +33,10 @@ bool HelloWorld::init()
 	spPlayer->setAnchorPoint(Vec2(0.5, 0.5));
 	spPlayer->setPosition(Vec2(visibleSize.width*0.1, visibleSize.height*0.5));
 	spPlayer->setScale((targetSizePlayer.width / sizeOrigPlayer.width), (targetSizePlayer.height / sizeOrigPlayer.height));
+
+	physicsBody = PhysicsBody::createBox(spPlayer->getContentSize());
+	physicsBody->setDynamic(false);
+	spPlayer->setPhysicsBody(physicsBody);
 	this->addChild(spPlayer);
 
 	CreateJoystick(this);
@@ -47,21 +49,6 @@ bool HelloWorld::init()
 
 void HelloWorld::CreateJoystick(Scene * scene)
 {
-	//int joystickOffset = 10;
-
-	//Rect joystickBaseDimensions = Rect(0, 0, 60.0f, 60.0f);
-	//Point joystickBasePosition = Point(Director::getInstance()->getVisibleSize().width*0.1, Director::getInstance()->getVisibleSize().height*0.2);
-	//SneakyJoystickSkinnedBase* joystickBase = SneakyJoystickSkinnedBase::create();
-	//SneakyJoystick* joystick = new SneakyJoystick();
-	//joystick->initWithRect(joystickBaseDimensions);
-	//joystickBase->setBackgroundSprite(cocos2d::Sprite::create("sprites/JoyStick/joystick.png"));
-	//joystickBase->setThumbSprite(cocos2d::Sprite::create("sprites/JoyStick/thumb.png"));
-	///*joystickBase->getThumbSprite()->setScale(0.5f);
-	//joystickBase->setScale(0.8f);*/
-	//joystickBase->setJoystick(joystick);
-	//joystickBase->setPosition(joystickBasePosition);
-	//leftJoystick = joystickBase->getJoystick();
-	//scene->addChild(joystickBase);
 	auto thumb = Sprite::create("sprites/JoyStick/thumb.png");
 	auto joystick = Sprite::create("sprites/JoyStick/joystick.png");
 	Rect joystickBaseDimensions;
@@ -98,12 +85,11 @@ void HelloWorld::UpdateJoystick()
 	if (radius > 0)
 	{
 		spPlayer->stopAllActions();
-		spPlayer->runAction(moveUp);
+		physicsBody->setVelocity(pos);
 	}
 	else
 	{
 		spPlayer->runAction(RepeatForever::create(player->getAnimateAttack()));
-		
 	}
 }
 
