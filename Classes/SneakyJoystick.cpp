@@ -7,15 +7,13 @@ using namespace cocos2d;
 #define SJ_RAD2DEG 180.0f/SJ_PI
 #define SJ_DEG2RAD SJ_PI/180.0f
 
-SneakyJoystick::SneakyJoystick() : onVelocityChanged(nullptr)
+SneakyJoystick::~SneakyJoystick()
 {
 
 }
 
 bool SneakyJoystick::initWithRect(Rect rect)
 {
-	bool pRet = false;
-	//if(cocos2d::Sprite::init()){
 	stickPosition = Point::ZERO;
 	degrees = 0.0f;
 	velocity = Point::ZERO;
@@ -30,65 +28,48 @@ bool SneakyJoystick::initWithRect(Rect rect)
 
 	//Cocos node stuff
 	setPosition(rect.origin);
-	setTouchEnabled(true);
-	pRet = true;
-	//}
-	return pRet;
+
+	auto listener = EventListenerTouchOneByOne::create();
+	listener->setSwallowTouches(true);
+	listener->onTouchBegan = SneakyJoystick::onTouchBegan;
+	listener->onTouchMoved = SneakyJoystick::onTouchMoved;
+	listener->onTouchEnded = SneakyJoystick::onTouchEnded;
+	listener->onTouchCancelled = SneakyJoystick::onTouchCancelled;
+
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+	return true;
 }
 
-bool SneakyJoystick::isTouchEnabled() const
+float SneakyJoystick::round(float r)
 {
-	return _touchListener != nullptr;
-}
-
-void SneakyJoystick::setTouchEnabled(bool enabled)
-{
-	_eventDispatcher->removeEventListener(_touchListener);
-	_touchListener = nullptr;
-
-	if (enabled)
-	{
-		_touchListener = EventListenerTouchOneByOne::create();
-		_touchListener->setSwallowTouches(true);
-		_touchListener->onTouchBegan = CC_CALLBACK_2(SneakyJoystick::ccTouchBegan, this);
-		_touchListener->onTouchMoved = CC_CALLBACK_2(SneakyJoystick::ccTouchMoved, this);
-		_touchListener->onTouchEnded = CC_CALLBACK_2(SneakyJoystick::ccTouchEnded, this);
-		_touchListener->onTouchCancelled = CC_CALLBACK_2(SneakyJoystick::ccTouchCancelled, this);
-
-		_eventDispatcher->addEventListenerWithSceneGraphPriority(_touchListener, this);
-	}
-}
-
-float SneakyJoystick::round(float r) {
 	return (r > 0.0) ? floor(r + 0.5) : ceil(r - 0.5);
 }
 
 void SneakyJoystick::updateVelocity(Point point)
 {
-	Point oldVelovity = velocity;
 	// Calculate distance and angle from the center.
 	float dx = point.x;
 	float dy = point.y;
 	float dSq = dx * dx + dy * dy;
 
-	if (dSq <= deadRadiusSq) {
+	if (dSq <= deadRadiusSq)
+	{
 		velocity = Point::ZERO;
 		degrees = 0.0f;
 		stickPosition = point;
-		if (onVelocityChanged) {
-			this->onVelocityChanged(this, oldVelovity, velocity);
-		}
 		return;
 	}
 
 	float angle = atan2f(dy, dx); // in radians
-	if (angle < 0) {
+	if (angle < 0)
+	{
 		angle += SJ_PI_X_2;
 	}
 	float cosAngle;
 	float sinAngle;
 
-	if (isDPad) {
+	if (isDPad)
+	{
 		float anglePerSector = 360.0f / numberOfDirections * SJ_DEG2RAD;
 		angle = round(angle / anglePerSector) * anglePerSector;
 	}
@@ -97,7 +78,8 @@ void SneakyJoystick::updateVelocity(Point point)
 	sinAngle = sinf(angle);
 
 	// NOTE: Velocity goes from -1.0 to 1.0.
-	if (dSq > joystickRadiusSq || isDPad) {
+	if (dSq > joystickRadiusSq || isDPad)
+	{
 		dx = cosAngle * joystickRadius;
 		dy = sinAngle * joystickRadius;
 	}
@@ -106,11 +88,7 @@ void SneakyJoystick::updateVelocity(Point point)
 	degrees = angle * SJ_RAD2DEG;
 
 	// Update the thumb's position
-	stickPosition = Point(dx, dy);
-
-	if (onVelocityChanged) {
-		this->onVelocityChanged(this, oldVelovity, velocity);
-	}
+	stickPosition = Vec2(dx, dy);
 }
 
 void SneakyJoystick::setIsDPad(bool b)
@@ -140,44 +118,64 @@ void SneakyJoystick::setDeadRadius(float r)
 	deadRadiusSq = r*r;
 }
 
-bool SneakyJoystick::ccTouchBegan(Touch *touch, Event *event)
+bool SneakyJoystick::onTouchBegan(Touch *touch, Event *event)
 {
 	Point location = Director::getInstance()->convertToGL(touch->getLocationInView());
 
-	//if([background containsPoint:[background convertToNodeSpace:location]]){
-	location = this->convertToNodeSpace(location);
+	auto target = static_cast<SneakyJoystick*>(event->getCurrentTarget());
+
+	location = target->convertToNodeSpace(location);
 	//Do a fast rect check before doing a circle hit check:
-	if (location.x < -joystickRadius || location.x > joystickRadius || location.y < -joystickRadius || location.y > joystickRadius) {
+	if (location.x < -target->getJoystickRadius() || location.x > target->getJoystickRadius() || location.y < -target->getJoystickRadius() || location.y > target->getJoystickRadius())
+	{
 		return false;
 	}
-	else {
+	else
+	{
 		float dSq = location.x*location.x + location.y*location.y;
-		if (joystickRadiusSq > dSq) {
-			this->updateVelocity(location);
+		if (target->getJoystickRadiusSq() > dSq)
+		{
+			target->updateVelocity(location);
 			return true;
 		}
 	}
 	return false;
 }
 
-void SneakyJoystick::ccTouchMoved(Touch *touch, Event *event)
+void SneakyJoystick::onTouchMoved(Touch *touch, Event *event)
 {
 	Point location = Director::getInstance()->convertToGL(touch->getLocationInView());
-	location = this->convertToNodeSpace(location);
-	this->updateVelocity(location);
+	auto target = static_cast<SneakyJoystick*>(event->getCurrentTarget());
+	location = target->convertToNodeSpace(location);
+	target->updateVelocity(location);
 }
 
-void SneakyJoystick::ccTouchEnded(Touch *touch, Event *event)
+void SneakyJoystick::onTouchEnded(Touch *touch, Event *event)
 {
 	Point location = Point::ZERO;
-	if (!autoCenter) {
+	auto target = static_cast<SneakyJoystick*>(event->getCurrentTarget());
+
+	if (!target->getAutoCenter())
+	{
 		Point location = Director::getInstance()->convertToGL(touch->getLocationInView());
-		location = this->convertToNodeSpace(location);
+		location = target->convertToNodeSpace(location);
 	}
-	this->updateVelocity(location);
+	target->updateVelocity(location);
 }
 
-void SneakyJoystick::ccTouchCancelled(Touch *touch, Event *event)
+void SneakyJoystick::onTouchCancelled(Touch *touch, Event *event)
 {
-	this->ccTouchEnded(touch, event);
+	auto target = static_cast<SneakyJoystick*>(event->getCurrentTarget());
+
+	target->onTouchEnded(touch, event);
+}
+
+void SneakyJoystick::touchDelegateRelease()
+{
+	this->release();
+}
+
+void SneakyJoystick::touchDelegateRetain()
+{
+	this->retain();
 }

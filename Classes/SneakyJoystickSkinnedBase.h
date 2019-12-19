@@ -21,4 +21,4 @@ public:
 	void setThumbSprite(cocos2d::Sprite *aSprite);
 	void setJoystick(SneakyJoystick *aJoystick);
 };
-#endif
+#endif	

@@ -3,48 +3,48 @@
 
 #include "cocos2d.h"
 
-class SneakyJoystick : public cocos2d::Node
+USING_NS_CC;
+
+class SneakyJoystick : public Node
 {
-	CC_SYNTHESIZE_READONLY(cocos2d::Point, stickPosition, StickPosition);
+public:
+	CREATE_FUNC(SneakyJoystick);
+
+protected:
+	float thumbRadiusSq;
+	float deadRadiusSq;
+
+	CC_SYNTHESIZE_READONLY(Point, stickPosition, StickPosition);
 	CC_SYNTHESIZE_READONLY(float, degrees, Degrees);
-	CC_SYNTHESIZE_READONLY(cocos2d::Point, velocity, Velocity);
+	CC_SYNTHESIZE_READONLY(Point, velocity, Velocity);
 	CC_SYNTHESIZE(bool, autoCenter, AutoCenter);
 	CC_SYNTHESIZE_READONLY(bool, isDPad, IsDPad);
 	CC_SYNTHESIZE(bool, hasDeadzone, HasDeadzone);
 	CC_SYNTHESIZE(int, numberOfDirections, NumberOfDirections);
+	CC_SYNTHESIZE(int, joystickRadiusSq, JoystickRadiusSq);
+
 
 	CC_SYNTHESIZE_READONLY(float, joystickRadius, JoystickRadius);
 	CC_SYNTHESIZE_READONLY(float, thumbRadius, ThumbRadius);
 	CC_SYNTHESIZE_READONLY(float, deadRadius, DeadRadius);
 
-public:
-	SneakyJoystick();
+	virtual ~SneakyJoystick();
 
-	bool initWithRect(cocos2d::Rect rect);
-
-	void setTouchEnabled(bool enabled);
-	bool isTouchEnabled() const;
+	bool initWithRect(Rect rect);
 	void setIsDPad(bool b);
 	void setJoystickRadius(float r);
 	void setThumbRadius(float r);
 	void setDeadRadius(float r);
+	static bool onTouchBegan(Touch *touch, Event *event);
+	static void onTouchMoved(Touch *touch, Event *event);
+	static void onTouchEnded(Touch *touch, Event *event);
+	static void onTouchCancelled(Touch *touch, Event *event);
+
+	void touchDelegateRelease();
+	void touchDelegateRetain();
 	float round(float r);
-	std::function<void(SneakyJoystick*, cocos2d::Point, cocos2d::Point)> onVelocityChanged;
-
-	virtual bool ccTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event);
-	virtual void ccTouchMoved(cocos2d::Touch *touch, cocos2d::Event *event);
-	virtual void ccTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event);
-	virtual void ccTouchCancelled(cocos2d::Touch *touch, cocos2d::Event *event);
-
-protected:
-	float joystickRadiusSq;
-	float thumbRadiusSq;
-	float deadRadiusSq;
-
 private:
-	void updateVelocity(cocos2d::Point point);
-	void setTouchRadius();
-	void sendVelocityEvent();
-	cocos2d::EventListenerTouchOneByOne* _touchListener;
+	void updateVelocity(Point point);
+
 };
 #endif

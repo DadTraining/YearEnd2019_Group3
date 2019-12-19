@@ -1,4 +1,5 @@
 #include "Player.h"
+//#include "ResourceManager.h"
 #include "SimpleAudioEngine.h"
 
 USING_NS_CC;
@@ -40,6 +41,7 @@ void Player::init()
 	Animation* animationAtack = Animation::createWithSpriteFrames(animAttack, 0.1f);
 	auto animateAttack = Animate::create(animationAtack);
 	animateAttack->retain();
+//	auto animateAttack = ResourceManager::GetInstance()->GetPlayerAction("atkA");
 	this->setAnimateAttack(animateAttack);
 	
 	//Create animate idle

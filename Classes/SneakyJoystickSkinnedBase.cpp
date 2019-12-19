@@ -25,7 +25,8 @@ SneakyJoystickSkinnedBase::~SneakyJoystickSkinnedBase()
 bool SneakyJoystickSkinnedBase::init()
 {
 	bool pRet = false;
-	if (cocos2d::Layer::init()) {
+	if (CCLayer::init())
+	{
 		this->backgroundSprite = NULL;
 
 		this->thumbSprite = NULL;
@@ -41,65 +42,82 @@ bool SneakyJoystickSkinnedBase::init()
 void SneakyJoystickSkinnedBase::updatePositions(float delta)
 {
 	if (joystick && thumbSprite)
+	{
 		thumbSprite->setPosition(joystick->getStickPosition());
+	}
 }
 
 void SneakyJoystickSkinnedBase::setContentSize(Size s)
 {
-	cocos2d::Layer::setContentSize(s);
+	CCLayer::setContentSize(s);
 	backgroundSprite->setContentSize(s);
 	//joystick.joystickRadius = s.width/2;
 }
 
 void SneakyJoystickSkinnedBase::setBackgroundSprite(Sprite *aSprite)
 {
-	if (backgroundSprite) {
+	if (backgroundSprite)
+	{
 		if (backgroundSprite->getParent())
+		{
 			backgroundSprite->getParent()->removeChild(backgroundSprite, true);
+		}
 		backgroundSprite->release();
 	}
 	aSprite->retain();
 	backgroundSprite = aSprite;
-	if (aSprite) {
+	if (aSprite)
+	{
 		this->addChild(backgroundSprite, 0);
-
 		this->setContentSize(backgroundSprite->getContentSize());
 	}
 }
 
 void SneakyJoystickSkinnedBase::setThumbSprite(Sprite *aSprite)
 {
-	if (thumbSprite) {
+	if (thumbSprite)
+	{
 		if (thumbSprite->getParent())
+		{
 			thumbSprite->getParent()->removeChild(thumbSprite, true);
+		}
 		thumbSprite->release();
 	}
 	aSprite->retain();
 	thumbSprite = aSprite;
-	if (aSprite) {
+	if (aSprite)
+	{
 		this->addChild(thumbSprite, 1);
-
 		//joystick->setThumbRadius(thumbSprite->getContentSize().width/2);
 	}
 }
 
 void SneakyJoystickSkinnedBase::setJoystick(SneakyJoystick *aJoystick)
 {
-	if (joystick) {
+	if (joystick)
+	{
 		if (joystick->getParent())
+		{
 			joystick->getParent()->removeChild(joystick, true);
+		}
 		joystick->release();
 	}
 	aJoystick->retain();
 	joystick = aJoystick;
-	if (aJoystick) {
+	if (aJoystick)
+	{
 		this->addChild(aJoystick, 2);
 		if (thumbSprite)
-			joystick->setThumbRadius(thumbSprite->getBoundingBox().size.width / 2);
+		{
+			joystick->setThumbRadius(thumbSprite->boundingBox().size.width / 2);
+		}
 		else
+		{
 			joystick->setThumbRadius(0);
-
+		}
 		if (backgroundSprite)
-			joystick->setJoystickRadius(backgroundSprite->getBoundingBox().size.width / 2);
+		{
+			joystick->setJoystickRadius(backgroundSprite->boundingBox().size.width / 2);
+		}
 	}
 }

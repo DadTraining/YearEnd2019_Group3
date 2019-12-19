@@ -38,7 +38,7 @@ bool HelloWorld::init()
 	this->addChild(spPlayer);
 
 	CreateJoystick(this);
-	UpdateJoystick();
+	scheduleUpdate();
     return true;
 }
 
@@ -47,21 +47,47 @@ bool HelloWorld::init()
 
 void HelloWorld::CreateJoystick(Scene * scene)
 {
-	int joystickOffset = 10;
+	//int joystickOffset = 10;
 
-	Rect joystickBaseDimensions = Rect(0, 0, 40.0f, 40.0f);
-	Point joystickBasePosition = Point(Director::getInstance()->getVisibleSize().width*0.1, Director::getInstance()->getVisibleSize().height*0.2);
-	SneakyJoystickSkinnedBase* joystickBase = SneakyJoystickSkinnedBase::create();
-	SneakyJoystick* joystick = new SneakyJoystick();
-	joystick->initWithRect(joystickBaseDimensions);
-	joystickBase->setBackgroundSprite(cocos2d::Sprite::create("sprites/JoyStick/joystick.png"));
-	joystickBase->setThumbSprite(cocos2d::Sprite::create("sprites/JoyStick/thumb.png"));
-	joystickBase->getThumbSprite()->setScale(0.5f);
-	joystickBase->setScale(0.8f);
-	joystickBase->setJoystick(joystick);
+	//Rect joystickBaseDimensions = Rect(0, 0, 60.0f, 60.0f);
+	//Point joystickBasePosition = Point(Director::getInstance()->getVisibleSize().width*0.1, Director::getInstance()->getVisibleSize().height*0.2);
+	//SneakyJoystickSkinnedBase* joystickBase = SneakyJoystickSkinnedBase::create();
+	//SneakyJoystick* joystick = new SneakyJoystick();
+	//joystick->initWithRect(joystickBaseDimensions);
+	//joystickBase->setBackgroundSprite(cocos2d::Sprite::create("sprites/JoyStick/joystick.png"));
+	//joystickBase->setThumbSprite(cocos2d::Sprite::create("sprites/JoyStick/thumb.png"));
+	///*joystickBase->getThumbSprite()->setScale(0.5f);
+	//joystickBase->setScale(0.8f);*/
+	//joystickBase->setJoystick(joystick);
+	//joystickBase->setPosition(joystickBasePosition);
+	//leftJoystick = joystickBase->getJoystick();
+	//scene->addChild(joystickBase);
+	auto thumb = Sprite::create("sprites/JoyStick/thumb.png");
+	auto joystick = Sprite::create("sprites/JoyStick/joystick.png");
+	Rect joystickBaseDimensions;
+	joystickBaseDimensions = Rect(0, 0, 40.f, 40.0f);
+	Point joystickBasePosition;
+	joystickBasePosition = Vec2(thumb->getBoundingBox().size.width / 2 + joystick->getBoundingBox().size.width / 2
+		, thumb->getBoundingBox().size.height / 2 + joystick->getBoundingBox().size.height / 2);
+
+	joystickBase = new SneakyJoystickSkinnedBase();
+	joystickBase->init();
 	joystickBase->setPosition(joystickBasePosition);
+	joystickBase->setBackgroundSprite(thumb);
+	joystickBase->setThumbSprite(joystick);
+	joystickBase->getThumbSprite()->setScale(0.5f);
+	joystick->setScale(0.5f);
+	SneakyJoystick *aJoystick = new SneakyJoystick();
+	aJoystick->initWithRect(joystickBaseDimensions);
+	aJoystick->autorelease();
+	joystickBase->setJoystick(aJoystick);
+	joystickBase->setPosition(joystickBasePosition);
+
 	leftJoystick = joystickBase->getJoystick();
-	scene->addChild(joystickBase);
+	this->addChild(joystickBase, 4);
+	//joystickBase->setCameraMask(2);
+
+	activeRunRange = thumb->getBoundingBox().size.height / 2;
 }
 
 void HelloWorld::UpdateJoystick()
@@ -71,58 +97,17 @@ void HelloWorld::UpdateJoystick()
 	auto moveUp = MoveBy::create(0.5f, Vec2(800, 100));
 	if (radius > 0)
 	{
-		float degree = std::atan2f(pos.y, pos.x) * 180 / 3.141593;
-		
-		// GO UP
-		if (degree < 120 && degree > 60)
-		{
-			spPlayer->stopAllActions();
-		}
-		// GO DOWN
-		else if (degree < -60 && degree > -120)
-		{
-			spPlayer->runAction(RepeatForever::create(moveUp));
-			log("ba");
-		}
-		// GO LEFT
-		else if (degree > 150 || degree < -150)
-		{
-			spPlayer->runAction(RepeatForever::create(moveUp));
-			log("ba");
-		}
-		// GO RIGHT
-		else if (degree < 30 && degree > -30)
-		{
-			spPlayer->runAction(RepeatForever::create(moveUp));
-			log("ba");
-		}
-		// GO LEFT UP
-		else if (degree <= 150 && degree >= 120)
-		{
-			spPlayer->runAction(RepeatForever::create(moveUp));
-			log("ba");
-		}
-		// GO LEFT DOWN
-		else if (degree <= -120 && degree >= -150)
-		{
-			spPlayer->runAction(RepeatForever::create(moveUp));
-			log("ba");
-		}
-		// GO RIGHT UP
-		else if (degree <= 60 && degree >= 30)
-		{
-			spPlayer->runAction(RepeatForever::create(moveUp));
-			log("ba");
-		}
-		// GO RIGHT DOWN
-		else
-		{
-			spPlayer->runAction(RepeatForever::create(moveUp));
-			log("ba");
-		}
+		spPlayer->stopAllActions();
+		spPlayer->runAction(moveUp);
 	}
 	else
 	{
 		spPlayer->runAction(RepeatForever::create(player->getAnimateAttack()));
+		
 	}
+}
+
+void HelloWorld::update(float dt)
+{
+	UpdateJoystick();
 }

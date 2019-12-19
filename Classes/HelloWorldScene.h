@@ -33,6 +33,7 @@ class HelloWorld : public cocos2d::Scene
 {
 private: 
 	SneakyJoystick *leftJoystick;
+	SneakyJoystickSkinnedBase* joystickBase;
 	float activeRunRange;
 	Player* player;
 	Sprite* spPlayer;
@@ -42,6 +43,7 @@ public:
 	void CreateJoystick(Scene * scene);
 	void UpdateJoystick();
     // implement the "static create()" method manually
+	void update(float dt);
     CREATE_FUNC(HelloWorld);
 };
 
