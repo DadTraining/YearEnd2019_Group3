@@ -41,7 +41,7 @@ public:
     static cocos2d::Scene* createScene();
     virtual bool init();
 	void CreateJoystick(Scene * scene);
-	void UpdateJoystick();
+	void UpdateJoystick(float dt);
     // implement the "static create()" method manually
 	void update(float dt);
     CREATE_FUNC(HelloWorld);

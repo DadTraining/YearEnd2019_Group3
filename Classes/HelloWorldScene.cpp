@@ -26,7 +26,7 @@ bool HelloWorld::init()
 
 	player = new Player(this);
 
-	auto targetSizePlayer = Size(40, 40);
+	auto targetSizePlayer = Size(60, 60);
 	auto sizeOrigPlayer = player->getSprite()->getContentSize();
 
 	this->spPlayer = Sprite::createWithSpriteFrame(player->getSprite()->getSpriteFrame());
@@ -76,24 +76,36 @@ void HelloWorld::CreateJoystick(Scene * scene)
 
 	activeRunRange = thumb->getBoundingBox().size.height / 2;
 }
-
-void HelloWorld::UpdateJoystick()
+void HelloWorld::UpdateJoystick(float dt)
 {
 	Point pos = leftJoystick->getStickPosition();
 	float radius = std::sqrt(pos.x*pos.x + pos.y*pos.y);
-	auto moveUp = MoveBy::create(0.5f, Vec2(800, 100));
+	auto rpAnimateIdle = RepeatForever::create(player->getAnimateIdle());
+	rpAnimateIdle->setTag(1);
+	auto rpAnimateRun = RepeatForever::create(player->getAnimateRun());
+	rpAnimateRun->setTag(2);
 	if (radius > 0)
 	{
-		spPlayer->stopAllActions();
+		float degree = std::atan2f(pos.y, pos.x) * 180 / 3.141593;
+		if(degree>-90 && degree<90){
+			spPlayer->setFlipX(false);
+		}
+		else {
+			spPlayer->setFlipX(true);
+		}
+		spPlayer->stopActionByTag(1);
+		spPlayer->runAction(rpAnimateRun);
 		physicsBody->setVelocity(pos);
 	}
 	else
 	{
-		spPlayer->runAction(RepeatForever::create(player->getAnimateAttack()));
+		spPlayer->runAction(rpAnimateIdle);
+		physicsBody->setVelocity(Vec2(0, 0));
+		
 	}
 }
 
 void HelloWorld::update(float dt)
 {
-	UpdateJoystick();
+	UpdateJoystick(dt);
 }
