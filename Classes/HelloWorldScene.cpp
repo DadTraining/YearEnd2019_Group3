@@ -1,6 +1,6 @@
 #include "HelloWorldScene.h"
 #include "SimpleAudioEngine.h"
-
+#define SPEED 2.5
 USING_NS_CC;
 
 PhysicsBody* physicsBody;
@@ -95,7 +95,7 @@ void HelloWorld::UpdateJoystick(float dt)
 		}
 		spPlayer->stopActionByTag(1);
 		spPlayer->runAction(rpAnimateRun);
-		physicsBody->setVelocity(pos);
+		physicsBody->setVelocity(pos*SPEED);
 	}
 	else
 	{
