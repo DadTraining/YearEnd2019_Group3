@@ -114,45 +114,46 @@ void LoadMapScene::isCollision(Vec2 position)
 				if (stuck == false)
 				{
 					stuck = true;
-					for (int i = 1; i < 5; i++)
-					{
-						if (m_player->getActionByTag(i) != NULL)
-						{
-							auto moveUp = MoveBy::create(0.1f, Vec2(0, 10));
-							auto moveRight = MoveBy::create(0.1f, Vec2(10, 0));
-							switch (i)
-							{
-								// case when player move Up
-							case 1:
-							{
-								m_player->stopActionByTag(i);
-								m_player->runAction(moveUp->clone()->reverse());
-								break;
-							}
-							// case when player move Down, we have to move it up
-							case 2:
-							{
-								m_player->stopActionByTag(i);
-								m_player->runAction(moveUp->clone());
-								break;
-							}
-							// case when player move Right, we have to move it to left
-							case 3:
-							{
-								m_player->stopActionByTag(i);
-								m_player->runAction(moveRight->clone()->reverse());
-								break;
-							}
-							// case when player move Left, we have to move it to right
-							case 4:
-							{
-								m_player->stopActionByTag(i);
-								m_player->runAction(moveRight->clone());
-								break;
-							}
-							};
-						}
-					}
+					//for (int i = 1; i < 5; i++)
+					//{
+					//	if (m_player->getActionByTag(i) != NULL)
+					//	{
+					//		auto moveUp = MoveBy::create(0.1f, Vec2(0, 10));
+					//		auto moveRight = MoveBy::create(0.1f, Vec2(10, 0));
+					//		switch (i)
+					//		{
+					//			// case when player move Up
+					//		case 1:
+					//		{
+					//			m_player->stopActionByTag(i);
+					//			m_player->runAction(moveUp->clone()->reverse());
+					//			break;
+					//		}
+					//		// case when player move Down, we have to move it up
+					//		case 2:
+					//		{
+					//			m_player->stopActionByTag(i);
+					//			m_player->runAction(moveUp->clone());
+					//			break;
+					//		}
+					//		// case when player move Right, we have to move it to left
+					//		case 3:
+					//		{
+					//			m_player->stopActionByTag(i);
+					//			m_player->runAction(moveRight->clone()->reverse());
+					//			break;
+					//		}
+					//		// case when player move Left, we have to move it to right
+					//		case 4:
+					//		{
+					//			m_player->stopActionByTag(i);
+					//			m_player->runAction(moveRight->clone());
+					//			break;
+					//		}
+					//		};
+					//	}
+					//}
+					m_player->getPhysicsBody()->setVelocity(Vec2(0, 0));
 					return;
 				}
 			}

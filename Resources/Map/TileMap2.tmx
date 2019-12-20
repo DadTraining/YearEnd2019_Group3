@@ -19,10 +19,10 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="1913" name="Player" tilewidth="27" tileheight="40" tilecount="1" columns="0">
+ <tileset firstgid="1913" name="idle-1" tilewidth="40" tileheight="40" tilecount="1" columns="0">
   <grid orientation="orthogonal" width="1" height="1"/>
   <tile id="0">
-   <image width="27" height="40" source="Player.png"/>
+   <image width="40" height="40" source="idle-1.png"/>
   </tile>
  </tileset>
  <layer id="1" name="Background" width="50" height="50" offsetx="2" offsety="2">
