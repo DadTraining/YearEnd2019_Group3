@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="4">
+<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="4">
  <tileset firstgid="1" name="MountainCity" tilewidth="32" tileheight="32" spacing="1" margin="1" tilecount="1292" columns="38">
   <image source="d8fk4uc-5983c96a-bf48-41cc-b5bf-e753531e9975.png" width="1280" height="1152"/>
  </tileset>
