@@ -1,13 +1,10 @@
 
 #include "GameStart.h"
-#include "HelloWorldScene.h"
 #include "SimpleAudioEngine.h"
 #define SPEED 2.5
 USING_NS_CC;
-Scene* GameStart::createScene()
-=======
 PhysicsBody* physicsBody;
-Scene* HelloWorld::createScene()
+Scene* GameStart::createScene()
 {
     return GameStart::create();
 }
@@ -19,35 +16,7 @@ static void problemLoading(const char* filename)
     printf("Depending on how you compiled you might have to add 'Resources/' in front of filenames in HelloWorldScene.cpp\n");
 }
 
-// on "init" you need to initialize your instance
 bool GameStart::init()
-{
-
-    if ( !Scene::init() )
-    {
-        return false;
-    }
-
-    auto visibleSize = Director::getInstance()->getVisibleSize();
-    Vec2 origin = Director::getInstance()->getVisibleOrigin();
-
-
-    auto label = Label::create("Hello World", "fonts/Marker Felt.ttf", 24);
-    if (label == nullptr)
-    {
-        problemLoading("'fonts/Marker Felt.ttf'");
-    }
-    else
-    {
-        // position the label on the center of the screen
-        label->setPosition(Vec2(origin.x + visibleSize.width/2,
-                                origin.y + visibleSize.height - label->getContentSize().height));
-
-        // add the label as a child to this layer
-        this->addChild(label, 1);
-    }
-=======
-bool HelloWorld::init()
 {
 	if (!Scene::initWithPhysics())
 		return false;
@@ -76,16 +45,7 @@ bool HelloWorld::init()
 }
 
 
-void GameStart::menuCloseCallback(Ref* pSender)
-{
-    //Close the cocos2d-x game scene and quit the application
-    Director::getInstance()->end();
-
-    /*To navigate back to native iOS screen(if present) without quitting the application  ,do not use Director::getInstance()->end() as given above,instead trigger a custom event created in RootViewController.mm as below*/
-=======
-
-
-void HelloWorld::CreateJoystick(Scene * scene)
+void GameStart::CreateJoystick(Scene * scene)
 {
 	auto thumb = Sprite::create("sprites/JoyStick/thumb.png");
 	auto joystick = Sprite::create("sprites/JoyStick/joystick.png");
@@ -114,7 +74,8 @@ void HelloWorld::CreateJoystick(Scene * scene)
 
 	activeRunRange = thumb->getBoundingBox().size.height / 2;
 }
-void HelloWorld::UpdateJoystick(float dt)
+
+void GameStart::UpdateJoystick(float dt)
 {
 	Point pos = leftJoystick->getStickPosition();
 	float radius = std::sqrt(pos.x*pos.x + pos.y*pos.y);
@@ -143,7 +104,7 @@ void HelloWorld::UpdateJoystick(float dt)
 	}
 }
 
-void HelloWorld::update(float dt)
+void GameStart::update(float dt)
 {
 	UpdateJoystick(dt);
 }

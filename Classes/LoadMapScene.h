@@ -36,6 +36,8 @@ public:
 	void onKeyPressed(EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
 	void setKeyBoard();
 	// --------------------------------
+	// Extra method to create joystick
+
 	void update(float dt);
 };
 

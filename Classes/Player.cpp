@@ -93,7 +93,6 @@ void Player::init()
 
 	//Create animate run
 	auto spriteCacheRun = SpriteFrameCache::getInstance();
-<<<<<<< HEAD
 	spriteCacheRun->addSpriteFramesWithFile("Resources/sprites/Player/Run/run.plist", "Resources/sprites/Player/Run/run.png");
 	char nameAnimateRun[50] = { 0 };
 	Vector<SpriteFrame*> animRun;
@@ -103,7 +102,7 @@ void Player::init()
 		auto frame = spriteCacheRun->getSpriteFrameByName(nameAnimateRun);
 		animRun.pushBack(frame);
 	}
-	Animation* animationRun = Animation::createWithSpriteFrames(animRun, 0.07f);
+	Animation* animationRun = Animation::createWithSpriteFrames(animRun, 0.1f);
 	auto animateRun = Animate::create(animationRun);
 	animateRun->retain();
 	this->setAnimateRun(animateRun);

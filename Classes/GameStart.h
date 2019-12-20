@@ -20,6 +20,7 @@ public:
     virtual bool init();
 	void CreateJoystick(Scene * scene);
 	void UpdateJoystick(float dt);
+	void update(float dt);
     // implement the "static create()" method manually
     CREATE_FUNC(GameStart);
 };

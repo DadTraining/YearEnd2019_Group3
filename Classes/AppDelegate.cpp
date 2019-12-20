@@ -1,7 +1,6 @@
 
 #include "AppDelegate.h"
 # include "LoadMapScene.h"
-//#include "ResourceManager.h"
 
 // #define USE_AUDIO_ENGINE 1
 // #define USE_SIMPLE_AUDIO_ENGINE 1
@@ -24,7 +23,6 @@ static cocos2d::Size designResolutionSize = cocos2d::Size(1600, 900);
 static cocos2d::Size smallResolutionSize = cocos2d::Size(480, 320);
 static cocos2d::Size mediumResolutionSize = cocos2d::Size(1024, 768);
 static cocos2d::Size largeResolutionSize = cocos2d::Size(2048, 1536);
->>>>>>> 395960b00c5c6e3d70d167a8a21c1b811aeadc0f
 
 AppDelegate::AppDelegate()
 {

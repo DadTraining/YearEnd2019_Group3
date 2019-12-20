@@ -10,6 +10,12 @@
     <Filter Include="src">
       <UniqueIdentifier>{bb6c862e-70e9-49d9-81b7-3829a6f50471}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Scene">
+      <UniqueIdentifier>{f5a3c733-b510-46d0-af33-00017eb2cbcd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Classes">
+      <UniqueIdentifier>{37b8f260-14f6-4eca-b7ba-4e8b58665c41}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -19,15 +25,6 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\GameStart.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\LoadMapScene.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Player.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Objects.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Objects.cpp">
@@ -45,6 +42,15 @@
     <ClCompile Include="..\Classes\ResourceManager.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\LoadMapScene.cpp">
+      <Filter>src\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Player.cpp">
+      <Filter>src\Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Objects.cpp">
+      <Filter>src\Classes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -54,15 +60,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\GameStart.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\LoadMapScene.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Player.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Objects.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Objects.h">
@@ -79,6 +76,15 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ResourceManager.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\LoadMapScene.h">
+      <Filter>src\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Player.h">
+      <Filter>src\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Objects.h">
+      <Filter>src\Classes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
