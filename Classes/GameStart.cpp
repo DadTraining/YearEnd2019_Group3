@@ -3,7 +3,6 @@
 #include "SimpleAudioEngine.h"
 #define SPEED 2.5
 USING_NS_CC;
-PhysicsBody* physicsBody;
 Scene* GameStart::createScene()
 {
     return GameStart::create();

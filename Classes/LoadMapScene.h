@@ -2,8 +2,12 @@
 #ifndef __LOADMAP_SCENE_H__
 #define __LOADMAP_SCENE_H__
 #define m_SCALE 4.0f
+#define SPEED 2.5
+
 #include "cocos2d.h"
 #include "Player.h"
+#include "SneakyJoystickSkinnedBase.h"
+
 using namespace cocos2d;
 class LoadMapScene : public cocos2d::Scene
 {
@@ -16,6 +20,12 @@ private:
 	bool stuck = false;
 	Sprite* m_player;
 	Player* player;
+	// private variable for joystick adding
+	SneakyJoystick *leftJoystick;
+	SneakyJoystickSkinnedBase* joystickBase;
+	float activeRunRange;
+	PhysicsBody* physicsBody;
+
 public:
     static cocos2d::Scene* createScene();
     virtual bool init();
@@ -37,7 +47,10 @@ public:
 	void setKeyBoard();
 	// --------------------------------
 	// Extra method to create joystick
-
+	// --------------------------------
+	void CreateJoystick(Scene * scene);
+	void UpdateJoystick(float dt);
+	// --------------------------------
 	void update(float dt);
 };
 

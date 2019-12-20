@@ -1,7 +1,6 @@
 
 #include "LoadMapScene.h"
 #include "SimpleAudioEngine.h"
-
 USING_NS_CC;
 
 Scene* LoadMapScene::createScene()
@@ -11,8 +10,7 @@ Scene* LoadMapScene::createScene()
 
 bool LoadMapScene::init()
 {
-
-    if ( !Scene::init() )
+    if ( !Scene::initWithPhysics() )
     {
         return false;
     }
@@ -38,6 +36,8 @@ bool LoadMapScene::init()
 	SpawnPlayer();
 	// Set the keyboard to the character
 	setKeyBoard();
+	// Create the joystick
+	CreateJoystick(this);
 	scheduleUpdate();
 	return true;
 }
@@ -64,6 +64,10 @@ void LoadMapScene::SpawnPlayer()
 	// create the player and add the x y to the player
 	m_player->setPosition(x, y);
 	m_player->setScale(m_SCALE / 2);
+	// add the physicsBody
+	physicsBody = PhysicsBody::createBox(m_player->getContentSize());
+	physicsBody->setDynamic(false);
+	m_player->setPhysicsBody(physicsBody);
 	addChild(m_player);
 }
 
@@ -284,9 +288,68 @@ void LoadMapScene::setKeyBoard()
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(listenerKeyBoard, m_player);
 }
 
+void LoadMapScene::CreateJoystick(Scene * scene)
+{
+	auto thumb = Sprite::create("Resources/sprites/JoyStick/thumb.png");
+	auto joystick = Sprite::create("Resources/sprites/JoyStick/joystick.png");
+	Rect joystickBaseDimensions = Rect(0, 0, 40.f, 40.0f);
+	Point joystickBasePosition;
+	joystickBasePosition = Vec2(thumb->getBoundingBox().size.width / 2 + joystick->getBoundingBox().size.width / 2
+		, thumb->getBoundingBox().size.height / 2 + joystick->getBoundingBox().size.height / 2);
+
+	joystickBase = new SneakyJoystickSkinnedBase();
+	joystickBase->init();
+	joystickBase->setPosition(joystickBasePosition);
+	joystickBase->setBackgroundSprite(thumb);
+	joystickBase->setThumbSprite(joystick);
+	joystickBase->getThumbSprite()->setScale(0.5f);
+	joystick->setScale(0.5f);
+	SneakyJoystick *aJoystick = new SneakyJoystick();
+	aJoystick->initWithRect(joystickBaseDimensions);
+	aJoystick->autorelease();
+	joystickBase->setJoystick(aJoystick);
+	joystickBase->setPosition(joystickBasePosition);
+
+	leftJoystick = joystickBase->getJoystick();
+	this->addChild(joystickBase, 4);
+	//joystickBase->setCameraMask(2);
+
+	activeRunRange = thumb->getBoundingBox().size.height / 2;
+}
+
+void LoadMapScene::UpdateJoystick(float dt)
+{
+	Point pos = leftJoystick->getStickPosition();
+	float radius = std::sqrt(pos.x*pos.x + pos.y*pos.y);
+	auto rpAnimateIdle = RepeatForever::create(player->getAnimateIdle());
+	rpAnimateIdle->setTag(1);
+	auto rpAnimateRun = RepeatForever::create(player->getAnimateRun());
+	rpAnimateRun->setTag(2);
+	if (radius > 0)
+	{
+		float degree = std::atan2f(pos.y, pos.x) * 180 / 3.141593;
+		if (degree>-90 && degree<90) {
+			m_player->setFlipX(false);
+		}
+		else {
+			m_player->setFlipX(true);
+		}
+		m_player->stopActionByTag(1);
+		m_player->runAction(rpAnimateRun);
+		physicsBody->setVelocity(pos*SPEED);
+	}
+	else
+	{
+		m_player->runAction(rpAnimateIdle);
+		physicsBody->setVelocity(Vec2(0, 0));
+
+	}
+}
+
 void LoadMapScene::update(float dt)
 {
 	setViewPointCenter(this->m_player->getPosition());
+	UpdateJoystick(dt);
 	isCollision(this->m_player->getPosition());
 	isCollectable(this->m_player->getPosition());
 }

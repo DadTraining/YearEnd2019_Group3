@@ -15,6 +15,7 @@ private:
 	float activeRunRange;
 	Player* player;
 	Sprite* spPlayer;
+	PhysicsBody* physicsBody;
 public:
     static cocos2d::Scene* createScene();
     virtual bool init();
