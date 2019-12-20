@@ -35,9 +35,10 @@ bool LoadMapScene::init()
 	// spawn the character at the SpawnPoint
 	SpawnPlayer();
 	// Set the keyboard to the character
-	setKeyBoard();
+	//setKeyBoard();
 	// Create the joystick
 	CreateJoystick(this);
+	createHud();
 	scheduleUpdate();
 	return true;
 }
@@ -86,6 +87,7 @@ void LoadMapScene::setViewPointCenter(Vec2 position)
 	auto centerOfView = Vec2(visibleSize.width / 2, visibleSize.height / 2);
 	auto viewPoint = Vec2(centerOfView.x - actualPosition.x, centerOfView.y - actualPosition.y);
 	this->setPosition(viewPoint);
+	_hudLayer->setPosition(Vec2(x - visibleSize.width / 2, y - visibleSize.height / 2));
 }
 
 Vec2 LoadMapScene::tileCoordForPosition(Vec2 position)
@@ -311,7 +313,7 @@ void LoadMapScene::CreateJoystick(Scene * scene)
 	joystickBase->setPosition(joystickBasePosition);
 
 	leftJoystick = joystickBase->getJoystick();
-	this->addChild(joystickBase, 4);
+	//this->addChild(joystickBase, 4);
 	//joystickBase->setCameraMask(2);
 
 	activeRunRange = thumb->getBoundingBox().size.height / 2;
@@ -344,6 +346,16 @@ void LoadMapScene::UpdateJoystick(float dt)
 		physicsBody->setVelocity(Vec2(0, 0));
 
 	}
+}
+
+void LoadMapScene::createHud()
+{
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+	// Init the layer of hud
+	_hudLayer = Layer::create();
+	// create a label to increase the score
+	_hudLayer->addChild(joystickBase);
+	addChild(_hudLayer, 10);
 }
 
 void LoadMapScene::update(float dt)

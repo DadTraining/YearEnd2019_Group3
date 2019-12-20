@@ -1,7 +1,7 @@
 
 #include "AppDelegate.h"
 # include "LoadMapScene.h"
-
+# include "GameStart.h"
 // #define USE_AUDIO_ENGINE 1
 // #define USE_SIMPLE_AUDIO_ENGINE 1
 

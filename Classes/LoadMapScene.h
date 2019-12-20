@@ -21,6 +21,7 @@ private:
 	Sprite* m_player;
 	Player* player;
 	// private variable for joystick adding
+	Layer* _hudLayer;
 	SneakyJoystick *leftJoystick;
 	SneakyJoystickSkinnedBase* joystickBase;
 	float activeRunRange;
@@ -50,6 +51,8 @@ public:
 	// --------------------------------
 	void CreateJoystick(Scene * scene);
 	void UpdateJoystick(float dt);
+	void createHud();
+
 	// --------------------------------
 	void update(float dt);
 };

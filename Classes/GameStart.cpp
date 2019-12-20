@@ -46,8 +46,8 @@ bool GameStart::init()
 
 void GameStart::CreateJoystick(Scene * scene)
 {
-	auto thumb = Sprite::create("sprites/JoyStick/thumb.png");
-	auto joystick = Sprite::create("sprites/JoyStick/joystick.png");
+	auto thumb = Sprite::create("Resources/sprites/JoyStick/thumb.png");
+	auto joystick = Sprite::create("Resources/sprites/JoyStick/joystick.png");
 	Rect joystickBaseDimensions;
 	joystickBaseDimensions = Rect(0, 0, 40.f, 40.0f);
 	Point joystickBasePosition;
