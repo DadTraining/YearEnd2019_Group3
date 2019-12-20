@@ -356,13 +356,24 @@ void LoadMapScene::createHud()
 	_hudLayer = Layer::create();
 	// create a label to increase the score
 	_hudLayer->addChild(joystickBase);
+	_hudScore = Label::create(std::to_string(this->_numCollected), "fonts/arial.ttf", 24);
+	int margin = 20;
+	_hudScore->setPosition(Vec2(visibleSize.width - (_hudScore->getContentSize().width / 2) - margin,
+		_hudScore->getContentSize().height / 2 + margin));
+	_hudLayer->addChild(_hudScore);
 	addChild(_hudLayer, 10);
+}
+
+void LoadMapScene::updateHud(float dt)
+{
+	_hudScore->setString(std::to_string(this->_numCollected));
 }
 
 void LoadMapScene::update(float dt)
 {
 	setViewPointCenter(this->m_player->getPosition());
 	UpdateJoystick(dt);
+	updateHud(dt);
 	isCollision(this->m_player->getPosition());
 	isCollectable(this->m_player->getPosition());
 }

@@ -18,6 +18,7 @@ private:
 	TMXLayer* m_villagerLayer;
 	int _numCollected = 0;
 	bool stuck = false;
+	Label* _hudScore;
 	Sprite* m_player;
 	Player* player;
 	// private variable for joystick adding
@@ -40,6 +41,8 @@ public:
 	Vec2 tileCoordForPosition(Vec2 position);
 	void isCollision(Vec2 position);
 	void isCollectable(Vec2 position);
+	void updateHud(float dt);
+
 	// --------------------------------
 	// Extra methods to make the character moving around
 	// --------------------------------
