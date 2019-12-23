@@ -1,21 +1,21 @@
-	
+
 #include "LoadMapScene.h"
 #include "SimpleAudioEngine.h"
 USING_NS_CC;
 
 Scene* LoadMapScene::createScene()
 {
-    return LoadMapScene::create();
+	return LoadMapScene::create();
 }
 
 bool LoadMapScene::init()
 {
-    if ( !Scene::initWithPhysics() )
-    {
-        return false;
-    }
-    auto visibleSize = Director::getInstance()->getVisibleSize();
-    Vec2 origin = Director::getInstance()->getVisibleOrigin();
+	if (!Scene::initWithPhysics())
+	{
+		return false;
+	}
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
 	player = new Player(this);
 	m_player = player->getSprite();
@@ -31,17 +31,15 @@ bool LoadMapScene::init()
 	addChild(m_tileMap, -1);
 	// spawn the character at the SpawnPoint
 	SpawnPlayer();
-	// Set the keyboard to the character
-	// Create the joystick
-	CreateJoystick(this);
-	createHud();
+	createHud(this);
+
 	scheduleUpdate();
 	return true;
 }
 
 void LoadMapScene::menuCloseCallback(Ref* pSender)
 {
-    Director::getInstance()->end();
+	Director::getInstance()->end();
 }
 
 // This method spawn the character at the coordinator of the player in
@@ -76,7 +74,7 @@ void LoadMapScene::setViewPointCenter(Vec2 position)
 
 	auto borderX = m_tileMap->getMapSize().width * this->m_tileMap->getTileSize().width * m_SCALE;
 	auto borderY = m_tileMap->getMapSize().width * this->m_tileMap->getTileSize().height * m_SCALE;
- 	x = MIN(x, borderX - visibleSize.width / 2);
+	x = MIN(x, borderX - visibleSize.width / 2);
 	y = MIN(y, borderY - visibleSize.height / 2);
 
 	auto actualPosition = Vec2(x, y);
@@ -178,7 +176,7 @@ void LoadMapScene::isCollectable(Vec2 position)
 	}
 }
 
-void LoadMapScene::CreateJoystick(Scene * scene)
+void LoadMapScene::CreateJoystick(Layer * layer)
 {
 	auto thumb = Sprite::create("Resources/sprites/JoyStick/thumb.png");
 	auto joystick = Sprite::create("Resources/sprites/JoyStick/joystick.png");
@@ -201,10 +199,8 @@ void LoadMapScene::CreateJoystick(Scene * scene)
 	joystickBase->setPosition(joystickBasePosition);
 
 	leftJoystick = joystickBase->getJoystick();
-	//this->addChild(joystickBase, 4);
-	//joystickBase->setCameraMask(2);
-
 	activeRunRange = thumb->getBoundingBox().size.height / 2;
+	layer->addChild(joystickBase, 10);
 }
 
 void LoadMapScene::UpdateJoystick(float dt)
@@ -212,55 +208,105 @@ void LoadMapScene::UpdateJoystick(float dt)
 	Point pos = leftJoystick->getStickPosition();
 	float radius = std::sqrt(pos.x*pos.x + pos.y*pos.y);
 	auto rpAnimateIdle = RepeatForever::create(player->getAnimateIdle());
-	rpAnimateIdle->setTag(1);
+	rpAnimateIdle->setTag(TAG_ANIMATE_IDLE1);
 	auto rpAnimateRun = RepeatForever::create(player->getAnimateRun());
-	rpAnimateRun->setTag(2);
+	rpAnimateRun->setTag(TAG_ANIMATE_RUN);
 	if (radius > 0)
 	{
 		float degree = std::atan2f(pos.y, pos.x) * 180 / 3.141593;
-		if (degree>-90 && degree<90) {
+		if (degree > -90 && degree < 90) {
 			m_player->setFlipX(false);
 		}
 		else {
 			m_player->setFlipX(true);
 		}
-		m_player->stopAllActionsByTag(1);
+		m_player->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
 		m_player->runAction(rpAnimateRun);
 		physicsBody->setVelocity(pos*SPEED);
 	}
 	else
 	{
-		m_player->stopAllActionsByTag(2);
+		m_player->stopAllActionsByTag(TAG_ANIMATE_RUN);
 		m_player->runAction(rpAnimateIdle);
 		physicsBody->setVelocity(Vec2(0, 0));
 	}
 }
 
-void LoadMapScene::createHud()
+void LoadMapScene::createHud(Scene* scene)
 {
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	// Init the layer of hud
 	_hudLayer = Layer::create();
 	// create a label to increase the score
-	_hudLayer->addChild(joystickBase);
 	_hudScore = Label::create(std::to_string(this->_numCollected), "fonts/arial.ttf", 24);
 	int margin = 20;
+
 	_hudScore->setPosition(Vec2(visibleSize.width - (_hudScore->getContentSize().width / 2) - margin,
 		_hudScore->getContentSize().height / 2 + margin));
-	_hudLayer->addChild(_hudScore);
-	addChild(_hudLayer, 10);
+
+	scene->addChild(_hudLayer, 10);
+	_hudLayer->addChild(_hudScore, 0);
+	CreateJoystick(_hudLayer);
+	CreateAttackBtn(_hudLayer);
+
 }
 
 void LoadMapScene::updateHud(float dt)
 {
 	_hudScore->setString(std::to_string(this->_numCollected));
+	UpdateJoystick(dt);
+	if (m_player->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) > 0) {
+		m_player->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
+		m_player->stopAllActionsByTag(TAG_ANIMATE_RUN);
+	}
+}
+
+void LoadMapScene::CreateAttackBtn(Layer * layer)
+{
+	auto attackBtn = ui::Button::create("Resources/Buttons/AttackButtonNormal.png", "Resources/Buttons/AttackButtonPressed.png");
+	attackBtn->setPosition(Vec2(1400, 80));
+	attackBtn->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+		auto rpAnimateAttack = RepeatForever::create(player->getAnimateAttack());
+		rpAnimateAttack->setTag(TAG_ANIMATE_ATTACK);
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+		{
+			if (m_player->getNumberOfRunningActionsByTag(TAG_ANIMATE_IDLE1) > 0 || m_player->getNumberOfRunningActionsByTag(TAG_ANIMATE_RUN) > 0) {
+				m_player->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
+				m_player->stopAllActionsByTag(TAG_ANIMATE_RUN);
+				m_player->runAction(rpAnimateAttack);
+			}
+
+			break;
+		}
+		case ui::Widget::TouchEventType::MOVED:
+		{
+			break;
+		}
+		case ui::Widget::TouchEventType::ENDED:
+		{
+			m_player->stopAllActions();
+			break;
+		}
+		default:
+			break;
+		}
+	});
+	layer->addChild(attackBtn, 10);
+}
+
+void LoadMapScene::attackTouch(Ref * render, ui::Widget::TouchEventType type)
+{
 }
 
 void LoadMapScene::update(float dt)
 {
 	setViewPointCenter(this->m_player->getPosition());
-	UpdateJoystick(dt);
+
 	updateHud(dt);
 	isCollision(this->m_player->getPosition());
 	isCollectable(this->m_player->getPosition());
 }
+
+

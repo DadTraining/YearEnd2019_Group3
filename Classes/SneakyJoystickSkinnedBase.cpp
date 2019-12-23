@@ -106,6 +106,7 @@ void SneakyJoystickSkinnedBase::setJoystick(SneakyJoystick *aJoystick)
 	joystick = aJoystick;
 	if (aJoystick)
 	{
+		
 		this->addChild(aJoystick, 2);
 		if (thumbSprite)
 		{

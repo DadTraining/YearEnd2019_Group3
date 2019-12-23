@@ -3,10 +3,16 @@
 #define __LOADMAP_SCENE_H__
 #define m_SCALE 4.0f
 #define SPEED 5.0f
+#define TAG_ANIMATE_RUN 111
+#define TAG_ANIMATE_IDLE1 121
+#define TAG_ANIMATE_IDLE2 122
+#define TAG_ANIMATE_ATTACK 131
 
+#include "ui/CocosGUI.h"
 #include "cocos2d.h"
 #include "Player.h"
 #include "SneakyJoystickSkinnedBase.h"
+
 
 using namespace cocos2d;
 class LoadMapScene : public cocos2d::Scene
@@ -23,6 +29,7 @@ private:
 	Player* player;
 	// private variable for joystick adding
 	Layer* _hudLayer;
+	ui::Button* attackBtn;
 	SneakyJoystick *leftJoystick;
 	SneakyJoystickSkinnedBase* joystickBase;
 	float activeRunRange;
@@ -46,10 +53,11 @@ public:
 	// --------------------------------
 	// Extra method to create joystick
 	// --------------------------------
-	void CreateJoystick(Scene * scene);
+	void CreateJoystick(Layer * layer);
 	void UpdateJoystick(float dt);
-	void createHud();
-
+	void createHud(Scene* scene);
+	void CreateAttackBtn(Layer* layer);
+	void attackTouch(Ref* render, ui::Widget::TouchEventType type);
 	// --------------------------------
 	void update(float dt);
 };
