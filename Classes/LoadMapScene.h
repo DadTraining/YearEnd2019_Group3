@@ -2,7 +2,7 @@
 #ifndef __LOADMAP_SCENE_H__
 #define __LOADMAP_SCENE_H__
 #define m_SCALE 4.0f
-#define SPEED 2.5
+#define SPEED 5.0f
 
 #include "cocos2d.h"
 #include "Player.h"
@@ -43,12 +43,6 @@ public:
 	void isCollectable(Vec2 position);
 	void updateHud(float dt);
 
-	// --------------------------------
-	// Extra methods to make the character moving around
-	// --------------------------------
-	void onKeyReleased(EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
-	void onKeyPressed(EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
-	void setKeyBoard();
 	// --------------------------------
 	// Extra method to create joystick
 	// --------------------------------

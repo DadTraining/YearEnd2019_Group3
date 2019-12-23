@@ -1,4 +1,4 @@
-
+	
 #include "LoadMapScene.h"
 #include "SimpleAudioEngine.h"
 USING_NS_CC;
@@ -19,9 +19,6 @@ bool LoadMapScene::init()
 
 	player = new Player(this);
 	m_player = player->getSprite();
-	auto rFIdle = RepeatForever::create(player->getAnimateIdle());
-	rFIdle->setTag(99);
-	m_player->runAction(rFIdle);
 	// Init the tile map to the gameplay
 	// Adding the tile map to the child
 	m_tileMap = TMXTiledMap::create("Resources/Map/TileMap2.tmx");
@@ -35,7 +32,6 @@ bool LoadMapScene::init()
 	// spawn the character at the SpawnPoint
 	SpawnPlayer();
 	// Set the keyboard to the character
-	//setKeyBoard();
 	// Create the joystick
 	CreateJoystick(this);
 	createHud();
@@ -182,115 +178,6 @@ void LoadMapScene::isCollectable(Vec2 position)
 	}
 }
 
-// Key for the character to moving
-// When the key is pressed
-void LoadMapScene::onKeyPressed(EventKeyboard::KeyCode keyCode, cocos2d::Event* event)
-{
-	auto moveUp = MoveBy::create(0.1f, Vec2(0, 30));
-	auto moveRight = MoveBy::create(0.1f, Vec2(30, 0));
-	auto runAnimate = player->getAnimateRun();
-	auto repeatForeverActionRun = RepeatForever::create(runAnimate);
-	repeatForeverActionRun->setTag(11);
-	switch (keyCode) {
-	case EventKeyboard::KeyCode::KEY_UP_ARROW:
-	{
-		auto repeatForever = RepeatForever::create(moveUp);
-		repeatForever->setTag(1);
-		event->getCurrentTarget()->runAction(repeatForever);
-		//
-		event->getCurrentTarget()->stopAllActionsByTag(99);
-		event->getCurrentTarget()->stopAllActionsByTag(11);
-		event->getCurrentTarget()->runAction(repeatForeverActionRun);
-		this->player->m_numberOfKeyPress++;
-		//
-		break;
-	}
-	case EventKeyboard::KeyCode::KEY_DOWN_ARROW:
-	{
-		auto repeatForever = RepeatForever::create(moveUp->reverse());
-		repeatForever->setTag(2);
-		//
-		event->getCurrentTarget()->runAction(repeatForever);
-		event->getCurrentTarget()->stopAllActionsByTag(99);
-		// --------------------------------------------
-		event->getCurrentTarget()->stopAllActionsByTag(11);
-		event->getCurrentTarget()->runAction(repeatForeverActionRun);
-		this->player->m_numberOfKeyPress++;
-
-		break;
-	}
-	case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
-	{
-		auto repeatForever = RepeatForever::create(moveRight);
-		repeatForever->setTag(3);
-		event->getCurrentTarget()->setRotationY(0.0f);
-		event->getCurrentTarget()->runAction(repeatForever);
-		event->getCurrentTarget()->stopAllActionsByTag(99);
-		//
-		event->getCurrentTarget()->stopAllActionsByTag(11);
-		event->getCurrentTarget()->runAction(repeatForeverActionRun);
-		this->player->m_numberOfKeyPress++;
-
-		break;
-	}
-	case  EventKeyboard::KeyCode::KEY_LEFT_ARROW:
-	{
-		auto repeatForever = RepeatForever::create(moveRight->reverse());
-		repeatForever->setTag(4);
-		event->getCurrentTarget()->setRotationY(180.0f);
-		event->getCurrentTarget()->runAction(repeatForever);
-		event->getCurrentTarget()->stopAllActionsByTag(99);
-		//
-		event->getCurrentTarget()->stopAllActionsByTag(11);
-		event->getCurrentTarget()->runAction(repeatForeverActionRun);
-		this->player->m_numberOfKeyPress++;
-		break;
-	}
-	default:
-		break;
-	}
-}
-// When the key is released
-void LoadMapScene::onKeyReleased(EventKeyboard::KeyCode keyCode, cocos2d::Event* event)
-{
-	auto idleAnimate = player->getAnimateIdle();
-	auto repeatForeverIdle = RepeatForever::create(idleAnimate);
-	repeatForeverIdle->setTag(99);
- 	switch (keyCode) {
-	case EventKeyboard::KeyCode::KEY_UP_ARROW:
-		event->getCurrentTarget()->stopAllActionsByTag(1);
-		this->player->m_numberOfKeyPress--;
-		break;
-	case EventKeyboard::KeyCode::KEY_DOWN_ARROW:
-		event->getCurrentTarget()->stopAllActionsByTag(2);
-		this->player->m_numberOfKeyPress--;
-		break;
-	case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
-		event->getCurrentTarget()->stopAllActionsByTag(3);
-		this->player->m_numberOfKeyPress--;
-		break;
-	case  EventKeyboard::KeyCode::KEY_LEFT_ARROW:
-		event->getCurrentTarget()->stopAllActionsByTag(4);
-		this->player->m_numberOfKeyPress--;
-		break;
-	default:
-		break;
-	}
-	// If the player is not pressed by key moving then player will stop moving action
-	if (player->m_numberOfKeyPress == 0) {
-		this->m_player->stopAllActionsByTag(11);
-		event->getCurrentTarget()->runAction(repeatForeverIdle);
-	}
-}
-// Set all the keyboard code to the player
-void LoadMapScene::setKeyBoard()
-{
-	auto listenerKeyBoard = EventListenerKeyboard::create();
-	listenerKeyBoard->onKeyPressed = CC_CALLBACK_2(LoadMapScene::onKeyPressed, this);
-	listenerKeyBoard->onKeyReleased = CC_CALLBACK_2(LoadMapScene::onKeyReleased, this);
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(listenerKeyBoard, m_player);
-}
-
 void LoadMapScene::CreateJoystick(Scene * scene)
 {
 	auto thumb = Sprite::create("Resources/sprites/JoyStick/thumb.png");
@@ -337,15 +224,15 @@ void LoadMapScene::UpdateJoystick(float dt)
 		else {
 			m_player->setFlipX(true);
 		}
-		m_player->stopActionByTag(1);
+		m_player->stopAllActionsByTag(1);
 		m_player->runAction(rpAnimateRun);
 		physicsBody->setVelocity(pos*SPEED);
 	}
 	else
 	{
+		m_player->stopAllActionsByTag(2);
 		m_player->runAction(rpAnimateIdle);
 		physicsBody->setVelocity(Vec2(0, 0));
-
 	}
 }
 
