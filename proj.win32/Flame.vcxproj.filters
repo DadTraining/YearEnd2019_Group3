@@ -16,21 +16,15 @@
     <Filter Include="src\Classes">
       <UniqueIdentifier>{37b8f260-14f6-4eca-b7ba-4e8b58665c41}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Layer">
+      <UniqueIdentifier>{17894463-f9e7-4228-84e2-f6242aaee25e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>win32</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\AppDelegate.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\GameStart.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Objects.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Player.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\SneakyJoystick.cpp">
@@ -51,21 +45,21 @@
     <ClCompile Include="..\Classes\Objects.cpp">
       <Filter>src\Classes</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Objects.cpp">
+      <Filter>src\Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Player.cpp">
+      <Filter>src\Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\HUDLayer.cpp">
+      <Filter>src\Layer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
       <Filter>win32</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\AppDelegate.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\GameStart.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Objects.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Player.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\SneakyJoystickSkinnedBase.h">
@@ -85,6 +79,15 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Objects.h">
       <Filter>src\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Objects.h">
+      <Filter>src\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Player.h">
+      <Filter>src\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\HUDLayer.h">
+      <Filter>src\Layer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

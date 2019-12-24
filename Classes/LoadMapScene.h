@@ -1,12 +1,7 @@
 
 #ifndef __LOADMAP_SCENE_H__
 #define __LOADMAP_SCENE_H__
-#define m_SCALE 4.0f
-#define SPEED 5.0f
-#define TAG_ANIMATE_RUN 111
-#define TAG_ANIMATE_IDLE1 121
-#define TAG_ANIMATE_IDLE2 122
-#define TAG_ANIMATE_ATTACK 131
+
 
 #include "ui/CocosGUI.h"
 #include "cocos2d.h"
@@ -24,11 +19,11 @@ private:
 	TMXLayer* m_villagerLayer;
 	int _numCollected = 0;
 	bool stuck = false;
-	Label* _hudScore;
 	Sprite* m_player;
 	Player* player;
 	// private variable for joystick adding
 	Layer* _hudLayer;
+	Label* _hudScore;
 	ui::Button* attackBtn;
 	SneakyJoystick *leftJoystick;
 	SneakyJoystickSkinnedBase* joystickBase;

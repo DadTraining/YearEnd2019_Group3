@@ -1,6 +1,7 @@
-
+#pragma once
 #include "LoadMapScene.h"
 #include "SimpleAudioEngine.h"
+#include "HUDLayer.h"
 USING_NS_CC;
 
 Scene* LoadMapScene::createScene()
@@ -292,8 +293,8 @@ void LoadMapScene::CreateAttackBtn(Layer * layer)
 			break;
 		}
 	});
-	addChild(attackBtn);
-	attackBtn->setPosition(m_player->getPosition());
+	layer->addChild(attackBtn);
+	attackBtn->setPosition(Vec2(1200, 200));
 }
 
 void LoadMapScene::update(float dt)
