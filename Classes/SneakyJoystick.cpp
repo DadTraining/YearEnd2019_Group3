@@ -35,7 +35,6 @@ bool SneakyJoystick::initWithRect(Rect rect)
 	listener->onTouchMoved = SneakyJoystick::onTouchMoved;
 	listener->onTouchEnded = SneakyJoystick::onTouchEnded;
 	listener->onTouchCancelled = SneakyJoystick::onTouchCancelled;
-
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 	return true;
 }

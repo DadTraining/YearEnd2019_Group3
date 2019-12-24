@@ -98,7 +98,9 @@ void HudLayer::CreateAttackBtn(Layer * layer)
 {
 	// init attackButton
 	attackBtn = ui::Button::create("Resources/Buttons/AttackButtonNormal.png", "Resources/Buttons/AttackButtonPressed.png");
-	// add touch event to attackButton
+	 //add touch event to attackButton
+	layer->addChild(attackBtn);
+	attackBtn->setPosition(Vec2(1200, 200));
 	attackBtn->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
 		auto rpAnimateAttack = RepeatForever::create(targetPlayer->getAnimateAttack());
 		rpAnimateAttack->setTag(TAG_ANIMATE_ATTACK);
@@ -129,8 +131,7 @@ void HudLayer::CreateAttackBtn(Layer * layer)
 			break;
 		}
 	});
-	layer->addChild(attackBtn);
-	attackBtn->setPosition(Vec2(1200, 200));
+
 }
 
 void HudLayer::update(float dt)
