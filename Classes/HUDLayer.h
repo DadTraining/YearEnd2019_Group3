@@ -18,8 +18,7 @@ private:
 	cocos2d::Scene* targetScene;
 	Player* targetPlayer;
 	Label* _hudScore;
-	int _numCollected = 0;
-	Label* _hudScore;
+	int _numCollected;
 	ui::Button* attackBtn;
 	// Joystick private variable
 	SneakyJoystick *leftJoystick;

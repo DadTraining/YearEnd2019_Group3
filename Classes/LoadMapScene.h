@@ -1,13 +1,12 @@
-
+#pragma once
 #ifndef __LOADMAP_SCENE_H__
 #define __LOADMAP_SCENE_H__
-
 
 #include "ui/CocosGUI.h"
 #include "cocos2d.h"
 #include "Player.h"
 #include "SneakyJoystickSkinnedBase.h"
-
+#include "HUDLayer.h"
 
 using namespace cocos2d;
 class LoadMapScene : public cocos2d::Scene
@@ -23,11 +22,7 @@ private:
 	Player* player;
 	// private variable for joystick adding
 	Layer* _hudLayer;
-	Label* _hudScore;
-	ui::Button* attackBtn;
-	SneakyJoystick *leftJoystick;
-	SneakyJoystickSkinnedBase* joystickBase;
-	float activeRunRange;
+	HudLayer* HUD;
 	PhysicsBody* physicsBody;
 
 public:
@@ -43,16 +38,11 @@ public:
 	Vec2 tileCoordForPosition(Vec2 position);
 	void isCollision(Vec2 position);
 	void isCollectable(Vec2 position);
-	void updateHud(float dt);
 
 	// --------------------------------
 	// Extra method to create joystick
 	// --------------------------------
-	void CreateJoystick(Layer * layer);
-	void UpdateJoystick(float dt);
-	void createHud(Scene* scene);
-	void CreateAttackBtn(Layer* layer);
-	void clickAttack(Ref* sender);
+	void addHud();
 	// --------------------------------
 	void update(float dt);
 };

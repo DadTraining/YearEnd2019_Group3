@@ -6,6 +6,7 @@ HudLayer::HudLayer(Scene* scene, Player* player)
 {
 	targetScene = scene;
 	targetPlayer = player;
+	this->init();
 }
 
 bool HudLayer::init()
@@ -15,6 +16,8 @@ bool HudLayer::init()
 		return false;
 	}
 	createHud();
+	_numCollected = 0;
+	scheduleUpdate();
 	return true;
 }
 
@@ -81,13 +84,13 @@ void HudLayer::UpdateJoystick(float dt)
 		}
 		targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
 		targetPlayer->getSprite()->runAction(rpAnimateRun);
-		physicsBody->setVelocity(pos*SPEED);
+		targetPlayer->getSprite()->getPhysicsBody()->setVelocity(pos*SPEED);
 	}
 	else
 	{
 		targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
 		targetPlayer->getSprite()->runAction(rpAnimateIdle);
-		physicsBody->setVelocity(Vec2(0, 0));
+		targetPlayer->getSprite()->getPhysicsBody()->setVelocity(Vec2(0, 0));
 	}
 }
 
@@ -130,7 +133,16 @@ void HudLayer::CreateAttackBtn(Layer * layer)
 	attackBtn->setPosition(Vec2(1200, 200));
 }
 
+void HudLayer::update(float dt)
+{
+	_hudScore->setString(std::to_string(this->_numCollected));
+	UpdateJoystick(dt);
+	if (targetPlayer->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) > 0) {
+		targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
+		targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
+	}
+}
 
-void HudLayer::update(float deltaTime)
+HudLayer::~HudLayer()
 {
 }
