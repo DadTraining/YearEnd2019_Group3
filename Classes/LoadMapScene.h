@@ -57,7 +57,7 @@ public:
 	void UpdateJoystick(float dt);
 	void createHud(Scene* scene);
 	void CreateAttackBtn(Layer* layer);
-	void attackTouch(Ref* render, ui::Widget::TouchEventType type);
+	void clickAttack(Ref* sender);
 	// --------------------------------
 	void update(float dt);
 };

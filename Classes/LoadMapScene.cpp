@@ -200,7 +200,7 @@ void LoadMapScene::CreateJoystick(Layer * layer)
 
 	leftJoystick = joystickBase->getJoystick();
 	activeRunRange = thumb->getBoundingBox().size.height / 2;
-	layer->addChild(joystickBase, 10);
+	layer->addChild(joystickBase);
 }
 
 void LoadMapScene::UpdateJoystick(float dt)
@@ -263,8 +263,7 @@ void LoadMapScene::updateHud(float dt)
 
 void LoadMapScene::CreateAttackBtn(Layer * layer)
 {
-	auto attackBtn = ui::Button::create("Resources/Buttons/AttackButtonNormal.png", "Resources/Buttons/AttackButtonPressed.png");
-	attackBtn->setPosition(Vec2(1400, 80));
+	attackBtn = ui::Button::create("Resources/Buttons/AttackButtonNormal.png", "Resources/Buttons/AttackButtonPressed.png");
 	attackBtn->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
 		auto rpAnimateAttack = RepeatForever::create(player->getAnimateAttack());
 		rpAnimateAttack->setTag(TAG_ANIMATE_ATTACK);
@@ -293,17 +292,13 @@ void LoadMapScene::CreateAttackBtn(Layer * layer)
 			break;
 		}
 	});
-	layer->addChild(attackBtn, 10);
-}
-
-void LoadMapScene::attackTouch(Ref * render, ui::Widget::TouchEventType type)
-{
+	addChild(attackBtn);
+	attackBtn->setPosition(m_player->getPosition());
 }
 
 void LoadMapScene::update(float dt)
 {
 	setViewPointCenter(this->m_player->getPosition());
-
 	updateHud(dt);
 	isCollision(this->m_player->getPosition());
 	isCollectable(this->m_player->getPosition());
