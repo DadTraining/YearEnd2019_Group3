@@ -2,10 +2,11 @@
 
 using namespace cocos2d;
 
-HudLayer::HudLayer(Scene* scene, Player* player)
+HudLayer::HudLayer(Scene* scene, Player* player, TMXTiledMap* map)
 {
 	targetScene = scene;
 	targetPlayer = player;
+	m_tiledMap = map;
 	this->init();
 }
 
@@ -84,15 +85,12 @@ void HudLayer::UpdateJoystick(float dt)
 		}
 		targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
 		targetPlayer->getSprite()->runAction(rpAnimateRun);
-		targetPlayer->getSprite()->getPhysicsBody()->setVelocity(pos*SPEED);
-
+		m_tiledMap->setPosition(m_tiledMap->getPosition() - pos / (SPEED * 2));
 	}
 	else
 	{
 		targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
 		targetPlayer->getSprite()->runAction(rpAnimateIdle);
-		targetPlayer->getSprite()->getPhysicsBody()->setVelocity(Vec2(0, 0));
-
 	}
 }
 
@@ -144,6 +142,16 @@ void HudLayer::update(float dt)
 		targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
 		targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
 	}
+}
+
+void HudLayer::setMap(TMXTiledMap * map)
+{
+	m_tiledMap = map;
+}
+
+TMXTiledMap * HudLayer::getMap()
+{
+	return m_tiledMap;
 }
 
 HudLayer::~HudLayer()

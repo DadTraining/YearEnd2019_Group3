@@ -15,6 +15,7 @@
 class HudLayer : public cocos2d::Layer
 {
 private:
+	TMXTiledMap* m_tiledMap;
 	cocos2d::Scene* targetScene;
 	Player* targetPlayer;
 	Label* _hudScore;
@@ -28,13 +29,15 @@ private:
 
 
 public:
-	HudLayer(cocos2d::Scene* scene, Player* player);
+	HudLayer(cocos2d::Scene* scene, Player* player, TMXTiledMap* map);
 	bool init();
 	void createHud();
 	void CreateAttackBtn(Layer * layer);
 	void CreateJoystick(Layer * layer);
 	void UpdateJoystick(float dt);
 	void update(float deltaTime);
+	void setMap(TMXTiledMap* map);
+	TMXTiledMap* getMap();
 	virtual ~HudLayer();
 };
 #endif	

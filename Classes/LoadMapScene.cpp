@@ -40,6 +40,7 @@ void LoadMapScene::menuCloseCallback(Ref* pSender)
 // the Map
 void LoadMapScene::SpawnPlayer()
 {
+	auto visibleSize = Director::getInstance()->getVisibleSize();
 	player = new Player(this);
 	m_player = player->getSprite();
 	// Get the object group named Objects
@@ -48,16 +49,15 @@ void LoadMapScene::SpawnPlayer()
 	{
 		return;
 	}
-	// get the x y of the spawnPoint
-	//auto spawnPoint = objectGroup->objectNamed("SpawnPoint");
-	//float x = spawnPoint.at("x").asFloat() * m_SCALE;
-	//float y = spawnPoint.at("y").asFloat() * m_SCALE;
-	//// create the player and add the x y to the player
-	//m_player->setPosition(x, y);
-	//m_player->setScale(m_SCALE / 2);
-	// add the physicsBody
-	m_player->setPosition(200, 200);
-	physicsBody = PhysicsBody::createBox(m_player->getContentSize());
+	 //get the x y of the spawnPoint
+	auto spawnPoint = objectGroup->objectNamed("SpawnPoint");
+	float x = spawnPoint.at("x").asFloat() * m_SCALE;
+	float y = spawnPoint.at("y").asFloat() * m_SCALE;
+	// create the player and add the x y to the player
+	m_player->setPosition(visibleSize.width / 2, visibleSize.height / 2);
+	m_player->setScale(m_SCALE / 2);
+	 //add the physicsBody
+	physicsBody = PhysicsBody::createBox(m_player->getContentSize() - Size(70, 30));
 	physicsBody->setDynamic(false);
 	m_player->setPhysicsBody(physicsBody);
 	addChild(m_player);
@@ -77,8 +77,7 @@ void LoadMapScene::setViewPointCenter(Vec2 position)
 	auto actualPosition = Vec2(x, y);
 	auto centerOfView = Vec2(visibleSize.width / 2, visibleSize.height / 2);
 	auto viewPoint = Vec2(centerOfView.x - actualPosition.x, centerOfView.y - actualPosition.y);
-	this->setPosition(viewPoint);
-	//m_tileMap->setPosition(m_tileMap->getPosition());
+	//this->setPosition(viewPoint);
 	HUD->setPosition(Vec2(x - visibleSize.width / 2, y - visibleSize.height / 2));
 }
 
@@ -137,16 +136,16 @@ void LoadMapScene::isCollectable(Vec2 position)
 
 void LoadMapScene::createPhysics()
 {
-	//auto visibleSize = Director::getInstance()->getVisibleSize();
-	//// world
-	//auto edgeBody = PhysicsBody::createEdgeBox(visibleSize + Size(0, 200),
-	//	PHYSICSBODY_MATERIAL_DEFAULT, 3);
-	//edgeBody->setCollisionBitmask(Model::BITMASK_WORLD);
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+	// world
+	auto edgeBody = PhysicsBody::createEdgeBox(visibleSize + Size(0, 200),
+		PHYSICSBODY_MATERIAL_DEFAULT, 3);
+	edgeBody->setCollisionBitmask(Model::BITMASK_WORLD);
 
-	//auto edgeNode = Node::create();
-	//edgeNode->setPosition(visibleSize.width / 2, visibleSize.height / 2 - 100);
-	//edgeNode->setPhysicsBody(edgeBody);
-	//addChild(edgeNode);
+	auto edgeNode = Node::create();
+	edgeNode->setPosition(visibleSize.width / 2, visibleSize.height / 2 - 100);
+	edgeNode->setPhysicsBody(edgeBody);
+	addChild(edgeNode);
 
 	//// Meta
 	//auto layerSize = m_meta->getLayerSize();
@@ -177,7 +176,8 @@ void LoadMapScene::createPhysics()
 
 void LoadMapScene::addHud()
 {
-	HUD = new HudLayer(this, player);
+	HUD = new HudLayer(this, player, m_tileMap);
+	HUD->setMap(m_tileMap);
 }
 
 void LoadMapScene::update(float dt)
