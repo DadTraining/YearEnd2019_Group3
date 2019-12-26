@@ -1,6 +1,7 @@
 #pragma once
 #include "LoadMapScene.h"
 #include "SimpleAudioEngine.h"
+#include "Model.h"
 USING_NS_CC;
 
 Scene* LoadMapScene::createScene()
@@ -13,25 +14,19 @@ bool LoadMapScene::init()
 	if (!Scene::initWithPhysics())
 	{
 		return false;
-	}
-	auto visibleSize = Director::getInstance()->getVisibleSize();
-	Vec2 origin = Director::getInstance()->getVisibleOrigin();
-
-	player = new Player(this);
-	m_player = player->getSprite();
-	// Init the tile map to the gameplay
-	// Adding the tile map to the child
+	}	
 	m_tileMap = TMXTiledMap::create("Resources/Map/TileMap2.tmx");
 	m_tileMap->setScale(m_SCALE);
-	// Get the Meta layer for indicate collision and eaten
 	m_meta = m_tileMap->layerNamed("Meta");
 	m_meta->setVisible(false);
-	// Get the m_villagerLayer  in the Map
 	m_villagerLayer = m_tileMap->layerNamed("Villagers");
 	addChild(m_tileMap, -1);
-	// spawn the character at the SpawnPoint
+
 	SpawnPlayer();
 	addHud();
+
+	createPhysics();
+	this->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 	scheduleUpdate();
 	return true;
 }
@@ -45,6 +40,8 @@ void LoadMapScene::menuCloseCallback(Ref* pSender)
 // the Map
 void LoadMapScene::SpawnPlayer()
 {
+	player = new Player(this);
+	m_player = player->getSprite();
 	// Get the object group named Objects
 	auto objectGroup = m_tileMap->objectGroupNamed("Objects");
 	if (objectGroup == NULL)
@@ -52,13 +49,14 @@ void LoadMapScene::SpawnPlayer()
 		return;
 	}
 	// get the x y of the spawnPoint
-	auto spawnPoint = objectGroup->objectNamed("SpawnPoint");
-	float x = spawnPoint.at("x").asFloat() * m_SCALE;
-	float y = spawnPoint.at("y").asFloat() * m_SCALE;
-	// create the player and add the x y to the player
-	m_player->setPosition(x, y);
-	m_player->setScale(m_SCALE / 2);
+	//auto spawnPoint = objectGroup->objectNamed("SpawnPoint");
+	//float x = spawnPoint.at("x").asFloat() * m_SCALE;
+	//float y = spawnPoint.at("y").asFloat() * m_SCALE;
+	//// create the player and add the x y to the player
+	//m_player->setPosition(x, y);
+	//m_player->setScale(m_SCALE / 2);
 	// add the physicsBody
+	m_player->setPosition(200, 200);
 	physicsBody = PhysicsBody::createBox(m_player->getContentSize());
 	physicsBody->setDynamic(false);
 	m_player->setPhysicsBody(physicsBody);
@@ -80,6 +78,7 @@ void LoadMapScene::setViewPointCenter(Vec2 position)
 	auto centerOfView = Vec2(visibleSize.width / 2, visibleSize.height / 2);
 	auto viewPoint = Vec2(centerOfView.x - actualPosition.x, centerOfView.y - actualPosition.y);
 	this->setPosition(viewPoint);
+	//m_tileMap->setPosition(m_tileMap->getPosition());
 	HUD->setPosition(Vec2(x - visibleSize.width / 2, y - visibleSize.height / 2));
 }
 
@@ -107,45 +106,6 @@ void LoadMapScene::isCollision(Vec2 position)
 				if (stuck == false)
 				{
 					stuck = true;
-					//for (int i = 1; i < 5; i++)
-					//{
-					//	if (m_player->getActionByTag(i) != NULL)
-					//	{
-					//		auto moveUp = MoveBy::create(0.1f, Vec2(0, 10));
-					//		auto moveRight = MoveBy::create(0.1f, Vec2(10, 0));
-					//		switch (i)
-					//		{
-					//			// case when player move Up
-					//		case 1:
-					//		{
-					//			m_player->stopActionByTag(i);
-					//			m_player->runAction(moveUp->clone()->reverse());
-					//			break;
-					//		}
-					//		// case when player move Down, we have to move it up
-					//		case 2:
-					//		{
-					//			m_player->stopActionByTag(i);
-					//			m_player->runAction(moveUp->clone());
-					//			break;
-					//		}
-					//		// case when player move Right, we have to move it to left
-					//		case 3:
-					//		{
-					//			m_player->stopActionByTag(i);
-					//			m_player->runAction(moveRight->clone()->reverse());
-					//			break;
-					//		}
-					//		// case when player move Left, we have to move it to right
-					//		case 4:
-					//		{
-					//			m_player->stopActionByTag(i);
-					//			m_player->runAction(moveRight->clone());
-					//			break;
-					//		}
-					//		};
-					//	}
-					//}
 					m_player->getPhysicsBody()->setVelocity(Vec2(0, 0));
 					return;
 				}
@@ -173,6 +133,46 @@ void LoadMapScene::isCollectable(Vec2 position)
 			}
 		}
 	}
+}
+
+void LoadMapScene::createPhysics()
+{
+	//auto visibleSize = Director::getInstance()->getVisibleSize();
+	//// world
+	//auto edgeBody = PhysicsBody::createEdgeBox(visibleSize + Size(0, 200),
+	//	PHYSICSBODY_MATERIAL_DEFAULT, 3);
+	//edgeBody->setCollisionBitmask(Model::BITMASK_WORLD);
+
+	//auto edgeNode = Node::create();
+	//edgeNode->setPosition(visibleSize.width / 2, visibleSize.height / 2 - 100);
+	//edgeNode->setPhysicsBody(edgeBody);
+	//addChild(edgeNode);
+
+	//// Meta
+	//auto layerSize = m_meta->getLayerSize();
+	//for (int i = 0; i < layerSize.width; i++)
+	//{
+	//	for (int j = 0; j < layerSize.height; j++)
+	//	{
+	//		auto tileSet = m_meta->getTileAt(Vec2(i, j));
+	//		if (tileSet != NULL)
+	//		{
+	//			auto physics = PhysicsBody::createBox(tileSet->getContentSize(), 
+	//				PhysicsMaterial(1.0f, 0.0f, 1.0f));
+	//			physics->setCollisionBitmask(Model::BITMASK_GROUND);
+	//			physics->setContactTestBitmask(true);
+	//			physics->setDynamic(false);
+	//			physics->setMass(100);
+	//			tileSet->setPhysicsBody(physics);
+	//		}
+	//	}
+	//}
+
+	auto sprite = Sprite::create("Resources/sprites/Player/idle-with-weapon-1.png");
+	sprite->setPosition(this->m_player->getPosition());
+	auto physicBody = PhysicsBody::createBox(sprite->getContentSize());
+	sprite->setPhysicsBody(physicBody);
+	addChild(sprite);
 }
 
 void LoadMapScene::addHud()

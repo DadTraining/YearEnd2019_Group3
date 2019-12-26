@@ -54,6 +54,9 @@
     <ClCompile Include="..\Classes\SneakyJoystick.cpp">
       <Filter>src\Classes</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Model.cpp">
+      <Filter>src\Classes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -87,6 +90,9 @@
       <Filter>src\Layer</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\SneakyJoystick.h">
+      <Filter>src\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Model.h">
       <Filter>src\Classes</Filter>
     </ClInclude>
   </ItemGroup>
