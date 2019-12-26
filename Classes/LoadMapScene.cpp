@@ -58,7 +58,8 @@ void LoadMapScene::SpawnPlayer()
 	m_player->setScale(m_SCALE / 2);
 	 //add the physicsBody
 	physicsBody = PhysicsBody::createBox(m_player->getContentSize() - Size(70, 30));
-	physicsBody->setDynamic(false);
+	physicsBody->setGravityEnable(false);
+	physicsBody->setRotationEnable(false);
 	m_player->setPhysicsBody(physicsBody);
 	addChild(m_player);
 }
@@ -147,31 +148,47 @@ void LoadMapScene::createPhysics()
 	edgeNode->setPhysicsBody(edgeBody);
 	addChild(edgeNode);
 
-	//// Meta
-	//auto layerSize = m_meta->getLayerSize();
-	//for (int i = 0; i < layerSize.width; i++)
-	//{
-	//	for (int j = 0; j < layerSize.height; j++)
-	//	{
-	//		auto tileSet = m_meta->getTileAt(Vec2(i, j));
-	//		if (tileSet != NULL)
-	//		{
-	//			auto physics = PhysicsBody::createBox(tileSet->getContentSize(), 
-	//				PhysicsMaterial(1.0f, 0.0f, 1.0f));
-	//			physics->setCollisionBitmask(Model::BITMASK_GROUND);
-	//			physics->setContactTestBitmask(true);
-	//			physics->setDynamic(false);
-	//			physics->setMass(100);
-	//			tileSet->setPhysicsBody(physics);
-	//		}
-	//	}
-	//}
+	// Meta
+	auto layerSize = m_meta->getLayerSize();
+	for (int i = 0; i < layerSize.width; i++)
+	{
+		for (int j = 0; j < layerSize.height; j++)
+		{
+			auto tileSet = m_meta->getTileAt(Vec2(i, j));
+			if (tileSet != NULL)
+			{
+				auto physics = PhysicsBody::createBox(tileSet->getContentSize(), 
+					PhysicsMaterial(1.0f, 0.0f, 1.0f));
+				physics->setCollisionBitmask(Model::BITMASK_GROUND);
+				physics->setContactTestBitmask(true);
+				physics->setDynamic(false);
+				physics->setMass(100);
+				tileSet->setPhysicsBody(physics);
+			}
+		}
+	}
 
 	auto sprite = Sprite::create("Resources/sprites/Player/idle-with-weapon-1.png");
 	sprite->setPosition(this->m_player->getPosition());
 	auto physicBody = PhysicsBody::createBox(sprite->getContentSize());
+	physicBody->setGravityEnable(false);
 	sprite->setPhysicsBody(physicBody);
 	addChild(sprite);
+}
+
+void LoadMapScene::addListener()
+{
+	/*auto contactListener = EventListenerPhysicsContact::create();
+	contactListener->onContactBegin = CC_CALLBACK_1(LoadMapScene::onContactBegin, this);
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);*/
+}
+
+bool LoadMapScene::onContactBegin(cocos2d::PhysicsContact & contact)
+{
+	auto a = contact.getShapeA()->getBody();
+	auto b = contact.getShapeB()->getBody();
+
+	return false;
 }
 
 void LoadMapScene::addHud()
@@ -183,7 +200,7 @@ void LoadMapScene::addHud()
 void LoadMapScene::update(float dt)
 {
 	setViewPointCenter(this->m_player->getPosition());
-	isCollision(this->m_player->getPosition());
+	//isCollision(this->m_player->getPosition());
 	isCollectable(this->m_player->getPosition());
 }
 

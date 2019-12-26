@@ -38,7 +38,11 @@ public:
 	Vec2 tileCoordForPosition(Vec2 position);
 	void isCollision(Vec2 position);
 	void isCollectable(Vec2 position);
+	// Physics layer
 	void createPhysics();
+	void addListener();
+	bool onContactBegin(cocos2d::PhysicsContact& contact);
+
 	// --------------------------------
 	// Extra method to create joystick
 	// --------------------------------
