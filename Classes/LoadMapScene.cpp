@@ -18,7 +18,6 @@ bool LoadMapScene::init()
 	addMap();
 	SpawnPlayer();
 	addHud();
-
 	createPhysics();
 	this->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 	scheduleUpdate();
@@ -48,7 +47,7 @@ void LoadMapScene::SpawnPlayer()
 	float x = spawnPoint.at("x").asFloat() * m_SCALE;
 	float y = spawnPoint.at("y").asFloat() * m_SCALE;
 	// create the player and add the x y to the player
-	m_player->setPosition(visibleSize.width / 2, visibleSize.height / 2);
+	m_player->setPosition(x, y);
 	m_player->setScale(m_SCALE / 2);
 	 //add the physicsBody
 	physicsBody = PhysicsBody::createBox(m_player->getContentSize() - Size(70, 30));
@@ -72,9 +71,7 @@ void LoadMapScene::setViewPointCenter(Vec2 position)
 	auto actualPosition = Vec2(x, y);
 	auto centerOfView = Vec2(visibleSize.width / 2, visibleSize.height / 2);
 	auto viewPoint = Vec2(centerOfView.x - actualPosition.x, centerOfView.y - actualPosition.y);
-	auto follow = Follow::create(m_player, Rect::ZERO);
-	this->runAction(follow);
-	HUD->setPosition(Vec2(x - visibleSize.width / 2, y - visibleSize.height / 2));
+	this->getDefaultCamera()->setPosition(position);
 }
 
 Vec2 LoadMapScene::tileCoordForPosition(Vec2 position)
@@ -175,13 +172,6 @@ void LoadMapScene::createPhysics()
 			}
 		}
 	}
-
-	auto sprite = Sprite::create("Resources/sprites/Player/idle-with-weapon-1.png");
-	sprite->setPosition(this->m_player->getPosition());
-	auto physicBody = PhysicsBody::createBox(sprite->getContentSize());
-	physicBody->setGravityEnable(false);
-	sprite->setPhysicsBody(physicBody);
-	addChild(sprite);
 }
 
 void LoadMapScene::addListener()
@@ -203,6 +193,10 @@ void LoadMapScene::addHud()
 {
 	HUD = new HudLayer(this, player, m_tileMap);
 	HUD->setMap(m_tileMap);
+}
+
+void LoadMapScene::createCameraForHUD()
+{
 }
 
 void LoadMapScene::update(float dt)

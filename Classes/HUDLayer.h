@@ -27,7 +27,7 @@ private:
 	float activeRunRange;
 	PhysicsBody* physicsBody;
 
-
+	Camera* cameraHUD;
 public:
 	HudLayer(cocos2d::Scene* scene, Player* player, TMXTiledMap* map);
 	bool init();
@@ -39,5 +39,6 @@ public:
 	void setMap(TMXTiledMap* map);
 	TMXTiledMap* getMap();
 	virtual ~HudLayer();
+	void createCameraHUD();
 };
 #endif	

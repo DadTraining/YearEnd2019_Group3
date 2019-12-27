@@ -1,3 +1,4 @@
+
 # include "HUDLayer.h"
 
 using namespace cocos2d;
@@ -18,6 +19,7 @@ bool HudLayer::init()
 	}
 	createHud();
 	_numCollected = 0;
+	createCameraHUD();
 	scheduleUpdate();
 	return true;
 }
@@ -86,6 +88,7 @@ void HudLayer::UpdateJoystick(float dt)
 		targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
 		targetPlayer->getSprite()->runAction(rpAnimateRun);
 		targetPlayer->getSprite()->getPhysicsBody()->setVelocity(pos * SPEED);
+		//m_tiledMap->setPosition(m_tiledMap->getPosition() - pos / (SPEED * 2));
 	}
 	else
 	{
@@ -100,7 +103,7 @@ void HudLayer::CreateAttackBtn(Layer * layer)
 {
 	// init attackButton
 	attackBtn = ui::Button::create("Resources/Buttons/AttackButtonNormal.png", "Resources/Buttons/AttackButtonPressed.png");
-	 //add touch event to attackButton
+	//add touch event to attackButton
 	layer->addChild(attackBtn);
 	attackBtn->setPosition(Vec2(1200, 200));
 	attackBtn->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
@@ -108,7 +111,7 @@ void HudLayer::CreateAttackBtn(Layer * layer)
 		rpAnimateAttack->setTag(TAG_ANIMATE_ATTACK);
 		switch (type)
 		{
-		// In case when the player press on the screen
+			// In case when the player press on the screen
 		case ui::Widget::TouchEventType::BEGAN:
 		{
 			// If the player still have the Idle animation or run animation then remove it
@@ -159,3 +162,12 @@ TMXTiledMap * HudLayer::getMap()
 HudLayer::~HudLayer()
 {
 }
+
+void HudLayer::createCameraHUD()
+{
+	cameraHUD = Camera::create();
+	cameraHUD->setCameraFlag(CameraFlag::USER2);
+	this->setCameraMask((unsigned short)CameraFlag::USER2);
+	targetScene->addChild(cameraHUD);
+}
+

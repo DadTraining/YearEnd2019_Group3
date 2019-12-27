@@ -24,7 +24,7 @@ private:
 	Layer* _hudLayer;
 	HudLayer* HUD;
 	PhysicsBody* physicsBody;
-
+	Camera* cameraHUD;
 public:
     static cocos2d::Scene* createScene();
     virtual bool init();
@@ -48,6 +48,7 @@ public:
 	// Extra method to create joystick
 	// --------------------------------
 	void addHud();
+	void createCameraForHUD();
 	// --------------------------------
 	void update(float dt);
 };
