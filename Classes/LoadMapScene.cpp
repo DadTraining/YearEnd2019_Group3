@@ -33,28 +33,57 @@ void LoadMapScene::menuCloseCallback(Ref* pSender)
 // the Map
 void LoadMapScene::SpawnPlayer()
 {
-	auto visibleSize = Director::getInstance()->getVisibleSize();
-	player = new Player(this);
-	m_player = player->getSprite();
-	// Get the object group named Objects
-	auto objectGroup = m_tileMap->objectGroupNamed("Objects");
-	if (objectGroup == NULL)
+	//auto visibleSize = Director::getInstance()->getVisibleSize();
+	//player = new Player(this);
+	//m_player = player->getSprite();
+	//// Get the object group named Objects
+	//auto objectGroup = m_tileMap->objectGroupNamed("Objects");
+	//if (objectGroup == NULL)
+	//{
+	//	return;
+	//}
+	// //get the x y of the spawnPoint
+	//auto spawnPoint = objectGroup->objectNamed("SpawnPoint");
+	//float x = spawnPoint.at("x").asFloat() * m_SCALE;
+	//float y = spawnPoint.at("y").asFloat() * m_SCALE;
+	//// create the player and add the x y to the player
+	//m_player->setPosition(x, y);
+	//m_player->setScale(m_SCALE / 2);
+	// //add the physicsBody
+	//addChild(m_player);
+
+	// ---
+	auto objects = m_objectGroup->getObjects();
+
+	for (int i = 0; i < objects.size(); i++)
 	{
-		return;
+		auto object = objects.at(i);
+
+		auto properties = object.asValueMap();
+		int posX = properties.at("x").asFloat() * m_SCALE;
+		int posY = properties.at("y").asFloat() * m_SCALE;
+		int type = object.asValueMap().at("type").asInt();
+		// Case the player is the main character
+		if (type == Model::MAIN_CHARACTER_TYPE)
+		{
+			player = new Player(this);
+			m_player = player->getSprite();
+			m_player->setPosition(Vec2(posX, posY));
+			m_player->setScale(m_SCALE / 2);
+			addChild(m_player);
+		}
+		else if (type == Model::MAIN_VILLAGER_TYPE)
+		{
+			auto villagerSprite = Sprite::create("Resources/sprites/Village/Idle/idle-1.png");
+			villagerSprite->setPosition(Vec2(posX, posY));
+			villagers.push_back(villagerSprite);
+			auto physicBody = PhysicsBody::createBox(villagerSprite->getContentSize());
+			villagerSprite->setPhysicsBody(physicBody);
+			physicBody->setDynamic(false);
+			physicBody->setCollisionBitmask(Model::BITMASK_VILLAGER);
+			addChild(villagerSprite);
+		}
 	}
-	 //get the x y of the spawnPoint
-	auto spawnPoint = objectGroup->objectNamed("SpawnPoint");
-	float x = spawnPoint.at("x").asFloat() * m_SCALE;
-	float y = spawnPoint.at("y").asFloat() * m_SCALE;
-	// create the player and add the x y to the player
-	m_player->setPosition(x, y);
-	m_player->setScale(m_SCALE / 2);
-	 //add the physicsBody
-	physicsBody = PhysicsBody::createBox(m_player->getContentSize() - Size(70, 30));
-	physicsBody->setGravityEnable(false);
-	physicsBody->setRotationEnable(false);
-	m_player->setPhysicsBody(physicsBody);
-	addChild(m_player);
 }
 
 void LoadMapScene::setViewPointCenter(Vec2 position)
@@ -134,6 +163,7 @@ void LoadMapScene::addMap()
 	auto physicsBody = PhysicsBody::createEdgeBox(m_tileMap->getContentSize());
 	m_tileMap->setPhysicsBody(physicsBody);
 	m_meta = m_tileMap->layerNamed("Meta");
+	m_objectGroup = m_tileMap->getObjectGroup("Objects");
 	m_meta->setVisible(false);
 	m_villagerLayer = m_tileMap->layerNamed("Villagers");
 	addChild(m_tileMap, -1);
@@ -185,7 +215,11 @@ bool LoadMapScene::onContactBegin(cocos2d::PhysicsContact & contact)
 {
 	auto a = contact.getShapeA()->getBody();
 	auto b = contact.getShapeB()->getBody();
-
+	if ((a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_VILLAGER)
+		|| (a->getCollisionBitmask() == Model::BITMASK_VILLAGER && b->getCollisionBitmask() == Model::BITMASK_PLAYER))
+	{
+		HUD->addVilagerPoint();
+	}
 	return false;
 }
 
@@ -193,10 +227,6 @@ void LoadMapScene::addHud()
 {
 	HUD = new HudLayer(this, player, m_tileMap);
 	HUD->setMap(m_tileMap);
-}
-
-void LoadMapScene::createCameraForHUD()
-{
 }
 
 void LoadMapScene::update(float dt)

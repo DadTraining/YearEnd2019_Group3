@@ -1,6 +1,7 @@
 #include "Player.h"
 //#include "ResourceManager.h"
 #include "SimpleAudioEngine.h"
+#include "Model.h"
 USING_NS_CC;
 
 Player::Player(cocos2d::Scene* scene) {
@@ -106,8 +107,20 @@ void Player::init()
 	auto animateRun = Animate::create(animationRun);
 	animateRun->retain();
 	this->setAnimateRun(animateRun);
+
+	// Adding the physic to player
+	addPhysic();
 }
 
 void Player::update(float deltaTime)
 {
+}
+
+void Player::addPhysic()
+{
+	auto physicsBody = PhysicsBody::createBox(this->getSprite()->getContentSize() - Size(70, 30));
+	physicsBody->setGravityEnable(false);
+	physicsBody->setRotationEnable(false);
+	physicsBody->setCollisionBitmask(Model::BITMASK_PLAYER);
+	this->getSprite()->setPhysicsBody(physicsBody);
 }

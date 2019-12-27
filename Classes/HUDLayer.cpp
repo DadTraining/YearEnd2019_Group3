@@ -171,3 +171,8 @@ void HudLayer::createCameraHUD()
 	targetScene->addChild(cameraHUD);
 }
 
+void HudLayer::addVilagerPoint()
+{
+	_numCollected++;
+}
+

@@ -20,11 +20,10 @@ private:
 	bool stuck = false;
 	Sprite* m_player;
 	Player* player;
+	vector<Sprite*> villagers;
+	TMXObjectGroup* m_objectGroup;
 	// private variable for joystick adding
-	Layer* _hudLayer;
 	HudLayer* HUD;
-	PhysicsBody* physicsBody;
-	Camera* cameraHUD;
 public:
     static cocos2d::Scene* createScene();
     virtual bool init();
@@ -48,7 +47,6 @@ public:
 	// Extra method to create joystick
 	// --------------------------------
 	void addHud();
-	void createCameraForHUD();
 	// --------------------------------
 	void update(float dt);
 };

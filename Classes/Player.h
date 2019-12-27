@@ -10,6 +10,7 @@ public:
 	~Player();
 	void init();
 	void update(float deltaTime);
+	void addPhysic();
 private:
 	Scene* scene;
 };

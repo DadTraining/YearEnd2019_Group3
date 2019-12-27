@@ -40,5 +40,6 @@ public:
 	TMXTiledMap* getMap();
 	virtual ~HudLayer();
 	void createCameraHUD();
+	void addVilagerPoint();
 };
 #endif	
