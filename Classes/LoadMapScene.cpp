@@ -72,6 +72,8 @@ void LoadMapScene::setViewPointCenter(Vec2 position)
 	auto actualPosition = Vec2(x, y);
 	auto centerOfView = Vec2(visibleSize.width / 2, visibleSize.height / 2);
 	auto viewPoint = Vec2(centerOfView.x - actualPosition.x, centerOfView.y - actualPosition.y);
+	auto follow = Follow::create(m_player, Rect::ZERO);
+	this->runAction(follow);
 	HUD->setPosition(Vec2(x - visibleSize.width / 2, y - visibleSize.height / 2));
 }
 
