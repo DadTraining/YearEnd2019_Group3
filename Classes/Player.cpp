@@ -37,7 +37,7 @@ void Player::init()
 		auto frame = spriteCacheAttack->getSpriteFrameByName(nameAnimateAttack);
 		animAttack.pushBack(frame);
 	}
-	Animation* animationAtack = Animation::createWithSpriteFrames(animAttack, 0.1f);
+	Animation* animationAtack = Animation::createWithSpriteFrames(animAttack, 0.07f);
 	auto animateAttack = Animate::create(animationAtack);
 	animateAttack->retain();
 	//	auto animateAttack = ResourceManager::GetInstance()->GetPlayerAction("atkA");

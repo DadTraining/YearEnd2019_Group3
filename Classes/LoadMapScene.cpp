@@ -15,13 +15,7 @@ bool LoadMapScene::init()
 	{
 		return false;
 	}	
-	m_tileMap = TMXTiledMap::create("Resources/Map/TileMap2.tmx");
-	m_tileMap->setScale(m_SCALE);
-	m_meta = m_tileMap->layerNamed("Meta");
-	m_meta->setVisible(false);
-	m_villagerLayer = m_tileMap->layerNamed("Villagers");
-	addChild(m_tileMap, -1);
-
+	addMap();
 	SpawnPlayer();
 	addHud();
 
@@ -78,7 +72,6 @@ void LoadMapScene::setViewPointCenter(Vec2 position)
 	auto actualPosition = Vec2(x, y);
 	auto centerOfView = Vec2(visibleSize.width / 2, visibleSize.height / 2);
 	auto viewPoint = Vec2(centerOfView.x - actualPosition.x, centerOfView.y - actualPosition.y);
-	//this->setPosition(viewPoint);
 	HUD->setPosition(Vec2(x - visibleSize.width / 2, y - visibleSize.height / 2));
 }
 
@@ -133,6 +126,19 @@ void LoadMapScene::isCollectable(Vec2 position)
 			}
 		}
 	}
+}
+
+void LoadMapScene::addMap()
+{
+	m_tileMap = TMXTiledMap::create("Resources/Map/TileMap2.tmx");
+	m_tileMap->setScale(m_SCALE);
+	auto physicsBody = PhysicsBody::createEdgeBox(m_tileMap->getContentSize());
+	m_tileMap->setPhysicsBody(physicsBody);
+	m_meta = m_tileMap->layerNamed("Meta");
+	m_meta->setVisible(false);
+	m_villagerLayer = m_tileMap->layerNamed("Villagers");
+	addChild(m_tileMap, -1);
+
 }
 
 void LoadMapScene::createPhysics()

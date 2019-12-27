@@ -38,6 +38,7 @@ public:
 	Vec2 tileCoordForPosition(Vec2 position);
 	void isCollision(Vec2 position);
 	void isCollectable(Vec2 position);
+	void addMap();
 	// Physics layer
 	void createPhysics();
 	void addListener();
