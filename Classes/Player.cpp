@@ -118,9 +118,10 @@ void Player::update(float deltaTime)
 
 void Player::addPhysic()
 {
-	auto physicsBody = PhysicsBody::createBox(this->getSprite()->getContentSize() - Size(70, 30));
+	auto physicsBody = PhysicsBody::createBox(this->getSprite()->getContentSize() - Size(90, 30));
 	physicsBody->setGravityEnable(false);
 	physicsBody->setRotationEnable(false);
+	physicsBody->setContactTestBitmask(true);
 	physicsBody->setCollisionBitmask(Model::BITMASK_PLAYER);
 	this->getSprite()->setPhysicsBody(physicsBody);
 }

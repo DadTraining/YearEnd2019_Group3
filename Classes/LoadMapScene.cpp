@@ -15,11 +15,12 @@ bool LoadMapScene::init()
 	{
 		return false;
 	}	
+	this->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 	addMap();
 	SpawnPlayer();
 	addHud();
 	createPhysics();
-	this->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	addListener();
 	scheduleUpdate();
 	return true;
 }
@@ -81,6 +82,7 @@ void LoadMapScene::SpawnPlayer()
 			villagerSprite->setPhysicsBody(physicBody);
 			physicBody->setDynamic(false);
 			physicBody->setCollisionBitmask(Model::BITMASK_VILLAGER);
+			physicBody->setContactTestBitmask(true);
 			addChild(villagerSprite);
 		}
 	}
@@ -195,7 +197,7 @@ void LoadMapScene::createPhysics()
 				auto physics = PhysicsBody::createBox(tileSet->getContentSize(), 
 					PhysicsMaterial(1.0f, 0.0f, 1.0f));
 				physics->setCollisionBitmask(Model::BITMASK_GROUND);
-				physics->setContactTestBitmask(true);
+				physics->setContactTestBitmask(false);
 				physics->setDynamic(false);
 				physics->setMass(100);
 				tileSet->setPhysicsBody(physics);
@@ -206,9 +208,9 @@ void LoadMapScene::createPhysics()
 
 void LoadMapScene::addListener()
 {
-	/*auto contactListener = EventListenerPhysicsContact::create();
+	auto contactListener = EventListenerPhysicsContact::create();
 	contactListener->onContactBegin = CC_CALLBACK_1(LoadMapScene::onContactBegin, this);
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);*/
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
 }
 
 bool LoadMapScene::onContactBegin(cocos2d::PhysicsContact & contact)
