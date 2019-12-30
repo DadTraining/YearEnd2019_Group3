@@ -2,7 +2,6 @@
 #include "LoadMapScene.h"
 #include "SimpleAudioEngine.h"
 #include "Model.h"
-#include "MiniBoss01.h"
 USING_NS_CC;
 
 Scene* LoadMapScene::createScene()
@@ -71,10 +70,13 @@ void LoadMapScene::SpawnPlayer()
 		}
 		else if (type == Model::MAIN_MONSTER_TYPE)
 		{
-			auto boss = new MiniBoss01();
+			auto boss = new MiniBoss01(this);
+			Skeletons.push_back(boss);
 			SpriteFrameCache::getInstance()->removeSpriteFrames();
 			boss->getSprite()->setPosition(Vec2(posX, posY));
-			boss->getSprite()->runAction(RepeatForever::create(boss->getAttackAnimate()));
+			auto animation = RepeatForever::create(boss->getAttackAnimate());
+			animation->setTag(TAG_ANIMATE_ATTACK);
+			boss->getSprite()->runAction(animation);
 			addChild(boss->getSprite());
 		}
 	}
@@ -166,13 +168,21 @@ bool LoadMapScene::onContactBegin(cocos2d::PhysicsContact & contact)
 {
 	auto a = contact.getShapeA()->getBody();
 	auto b = contact.getShapeB()->getBody();
+	// player touch villager
 	if ((a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_VILLAGER)
 		|| (a->getCollisionBitmask() == Model::BITMASK_VILLAGER && b->getCollisionBitmask() == Model::BITMASK_PLAYER))
 	{
 		HUD->addVilagerPoint();
 	}
+	// player attack enemy
 	if ((a->getCollisionBitmask() == Model::BITMASK_ENEMY && b->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK)
 		|| (a->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK && b->getCollisionBitmask() == Model::BITMASK_ENEMY))
+	{
+		HUD->addVilagerPoint();
+	}
+	// Skeleton attack player
+	if ((a->getCollisionBitmask() == Model::BITMASK_ENEMY1_ATTACK && b->getCollisionBitmask() == Model::BITMASK_PLAYER)
+		|| (a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_ENEMY1_ATTACK))
 	{
 		HUD->addVilagerPoint();
 	}
@@ -189,6 +199,10 @@ void LoadMapScene::update(float dt)
 {
 	setViewPointCenter(this->m_player->getPosition());
 	player->update(dt);
+	for (int i = 0; i < Skeletons.size(); i++)
+	{
+		Skeletons[i]->update(dt);
+	}
 }
 
 

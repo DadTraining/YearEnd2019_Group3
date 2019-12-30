@@ -11,7 +11,7 @@
 class MiniBoss01 : public Objects
 {
 public:
-	MiniBoss01();
+	MiniBoss01(Scene* scene);
 	~MiniBoss01();
 	void init();
 	void update(float deltaTime);
@@ -45,4 +45,6 @@ private:
 	Sprite* sprite;
 	Animate *attackAnimate, *idleAnimate, *hitAnimate, *runAnimate, *deadAnimate;
 	float *hP, *damage;
+	Slash* m_slash;
+	Scene* targetScene;
 };

@@ -16,6 +16,8 @@ public:
 	static const int BITMASK_ENEMY = BITMASK_GROUND + 1;
 	static const int BITMASK_VILLAGER = BITMASK_ENEMY + 1;
 	static const int BITMASK_NORMAL_ATTACK = 50;
+	static const int BITMASK_ENEMY1_ATTACK = BITMASK_NORMAL_ATTACK + 10;
+
 	static const int MAIN_CHARACTER_TYPE = 1;
 	static const int MAIN_MONSTER_TYPE = 2;
 	static const int MAIN_VILLAGER_TYPE = 3;

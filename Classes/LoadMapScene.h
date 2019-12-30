@@ -7,6 +7,8 @@
 #include "Player.h"
 #include "SneakyJoystickSkinnedBase.h"
 #include "HUDLayer.h"
+#include "MiniBoss01.h"
+
 
 using namespace cocos2d;
 class LoadMapScene : public cocos2d::Scene
@@ -20,6 +22,8 @@ private:
 	bool stuck = false;
 	Sprite* m_player;
 	Player* player;
+	//enemy
+	vector<MiniBoss01*> Skeletons;
 	vector<Sprite*> villagers;
 	TMXObjectGroup* m_objectGroup;
 	// private variable for joystick adding

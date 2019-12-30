@@ -5,8 +5,9 @@
 
 USING_NS_CC;
 
-MiniBoss01::MiniBoss01() {
+MiniBoss01::MiniBoss01(Scene* scene) {
 	//init sprite and Animate
+	targetScene = scene;
 	this->init();
 
 
@@ -20,7 +21,7 @@ void MiniBoss01::init()
 {
 	//Create sprite
 	this->sprite = Sprite::create("Resources/sprites/aMiniBoss/Idle/idle-1.png");
-
+	this->sprite->setScale(m_SCALE / 2);
 	//Create animate attackA
 	auto spriteCacheAttack_MB1 = SpriteFrameCache::getInstance();
 	spriteCacheAttack_MB1->addSpriteFramesWithFile("Resources/sprites/aMiniBoss/Attacks/attackA.plist", "Resources/sprites/aMiniBoss/Attacks/attackA.png");
@@ -106,11 +107,12 @@ void MiniBoss01::init()
 
 	// Add physics
 	addPhysic();
+	// init slash
+	m_slash = new Slash();
+	m_slash->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_ENEMY1_ATTACK);
+	targetScene->addChild(m_slash->getSprite());
 }
 
-void MiniBoss01::update(float deltaTime)
-{
-}
 
 void MiniBoss01::setSprite(Sprite * sprite)
 {
@@ -194,6 +196,26 @@ float * MiniBoss01::getDamage()
 
 void MiniBoss01::normalAttack()
 {
+	auto isLeft = this->getSprite()->isFlippedX();
+	auto distance = this->getSprite()->getContentSize().width / 2;
+	if (isLeft)
+	{
+		m_slash->getSprite()->setPosition(this->getSprite()->getPosition() - Vec2(distance, 0));
+	}
+	else {
+		m_slash->getSprite()->setPosition(this->getSprite()->getPosition() + Vec2(distance, 0));
+	}
+}
+
+void MiniBoss01::update(float deltaTime)
+{
+	if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) == 0)
+	{
+		this->m_slash->getSprite()->setPosition(Vec2(-1, -1));
+	}
+	else {
+		this->normalAttack();
+	}
 }
 
 void MiniBoss01::addPhysic()
