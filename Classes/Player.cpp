@@ -90,12 +90,12 @@ void Player::init()
 	runAnimate->retain();
 
 	auto spriteCacheHit_Player = SpriteFrameCache::getInstance();
-	spriteCacheHit_Player->addSpriteFramesWithFile("Resources/sprites/Player/Hit/hit-with-weapon-behind.plist", "Resources/sprites/Player//Hit/hit-with-weapon-behind.png");
+	spriteCacheHit_Player->addSpriteFramesWithFile("Resources/sprites/Player/Hit/hit-with-weapon-front.plist", "Resources/sprites/Player//Hit/hit-with-weapon-front.png");
 	char nameAnimateHit[50] = { 0 };
 	Vector<SpriteFrame*> animHit;
 	for (int i = 1; i < 5; i++)
 	{
-		sprintf(nameAnimateHit, "hit-with-weapon-behind-%d.png", i);
+		sprintf(nameAnimateHit, "hit-with-weapon-front-%d.png", i);
 		auto frame = spriteCacheHit_Player->getSpriteFrameByName(nameAnimateHit);
 		animHit.pushBack(frame);
 	}
