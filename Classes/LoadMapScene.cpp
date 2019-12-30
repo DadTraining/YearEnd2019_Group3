@@ -79,7 +79,7 @@ void LoadMapScene::SpawnPlayer()
 			boss->getSprite()->runAction(animation);
 			addChild(boss->getSprite());
 		}
-	}
+ 	}
 }
 
 void LoadMapScene::setViewPointCenter(Vec2 position)
@@ -185,6 +185,10 @@ bool LoadMapScene::onContactBegin(cocos2d::PhysicsContact & contact)
 		|| (a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_ENEMY1_ATTACK))
 	{
 		HUD->addVilagerPoint();
+		m_player->stopAllActions();
+		auto animation = player->getHitAnimate();
+		animation->setTag(TAG_ANIMATE_HIT);
+		m_player->runAction(animation);
 	}
 	return false;
 }
