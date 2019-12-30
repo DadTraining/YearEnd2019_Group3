@@ -6,30 +6,27 @@ USING_NS_CC;
 using namespace std;
 class Objects
 {
-private:
-	int hP;
-	int damage;
-	Sprite* sprite;
-	Animate *animateAttack, *animateIdle, *animateMove, *animateDead, *animateRun;
 public:
 	Objects();
 	~Objects();
-	void setHP(int hp);
-	int getHP();
-	void setDammage(int damage);
-	int getDamage();
-	void setSprite(Sprite* sprite);
-	Sprite* getSprite();
-	void setAnimateAttack(Animate* animateAttack);
-	Animate* getAnimateAttack();
-	void setAnimateIdle(Animate* animateIdle);
-	Animate* getAnimateIdle();
-	void setAnimateMove(Animate* animateMove);
-	Animate* getAnimateMove();
-	void setAnimateDead(Animate* animateDead);
-	Animate* getAnimateDead();
-	void setAnimateRun(Animate* animateRun);
-	Animate* getAnimateRun();
 	virtual void init() = 0;
 	virtual void update(float deltaTime) = 0;
+
+	virtual void setSprite(Sprite* sprite) = 0;
+	virtual void setAttackAnimate(Animate* attackAnimate) = 0;
+	virtual void setIdleAnimate(Animate* aidleAnimate) = 0;
+	virtual void setHitAnimate(Animate* hitAnimate) = 0;
+	virtual void setRunAnimate(Animate* runAnimate) = 0;
+	virtual void setDeadAnimate(Animate* deadAnimate) = 0;
+	virtual void setHP(float* hP) = 0;
+	virtual void setDamage(float* damage) = 0;
+
+	virtual Sprite* getSprite() = 0;
+	virtual Animate* getAttackAnimate() = 0;
+	virtual Animate* getIdleAnimate() = 0;
+	virtual Animate* getHitAnimate() = 0;
+	virtual Animate* getRunAnimate() = 0;
+	virtual Animate* getDeadAnimate() = 0;
+	virtual float* getHP() = 0;
+	virtual float* getDamage() = 0;
 };

@@ -2,6 +2,7 @@
 #include "LoadMapScene.h"
 #include "SimpleAudioEngine.h"
 #include "Model.h"
+#include "MiniBoss01.h"
 USING_NS_CC;
 
 Scene* LoadMapScene::createScene()
@@ -34,25 +35,6 @@ void LoadMapScene::menuCloseCallback(Ref* pSender)
 // the Map
 void LoadMapScene::SpawnPlayer()
 {
-	//auto visibleSize = Director::getInstance()->getVisibleSize();
-	//player = new Player(this);
-	//m_player = player->getSprite();
-	//// Get the object group named Objects
-	//auto objectGroup = m_tileMap->objectGroupNamed("Objects");
-	//if (objectGroup == NULL)
-	//{
-	//	return;
-	//}
-	// //get the x y of the spawnPoint
-	//auto spawnPoint = objectGroup->objectNamed("SpawnPoint");
-	//float x = spawnPoint.at("x").asFloat() * m_SCALE;
-	//float y = spawnPoint.at("y").asFloat() * m_SCALE;
-	//// create the player and add the x y to the player
-	//m_player->setPosition(x, y);
-	//m_player->setScale(m_SCALE / 2);
-	// //add the physicsBody
-	//addChild(m_player);
-
 	// ---
 	auto objects = m_objectGroup->getObjects();
 
@@ -67,7 +49,8 @@ void LoadMapScene::SpawnPlayer()
 		// Case the player is the main character
 		if (type == Model::MAIN_CHARACTER_TYPE)
 		{
-			player = new Player(this);
+			player = new Player();
+			SpriteFrameCache::getInstance()->removeSpriteFrames();
 			m_player = player->getSprite();
 			m_player->setPosition(Vec2(posX, posY));
 			m_player->setScale(m_SCALE / 2);
@@ -75,15 +58,21 @@ void LoadMapScene::SpawnPlayer()
 		}
 		else if (type == Model::MAIN_VILLAGER_TYPE)
 		{
-			auto villagerSprite = Sprite::create("Resources/sprites/Village/Idle/idle-1.png");
-			villagerSprite->setPosition(Vec2(posX, posY));
-			villagers.push_back(villagerSprite);
-			auto physicBody = PhysicsBody::createBox(villagerSprite->getContentSize());
-			villagerSprite->setPhysicsBody(physicBody);
-			physicBody->setDynamic(false);
-			physicBody->setCollisionBitmask(Model::BITMASK_VILLAGER);
-			physicBody->setContactTestBitmask(true);
-			addChild(villagerSprite);
+			//auto villagerSprite = Sprite::create("Resources/sprites/Village/Idle/idle-1.png");
+			//villagerSprite->setPosition(Vec2(posX, posY));
+			//villagers.push_back(villagerSprite);
+			//auto physicBody = PhysicsBody::createBox(villagerSprite->getContentSize());
+			//villagerSprite->setPhysicsBody(physicBody);
+			//physicBody->setDynamic(false);
+			//physicBody->setCollisionBitmask(Model::BITMASK_VILLAGER);
+			//physicBody->setContactTestBitmask(true);
+			//addChild(villagerSprite);
+
+			auto boss = new MiniBoss01();
+			SpriteFrameCache::getInstance()->removeSpriteFrames();
+			boss->getSprite()->setPosition(Vec2(posX, posY));
+			boss->getSprite()->runAction(RepeatForever::create(boss->getIdleAnimate()));
+			addChild(boss->getSprite());
 		}
 	}
 }

@@ -72,9 +72,9 @@ void HudLayer::UpdateJoystick(float dt)
 {
 	Point pos = leftJoystick->getStickPosition();
 	float radius = std::sqrt(pos.x*pos.x + pos.y*pos.y);
-	auto rpAnimateIdle = RepeatForever::create(targetPlayer->getAnimateIdle());
+	auto rpAnimateIdle = RepeatForever::create(targetPlayer->getIdleAnimate());
 	rpAnimateIdle->setTag(TAG_ANIMATE_IDLE1);
-	auto rpAnimateRun = RepeatForever::create(targetPlayer->getAnimateRun());
+	auto rpAnimateRun = RepeatForever::create(targetPlayer->getRunAnimate());
 	rpAnimateRun->setTag(TAG_ANIMATE_RUN);
 	if (radius > 0)
 	{
@@ -86,7 +86,10 @@ void HudLayer::UpdateJoystick(float dt)
 			targetPlayer->getSprite()->setFlipX(true);
 		}
 		targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
-		targetPlayer->getSprite()->runAction(rpAnimateRun);
+		if (targetPlayer->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_RUN) == 0)
+		{
+			targetPlayer->getSprite()->runAction(rpAnimateRun);
+		}
 		targetPlayer->getSprite()->getPhysicsBody()->setVelocity(pos * SPEED);
 		//m_tiledMap->setPosition(m_tiledMap->getPosition() - pos / (SPEED * 2));
 	}
@@ -107,7 +110,7 @@ void HudLayer::CreateAttackBtn(Layer * layer)
 	layer->addChild(attackBtn);
 	attackBtn->setPosition(Vec2(1200, 200));
 	attackBtn->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
-		auto rpAnimateAttack = RepeatForever::create(targetPlayer->getAnimateAttack());
+		auto rpAnimateAttack = targetPlayer->getAttackAnimate();
 		rpAnimateAttack->setTag(TAG_ANIMATE_ATTACK);
 		switch (type)
 		{
@@ -123,14 +126,12 @@ void HudLayer::CreateAttackBtn(Layer * layer)
 
 			break;
 		}
-		case ui::Widget::TouchEventType::MOVED:
-		{
-			break;
-		}
 		case ui::Widget::TouchEventType::ENDED:
 		{
-			targetPlayer->getSprite()->stopAllActions();
-			break;
+			if (rpAnimateAttack->isDone()) {
+				targetPlayer->getSprite()->stopAllActions();
+				break;
+			}
 		}
 		default:
 			break;

@@ -6,19 +6,14 @@
 #define TIME_ONE_RUN 0.1f
 #define TIME_ONE_DEAD 0.26f
 #define TIME_ONE_WALK 0.1f
-#define INIT_HP 100
-#define INIT_DAMAGE 20 
 
-class Player : public Objects
+class MiniBoss01 : public Objects
 {
 public:
-	// An integer to determine if the player release all the keyCode
-	int m_numberOfKeyPress = 0;
-	Player();
-	~Player();
+	MiniBoss01();
+	~MiniBoss01();
 	void init();
 	void update(float deltaTime);
-	void addPhysic();
 
 	void setSprite(Sprite* sprite);
 	void setAttackAnimate(Animate* attackAnimate);
@@ -38,8 +33,12 @@ public:
 	float* getHP();
 	float* getDamage();
 
+	//---
+	// Add physics
+	void addPhysic();
+	//---
 private:
-	Sprite* playerSprite;
+	Sprite* sprite;
 	Animate *attackAnimate, *idleAnimate, *hitAnimate, *runAnimate, *deadAnimate;
 	float *hP, *damage;
 };

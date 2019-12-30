@@ -4,14 +4,13 @@
 #include "Model.h"
 USING_NS_CC;
 
-Player::Player(cocos2d::Scene* scene) {
+Player::Player() {
 	//init sprite and Animate
 	this->init();
 
 	//create scece
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
-	this->scene = scene;
 
 
 }
@@ -23,9 +22,7 @@ Player::~Player()
 void Player::init()
 {
 	//Create sprite
-	Sprite* player = Sprite::create("Resources/sprites/Player/idle-with-weapon-1.png");
-	Sprite* playerFrame = Sprite::createWithSpriteFrame(player->getSpriteFrame());
-	this->setSprite(playerFrame);
+	this->playerSprite = Sprite::create("Resources/sprites/Player/idle-with-weapon-1.png");
 
 	//Create animate attack
 	auto spriteCacheAttack = SpriteFrameCache::getInstance();
@@ -42,8 +39,8 @@ void Player::init()
 	auto animateAttack = Animate::create(animationAtack);
 	animateAttack->retain();
 	//	auto animateAttack = ResourceManager::GetInstance()->GetPlayerAction("atkA");
-	this->setAnimateAttack(animateAttack);
-
+	this->attackAnimate = animateAttack;
+	attackAnimate->retain();
 	//Create animate idle
 	auto spriteCacheIdle = SpriteFrameCache::getInstance();
 	spriteCacheIdle->addSpriteFramesWithFile("Resources/sprites/Player/Idle/idle-with-weapon.plist", "Resources/sprites/Player/Idle/idle-with-weapon.png");
@@ -58,23 +55,8 @@ void Player::init()
 	Animation* animationIdle = Animation::createWithSpriteFrames(animIdle, 0.2f);
 	auto animateIdle = Animate::create(animationIdle);
 	animateIdle->retain();
-	this->setAnimateIdle(animateIdle);
-
-	//Create animate move
-	auto spriteCacheMove = SpriteFrameCache::getInstance();
-	spriteCacheIdle->addSpriteFramesWithFile("Resources/sprites/Player/Walk/walk-with-weapon.plist", "Resources/sprites/Player/Walk/walk-with-weapon.png");
-	char nameAnimateMove[50] = { 0 };
-	Vector<SpriteFrame*> animMove;
-	for (int i = 1; i < 12; i++)
-	{
-		sprintf(nameAnimateMove, "walk-with-weapon-%d.png", i);
-		auto frame = spriteCacheMove->getSpriteFrameByName(nameAnimateMove);
-		animMove.pushBack(frame);
-	}
-	Animation* animationMove = Animation::createWithSpriteFrames(animMove, 0.1f);
-	auto animateMove = Animate::create(animationMove);
-	animateMove->retain();
-	this->setAnimateMove(animateMove);
+	this->idleAnimate = animateIdle;
+	idleAnimate->retain();
 
 	//Create animate dead
 	auto spriteCacheDead = SpriteFrameCache::getInstance();
@@ -90,8 +72,8 @@ void Player::init()
 	Animation* animationDead = Animation::createWithSpriteFrames(animDead, 0.26f);
 	auto animateDead = Animate::create(animationDead);
 	animateDead->retain();
-	this->setAnimateDead(animateDead);
-
+	this->deadAnimate = animateDead;
+	deadAnimate->retain();
 	//Create animate run
 	auto spriteCacheRun = SpriteFrameCache::getInstance();
 	spriteCacheRun->addSpriteFramesWithFile("Resources/sprites/Player/Run/run.plist", "Resources/sprites/Player/Run/run.png");
@@ -106,7 +88,24 @@ void Player::init()
 	Animation* animationRun = Animation::createWithSpriteFrames(animRun, 0.1f);
 	auto animateRun = Animate::create(animationRun);
 	animateRun->retain();
-	this->setAnimateRun(animateRun);
+	this->runAnimate = animateRun;
+	runAnimate->retain();
+
+	auto spriteCacheHit_Player = SpriteFrameCache::getInstance();
+	spriteCacheHit_Player->addSpriteFramesWithFile("Resources/sprites/Player/Hit/hit-with-weapon-behind.plist", "Resources/sprites/Player//Hit/hit-with-weapon-behind.png");
+	char nameAnimateHit[50] = { 0 };
+	Vector<SpriteFrame*> animHit;
+	for (int i = 1; i < 5; i++)
+	{
+		sprintf(nameAnimateHit, "hit-with-weapon-behind-%d.png", i);
+		auto frame = spriteCacheHit_Player->getSpriteFrameByName(nameAnimateHit);
+		animHit.pushBack(frame);
+	}
+	Animation* animationHit = Animation::createWithSpriteFrames(animHit, TIME_ONE_HIT);
+	auto animateHit = Animate::create(animationHit);
+	animateHit->retain();
+	this->hitAnimate = animateHit;
+	hitAnimate->retain();
 
 	// Adding the physic to player
 	addPhysic();
@@ -125,3 +124,83 @@ void Player::addPhysic()
 	physicsBody->setCollisionBitmask(Model::BITMASK_PLAYER);
 	this->getSprite()->setPhysicsBody(physicsBody);
 }
+void Player::setSprite(Sprite * sprite)
+{
+	this->playerSprite = sprite;
+}
+
+void Player::setAttackAnimate(Animate * attackAnimate)
+{
+	this->attackAnimate = attackAnimate;
+}
+
+void Player::setIdleAnimate(Animate * idleAnimate)
+{
+	this->idleAnimate = idleAnimate;
+}
+
+void Player::setHitAnimate(Animate * hitAnimate)
+{
+	this->hitAnimate = hitAnimate;
+}
+
+void Player::setRunAnimate(Animate * runAnimate)
+{
+	this->runAnimate = runAnimate;
+}
+
+void Player::setDeadAnimate(Animate * deadAnimate)
+{
+	this->deadAnimate = deadAnimate;
+}
+
+void Player::setHP(float* hP)
+{
+	this->hP = hP;
+}
+
+void Player::setDamage(float * damage)
+{
+	this->damage = damage;
+}
+
+Sprite * Player::getSprite()
+{
+	return this->playerSprite;
+}
+
+Animate * Player::getAttackAnimate()
+{
+	return this->attackAnimate;
+}
+
+Animate * Player::getIdleAnimate()
+{
+	return this->idleAnimate;
+}
+
+Animate * Player::getHitAnimate()
+{
+	return this->hitAnimate;
+}
+
+Animate * Player::getRunAnimate()
+{
+	return this->runAnimate;
+}
+
+Animate * Player::getDeadAnimate()
+{
+	return this->deadAnimate;
+}
+
+float * Player::getHP()
+{
+	return this->hP;
+}
+
+float * Player::getDamage()
+{
+	return this->damage;
+}
+
