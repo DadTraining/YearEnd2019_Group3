@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="70" height="67" tilewidth="32" tileheight="32" infinite="0" nextlayerid="25" nextobjectid="21">
+<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="70" height="67" tilewidth="32" tileheight="32" infinite="0" nextlayerid="25" nextobjectid="29">
  <tileset firstgid="1" name="meta_tiles" tilewidth="32" tileheight="32" spacing="1" margin="1" tilecount="2" columns="2">
   <image source="meta_tiles.png" width="67" height="34"/>
   <tile id="0">
@@ -1077,12 +1077,20 @@
 </data>
  </layer>
  <objectgroup id="3" name="Objects">
-  <object id="4" name="SpawnPoint" type="1" x="1661.33" y="773"/>
+  <object id="4" name="SpawnPoint" type="1" x="1646.66" y="757.667"/>
   <object id="10" name="Villager" type="3" x="1498.67" y="760"/>
   <object id="11" name="Villager" type="3" x="1777.33" y="870.667"/>
   <object id="12" name="Villager" type="3" x="1318.67" y="754.667"/>
   <object id="19" name="Villager" type="3" x="1582" y="768"/>
   <object id="20" name="Villager" type="3" x="1535" y="705"/>
+  <object id="21" name="Enemy" type="2" x="1733.33" y="752"/>
+  <object id="22" name="Enemy" type="2" x="1758" y="786"/>
+  <object id="23" name="Enemy" type="2" x="1658.67" y="830.667"/>
+  <object id="24" name="Enemy" type="2" x="1687.33" y="950.667"/>
+  <object id="25" name="Enemy" type="2" x="1368.67" y="642.667"/>
+  <object id="26" name="Enemy" type="2" x="1420.67" y="742.667"/>
+  <object id="27" name="Enemy" type="2" x="1501.33" y="606.667"/>
+  <object id="28" name="Enemy" type="2" x="1840" y="692.667"/>
  </objectgroup>
  <layer id="6" name="Villagers" width="70" height="67">
   <data encoding="csv">

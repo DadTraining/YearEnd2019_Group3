@@ -1,4 +1,4 @@
-
+# include "Model.h"
 # include "HUDLayer.h"
 
 using namespace cocos2d;
@@ -122,6 +122,7 @@ void HudLayer::CreateAttackBtn(Layer * layer)
 				targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
 				targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
 				targetPlayer->getSprite()->runAction(rpAnimateAttack);
+				targetPlayer->normalAttack();
 			}
 
 			break;

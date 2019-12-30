@@ -60,6 +60,9 @@
     <ClCompile Include="..\Classes\MiniBoss01.cpp">
       <Filter>src\Classes</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Slash.cpp">
+      <Filter>src\Classes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -99,6 +102,9 @@
       <Filter>src\Classes</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\MiniBoss01.h">
+      <Filter>src\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Slash.h">
       <Filter>src\Classes</Filter>
     </ClInclude>
   </ItemGroup>

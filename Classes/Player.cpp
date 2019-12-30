@@ -4,15 +4,13 @@
 #include "Model.h"
 USING_NS_CC;
 
-Player::Player() {
+Player::Player(Scene* scene) {
 	//init sprite and Animate
+	targetScene = scene;
 	this->init();
-
 	//create scece
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
-
-
 }
 
 Player::~Player()
@@ -109,21 +107,30 @@ void Player::init()
 
 	// Adding the physic to player
 	addPhysic();
+	// init slash
+	m_slash = new Slash;
+	m_slash->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_NORMAL_ATTACK);
+	targetScene->addChild(m_slash->getSprite());
 }
 
 void Player::update(float deltaTime)
 {
+	if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) == 0)
+	{
+		this->m_slash->getSprite()->setPosition(Vec2(-1, -1));
+	}
 }
 
 void Player::addPhysic()
 {
-	auto physicsBody = PhysicsBody::createBox(this->getSprite()->getContentSize() - Size(90, 30));
+	auto physicsBody = PhysicsBody::createBox(this->getSprite()->getContentSize() - Size(100, 30));
 	physicsBody->setGravityEnable(false);
 	physicsBody->setRotationEnable(false);
 	physicsBody->setContactTestBitmask(true);
 	physicsBody->setCollisionBitmask(Model::BITMASK_PLAYER);
 	this->getSprite()->setPhysicsBody(physicsBody);
 }
+
 void Player::setSprite(Sprite * sprite)
 {
 	this->playerSprite = sprite;
@@ -162,6 +169,19 @@ void Player::setHP(float* hP)
 void Player::setDamage(float * damage)
 {
 	this->damage = damage;
+}
+
+void Player::normalAttack()
+{
+	auto isLeft = this->getSprite()->isFlippedX();
+	auto distance = this->getSprite()->getContentSize().width / 2 - 10;
+	if (isLeft)
+	{
+		m_slash->getSprite()->setPosition(this->getSprite()->getPosition() - Vec2(distance, 0));
+	}
+	else {
+		m_slash->getSprite()->setPosition(this->getSprite()->getPosition() + Vec2(distance, 0));
+	}
 }
 
 Sprite * Player::getSprite()

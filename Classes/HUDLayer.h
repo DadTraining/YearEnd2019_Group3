@@ -1,12 +1,7 @@
 #pragma once
 #ifndef __HUD_LAYER_H__
 #define __HUD_LAYER_H__
-#define TAG_ANIMATE_RUN 111
-#define TAG_ANIMATE_IDLE1 121
-#define TAG_ANIMATE_IDLE2 122
-#define TAG_ANIMATE_ATTACK 131
-#define SPEED 5.0f
-#define m_SCALE 4.0f
+
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
 # include "SneakyJoystickSkinnedBase.h"

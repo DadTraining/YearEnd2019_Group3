@@ -35,8 +35,6 @@ public:
 	void SpawnPlayer();
 	void setViewPointCenter(Vec2 position);
 	Vec2 tileCoordForPosition(Vec2 position);
-	void isCollision(Vec2 position);
-	void isCollectable(Vec2 position);
 	void addMap();
 	// Physics layer
 	void createPhysics();

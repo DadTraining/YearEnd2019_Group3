@@ -17,6 +17,7 @@ bool LoadMapScene::init()
 		return false;
 	}	
 	this->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	this->getPhysicsWorld()->setGravity(Vec2(0, 0));
 	addMap();
 	SpawnPlayer();
 	addHud();
@@ -49,7 +50,7 @@ void LoadMapScene::SpawnPlayer()
 		// Case the player is the main character
 		if (type == Model::MAIN_CHARACTER_TYPE)
 		{
-			player = new Player();
+			player = new Player(this);
 			SpriteFrameCache::getInstance()->removeSpriteFrames();
 			m_player = player->getSprite();
 			m_player->setPosition(Vec2(posX, posY));
@@ -58,20 +59,22 @@ void LoadMapScene::SpawnPlayer()
 		}
 		else if (type == Model::MAIN_VILLAGER_TYPE)
 		{
-			//auto villagerSprite = Sprite::create("Resources/sprites/Village/Idle/idle-1.png");
-			//villagerSprite->setPosition(Vec2(posX, posY));
-			//villagers.push_back(villagerSprite);
-			//auto physicBody = PhysicsBody::createBox(villagerSprite->getContentSize());
-			//villagerSprite->setPhysicsBody(physicBody);
-			//physicBody->setDynamic(false);
-			//physicBody->setCollisionBitmask(Model::BITMASK_VILLAGER);
-			//physicBody->setContactTestBitmask(true);
-			//addChild(villagerSprite);
-
+			auto villagerSprite = Sprite::create("Resources/sprites/Village/Idle/idle-1.png");
+			villagerSprite->setPosition(Vec2(posX, posY));
+			villagers.push_back(villagerSprite);
+			auto physicBody = PhysicsBody::createBox(villagerSprite->getContentSize());
+			villagerSprite->setPhysicsBody(physicBody);
+			physicBody->setDynamic(false);
+			physicBody->setCollisionBitmask(Model::BITMASK_VILLAGER);
+			physicBody->setContactTestBitmask(true);
+			addChild(villagerSprite);
+		}
+		else if (type == Model::MAIN_MONSTER_TYPE)
+		{
 			auto boss = new MiniBoss01();
 			SpriteFrameCache::getInstance()->removeSpriteFrames();
 			boss->getSprite()->setPosition(Vec2(posX, posY));
-			boss->getSprite()->runAction(RepeatForever::create(boss->getIdleAnimate()));
+			boss->getSprite()->runAction(RepeatForever::create(boss->getAttackAnimate()));
 			addChild(boss->getSprite());
 		}
 	}
@@ -79,18 +82,18 @@ void LoadMapScene::SpawnPlayer()
 
 void LoadMapScene::setViewPointCenter(Vec2 position)
 {
-	auto visibleSize = Director::getInstance()->getVisibleSize();
-	int x = MAX(position.x, visibleSize.width / 2);
-	int y = MAX(position.y, visibleSize.height / 2);
+	//auto visibleSize = Director::getInstance()->getVisibleSize();
+	//int x = MAX(position.x, visibleSize.width / 2);
+	//int y = MAX(position.y, visibleSize.height / 2);
 
-	auto borderX = m_tileMap->getMapSize().width * this->m_tileMap->getTileSize().width * m_SCALE;
-	auto borderY = m_tileMap->getMapSize().width * this->m_tileMap->getTileSize().height * m_SCALE;
-	x = MIN(x, borderX - visibleSize.width / 2);
-	y = MIN(y, borderY - visibleSize.height / 2);
+	//auto borderX = m_tileMap->getMapSize().width * this->m_tileMap->getTileSize().width * m_SCALE;
+	//auto borderY = m_tileMap->getMapSize().width * this->m_tileMap->getTileSize().height * m_SCALE;
+	//x = MIN(x, borderX - visibleSize.width / 2);
+	//y = MIN(y, borderY - visibleSize.height / 2);
 
-	auto actualPosition = Vec2(x, y);
-	auto centerOfView = Vec2(visibleSize.width / 2, visibleSize.height / 2);
-	auto viewPoint = Vec2(centerOfView.x - actualPosition.x, centerOfView.y - actualPosition.y);
+	//auto actualPosition = Vec2(x, y);
+	//auto centerOfView = Vec2(visibleSize.width / 2, visibleSize.height / 2);
+	//auto viewPoint = Vec2(centerOfView.x - actualPosition.x, centerOfView.y - actualPosition.y);
 	this->getDefaultCamera()->setPosition(position);
 }
 
@@ -103,49 +106,6 @@ Vec2 LoadMapScene::tileCoordForPosition(Vec2 position)
 }
 
 // indicate collsion between player and object
-void LoadMapScene::isCollision(Vec2 position)
-{
-	auto tileCoord = this->tileCoordForPosition(position);
-	int tileGid = this->m_meta->tileGIDAt(tileCoord);
-	if (tileGid)
-	{
-		auto properties = m_tileMap->getPropertiesForGID(tileGid).asValueMap();
-		if (!properties.empty())
-		{
-			auto collision = properties["Collidable"].asString();
-			if (collision.empty() || (collision.compare("true") == 0))
-			{
-				if (stuck == false)
-				{
-					stuck = true;
-					m_player->getPhysicsBody()->setVelocity(Vec2(0, 0));
-					return;
-				}
-			}
-		}
-	}
-	stuck = false;
-}
-
-void LoadMapScene::isCollectable(Vec2 position)
-{
-	auto tileCoord = this->tileCoordForPosition(position);
-	auto tileGid = this->m_meta->tileGIDAt(tileCoord);
-	if (tileGid)
-	{
-		auto properties = m_tileMap->getPropertiesForGID(tileGid).asValueMap();
-		if (!properties.empty())
-		{
-			auto collect = properties["Collectable"].asString();
-			if ((collect.compare("true") == 0))
-			{
-				m_meta->removeTileAt(tileCoord);
-				m_villagerLayer->removeTileAt(tileCoord);
-				_numCollected++;
-			}
-		}
-	}
-}
 
 void LoadMapScene::addMap()
 {
@@ -211,6 +171,11 @@ bool LoadMapScene::onContactBegin(cocos2d::PhysicsContact & contact)
 	{
 		HUD->addVilagerPoint();
 	}
+	if ((a->getCollisionBitmask() == Model::BITMASK_ENEMY && b->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK)
+		|| (a->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK && b->getCollisionBitmask() == Model::BITMASK_ENEMY))
+	{
+		HUD->addVilagerPoint();
+	}
 	return false;
 }
 
@@ -223,8 +188,7 @@ void LoadMapScene::addHud()
 void LoadMapScene::update(float dt)
 {
 	setViewPointCenter(this->m_player->getPosition());
-	//isCollision(this->m_player->getPosition());
-	isCollectable(this->m_player->getPosition());
+	player->update(dt);
 }
 
 

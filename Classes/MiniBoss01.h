@@ -1,5 +1,6 @@
 #pragma once
 #include "Objects.h"
+#include "Slash.h"
 #define TIME_ONE_ATTACK 0.1f
 #define TIME_ONE_HIT 0.1f
 #define TIME_ONE_IDLE 0.2f
@@ -34,6 +35,9 @@ public:
 	float* getDamage();
 
 	//---
+	//Attack
+	void normalAttack();
+
 	// Add physics
 	void addPhysic();
 	//---

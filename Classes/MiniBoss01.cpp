@@ -181,6 +181,7 @@ Animate * MiniBoss01::getDeadAnimate()
 {
 	return this->deadAnimate;
 }
+
 float * MiniBoss01::getHP()
 {
 	return this->hP;
@@ -191,9 +192,13 @@ float * MiniBoss01::getDamage()
 	return this->damage;
 }
 
+void MiniBoss01::normalAttack()
+{
+}
+
 void MiniBoss01::addPhysic()
 {
-	auto physicsBody = PhysicsBody::createBox(this->getSprite()->getContentSize());
+	auto physicsBody = PhysicsBody::createBox(this->getSprite()->getContentSize() - Size(80, 30));
 	physicsBody->setGravityEnable(false);
 	physicsBody->setRotationEnable(false);
 	physicsBody->setContactTestBitmask(true);
