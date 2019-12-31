@@ -75,6 +75,9 @@
     <ClCompile Include="..\Classes\OptionsLayer.cpp">
       <Filter>src\Layer</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\HealthBarLayer.cpp">
+      <Filter>src\Layer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -126,6 +129,9 @@
       <Filter>src\Scene</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\OptionsLayer.h">
+      <Filter>src\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\HealthBarLayer.h">
       <Filter>src\Layer</Filter>
     </ClInclude>
   </ItemGroup>

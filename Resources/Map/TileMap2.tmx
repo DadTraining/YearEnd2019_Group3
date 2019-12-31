@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="70" height="67" tilewidth="32" tileheight="32" infinite="0" nextlayerid="25" nextobjectid="29">
+<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="70" height="67" tilewidth="32" tileheight="32" infinite="0" nextlayerid="25" nextobjectid="52">
  <tileset firstgid="1" name="meta_tiles" tilewidth="32" tileheight="32" spacing="1" margin="1" tilecount="2" columns="2">
   <image source="meta_tiles.png" width="67" height="34"/>
   <tile id="0">
@@ -1091,6 +1091,29 @@
   <object id="26" name="Enemy" type="2" x="1420.67" y="742.667"/>
   <object id="27" name="Enemy" type="2" x="1501.33" y="606.667"/>
   <object id="28" name="Enemy" type="2" x="1840" y="692.667"/>
+  <object id="29" name="Villager" type="3" x="1493.33" y="1272"/>
+  <object id="30" name="Villager" type="3" x="1689.33" y="1193.33"/>
+  <object id="31" name="Villager" type="3" x="1144" y="1221.33"/>
+  <object id="32" name="Villager" type="3" x="950.667" y="1141.33"/>
+  <object id="33" name="Villager" type="3" x="1013.33" y="945.333"/>
+  <object id="34" name="Villager" type="3" x="1028" y="725.333"/>
+  <object id="35" name="Villager" type="3" x="1113.33" y="981.333"/>
+  <object id="36" name="Villager" type="3" x="1064" y="621.333"/>
+  <object id="37" name="Villager" type="3" x="1090.67" y="829.333"/>
+  <object id="38" name="Villager" type="3" x="1238" y="658"/>
+  <object id="39" name="Villager" type="3" x="1196" y="740"/>
+  <object id="40" name="Villager" type="3" x="1286" y="1208"/>
+  <object id="41" name="Villager" type="3" x="1224.24" y="1536.36"/>
+  <object id="42" name="Villager" type="3" x="1063.64" y="1396.97"/>
+  <object id="43" name="Villager" type="3" x="1175.76" y="1372.73"/>
+  <object id="44" name="Villager" type="3" x="1966.67" y="1342.42"/>
+  <object id="45" name="Villager" type="3" x="1396.97" y="863.636"/>
+  <object id="46" name="Villager" type="3" x="1466.67" y="978.788"/>
+  <object id="47" name="Villager" type="3" x="1321.21" y="1036.36"/>
+  <object id="48" name="Villager" type="3" x="1600" y="1096.97"/>
+  <object id="49" name="Villager" type="3" x="1824.24" y="1087.88"/>
+  <object id="50" name="Villager" type="3" x="1890.91" y="966.667"/>
+  <object id="51" name="Villager" type="3" x="1903.03" y="781.818"/>
  </objectgroup>
  <layer id="6" name="Villagers" width="70" height="67">
   <data encoding="csv">

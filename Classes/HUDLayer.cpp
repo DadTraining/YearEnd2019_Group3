@@ -66,6 +66,7 @@ void HudLayer::CreateJoystick(Layer * layer)
 	leftJoystick = joystickBase->getJoystick();
 	activeRunRange = thumb->getBoundingBox().size.height / 2;
 	layer->addChild(joystickBase);
+	addHealthBar();
 }
 
 void HudLayer::UpdateJoystick(float dt)
@@ -159,6 +160,7 @@ void HudLayer::update(float dt)
 		targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
 		targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
 	}
+	
 }
 
 void HudLayer::setMap(TMXTiledMap * map)
@@ -175,6 +177,17 @@ HudLayer::~HudLayer()
 {
 }
 
+void HudLayer::addVilagerPoint()
+{
+	_numCollected++;
+}
+
+void HudLayer::addHealthBar()
+{
+	healthBar = HealthBarLayer::createLayer();
+	this->addChild(healthBar);
+}
+
 void HudLayer::createCameraHUD()
 {
 	cameraHUD = Camera::create();
@@ -182,9 +195,3 @@ void HudLayer::createCameraHUD()
 	this->setCameraMask((unsigned short)CameraFlag::USER2);
 	targetScene->addChild(cameraHUD);
 }
-
-void HudLayer::addVilagerPoint()
-{
-	_numCollected++;
-}
-
