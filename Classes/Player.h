@@ -31,6 +31,7 @@ public:
 	void setDamage(float* damage);
 	//----
 	void normalAttack();
+	void gotHit();
 	//----
 
 	Sprite* getSprite();

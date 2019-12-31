@@ -184,6 +184,19 @@ void Player::normalAttack()
 	}
 }
 
+void Player::gotHit()
+{
+	playerSprite->stopAllActions();
+	auto animation = this->getHitAnimate();
+	animation->setTag(TAG_ANIMATE_HIT);
+	playerSprite->runAction(animation);
+	auto emitter = CCParticleSystemQuad::create("Resources/Effect/Player/player_got_hit.plist");
+	emitter->setPosition(playerSprite->getPosition());
+	emitter->setScale(m_SCALE / 8);
+	targetScene->addChild(emitter);
+	emitter->setAutoRemoveOnFinish(true);
+}
+
 Sprite * Player::getSprite()
 {
 	return this->playerSprite;

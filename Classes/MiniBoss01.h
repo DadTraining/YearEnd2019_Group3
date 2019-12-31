@@ -36,7 +36,7 @@ public:
 	//---
 	//Attack
 	void normalAttack();
-
+	void gotHit();
 	// Add physics
 	void addPhysic();
 	void setIndex(int index);

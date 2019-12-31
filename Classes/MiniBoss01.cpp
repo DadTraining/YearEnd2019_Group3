@@ -113,7 +113,6 @@ void MiniBoss01::init()
 	targetScene->addChild(m_slash->getSprite());
 }
 
-
 void MiniBoss01::setSprite(Sprite * sprite)
 {
 	this->sprite = sprite;
@@ -205,6 +204,15 @@ void MiniBoss01::normalAttack()
 	else {
 		m_slash->getSprite()->setPosition(this->getSprite()->getPosition() + Vec2(distance, 0));
 	}
+}
+
+void MiniBoss01::gotHit()
+{
+	this->sprite->stopAllActions();
+	auto animation = this->getHitAnimate();
+	animation->setTag(TAG_ANIMATE_HIT);
+	this->sprite->runAction(animation);
+	
 }
 
 void MiniBoss01::update(float deltaTime)

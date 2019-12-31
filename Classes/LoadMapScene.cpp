@@ -192,28 +192,23 @@ bool LoadMapScene::onContactBegin(cocos2d::PhysicsContact & contact)
 		|| (a->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK && b->getCollisionBitmask() == Model::BITMASK_ENEMY))
 	{
 		HUD->addVilagerPoint();
+		if (a->getCollisionBitmask() == Model::BITMASK_ENEMY)
+		{
+			Skeletons.at(a->getGroup())->gotHit();
+		}
+		else if (b->getCollisionBitmask() == Model::BITMASK_ENEMY)
+		{
+			Skeletons.at(b->getGroup())->gotHit();
+		}
 	}
 	// Skeleton attack player
 	if ((a->getCollisionBitmask() == Model::BITMASK_ENEMY1_ATTACK && b->getCollisionBitmask() == Model::BITMASK_PLAYER)
 		|| (a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_ENEMY1_ATTACK))
 	{
 		HUD->addVilagerPoint();
-		playerGotHit();
+		player->gotHit();
 	}
 	return false;
-}
-
-void LoadMapScene::playerGotHit()
-{
-	m_player->stopAllActions();
-	auto animation = player->getHitAnimate();
-	animation->setTag(TAG_ANIMATE_HIT);
-	m_player->runAction(animation);
-	auto emitter = CCParticleSystemQuad::create("Resources/Effect/Player/player_got_hit.plist");
-	emitter->setPosition(m_player->getPosition());
-	emitter->setScale(m_SCALE / 8);
-	this->addChild(emitter);
-	emitter->setAutoRemoveOnFinish(true);
 }
 
 void LoadMapScene::addHud()

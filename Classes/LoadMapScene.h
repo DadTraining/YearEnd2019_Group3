@@ -45,7 +45,6 @@ public:
 	void addListener();
 	bool onContactBegin(cocos2d::PhysicsContact& contact);
 	// A method to hide the villager
-	void playerGotHit();
 	// --------------------------------
 	// Extra method to create joystick
 	// --------------------------------
