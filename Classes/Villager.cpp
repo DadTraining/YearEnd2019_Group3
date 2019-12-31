@@ -18,7 +18,7 @@ void Villager::init()
 	this->addPhysic();
 }
 
-void Villager::update()
+void Villager::update(float dt)
 {
 }
 
@@ -65,4 +65,6 @@ Animate * Villager::getIdleAnimate()
 
 void Villager::Die()
 {
+	auto fade = FadeOut::create(0.5f);
+	this->getSprite()->runAction(fade->clone());
 }

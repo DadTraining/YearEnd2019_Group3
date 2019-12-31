@@ -182,6 +182,14 @@ bool LoadMapScene::onContactBegin(cocos2d::PhysicsContact & contact)
 		|| (a->getCollisionBitmask() == Model::BITMASK_VILLAGER && b->getCollisionBitmask() == Model::BITMASK_PLAYER))
 	{
 		HUD->addVilagerPoint();
+		if (a->getCollisionBitmask() == Model::BITMASK_VILLAGER)
+		{
+			this->villageCollected(b->getNode());
+		}
+		else if (b->getCollisionBitmask() == Model::BITMASK_VILLAGER)
+		{
+			this->villageCollected(b->getNode());
+		}
 	}
 	// player attack enemy
 	if ((a->getCollisionBitmask() == Model::BITMASK_ENEMY && b->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK)
@@ -202,6 +210,17 @@ bool LoadMapScene::onContactBegin(cocos2d::PhysicsContact & contact)
 	return false;
 }
 
+void LoadMapScene::villageCollected(Node * node)
+{
+	auto callbackHide = CallFunc::create([node]()
+	{
+		node->removeFromParent();
+	});
+	auto fade = FadeOut::create(0.5f);
+	auto sequence = Sequence::create(fade, callbackHide, nullptr);
+	node->runAction(sequence);
+}
+
 void LoadMapScene::addHud()
 {
 	HUD = new HudLayer(this, player, m_tileMap);
@@ -215,6 +234,10 @@ void LoadMapScene::update(float dt)
 	for (int i = 0; i < Skeletons.size(); i++)
 	{
 		Skeletons[i]->update(dt);
+	}
+	for (int i = 0; i < villagers.size(); i++)
+	{
+		villagers[i]->update(dt);
 	}
 }
 

@@ -13,7 +13,7 @@ public:
 	Villager(Scene* scene);
 	~Villager();
 	void init();
-	void update();
+	void update(float dt);
 	void createIdleAnimation();
 	void addPhysic();
 	Sprite* getSprite();

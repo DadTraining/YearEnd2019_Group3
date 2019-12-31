@@ -33,7 +33,6 @@ public:
 	Animate* getDeadAnimate();
 	float* getHP();
 	float* getDamage();
-
 	//---
 	//Attack
 	void normalAttack();
