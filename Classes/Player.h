@@ -32,6 +32,7 @@ public:
 
 	//----
 	void normalAttack();
+	void gotHit();
 	//----
 
 	Sprite* getSprite();

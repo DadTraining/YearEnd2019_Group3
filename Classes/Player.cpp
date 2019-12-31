@@ -166,7 +166,7 @@ void Player::setHP(float* hP)
 	this->hP = hP;
 }
 
-void Player::setDamage(float * damage)
+void Player::setDamage(float* damage)
 {
 	this->damage = damage;
 }
@@ -174,13 +174,34 @@ void Player::normalAttack()
 {
 	auto isLeft = this->getSprite()->isFlippedX();
 	auto distance = this->getSprite()->getContentSize().width / 2 - 10;
+	Vec2 position;
+	auto emitter = CCParticleSystemQuad::create("Resources/Effect/Player/normal_attack.plist");
+	emitter->setScale(m_SCALE / 16);
+	targetScene->addChild(emitter);
+	emitter->setAutoRemoveOnFinish(true);
 	if (isLeft)
 	{
-		m_slash->getSprite()->setPosition(this->getSprite()->getPosition() - Vec2(distance, 0));
+		emitter->setRotation(180);
+		position = Vec2(this->getSprite()->getPosition() - Vec2(distance, 0));		
 	}
 	else {
-		m_slash->getSprite()->setPosition(this->getSprite()->getPosition() + Vec2(distance, 0));
+		position = Vec2(this->getSprite()->getPosition() + Vec2(distance, 0));
 	}
+	emitter->setPosition(position);
+	m_slash->getSprite()->setPosition(position);
+}
+
+void Player::gotHit()
+{
+	playerSprite->stopAllActions();
+	auto animation = this->getHitAnimate();
+	animation->setTag(TAG_ANIMATE_HIT);
+	playerSprite->runAction(animation);
+	auto emitter = CCParticleSystemQuad::create("Resources/Effect/Player/player_got_hit.plist");
+	emitter->setPosition(playerSprite->getPosition());
+	emitter->setScale(m_SCALE / 8);
+	targetScene->addChild(emitter);
+	emitter->setAutoRemoveOnFinish(true);
 }
 
 Sprite * Player::getSprite()

@@ -38,8 +38,11 @@ void LoadMapScene::menuCloseCallback(Ref* pSender)
 void LoadMapScene::SpawnPlayer()
 {
 	// ---
+	//number of Villager
+	int numberOfVillager = 0;
+	int numberOfSkeleton = 0;
+	// ---
 	auto objects = m_objectGroup->getObjects();
-
 	for (int i = 0; i < objects.size(); i++)
 	{
 		auto object = objects.at(i);
@@ -60,15 +63,15 @@ void LoadMapScene::SpawnPlayer()
 		}
 		else if (type == Model::MAIN_VILLAGER_TYPE)
 		{
-			auto villagerSprite = Sprite::create("Resources/sprites/Village/Idle/idle-1.png");
-			villagerSprite->setPosition(Vec2(posX, posY));
-			villagers.push_back(villagerSprite);
-			auto physicBody = PhysicsBody::createBox(villagerSprite->getContentSize());
-			villagerSprite->setPhysicsBody(physicBody);
-			physicBody->setDynamic(false);
-			physicBody->setCollisionBitmask(Model::BITMASK_VILLAGER);
-			physicBody->setContactTestBitmask(true);
-			addChild(villagerSprite);
+			auto villager = new Villager(this);
+			villager->setIndex(villagers.size());
+			villagers.push_back(villager);
+			SpriteFrameCache::getInstance()->removeSpriteFrames();
+			villager->getSprite()->setPosition(Vec2(posX, posY));
+			auto animation = RepeatForever::create(villager->getIdleAnimate());
+			animation->setTag(TAG_ANIMATE_IDLE1);
+			villager->getSprite()->runAction(animation);
+			addChild(villager->getSprite());
 		}
 		else if (type == Model::MAIN_MONSTER_TYPE)
 		{
@@ -176,22 +179,35 @@ bool LoadMapScene::onContactBegin(cocos2d::PhysicsContact & contact)
 		|| (a->getCollisionBitmask() == Model::BITMASK_VILLAGER && b->getCollisionBitmask() == Model::BITMASK_PLAYER))
 	{
 		HUD->addVilagerPoint();
+		if (a->getCollisionBitmask() == Model::BITMASK_VILLAGER)
+		{
+			villagers.at(a->getGroup())->Die();
+		}
+		else if (b->getCollisionBitmask() == Model::BITMASK_VILLAGER)
+		{
+			villagers.at(b->getGroup())->Die();
+		}
 	}
 	// player attack enemy
 	if ((a->getCollisionBitmask() == Model::BITMASK_ENEMY && b->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK)
 		|| (a->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK && b->getCollisionBitmask() == Model::BITMASK_ENEMY))
 	{
 		HUD->addVilagerPoint();
+		if (a->getCollisionBitmask() == Model::BITMASK_ENEMY)
+		{
+			Skeletons.at(a->getGroup())->gotHit();
+		}
+		else if (b->getCollisionBitmask() == Model::BITMASK_ENEMY)
+		{
+			Skeletons.at(b->getGroup())->gotHit();
+		}
 	}
 	// Skeleton attack player
 	if ((a->getCollisionBitmask() == Model::BITMASK_ENEMY1_ATTACK && b->getCollisionBitmask() == Model::BITMASK_PLAYER)
 		|| (a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_ENEMY1_ATTACK))
 	{
 		HUD->addVilagerPoint();
-		m_player->stopAllActions();
-		auto animation = player->getHitAnimate();
-		animation->setTag(TAG_ANIMATE_HIT);
-		m_player->runAction(animation);
+		player->gotHit();
 	}
 	return false;
 }
@@ -267,6 +283,10 @@ void LoadMapScene::update(float dt)
 		Skeletons[i]->update(dt);
 	}
 	checkConditionsToMiniBoss01Move();
+	for (int i = 0; i < villagers.size(); i++)
+	{
+		villagers[i]->update(dt);
+	}
 }
 
 
