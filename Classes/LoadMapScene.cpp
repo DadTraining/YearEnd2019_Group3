@@ -37,8 +37,11 @@ void LoadMapScene::menuCloseCallback(Ref* pSender)
 void LoadMapScene::SpawnPlayer()
 {
 	// ---
+	//number of Villager
+	int numberOfVillager = 0;
+	int numberOfSkeleton = 0;
+	// ---
 	auto objects = m_objectGroup->getObjects();
-
 	for (int i = 0; i < objects.size(); i++)
 	{
 		auto object = objects.at(i);
@@ -59,16 +62,8 @@ void LoadMapScene::SpawnPlayer()
 		}
 		else if (type == Model::MAIN_VILLAGER_TYPE)
 		{
-			/*auto villagerSprite = Sprite::create("Resources/sprites/Village/Idle/idle-1.png");
-			villagerSprite->setPosition(Vec2(posX, posY));
-			villagers.push_back(villagerSprite);
-			auto physicBody = PhysicsBody::createBox(villagerSprite->getContentSize());
-			villagerSprite->setPhysicsBody(physicBody);
-			physicBody->setDynamic(false);
-			physicBody->setCollisionBitmask(Model::BITMASK_VILLAGER);
-			physicBody->setContactTestBitmask(true);
-			addChild(villagerSprite);*/
 			auto villager = new Villager(this);
+			villager->setIndex(villagers.size());
 			villagers.push_back(villager);
 			SpriteFrameCache::getInstance()->removeSpriteFrames();
 			villager->getSprite()->setPosition(Vec2(posX, posY));
@@ -79,14 +74,15 @@ void LoadMapScene::SpawnPlayer()
 		}
 		else if (type == Model::MAIN_MONSTER_TYPE)
 		{
-			auto boss = new MiniBoss01(this);
-			Skeletons.push_back(boss);
+			auto skeleton = new MiniBoss01(this);
+			skeleton->setIndex(Skeletons.size());
+			Skeletons.push_back(skeleton);
 			SpriteFrameCache::getInstance()->removeSpriteFrames();
-			boss->getSprite()->setPosition(Vec2(posX, posY));
-			auto animation = RepeatForever::create(boss->getAttackAnimate());
+			skeleton->getSprite()->setPosition(Vec2(posX, posY));
+			auto animation = RepeatForever::create(skeleton->getAttackAnimate());
 			animation->setTag(TAG_ANIMATE_ATTACK);
-			boss->getSprite()->runAction(animation);
-			addChild(boss->getSprite());
+			skeleton->getSprite()->runAction(animation);
+			addChild(skeleton->getSprite());
 		}
  	}
 }
@@ -184,11 +180,11 @@ bool LoadMapScene::onContactBegin(cocos2d::PhysicsContact & contact)
 		HUD->addVilagerPoint();
 		if (a->getCollisionBitmask() == Model::BITMASK_VILLAGER)
 		{
-			this->villageCollected(b->getNode());
+			villagers.at(a->getGroup())->Die();
 		}
 		else if (b->getCollisionBitmask() == Model::BITMASK_VILLAGER)
 		{
-			this->villageCollected(b->getNode());
+			villagers.at(b->getGroup())->Die();
 		}
 	}
 	// player attack enemy
@@ -202,23 +198,22 @@ bool LoadMapScene::onContactBegin(cocos2d::PhysicsContact & contact)
 		|| (a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_ENEMY1_ATTACK))
 	{
 		HUD->addVilagerPoint();
-		m_player->stopAllActions();
-		auto animation = player->getHitAnimate();
-		animation->setTag(TAG_ANIMATE_HIT);
-		m_player->runAction(animation);
+		playerGotHit();
 	}
 	return false;
 }
 
-void LoadMapScene::villageCollected(Node * node)
+void LoadMapScene::playerGotHit()
 {
-	auto callbackHide = CallFunc::create([node]()
-	{
-		node->removeFromParent();
-	});
-	auto fade = FadeOut::create(0.5f);
-	auto sequence = Sequence::create(fade, callbackHide, nullptr);
-	node->runAction(sequence);
+	m_player->stopAllActions();
+	auto animation = player->getHitAnimate();
+	animation->setTag(TAG_ANIMATE_HIT);
+	m_player->runAction(animation);
+	auto emitter = CCParticleSystemQuad::create("Resources/Effect/Player/player_got_hit.plist");
+	emitter->setPosition(m_player->getPosition());
+	emitter->setScale(m_SCALE / 8);
+	this->addChild(emitter);
+	emitter->setAutoRemoveOnFinish(true);
 }
 
 void LoadMapScene::addHud()

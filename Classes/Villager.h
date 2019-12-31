@@ -19,5 +19,5 @@ public:
 	Sprite* getSprite();
 	Animate* getIdleAnimate();
 	void Die();
-	
+	void setIndex(int index);
 };

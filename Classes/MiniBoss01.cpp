@@ -227,3 +227,8 @@ void MiniBoss01::addPhysic()
 	physicsBody->setCollisionBitmask(Model::BITMASK_ENEMY);
 	this->getSprite()->setPhysicsBody(physicsBody);
 }
+
+void MiniBoss01::setIndex(int index)
+{
+	this->getSprite()->getPhysicsBody()->setGroup(index);
+}

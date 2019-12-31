@@ -39,6 +39,7 @@ public:
 
 	// Add physics
 	void addPhysic();
+	void setIndex(int index);
 	//---
 private:
 	Sprite* sprite;

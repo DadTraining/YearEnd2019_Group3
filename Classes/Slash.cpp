@@ -11,7 +11,7 @@ void Slash::init()
 {
 	m_Sprite = Sprite::create();
 	m_Sprite->setVisible(false);
-	auto physicBody = PhysicsBody::createBox(Size(50, 120));
+	auto physicBody = PhysicsBody::createBox(Size(100, 120));
 	physicBody->setDynamic(false);
 	physicBody->setContactTestBitmask(true);
 	m_Sprite->setPhysicsBody(physicBody);

@@ -166,7 +166,7 @@ void Player::setHP(float* hP)
 	this->hP = hP;
 }
 
-void Player::setDamage(float * damage)
+void Player::setDamage(float* damage)
 {
 	this->damage = damage;
 }

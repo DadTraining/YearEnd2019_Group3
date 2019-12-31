@@ -65,6 +65,17 @@ Animate * Villager::getIdleAnimate()
 
 void Villager::Die()
 {
+	auto villagerSprite = this->getSprite();
+	auto callbackHide = CallFunc::create([villagerSprite]()
+	{
+		villagerSprite->removeFromParent();
+	});
 	auto fade = FadeOut::create(0.5f);
-	this->getSprite()->runAction(fade->clone());
+	auto sequence = Sequence::create(fade, callbackHide, nullptr);
+	villagerSprite->runAction(sequence);
+}
+
+void Villager::setIndex(int index)
+{
+	this->getSprite()->getPhysicsBody()->setGroup(index);
 }
