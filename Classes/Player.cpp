@@ -175,13 +175,21 @@ void Player::normalAttack()
 {
 	auto isLeft = this->getSprite()->isFlippedX();
 	auto distance = this->getSprite()->getContentSize().width / 2 - 10;
+	Vec2 position;
+	auto emitter = CCParticleSystemQuad::create("Resources/Effect/Player/normal_attack.plist");
+	emitter->setScale(m_SCALE / 16);
+	targetScene->addChild(emitter);
+	emitter->setAutoRemoveOnFinish(true);
 	if (isLeft)
 	{
-		m_slash->getSprite()->setPosition(this->getSprite()->getPosition() - Vec2(distance, 0));
+		emitter->setRotation(180);
+		position = Vec2(this->getSprite()->getPosition() - Vec2(distance, 0));		
 	}
 	else {
-		m_slash->getSprite()->setPosition(this->getSprite()->getPosition() + Vec2(distance, 0));
+		position = Vec2(this->getSprite()->getPosition() + Vec2(distance, 0));
 	}
+	emitter->setPosition(position);
+	m_slash->getSprite()->setPosition(position);
 }
 
 void Player::gotHit()

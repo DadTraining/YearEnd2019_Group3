@@ -73,6 +73,11 @@ void Villager::Die()
 	auto fade = FadeOut::create(0.5f);
 	auto sequence = Sequence::create(fade, callbackHide, nullptr);
 	villagerSprite->runAction(sequence);
+	auto emitter = CCParticleSystemQuad::create("Resources/Effect/Villager/collected_effect.plist");
+	emitter->setPosition(sprite->getPosition());
+	emitter->setScale(m_SCALE / 32);
+	targetScene->addChild(emitter);
+	emitter->setAutoRemoveOnFinish(true);
 }
 
 void Villager::setIndex(int index)
