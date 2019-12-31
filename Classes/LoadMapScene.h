@@ -8,7 +8,7 @@
 #include "SneakyJoystickSkinnedBase.h"
 #include "HUDLayer.h"
 #include "MiniBoss01.h"
-
+#include "Villager.h"
 
 using namespace cocos2d;
 class LoadMapScene : public cocos2d::Scene
@@ -24,7 +24,7 @@ private:
 	Player* player;
 	//enemy
 	vector<MiniBoss01*> Skeletons;
-	vector<Sprite*> villagers;
+	vector<Villager*> villagers;
 	TMXObjectGroup* m_objectGroup;
 	// private variable for joystick adding
 	HudLayer* HUD;

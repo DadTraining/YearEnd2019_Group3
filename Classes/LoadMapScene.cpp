@@ -59,7 +59,7 @@ void LoadMapScene::SpawnPlayer()
 		}
 		else if (type == Model::MAIN_VILLAGER_TYPE)
 		{
-			auto villagerSprite = Sprite::create("Resources/sprites/Village/Idle/idle-1.png");
+			/*auto villagerSprite = Sprite::create("Resources/sprites/Village/Idle/idle-1.png");
 			villagerSprite->setPosition(Vec2(posX, posY));
 			villagers.push_back(villagerSprite);
 			auto physicBody = PhysicsBody::createBox(villagerSprite->getContentSize());
@@ -67,7 +67,15 @@ void LoadMapScene::SpawnPlayer()
 			physicBody->setDynamic(false);
 			physicBody->setCollisionBitmask(Model::BITMASK_VILLAGER);
 			physicBody->setContactTestBitmask(true);
-			addChild(villagerSprite);
+			addChild(villagerSprite);*/
+			auto villager = new Villager(this);
+			villagers.push_back(villager);
+			SpriteFrameCache::getInstance()->removeSpriteFrames();
+			villager->getSprite()->setPosition(Vec2(posX, posY));
+			auto animation = RepeatForever::create(villager->getIdleAnimate());
+			animation->setTag(TAG_ANIMATE_IDLE1);
+			villager->getSprite()->runAction(animation);
+			addChild(villager->getSprite());
 		}
 		else if (type == Model::MAIN_MONSTER_TYPE)
 		{
