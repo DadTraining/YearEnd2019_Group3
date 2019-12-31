@@ -78,7 +78,7 @@ void LoadMapScene::SpawnPlayer()
 			SpriteFrameCache::getInstance()->removeSpriteFrames();
 			boss->getSprite()->setPosition(Vec2(posX, posY));
 			auto animation = RepeatForever::create(boss->getIdleAnimate());
-			animation->setTag(TAG_ANIMATE_ATTACK);
+			animation->setTag(TAG_ANIMATE_IDLE1);
 			boss->getSprite()->runAction(animation);
 			addChild(boss->getSprite());
 		}
@@ -204,10 +204,30 @@ void LoadMapScene::addHud()
 void LoadMapScene::checkConditionsToMiniBoss01Move()
 {
 	for (int i = 0; i < Skeletons.size(); i++) {
+		auto rpAttackAnimate = RepeatForever::create(Skeletons[i]->getAttackAnimate());
+		rpAttackAnimate->setTag(TAG_ANIMATE_ATTACK);
+		auto rpRunAnimate = RepeatForever::create(Skeletons[i]->getRunAnimate());
+		rpRunAnimate->setTag(TAG_ANIMATE_RUN);
 		auto range = std::sqrt(pow((Skeletons[i]->getSprite()->getPosition().x - player->getSprite()->getPosition().x), 2) + pow((Skeletons[i]->getSprite()->getPosition().y - player->getSprite()->getPosition().y), 2));
 		if (range < 300) {
 			auto vectorMove = Vec2(player->getSprite()->getPosition().x - Skeletons[i]->getSprite()->getPosition().x, player->getSprite()->getPosition().y - Skeletons[i]->getSprite()->getPosition().y);
 			Skeletons[i]->getSprite()->getPhysicsBody()->setVelocity(vectorMove*SPEED_MB01);
+			if (Skeletons[i]->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_IDLE1) > 0) {
+				Skeletons[i]->getSprite()->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
+				Skeletons[i]->getSprite()->runAction(rpRunAnimate);
+			}
+			if ((player->getSprite()->getPosition().y < (Skeletons[i]->getSprite()->getPosition().y + 50)) && player->getSprite()->getPosition().y >(Skeletons[i]->getSprite()->getPosition().y - 50)&&std::sqrt(pow(player->getSprite()->getPosition().x -Skeletons[i]->getSprite()->getPosition().x, 2))<100) {
+				if (Skeletons[i]->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_RUN) > 0) {
+					Skeletons[i]->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
+					Skeletons[i]->getSprite()->runAction(rpAttackAnimate);
+				}
+			}
+			else {
+				if (Skeletons[i]->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) > 0) {
+					Skeletons[i]->getSprite()->stopAllActionsByTag(TAG_ANIMATE_ATTACK);
+					Skeletons[i]->getSprite()->runAction(rpRunAnimate);
+				}
+			}
 		}
 		else {
 			auto vectorMove = Vec2(Skeletons[i]->getPosSpawn().x - Skeletons[i]->getSprite()->getPosition().x, Skeletons[i]->getPosSpawn().y - Skeletons[i]->getSprite()->getPosition().y);
@@ -215,11 +235,6 @@ void LoadMapScene::checkConditionsToMiniBoss01Move()
 		}
 	}
 }
-
-void LoadMapScene::checkConditionsToMiniBoss01Attack()
-{
-}
-
 void LoadMapScene::update(float dt)
 {
 	setViewPointCenter(this->m_player->getPosition());
