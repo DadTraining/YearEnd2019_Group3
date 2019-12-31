@@ -93,7 +93,7 @@ void HudLayer::UpdateJoystick(float dt)
 				targetPlayer->getSprite()->runAction(rpAnimateRun);
 			}
 		}
-		targetPlayer->getSprite()->getPhysicsBody()->setVelocity(pos * SPEED);
+		targetPlayer->getSprite()->getPhysicsBody()->setVelocity(pos * SPEED_PLAYER);
 
 		//m_tiledMap->setPosition(m_tiledMap->getPosition() - pos / (SPEED * 2));
 	}

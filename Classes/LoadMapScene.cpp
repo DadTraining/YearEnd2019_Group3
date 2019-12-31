@@ -246,12 +246,15 @@ void LoadMapScene::checkConditionsToMiniBoss01Move()
 			if (Skeletons[i]->getPosSpawn().x < Skeletons[i]->getSprite()->getPosition().x) {
 				Skeletons[i]->getSprite()->setFlipX(180);
 			}
-			if (Skeletons[i]->getPosSpawn().x== Skeletons[i]->getSprite()->getPosition().x &&Skeletons[i]->getPosSpawn().y == Skeletons[i]->getSprite()->getPosition().y) {
+			if (Skeletons[i]->getPosSpawn()==Skeletons[i]->getSprite()->getPosition()) {
 				if (Skeletons[i]->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_RUN) > 0) {
 					Skeletons[i]->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
 					Skeletons[i]->getSprite()->runAction(rpIdleAnimate);
 				}
+				
 			}
+			
+			
 		}
 	}
 }
