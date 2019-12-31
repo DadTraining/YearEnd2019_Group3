@@ -7,7 +7,9 @@
 #define TAG_ANIMATE_ATTACK 131
 #define TAG_ENEMY_ATTACK TAG_ANIMATE_ATTACK + 1
 #define SPEED 5.0f
+#define SPEED_MB01 0.6f
 #define m_SCALE 4.0f
+#define TIME_MOVE_TO_PLAYER 10
 class Model
 {
 public:

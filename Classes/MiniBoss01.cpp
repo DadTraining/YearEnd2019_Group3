@@ -154,6 +154,11 @@ void MiniBoss01::setDamage(float * damage)
 	this->damage = damage;
 }
 
+void MiniBoss01::setPosSpawn(Point point)
+{
+	this->posSpawn = point;
+}
+
 Sprite * MiniBoss01::getSprite()
 {
 	return this->sprite;
@@ -192,6 +197,11 @@ float * MiniBoss01::getHP()
 float * MiniBoss01::getDamage()
 {
 	return this->damage;
+}
+
+Point MiniBoss01::getPosSpawn()
+{
+	return this->posSpawn;
 }
 
 void MiniBoss01::normalAttack()

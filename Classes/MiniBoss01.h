@@ -24,6 +24,8 @@ public:
 	void setDeadAnimate(Animate* deadAnimate);
 	void setHP(float* hP);
 	void setDamage(float* damage);
+	void setPosSpawn(Point point);
+	
 
 	Sprite* getSprite();
 	Animate* getAttackAnimate();
@@ -33,7 +35,7 @@ public:
 	Animate* getDeadAnimate();
 	float* getHP();
 	float* getDamage();
-
+	Point getPosSpawn();
 	//---
 	//Attack
 	void normalAttack();
@@ -41,10 +43,12 @@ public:
 	// Add physics
 	void addPhysic();
 	//---
+	
 private:
 	Sprite* sprite;
 	Animate *attackAnimate, *idleAnimate, *hitAnimate, *runAnimate, *deadAnimate;
 	float *hP, *damage;
 	Slash* m_slash;
 	Scene* targetScene;
+	Point posSpawn;
 };

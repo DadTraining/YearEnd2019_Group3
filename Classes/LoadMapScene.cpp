@@ -2,6 +2,7 @@
 #include "LoadMapScene.h"
 #include "SimpleAudioEngine.h"
 #include "Model.h"
+
 USING_NS_CC;
 
 Scene* LoadMapScene::createScene()
@@ -72,10 +73,11 @@ void LoadMapScene::SpawnPlayer()
 		else if (type == Model::MAIN_MONSTER_TYPE)
 		{
 			auto boss = new MiniBoss01(this);
+			boss->setPosSpawn(Vec2(posX, posY));
 			Skeletons.push_back(boss);
 			SpriteFrameCache::getInstance()->removeSpriteFrames();
 			boss->getSprite()->setPosition(Vec2(posX, posY));
-			auto animation = RepeatForever::create(boss->getAttackAnimate());
+			auto animation = RepeatForever::create(boss->getIdleAnimate());
 			animation->setTag(TAG_ANIMATE_ATTACK);
 			boss->getSprite()->runAction(animation);
 			addChild(boss->getSprite());
@@ -199,6 +201,24 @@ void LoadMapScene::addHud()
 	HUD = new HudLayer(this, player, m_tileMap);
 	HUD->setMap(m_tileMap);
 }
+void LoadMapScene::checkConditionsToMiniBoss01Move()
+{
+	for (int i = 0; i < Skeletons.size(); i++) {
+		auto range = std::sqrt(pow((Skeletons[i]->getSprite()->getPosition().x - player->getSprite()->getPosition().x), 2) + pow((Skeletons[i]->getSprite()->getPosition().y - player->getSprite()->getPosition().y), 2));
+		if (range < 300) {
+			auto vectorMove = Vec2(player->getSprite()->getPosition().x - Skeletons[i]->getSprite()->getPosition().x, player->getSprite()->getPosition().y - Skeletons[i]->getSprite()->getPosition().y);
+			Skeletons[i]->getSprite()->getPhysicsBody()->setVelocity(vectorMove*SPEED_MB01);
+		}
+		else {
+			auto vectorMove = Vec2(Skeletons[i]->getPosSpawn().x - Skeletons[i]->getSprite()->getPosition().x, Skeletons[i]->getPosSpawn().y - Skeletons[i]->getSprite()->getPosition().y);
+			Skeletons[i]->getSprite()->getPhysicsBody()->setVelocity(vectorMove*SPEED_MB01);
+		}
+	}
+}
+
+void LoadMapScene::checkConditionsToMiniBoss01Attack()
+{
+}
 
 void LoadMapScene::update(float dt)
 {
@@ -208,6 +228,7 @@ void LoadMapScene::update(float dt)
 	{
 		Skeletons[i]->update(dt);
 	}
+	checkConditionsToMiniBoss01Move();
 }
 
 

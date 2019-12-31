@@ -102,7 +102,9 @@ void HudLayer::UpdateJoystick(float dt)
 		if (targetPlayer->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_HIT) == 0)
 		{
 			targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
-			targetPlayer->getSprite()->runAction(rpAnimateIdle);
+			if (targetPlayer->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_IDLE1) == 0) {
+				targetPlayer->getSprite()->runAction(rpAnimateIdle);
+			}
 		}
 			targetPlayer->getSprite()->getPhysicsBody()->setVelocity(Vec2(0, 0));
 		

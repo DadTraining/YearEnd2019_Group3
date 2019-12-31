@@ -170,7 +170,6 @@ void Player::setDamage(float * damage)
 {
 	this->damage = damage;
 }
-
 void Player::normalAttack()
 {
 	auto isLeft = this->getSprite()->isFlippedX();

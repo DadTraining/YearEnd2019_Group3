@@ -29,6 +29,7 @@ public:
 	void setDeadAnimate(Animate* deadAnimate);
 	void setHP(float* hP);
 	void setDamage(float* damage);
+
 	//----
 	void normalAttack();
 	//----

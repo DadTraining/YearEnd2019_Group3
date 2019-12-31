@@ -50,6 +50,13 @@ public:
 	// --------------------------------
 	void addHud();
 	// --------------------------------
+
+	//---------------------------------
+
+	//Check the conditions to move
+	void checkConditionsToMiniBoss01Move();
+	//Check the conditions to attack
+	void checkConditionsToMiniBoss01Attack();
 	void update(float dt);
 };
 
