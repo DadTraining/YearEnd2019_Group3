@@ -151,9 +151,11 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\HUDLayer.cpp" />
     <ClCompile Include="..\Classes\LoadMapScene.cpp" />
+    <ClCompile Include="..\Classes\MainMenu.cpp" />
     <ClCompile Include="..\Classes\MiniBoss01.cpp" />
     <ClCompile Include="..\Classes\Model.cpp" />
     <ClCompile Include="..\Classes\Objects.cpp" />
+    <ClCompile Include="..\Classes\OptionsLayer.cpp" />
     <ClCompile Include="..\Classes\Player.cpp" />
     <ClCompile Include="..\Classes\ResourceManager.cpp" />
     <ClCompile Include="..\Classes\Slash.cpp" />
@@ -166,9 +168,11 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\HUDLayer.h" />
     <ClInclude Include="..\Classes\LoadMapScene.h" />
+    <ClInclude Include="..\Classes\MainMenu.h" />
     <ClInclude Include="..\Classes\MiniBoss01.h" />
     <ClInclude Include="..\Classes\Model.h" />
     <ClInclude Include="..\Classes\Objects.h" />
+    <ClInclude Include="..\Classes\OptionsLayer.h" />
     <ClInclude Include="..\Classes\Player.h" />
     <ClInclude Include="..\Classes\ResourceManager.h" />
     <ClInclude Include="..\Classes\Slash.h" />
