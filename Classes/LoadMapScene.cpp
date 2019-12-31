@@ -212,6 +212,12 @@ void LoadMapScene::checkConditionsToMiniBoss01Move()
 		if (range < 300) {
 			auto vectorMove = Vec2(player->getSprite()->getPosition().x - Skeletons[i]->getSprite()->getPosition().x, player->getSprite()->getPosition().y - Skeletons[i]->getSprite()->getPosition().y);
 			Skeletons[i]->getSprite()->getPhysicsBody()->setVelocity(vectorMove*SPEED_MB01);
+			if (player->getSprite()->getPosition().x < Skeletons[i]->getSprite()->getPosition().x) {
+				Skeletons[i]->getSprite()->setFlipX(180);
+			}
+			if (player->getSprite()->getPosition().x > Skeletons[i]->getSprite()->getPosition().x) {
+				Skeletons[i]->getSprite()->setFlipX(0);
+			}
 			if (Skeletons[i]->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_IDLE1) > 0) {
 				Skeletons[i]->getSprite()->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
 				Skeletons[i]->getSprite()->runAction(rpRunAnimate);
