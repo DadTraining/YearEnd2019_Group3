@@ -204,6 +204,8 @@ void LoadMapScene::addHud()
 void LoadMapScene::checkConditionsToMiniBoss01Move()
 {
 	for (int i = 0; i < Skeletons.size(); i++) {
+		auto rpIdleAnimate = RepeatForever::create(Skeletons[i]->getIdleAnimate());
+		rpIdleAnimate->setTag(TAG_ANIMATE_IDLE1);
 		auto rpAttackAnimate = RepeatForever::create(Skeletons[i]->getAttackAnimate());
 		rpAttackAnimate->setTag(TAG_ANIMATE_ATTACK);
 		auto rpRunAnimate = RepeatForever::create(Skeletons[i]->getRunAnimate());
@@ -238,6 +240,18 @@ void LoadMapScene::checkConditionsToMiniBoss01Move()
 		else {
 			auto vectorMove = Vec2(Skeletons[i]->getPosSpawn().x - Skeletons[i]->getSprite()->getPosition().x, Skeletons[i]->getPosSpawn().y - Skeletons[i]->getSprite()->getPosition().y);
 			Skeletons[i]->getSprite()->getPhysicsBody()->setVelocity(vectorMove*SPEED_MB01);
+			if (Skeletons[i]->getPosSpawn().x > Skeletons[i]->getSprite()->getPosition().x) {
+				Skeletons[i]->getSprite()->setFlipX(0);
+			}
+			if (Skeletons[i]->getPosSpawn().x < Skeletons[i]->getSprite()->getPosition().x) {
+				Skeletons[i]->getSprite()->setFlipX(180);
+			}
+			if (Skeletons[i]->getPosSpawn().x== Skeletons[i]->getSprite()->getPosition().x &&Skeletons[i]->getPosSpawn().y == Skeletons[i]->getSprite()->getPosition().y) {
+				if (Skeletons[i]->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_RUN) > 0) {
+					Skeletons[i]->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
+					Skeletons[i]->getSprite()->runAction(rpIdleAnimate);
+				}
+			}
 		}
 	}
 }
