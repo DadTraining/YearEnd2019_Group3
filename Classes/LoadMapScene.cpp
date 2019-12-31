@@ -17,6 +17,7 @@ bool LoadMapScene::init()
 	}	
 	this->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 	this->getPhysicsWorld()->setGravity(Vec2(0, 0));
+	this->getPhysicsWorld()->setSubsteps(5);
 	addMap();
 	SpawnPlayer();
 	addHud();
