@@ -27,11 +27,13 @@ public:
 	void setHitAnimate(Animate* hitAnimate);
 	void setRunAnimate(Animate* runAnimate);
 	void setDeadAnimate(Animate* deadAnimate);
-	void setHP(float* hP);
-	void setDamage(float* damage);
+	void setHP(float hP);
+	void setDamage(float damage);
 
 	//----
 	void normalAttack();
+	void increaseVillager(int num);
+	void CheckUpdate();
 	void gotHit();
 	//----
 
@@ -41,15 +43,16 @@ public:
 	Animate* getHitAnimate();
 	Animate* getRunAnimate();
 	Animate* getDeadAnimate();
-	float* getHP();
-	float* getDamage();
+	float getHP();
+	float getDamage();
 
 	void Die();
 
 private:
 	Sprite* playerSprite;
 	Animate *attackAnimate, *idleAnimate, *hitAnimate, *runAnimate, *deadAnimate;
-	float *hP, *damage;
+	float hP, damage;
 	Slash* m_slash;
 	Scene* targetScene;
+	int villagersNum;
 };

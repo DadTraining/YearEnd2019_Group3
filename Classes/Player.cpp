@@ -1,7 +1,7 @@
 #include "Player.h"
-//#include "ResourceManager.h"
 #include "SimpleAudioEngine.h"
 #include "Model.h"
+#include "Update.h"
 USING_NS_CC;
 
 Player::Player(Scene* scene) {
@@ -19,6 +19,9 @@ Player::~Player()
 
 void Player::init()
 {
+	this->damage = Update::GetInstance()->getDamageOfPlayer();
+	this->hP = Update::GetInstance()->getHPOfPlayer();
+	this->villagersNum = 0;
 	//Create sprite
 	this->playerSprite = Sprite::create("Resources/sprites/Player/idle-with-weapon-1.png");
 
@@ -119,6 +122,7 @@ void Player::update(float deltaTime)
 	{
 		this->m_slash->getSprite()->setPosition(Vec2(-1, -1));
 	}
+	CheckUpdate();
 }
 
 void Player::addPhysic()
@@ -161,12 +165,12 @@ void Player::setDeadAnimate(Animate * deadAnimate)
 	this->deadAnimate = deadAnimate;
 }
 
-void Player::setHP(float* hP)
+void Player::setHP(float hP)
 {
 	this->hP = hP;
 }
 
-void Player::setDamage(float* damage)
+void Player::setDamage(float damage)
 {
 	this->damage = damage;
 }
@@ -185,6 +189,19 @@ void Player::normalAttack()
 	m_slash->getSprite()->setPosition(position);
 }
 
+void Player::increaseVillager(int num)
+{
+	villagersNum += num;
+}
+void Player::CheckUpdate()
+{
+	if (villagersNum == 10) {
+		this->setDamage(this->getDamage() + 1);
+		this->setHP(this->getHP() + 5);
+		villagersNum = 0;
+
+	}
+}
 void Player::gotHit()
 {
 	playerSprite->stopAllActions();
@@ -196,6 +213,8 @@ void Player::gotHit()
 	emitter->setScale(m_SCALE / 8);
 	targetScene->addChild(emitter);
 	emitter->setAutoRemoveOnFinish(true);
+	auto dtHP = this->getHP() - Update::GetInstance()->getDamageOfMB1();
+	this->setHP(dtHP);
 }
 
 Sprite * Player::getSprite()
@@ -228,12 +247,12 @@ Animate * Player::getDeadAnimate()
 	return this->deadAnimate;
 }
 
-float * Player::getHP()
+float  Player::getHP()
 {
 	return this->hP;
 }
 
-float * Player::getDamage()
+float  Player::getDamage()
 {
 	return this->damage;
 }

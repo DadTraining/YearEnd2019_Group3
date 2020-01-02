@@ -10,6 +10,9 @@
 #define SPEED_MB01 0.6f
 #define m_SCALE 4.0f
 #define TIME_MOVE_TO_PLAYER 10
+#define VISION_OF_MB 300
+#define RANGE_OF_MB 100
+#include<Player.h>
 class Model
 {
 public:
@@ -25,7 +28,10 @@ public:
 	static const int MAIN_MONSTER_TYPE = 2;
 	static const int MAIN_VILLAGER_TYPE = 3;
 
+<<<<<<< HEAD
 	// Order of the map
 	static const int TREE_ORDER = 3;
+=======
+>>>>>>> f5d30c6d0b3d9b84cfddbb7cd0307a89fe061623
 };
 #endif

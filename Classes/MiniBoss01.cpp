@@ -1,5 +1,5 @@
 #include "MiniBoss01.h"
-//#include "ResourceManager.h"
+#include "Update.h"
 #include "SimpleAudioEngine.h"
 #include "Model.h"
 
@@ -19,6 +19,8 @@ MiniBoss01::~MiniBoss01()
 
 void MiniBoss01::init()
 {
+	this->damage = Update::GetInstance()->getDamageOfMB1();
+	this->hP = Update::GetInstance()->getHPOfMB1();
 	//Create sprite
 	this->sprite = Sprite::create("Resources/sprites/aMiniBoss/Idle/idle-1.png");
 	this->sprite->setScale(m_SCALE / 2);
@@ -143,12 +145,12 @@ void MiniBoss01::setDeadAnimate(Animate * deadAnimate)
 	this->deadAnimate = deadAnimate;
 }
 
-void MiniBoss01::setHP(float* hP)
+void MiniBoss01::setHP(float hP)
 {
 	this->hP = hP;
 }
 
-void MiniBoss01::setDamage(float * damage)
+void MiniBoss01::setDamage(float  damage)
 {
 	this->damage = damage;
 }
@@ -188,12 +190,12 @@ Animate * MiniBoss01::getDeadAnimate()
 	return this->deadAnimate;
 }
 
-float * MiniBoss01::getHP()
+float  MiniBoss01::getHP()
 {
 	return this->hP;
 }
 
-float * MiniBoss01::getDamage()
+float  MiniBoss01::getDamage()
 {
 	return this->damage;
 }
@@ -222,7 +224,12 @@ void MiniBoss01::gotHit()
 	auto animation = this->getHitAnimate();
 	animation->setTag(TAG_ANIMATE_HIT);
 	this->sprite->runAction(animation);
+<<<<<<< HEAD
 	// Adding the effect
+=======
+	auto dtHP = this->getHP() - Update::GetInstance()->getDamageOfPlayer();
+	this->setHP(dtHP);
+>>>>>>> f5d30c6d0b3d9b84cfddbb7cd0307a89fe061623
 	auto emitter = CCParticleSystemQuad::create("Resources/Effect/Player/player_got_hit.plist");
 	emitter->setPosition(this->getSprite()->getPosition());
 	emitter->setScale(m_SCALE / 8);
