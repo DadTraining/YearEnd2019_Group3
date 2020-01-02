@@ -113,7 +113,8 @@ void LoadMapScene::addMap()
 	m_meta = m_tileMap->layerNamed("Meta");
 	m_objectGroup = m_tileMap->getObjectGroup("Objects");
 	m_meta->setVisible(false);
-	m_villagerLayer = m_tileMap->layerNamed("Villagers");
+	auto tree = m_tileMap->layerNamed("Treetop");
+	tree->setGlobalZOrder(Model::TREE_ORDER);
 	addChild(m_tileMap, -1);
 
 }

@@ -24,5 +24,8 @@ public:
 	static const int MAIN_CHARACTER_TYPE = 1;
 	static const int MAIN_MONSTER_TYPE = 2;
 	static const int MAIN_VILLAGER_TYPE = 3;
+
+	// Order of the map
+	static const int TREE_ORDER = 3;
 };
 #endif
