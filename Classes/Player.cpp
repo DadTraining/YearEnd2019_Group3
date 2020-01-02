@@ -123,11 +123,9 @@ void Player::update(float deltaTime)
 		this->m_slash->getSprite()->setPosition(Vec2(-1, -1));
 	}
 	CheckUpdate();
-	if (this->getHP() < 0)
-	{
+	/*if (this->getHP() <= 0) {
 		this->Die();
-		this->setHP(1000);
-	}
+	}*/
 }
 
 void Player::addPhysic()
@@ -268,18 +266,6 @@ float  Player::getDamage()
 
 void Player::Die()
 {
-	if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_DIE) > 0)
-	{
-		return;
-	}
-	auto mySprite = this->getSprite();
-	mySprite->stopAllActions();
-	auto callbackHide = CallFunc::create([mySprite]()
-	{
-		mySprite->setPosition(mySprite->getPosition() - Vec2(200, 200));
-	});
-	auto dieAnimation = this->getDeadAnimate();
-	auto sequence = Sequence::create(dieAnimation, callbackHide, nullptr);
-	sequence->setTag(TAG_ANIMATE_DIE);
-	mySprite->runAction(sequence);
+	this->getSprite()->stopAllActions();
+	this->getSprite()->runAction(this->getDeadAnimate());
 }
