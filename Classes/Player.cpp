@@ -257,3 +257,14 @@ float  Player::getDamage()
 	return this->damage;
 }
 
+void Player::Die()
+{
+	auto mySprite = this->getSprite();
+	auto callbackHide = CallFunc::create([mySprite]()
+	{
+		mySprite->removeFromParent();
+	});
+	auto dieAnimation = this->getDeadAnimate();
+	auto sequence = Sequence::create(dieAnimation, callbackHide, nullptr);
+	mySprite->runAction(sequence);
+}

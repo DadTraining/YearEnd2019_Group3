@@ -28,5 +28,10 @@ public:
 	static const int MAIN_MONSTER_TYPE = 2;
 	static const int MAIN_VILLAGER_TYPE = 3;
 
+<<<<<<< HEAD
+	// Order of the map
+	static const int TREE_ORDER = 3;
+=======
+>>>>>>> f5d30c6d0b3d9b84cfddbb7cd0307a89fe061623
 };
 #endif

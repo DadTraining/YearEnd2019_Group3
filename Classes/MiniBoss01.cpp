@@ -224,6 +224,7 @@ void MiniBoss01::gotHit()
 	auto animation = this->getHitAnimate();
 	animation->setTag(TAG_ANIMATE_HIT);
 	this->sprite->runAction(animation);
+	// Adding the effect
 	auto dtHP = this->getHP() - Update::GetInstance()->getDamageOfPlayer();
 	this->setHP(dtHP);
 	auto emitter = CCParticleSystemQuad::create("Resources/Effect/Player/player_got_hit.plist");
@@ -243,6 +244,13 @@ void MiniBoss01::update(float deltaTime)
 	else {
 		this->normalAttack();
 	}
+
+	if (this->getSprite()->getNumberOfRunningActions() == 0)
+	{
+		auto animationRun = RepeatForever::create(this->getRunAnimate());
+		animationRun->setTag(TAG_ANIMATE_RUN);
+		this->getSprite()->runAction(animationRun);
+	}
 }
 
 void MiniBoss01::addPhysic()
@@ -258,4 +266,17 @@ void MiniBoss01::addPhysic()
 void MiniBoss01::setIndex(int index)
 {
 	this->getSprite()->getPhysicsBody()->setGroup(index);
+}
+
+void MiniBoss01::Die()
+{
+	this->getSprite()->stopAllActions();
+	auto mySprite = this->getSprite();
+	auto callbackHide = CallFunc::create([mySprite]()
+	{
+		mySprite->removeFromParent();
+	});
+	auto dieAnimation = this->getDeadAnimate();
+	auto sequence = Sequence::create(dieAnimation, callbackHide, nullptr);
+	mySprite->runAction(sequence);
 }

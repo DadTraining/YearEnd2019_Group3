@@ -26,7 +26,13 @@ public:
 	virtual Animate* getHitAnimate() = 0;
 	virtual Animate* getRunAnimate() = 0;
 	virtual Animate* getDeadAnimate() = 0;
+<<<<<<< HEAD
+	virtual float* getHP() = 0;
+	virtual float* getDamage() = 0;
+	virtual void Die() = 0;
+=======
 	virtual float getHP() = 0;
 	virtual float getDamage() = 0;
+>>>>>>> f5d30c6d0b3d9b84cfddbb7cd0307a89fe061623
 	
 };
