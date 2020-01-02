@@ -212,7 +212,7 @@ void LoadMapScene::mb1MoveToPlayer()
 	for (int i = 0; i < Skeletons.size(); i++) {
 		auto rpIdleAnimate = RepeatForever::create(Skeletons[i]->getIdleAnimate());
 		rpIdleAnimate->setTag(TAG_ANIMATE_IDLE1);
-		auto rpAttackAnimate = RepeatForever::create(Skeletons[i]->getAttackAnimate());
+		auto rpAttackAnimate = Skeletons[i]->getAttackAnimate();
 		rpAttackAnimate->setTag(TAG_ANIMATE_ATTACK);
 		auto rpRunAnimate = RepeatForever::create(Skeletons[i]->getRunAnimate());
 		rpRunAnimate->setTag(TAG_ANIMATE_RUN);
@@ -259,8 +259,6 @@ void LoadMapScene::mb1MoveToPlayer()
 				}
 				
 			}
-			
-			
 		}
 	}
 }
