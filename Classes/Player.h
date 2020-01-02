@@ -32,6 +32,8 @@ public:
 
 	//----
 	void normalAttack();
+	void increaseVillager(int num);
+	void CheckUpdate();
 	void gotHit();
 	//----
 
@@ -50,4 +52,5 @@ private:
 	float hP, damage;
 	Slash* m_slash;
 	Scene* targetScene;
+	int villagersNum;
 };

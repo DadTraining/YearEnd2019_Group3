@@ -21,6 +21,7 @@ void Player::init()
 {
 	this->damage = Update::GetInstance()->getDamageOfPlayer();
 	this->hP = Update::GetInstance()->getHPOfPlayer();
+	this->villagersNum = 0;
 	//Create sprite
 	this->playerSprite = Sprite::create("Resources/sprites/Player/idle-with-weapon-1.png");
 
@@ -121,6 +122,7 @@ void Player::update(float deltaTime)
 	{
 		this->m_slash->getSprite()->setPosition(Vec2(-1, -1));
 	}
+	CheckUpdate();
 }
 
 void Player::addPhysic()
@@ -193,6 +195,19 @@ void Player::normalAttack()
 	m_slash->getSprite()->setPosition(position);
 }
 
+void Player::increaseVillager(int num)
+{
+	villagersNum += num;
+}
+void Player::CheckUpdate()
+{
+	if (villagersNum == 10) {
+		this->setDamage(this->getDamage() + 1);
+		this->setHP(this->getHP() + 5);
+		villagersNum = 0;
+
+	}
+}
 void Player::gotHit()
 {
 	playerSprite->stopAllActions();

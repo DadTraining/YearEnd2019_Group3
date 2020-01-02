@@ -178,6 +178,8 @@ bool LoadMapScene::onContactBegin(cocos2d::PhysicsContact & contact)
 	if ((a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_VILLAGER)
 		|| (a->getCollisionBitmask() == Model::BITMASK_VILLAGER && b->getCollisionBitmask() == Model::BITMASK_PLAYER))
 	{
+		player->increaseVillager(1);
+		
 		HUD->addVilagerPoint();
 		if (a->getCollisionBitmask() == Model::BITMASK_VILLAGER)
 		{
