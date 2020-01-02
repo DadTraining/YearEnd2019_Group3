@@ -8,9 +8,12 @@ class Slash
 {
 private:
 	Sprite* m_Sprite;
+	int m_width;
+	int m_height;
 public:
-	Slash();
+	Slash(int width, int height);
 	void init();
 	Sprite* getSprite();
+	void createPhysics();
 	~Slash();
 };

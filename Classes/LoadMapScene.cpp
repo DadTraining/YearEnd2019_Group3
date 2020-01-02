@@ -77,6 +77,7 @@ void LoadMapScene::SpawnPlayer()
 		{
 			auto boss = new MiniBoss01(this);
 			boss->setPosSpawn(Vec2(posX, posY));
+			boss->setIndex(Skeletons.size());
 			Skeletons.push_back(boss);
 			SpriteFrameCache::getInstance()->removeSpriteFrames();
 			boss->getSprite()->setPosition(Vec2(posX, posY));
@@ -90,18 +91,6 @@ void LoadMapScene::SpawnPlayer()
 
 void LoadMapScene::setViewPointCenter(Vec2 position)
 {
-	//auto visibleSize = Director::getInstance()->getVisibleSize();
-	//int x = MAX(position.x, visibleSize.width / 2);
-	//int y = MAX(position.y, visibleSize.height / 2);
-
-	//auto borderX = m_tileMap->getMapSize().width * this->m_tileMap->getTileSize().width * m_SCALE;
-	//auto borderY = m_tileMap->getMapSize().width * this->m_tileMap->getTileSize().height * m_SCALE;
-	//x = MIN(x, borderX - visibleSize.width / 2);
-	//y = MIN(y, borderY - visibleSize.height / 2);
-
-	//auto actualPosition = Vec2(x, y);
-	//auto centerOfView = Vec2(visibleSize.width / 2, visibleSize.height / 2);
-	//auto viewPoint = Vec2(centerOfView.x - actualPosition.x, centerOfView.y - actualPosition.y);
 	this->getDefaultCamera()->setPosition(position);
 }
 

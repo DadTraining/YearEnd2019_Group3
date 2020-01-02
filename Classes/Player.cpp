@@ -108,7 +108,7 @@ void Player::init()
 	// Adding the physic to player
 	addPhysic();
 	// init slash
-	m_slash = new Slash;
+	m_slash = new Slash(150, 150);
 	m_slash->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_NORMAL_ATTACK);
 	targetScene->addChild(m_slash->getSprite());
 }
@@ -175,19 +175,13 @@ void Player::normalAttack()
 	auto isLeft = this->getSprite()->isFlippedX();
 	auto distance = this->getSprite()->getContentSize().width / 2 - 10;
 	Vec2 position;
-	auto emitter = CCParticleSystemQuad::create("Resources/Effect/Player/normal_attack.plist");
-	emitter->setScale(m_SCALE / 16);
-	targetScene->addChild(emitter);
-	emitter->setAutoRemoveOnFinish(true);
 	if (isLeft)
 	{
-		emitter->setRotation(180);
 		position = Vec2(this->getSprite()->getPosition() - Vec2(distance, 0));		
 	}
 	else {
 		position = Vec2(this->getSprite()->getPosition() + Vec2(distance, 0));
 	}
-	emitter->setPosition(position);
 	m_slash->getSprite()->setPosition(position);
 }
 
