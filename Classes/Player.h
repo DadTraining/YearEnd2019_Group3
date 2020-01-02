@@ -44,6 +44,8 @@ public:
 	float* getHP();
 	float* getDamage();
 
+	void Die();
+
 private:
 	Sprite* playerSprite;
 	Animate *attackAnimate, *idleAnimate, *hitAnimate, *runAnimate, *deadAnimate;

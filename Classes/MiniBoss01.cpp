@@ -263,3 +263,16 @@ void MiniBoss01::setIndex(int index)
 {
 	this->getSprite()->getPhysicsBody()->setGroup(index);
 }
+
+void MiniBoss01::Die()
+{
+	this->getSprite()->stopAllActions();
+	auto mySprite = this->getSprite();
+	auto callbackHide = CallFunc::create([mySprite]()
+	{
+		mySprite->removeFromParent();
+	});
+	auto dieAnimation = this->getDeadAnimate();
+	auto sequence = Sequence::create(dieAnimation, callbackHide, nullptr);
+	mySprite->runAction(sequence);
+}

@@ -28,5 +28,6 @@ public:
 	virtual Animate* getDeadAnimate() = 0;
 	virtual float* getHP() = 0;
 	virtual float* getDamage() = 0;
+	virtual void Die() = 0;
 	
 };
