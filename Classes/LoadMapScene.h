@@ -54,7 +54,7 @@ public:
 	//---------------------------------
 
 	//Check the conditions to move
-	void checkConditionsToMiniBoss01Move();
+	void mb1MoveToPlayer();
 	void update(float dt);
 };
 

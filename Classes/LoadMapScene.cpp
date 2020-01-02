@@ -217,7 +217,8 @@ void LoadMapScene::addHud()
 	HUD = new HudLayer(this, player, m_tileMap);
 	HUD->setMap(m_tileMap);
 }
-void LoadMapScene::checkConditionsToMiniBoss01Move()
+
+void LoadMapScene::mb1MoveToPlayer()
 {
 	for (int i = 0; i < Skeletons.size(); i++) {
 		auto rpIdleAnimate = RepeatForever::create(Skeletons[i]->getIdleAnimate());
@@ -274,6 +275,7 @@ void LoadMapScene::checkConditionsToMiniBoss01Move()
 		}
 	}
 }
+
 void LoadMapScene::update(float dt)
 {
 	setViewPointCenter(this->m_player->getPosition());
@@ -282,7 +284,7 @@ void LoadMapScene::update(float dt)
 	{
 		Skeletons[i]->update(dt);
 	}
-	checkConditionsToMiniBoss01Move();
+	mb1MoveToPlayer();
 	for (int i = 0; i < villagers.size(); i++)
 	{
 		villagers[i]->update(dt);

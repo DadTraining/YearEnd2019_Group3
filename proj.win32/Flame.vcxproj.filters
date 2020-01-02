@@ -19,7 +19,10 @@
     <Filter Include="src\Layer">
       <UniqueIdentifier>{17894463-f9e7-4228-84e2-f6242aaee25e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Classes\Object">
+    <Filter Include="src\Sneaky">
+      <UniqueIdentifier>{10e2c26c-c60f-40e6-9458-da623e28ad0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Object">
       <UniqueIdentifier>{cb0c0805-ee4d-44d5-8d6b-7451e77047cd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -36,20 +39,8 @@
     <ClCompile Include="..\Classes\LoadMapScene.cpp">
       <Filter>src\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Objects.cpp">
-      <Filter>src\Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Player.cpp">
-      <Filter>src\Classes</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\HUDLayer.cpp">
       <Filter>src\Layer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\SneakyJoystickSkinnedBase.cpp">
-      <Filter>src\Layer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\SneakyJoystick.cpp">
-      <Filter>src\Classes</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Model.cpp">
       <Filter>src\Classes</Filter>
@@ -58,16 +49,10 @@
       <Filter>src\Classes</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\MiniBoss01.cpp">
-      <Filter>src\Classes\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Objects.cpp">
-      <Filter>src\Classes\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Player.cpp">
-      <Filter>src\Classes\Object</Filter>
+      <Filter>src\Object</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Villager.cpp">
-      <Filter>src\Classes\Object</Filter>
+      <Filter>src\Object</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\MainMenu.cpp">
       <Filter>src\Scene</Filter>
@@ -77,6 +62,24 @@
     </ClCompile>
     <ClCompile Include="..\Classes\HealthBarLayer.cpp">
       <Filter>src\Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Objects.cpp">
+      <Filter>src\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Player.cpp">
+      <Filter>src\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SneakyJoystick.cpp">
+      <Filter>src\Sneaky</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SneakyJoystickSkinnedBase.cpp">
+      <Filter>src\Sneaky</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Objects.cpp">
+      <Filter>src\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Player.cpp">
+      <Filter>src\Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -92,20 +95,8 @@
     <ClInclude Include="..\Classes\LoadMapScene.h">
       <Filter>src\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Objects.h">
-      <Filter>src\Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Player.h">
-      <Filter>src\Classes</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\HUDLayer.h">
       <Filter>src\Layer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\SneakyJoystickSkinnedBase.h">
-      <Filter>src\Layer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\SneakyJoystick.h">
-      <Filter>src\Classes</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Model.h">
       <Filter>src\Classes</Filter>
@@ -114,16 +105,10 @@
       <Filter>src\Classes</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\MiniBoss01.h">
-      <Filter>src\Classes\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Objects.h">
-      <Filter>src\Classes\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Player.h">
-      <Filter>src\Classes\Object</Filter>
+      <Filter>src\Object</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Villager.h">
-      <Filter>src\Classes\Object</Filter>
+      <Filter>src\Object</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\MainMenu.h">
       <Filter>src\Scene</Filter>
@@ -133,6 +118,24 @@
     </ClInclude>
     <ClInclude Include="..\Classes\HealthBarLayer.h">
       <Filter>src\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Objects.h">
+      <Filter>src\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Player.h">
+      <Filter>src\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SneakyJoystick.h">
+      <Filter>src\Sneaky</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SneakyJoystickSkinnedBase.h">
+      <Filter>src\Sneaky</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Objects.h">
+      <Filter>src\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Player.h">
+      <Filter>src\Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
