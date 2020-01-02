@@ -110,7 +110,7 @@ void MiniBoss01::init()
 	// Add physics
 	addPhysic();
 	// init slash
-	m_slash = new Slash();
+	m_slash = new Slash(100, 100);
 	m_slash->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_ENEMY1_ATTACK);
 	targetScene->addChild(m_slash->getSprite());
 }
@@ -226,6 +226,11 @@ void MiniBoss01::gotHit()
 	this->sprite->runAction(animation);
 	auto dtHP = this->getHP() - Update::GetInstance()->getDamageOfPlayer();
 	this->setHP(dtHP);
+	auto emitter = CCParticleSystemQuad::create("Resources/Effect/Player/player_got_hit.plist");
+	emitter->setPosition(this->getSprite()->getPosition());
+	emitter->setScale(m_SCALE / 8);
+	targetScene->addChild(emitter);
+	emitter->setAutoRemoveOnFinish(true);
 	
 }
 
