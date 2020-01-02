@@ -12,6 +12,7 @@
 #define TIME_MOVE_TO_PLAYER 10
 #define VISION_OF_MB 300
 #define RANGE_OF_MB 100
+#include<Player.h>
 class Model
 {
 public:
@@ -26,5 +27,6 @@ public:
 	static const int MAIN_CHARACTER_TYPE = 1;
 	static const int MAIN_MONSTER_TYPE = 2;
 	static const int MAIN_VILLAGER_TYPE = 3;
+
 };
 #endif

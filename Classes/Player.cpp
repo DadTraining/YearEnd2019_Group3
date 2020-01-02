@@ -1,7 +1,7 @@
 #include "Player.h"
-//#include "ResourceManager.h"
 #include "SimpleAudioEngine.h"
 #include "Model.h"
+#include "Update.h"
 USING_NS_CC;
 
 Player::Player(Scene* scene) {
@@ -19,6 +19,8 @@ Player::~Player()
 
 void Player::init()
 {
+	this->damage = Update::GetInstance()->getDamageOfPlayer();
+	this->hP = Update::GetInstance()->getHPOfPlayer();
 	//Create sprite
 	this->playerSprite = Sprite::create("Resources/sprites/Player/idle-with-weapon-1.png");
 
@@ -161,12 +163,12 @@ void Player::setDeadAnimate(Animate * deadAnimate)
 	this->deadAnimate = deadAnimate;
 }
 
-void Player::setHP(float* hP)
+void Player::setHP(float hP)
 {
 	this->hP = hP;
 }
 
-void Player::setDamage(float* damage)
+void Player::setDamage(float damage)
 {
 	this->damage = damage;
 }
@@ -202,6 +204,8 @@ void Player::gotHit()
 	emitter->setScale(m_SCALE / 8);
 	targetScene->addChild(emitter);
 	emitter->setAutoRemoveOnFinish(true);
+	auto dtHP = this->getHP() - Update::GetInstance()->getDamageOfMB1();
+	this->setHP(dtHP);
 }
 
 Sprite * Player::getSprite()
@@ -234,12 +238,12 @@ Animate * Player::getDeadAnimate()
 	return this->deadAnimate;
 }
 
-float * Player::getHP()
+float  Player::getHP()
 {
 	return this->hP;
 }
 
-float * Player::getDamage()
+float  Player::getDamage()
 {
 	return this->damage;
 }
