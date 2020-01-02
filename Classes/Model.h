@@ -10,6 +10,8 @@
 #define SPEED_MB01 0.6f
 #define m_SCALE 4.0f
 #define TIME_MOVE_TO_PLAYER 10
+#define VISION_OF_MB 300
+#define RANGE_OF_MB 100
 class Model
 {
 public:

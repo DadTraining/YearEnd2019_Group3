@@ -228,7 +228,7 @@ void LoadMapScene::mb1MoveToPlayer()
 		auto rpRunAnimate = RepeatForever::create(Skeletons[i]->getRunAnimate());
 		rpRunAnimate->setTag(TAG_ANIMATE_RUN);
 		auto range = std::sqrt(pow((Skeletons[i]->getSprite()->getPosition().x - player->getSprite()->getPosition().x), 2) + pow((Skeletons[i]->getSprite()->getPosition().y - player->getSprite()->getPosition().y), 2));
-		if (range < 300) {
+		if (range < VISION_OF_MB) {
 			auto vectorMove = Vec2(player->getSprite()->getPosition().x - Skeletons[i]->getSprite()->getPosition().x, player->getSprite()->getPosition().y - Skeletons[i]->getSprite()->getPosition().y);
 			Skeletons[i]->getSprite()->getPhysicsBody()->setVelocity(vectorMove*SPEED_MB01);
 			if (player->getSprite()->getPosition().x < Skeletons[i]->getSprite()->getPosition().x) {
@@ -241,7 +241,9 @@ void LoadMapScene::mb1MoveToPlayer()
 				Skeletons[i]->getSprite()->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
 				Skeletons[i]->getSprite()->runAction(rpRunAnimate);
 			}
-			if ((player->getSprite()->getPosition().y < (Skeletons[i]->getSprite()->getPosition().y + 50)) && player->getSprite()->getPosition().y >(Skeletons[i]->getSprite()->getPosition().y - 50)&&std::sqrt(pow(player->getSprite()->getPosition().x -Skeletons[i]->getSprite()->getPosition().x, 2))<100) {
+			if ((player->getSprite()->getPosition().y < (Skeletons[i]->getSprite()->getPosition().y + 50)) &&
+				player->getSprite()->getPosition().y >(Skeletons[i]->getSprite()->getPosition().y - 50)&&
+				std::sqrt(pow(player->getSprite()->getPosition().x -Skeletons[i]->getSprite()->getPosition().x, 2))<RANGE_OF_MB) {
 				if (Skeletons[i]->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_RUN) > 0) {
 					Skeletons[i]->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
 					Skeletons[i]->getSprite()->runAction(rpAttackAnimate);
@@ -257,14 +259,18 @@ void LoadMapScene::mb1MoveToPlayer()
 		else {
 			auto vectorMove = Vec2(Skeletons[i]->getPosSpawn().x - Skeletons[i]->getSprite()->getPosition().x, Skeletons[i]->getPosSpawn().y - Skeletons[i]->getSprite()->getPosition().y);
 			Skeletons[i]->getSprite()->getPhysicsBody()->setVelocity(vectorMove*SPEED_MB01);
+			if ((Skeletons[i]->getSprite()->getPosition() < Skeletons[i]->getPosSpawn()&& Skeletons[i]->getSprite()->getPosition() > Skeletons[i]->getPosSpawn()-Vec2(5, 5))||
+				Skeletons[i]->getSprite()->getPosition() > Skeletons[i]->getPosSpawn() && Skeletons[i]->getSprite()->getPosition() < Skeletons[i]->getPosSpawn() + Vec2(5, 5)) {
+				Skeletons[i]->getSprite()->setPosition(Skeletons[i]->getPosSpawn());
+			}
 			if (Skeletons[i]->getPosSpawn().x > Skeletons[i]->getSprite()->getPosition().x) {
 				Skeletons[i]->getSprite()->setFlipX(0);
 			}
 			if (Skeletons[i]->getPosSpawn().x < Skeletons[i]->getSprite()->getPosition().x) {
 				Skeletons[i]->getSprite()->setFlipX(180);
 			}
-			if (Skeletons[i]->getPosSpawn()==Skeletons[i]->getSprite()->getPosition()) {
-				if (Skeletons[i]->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_RUN) > 0) {
+			if (Skeletons[i]->getPosSpawn().x==Skeletons[i]->getSprite()->getPosition().x) {
+				if (Skeletons[i]->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_IDLE1) == 0) {
 					Skeletons[i]->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
 					Skeletons[i]->getSprite()->runAction(rpIdleAnimate);
 				}
