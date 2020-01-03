@@ -6,6 +6,8 @@
 #include "ResourceManager.h"
 #include "OptionsLayer.h"
 #include "LoadMapScene.h"
+#include "ResultScene.h"
+
 class MainMenu : public cocos2d::Scene
 {
 public:

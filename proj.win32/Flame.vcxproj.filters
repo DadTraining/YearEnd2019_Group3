@@ -81,6 +81,12 @@
     <ClCompile Include="..\Classes\Player.cpp">
       <Filter>src\Object</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\PauseLayer.cpp">
+      <Filter>src\Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ResultScene.cpp">
+      <Filter>src\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -136,6 +142,12 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Player.h">
       <Filter>src\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PauseLayer.h">
+      <Filter>src\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ResultScene.h">
+      <Filter>src\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
