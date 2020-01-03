@@ -5,7 +5,7 @@
 #define TIME_ONE_HIT 0.1f
 #define TIME_ONE_IDLE 0.2f
 #define TIME_ONE_RUN 0.1f
-#define TIME_ONE_DEAD 0.26f
+#define TIME_ONE_DEAD 0.15f
 #define TIME_ONE_WALK 0.1f
 
 class MiniBoss01 : public Objects
@@ -22,8 +22,8 @@ public:
 	void setHitAnimate(Animate* hitAnimate);
 	void setRunAnimate(Animate* runAnimate);
 	void setDeadAnimate(Animate* deadAnimate);
-	void setHP(float* hP);
-	void setDamage(float* damage);
+	void setHP(float hP);
+	void setDamage(float damage);
 	void setPosSpawn(Point point);
 	
 
@@ -33,8 +33,8 @@ public:
 	Animate* getHitAnimate();
 	Animate* getRunAnimate();
 	Animate* getDeadAnimate();
-	float* getHP();
-	float* getDamage();
+	float getHP();
+	float getDamage();
 	Point getPosSpawn();
 	//---
 	//Attack
@@ -43,13 +43,17 @@ public:
 	// Add physics
 	void addPhysic();
 	void setIndex(int index);
+	void Die();
+	void setAlive(bool isAlive);
+	bool getAlive();
 	//---
 	
 private:
 	Sprite* sprite;
 	Animate *attackAnimate, *idleAnimate, *hitAnimate, *runAnimate, *deadAnimate;
-	float *hP, *damage;
+	float hP, damage;
 	Slash* m_slash;
 	Scene* targetScene;
 	Point posSpawn;
+	bool isAlive;
 };

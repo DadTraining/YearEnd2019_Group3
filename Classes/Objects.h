@@ -17,8 +17,8 @@ public:
 	virtual void setHitAnimate(Animate* hitAnimate) = 0;
 	virtual void setRunAnimate(Animate* runAnimate) = 0;
 	virtual void setDeadAnimate(Animate* deadAnimate) = 0;
-	virtual void setHP(float* hP) = 0;
-	virtual void setDamage(float* damage) = 0;
+	virtual void setHP(float hP) = 0;
+	virtual void setDamage(float damage) = 0;
 
 	virtual Sprite* getSprite() = 0;
 	virtual Animate* getAttackAnimate() = 0;
@@ -26,7 +26,8 @@ public:
 	virtual Animate* getHitAnimate() = 0;
 	virtual Animate* getRunAnimate() = 0;
 	virtual Animate* getDeadAnimate() = 0;
-	virtual float* getHP() = 0;
-	virtual float* getDamage() = 0;
+	virtual void Die() = 0;
+	virtual float getHP() = 0;
+	virtual float getDamage() = 0;
 	
 };

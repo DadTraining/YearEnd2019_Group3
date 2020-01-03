@@ -1,0 +1,59 @@
+#Sprite 3
+Player 14
+0 sprites/Player/Attacks/attackA.png  sprites/Player/Attacks/attackA.plist
+1 sprites/Player/Attacks/attackB.png  sprites/Player/Attacks/attackB.plist
+2 sprites/Player/Attacks/attackC.png  sprites/Player/Attacks/attackC.plist
+3 sprites/Player/Attacks/attackD.png  sprites/Player/Attacks/attackD.plist
+4 sprites/Player/Attacks/kick.png  sprites/Player/Attacks/kick.plist
+5 sprites/Player/Dead/dead.png  sprites/Player/Dead/dead.plist
+6 sprites/Player/Hit/hit-idle-behind.png  sprites/Player/Hit/hit-idle-behind.plist
+7 sprites/Player/Hit/hit-with-weapon-behind.png  sprites/Player/Hit/hit-with-weapon-behind.plist
+8 sprites/Player/Hit/hit-idle-front.png  sprites/Player/Hit/hit-idle-font.plist
+9 sprites/Player/Hit/hit-with-weapon-front.png  sprites/Player/Hit/hit-with-weapon-front.plist
+10 sprites/Player/Idle/idle.png  sprites/Player/Idle/idle.plist
+11 sprites/Player/Idle/idle-with-weapon.png  sprites/Player/Idle/idle-with-weapon.plist
+12 sprites/Player/Run/run.png  sprites/Player/Run/run.plist
+13 sprites/Player/Walk/walk-with-weapon.png  sprites/Player/Walk/walk-with-weapon.plist
+Villager 2
+0 sprites/Villager/Idle/villager-idle.png  sprites/Villager/Idle/villager-idle.plist
+1 sprites/Villager/Run/villager-run.png  sprites/Villager/Run/villager-run.plist
+Boss 7
+0 sprites/Boss/Attack/attackA.png sprites/Boss/Attack/attackA.plist
+1 sprites/Boss/Attack/attackb.png sprites/Boss/Attack/attackB.plist
+2 sprites/Boss/Attack/attackC.png sprites/Boss/Attack/attackA.plist
+3 sprites/Boss/Dead/dead.png sprites/Boss/Dead/dead.plist
+4 sprites/Boss/Hit/hit.png sprites/Boss/Hit/hit.png
+5 sprites/Boss/Idle/idle.png sprites/Boss/Idle/idle.plist
+6 sprites/Boss/Walk/walk.png sprites/Boss/Walk/walk.plist
+rEnemy 6
+0 sprites/rEnemy/Attack/attackA.png sprites/rEnemy/Attack/attackA.plist
+1 sprites/rEnemy/Attack/attackB.png sprites/rEnemy/Attack/attackB.plist
+2 sprites/rEnemy/Dead/dead.png sprites/rEnemy/Dead/dead.plist
+3 sprites/rEnemy/Hit/hit.png sprites/rEnemy/Hit/hit.plist
+4 sprites/rEnemy/Idle/idle.png sprites/rEnemy/Idle/idle.plist
+5 sprites/rEnemy/Run/run.png sprites/rEnemy/Run/run.plist
+mEnemy 6
+0 sprites/mEnemy/Attack/attackA.png sprites/mEnemy/Attack/attackA.plist
+1 sprites/mEnemy/Attack/attackB.png sprites/mEnemy/Attack/attackB.plist
+2 sprites/mEnemy/Dead/dead.png sprites/mEnemy/Dead/dead.plist
+3 sprites/mEnemy/Hit/hit.png sprites/mEnemy/Hit/hit.plist
+4 sprites/mEnemy/Idle/idle.png sprites/mEnemy/Idle/idle.plist
+5 sprites/mEnemy/Run/run.png sprites/mEnemy/Run/run.plist
+dMiniBoss 6
+0 sprites/dMiniBoss/Attack/attackA.png sprites/dMiniBoss/Attack/attackA.plist
+1 sprites/dMiniBoss/Attack/attackB.png sprites/dMiniBoss/Attack/attackB.plist
+2 sprites/dMiniBoss/Dead/dead.png sprites/dMiniBoss/Dead/dead.plist
+3 sprites/dMiniBoss/Hit/hit.png sprites/dMiniBoss/Hit/hit.plist
+4 sprites/dMiniBoss/Idle/idle.png sprites/dMiniBoss/Idle/idle.plist
+5 sprites/dMiniBoss/Run/run.png sprites/dMiniBoss/Run/run.plist
+aMiniBoss 6
+0 sprites/aMiniBoss/Attack/attackA.png sprites/aMiniBoss/Attack/attackA.plist
+1 sprites/aMiniBoss/Attack/attackB.png sprites/aMiniBoss/Attack/attackB.plist
+2 sprites/aMiniBoss/Dead/dead.png sprites/aMiniBoss/Dead/dead.plist
+3 sprites/aMiniBoss/Hit/hit.png sprites/aMiniBoss/Hit/hit.plist
+4 sprites/aMiniBoss/Idle/idle.png sprites/aMiniBoss/Idle/idle.plist
+5 sprites/aMiniBoss/Run/run.png sprites/aMiniBoss/Run/run.plist
+#Font 3
+0 fonts/arial.ttf
+1 fonts/Fool.ttf
+2 fonts/Marker Felt.ttf
