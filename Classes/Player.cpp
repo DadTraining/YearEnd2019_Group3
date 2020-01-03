@@ -70,7 +70,7 @@ void Player::init()
 		auto frame = spriteCacheDead->getSpriteFrameByName(nameAnimateDead);
 		animDead.pushBack(frame);
 	}
-	Animation* animationDead = Animation::createWithSpriteFrames(animDead, 0.26f);
+	Animation* animationDead = Animation::createWithSpriteFrames(animDead, 0.2f);
 	auto animateDead = Animate::create(animationDead);
 	animateDead->retain();
 	this->deadAnimate = animateDead;
@@ -116,17 +116,6 @@ void Player::init()
 	targetScene->addChild(m_slash->getSprite());
 }
 
-void Player::update(float deltaTime)
-{
-	if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) == 0)
-	{
-		this->m_slash->getSprite()->setPosition(Vec2(-1, -1));
-	}
-	CheckUpdate();
-	/*if (this->getHP() <= 0) {
-		this->Die();
-	}*/
-}
 
 void Player::addPhysic()
 {
@@ -196,15 +185,7 @@ void Player::increaseVillager(int num)
 {
 	villagersNum += num;
 }
-void Player::CheckUpdate()
-{
-	if (villagersNum == 10) {
-		this->setDamage(this->getDamage() + 1);
-		this->setHP(this->getHP() + 5);
-		villagersNum = 0;
 
-	}
-}
 void Player::gotHit()
 {
 	playerSprite->stopActionByTag(TAG_ANIMATE_RUN);
@@ -267,5 +248,34 @@ float  Player::getDamage()
 void Player::Die()
 {
 	this->getSprite()->stopAllActions();
-	this->getSprite()->runAction(this->getDeadAnimate());
+	auto mySprite = this->getSprite();
+	auto callbackHide = CallFunc::create([mySprite]()
+	{
+		mySprite->setPosition(4000, 4000);
+	});
+	auto dieAnimation = this->getDeadAnimate();
+	auto sequence = Sequence::create(dieAnimation, callbackHide, nullptr);
+	this->isAlive = false;
+	mySprite->runAction(sequence);
+}
+
+void Player::setAlive(bool isAlive)
+{
+	this->isAlive = isAlive;
+}
+
+bool Player::getAlive()
+{
+	return this->isAlive;
+}
+void Player::update(float deltaTime)
+{
+	if (!this->isAlive)
+	{
+		return;
+	}
+	if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) == 0)
+	{
+		this->m_slash->getSprite()->setPosition(Vec2(-1, -1));
+	}	
 }

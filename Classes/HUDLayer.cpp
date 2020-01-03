@@ -155,7 +155,11 @@ void HudLayer::CreateAttackBtn(Layer * layer)
 void HudLayer::update(float dt)
 {
 	_hudScore->setString(std::to_string(this->_numCollected));
-	UpdateJoystick(dt);
+	// if player still alive
+	if (targetPlayer->getAlive())
+	{
+		UpdateJoystick(dt);
+	}
 	if (targetPlayer->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) > 0) {
 		targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
 		targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);

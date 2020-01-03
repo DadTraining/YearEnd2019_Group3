@@ -45,8 +45,11 @@ public:
 	Animate* getDeadAnimate();
 	float getHP();
 	float getDamage();
-
 	void Die();
+
+	// getAlive
+	void setAlive(bool isAlive);
+	bool getAlive();
 
 private:
 	Sprite* playerSprite;
@@ -55,4 +58,5 @@ private:
 	Slash* m_slash;
 	Scene* targetScene;
 	int villagersNum;
+	bool isAlive;
 };

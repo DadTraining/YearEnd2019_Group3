@@ -201,7 +201,11 @@ bool LoadMapScene::onContactBegin(cocos2d::PhysicsContact & contact)
 		|| (a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_ENEMY1_ATTACK))
 	{
 		HUD->addVilagerPoint();
-		player->gotHit();
+		//player->gotHit();
+		if (player->getAlive())
+		{
+			player->Die();
+		}
 	}
 	return false;
 }
