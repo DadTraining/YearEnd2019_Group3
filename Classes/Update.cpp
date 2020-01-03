@@ -22,8 +22,8 @@ Update * Update::GetInstance()
 
 void Update::Init()
 {
-	this->damageOfPlayer = 2000.0f;
-	this->hpOfPlayer = 1000.0f;
+	this->damageOfPlayer = 100.0f;
+	this->hpOfPlayer = 10000.0f;
 	this->damageOfMB1 = 100.0f;
 	this->hpOfMB1 = 500.0f;
 }

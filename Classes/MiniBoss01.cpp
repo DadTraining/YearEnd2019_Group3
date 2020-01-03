@@ -235,6 +235,11 @@ void MiniBoss01::gotHit()
 	emitter->setScale(m_SCALE / 8);
 	targetScene->addChild(emitter);
 	emitter->setAutoRemoveOnFinish(true);
+	if (this->getHP() <= 0)
+	{
+		this->setAlive(false);
+		this->Die();
+	}
 	
 }
 
