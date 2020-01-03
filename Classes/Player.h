@@ -33,7 +33,6 @@ public:
 	//----
 	void normalAttack();
 	void increaseVillager(int num);
-	void CheckUpdate();
 	void gotHit();
 	//----
 
@@ -46,6 +45,7 @@ public:
 	float getHP();
 	float getDamage();
 	void Die();
+	int getVillagersNum();
 
 	// getAlive
 	void setAlive(bool isAlive);

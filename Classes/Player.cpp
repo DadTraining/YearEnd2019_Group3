@@ -203,6 +203,11 @@ void Player::gotHit()
 	emitter->setAutoRemoveOnFinish(true);
 	auto dtHP = this->getHP() - Update::GetInstance()->getDamageOfMB1();
 	this->setHP(dtHP);
+	if (this->getHP() <= 0)
+	{
+		this->Die();
+		this->setAlive(false);
+	}
 }
 
 Sprite * Player::getSprite()
@@ -278,4 +283,10 @@ void Player::update(float deltaTime)
 	{
 		this->m_slash->getSprite()->setPosition(Vec2(-1, -1));
 	}	
+	//this->getSprite()->setPhysicsBody(nullptr);
+}
+
+int Player::getVillagersNum()
+{
+	return this->villagersNum;
 }

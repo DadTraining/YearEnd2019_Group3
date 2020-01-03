@@ -22,9 +22,9 @@ Update * Update::GetInstance()
 
 void Update::Init()
 {
-	this->damageOfPlayer = 20.0f;
+	this->damageOfPlayer = 2000.0f;
 	this->hpOfPlayer = 1000.0f;
-	this->damageOfMB1 = 50.0f;
+	this->damageOfMB1 = 100.0f;
 	this->hpOfMB1 = 500.0f;
 }
 
@@ -46,4 +46,12 @@ float Update::getDamageOfMB1()
 float Update::getHPOfMB1()
 {
 	return this->hpOfMB1;
+}
+
+Player* Update::getPlayer()
+{
+	return player;
+}
+void Update::setPlayer(Player* player) {
+	this->player = player;
 }

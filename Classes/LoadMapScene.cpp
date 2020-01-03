@@ -2,7 +2,7 @@
 #include "LoadMapScene.h"
 #include "SimpleAudioEngine.h"
 #include "Model.h"
-
+#include "Update.h"
 USING_NS_CC;
 
 Scene* LoadMapScene::createScene()
@@ -55,6 +55,7 @@ void LoadMapScene::SpawnPlayer()
 		if (type == Model::MAIN_CHARACTER_TYPE)
 		{
 			player = new Player(this);
+			Update::GetInstance()->setPlayer(player);
 			SpriteFrameCache::getInstance()->removeSpriteFrames();
 			m_player = player->getSprite();
 			m_player->setPosition(Vec2(posX, posY));
@@ -188,12 +189,10 @@ bool LoadMapScene::onContactBegin(cocos2d::PhysicsContact & contact)
 		if (a->getCollisionBitmask() == Model::BITMASK_ENEMY)
 		{
 			Skeletons.at(a->getGroup())->gotHit();
-			Skeletons.at(a->getGroup())->Die();
 		}
 		else if (b->getCollisionBitmask() == Model::BITMASK_ENEMY)
 		{
 			Skeletons.at(b->getGroup())->gotHit();
-			Skeletons.at(b->getGroup())->Die();
 		}
 	}
 	// Skeleton attack player
@@ -201,11 +200,7 @@ bool LoadMapScene::onContactBegin(cocos2d::PhysicsContact & contact)
 		|| (a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_ENEMY1_ATTACK))
 	{
 		HUD->addVilagerPoint();
-		//player->gotHit();
-		if (player->getAlive())
-		{
-			player->Die();
-		}
+		player->gotHit();
 	}
 	return false;
 }
@@ -261,52 +256,27 @@ void LoadMapScene::mb1MoveToPlayer()
 					}
 				}
 			}
-			//else {
-			//	//player->Die();
-			//	if (Skeletons[i]->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) > 0) {
-			//		Skeletons[i]->getSprite()->stopAllActionsByTag(TAG_ANIMATE_ATTACK);
-			//		Skeletons[i]->getSprite()->runAction(rpRunAnimate);
-			//	}
-			//	Skeletons[i]->getSprite()->getPhysicsBody()->setVelocity(vectorMoveToSpawnPoint*SPEED_MB01);
-			//	if ((Skeletons[i]->getSprite()->getPosition() < Skeletons[i]->getPosSpawn() && Skeletons[i]->getSprite()->getPosition() > Skeletons[i]->getPosSpawn() - Vec2(5, 5)) ||
-			//		Skeletons[i]->getSprite()->getPosition() > Skeletons[i]->getPosSpawn() && Skeletons[i]->getSprite()->getPosition() < Skeletons[i]->getPosSpawn() + Vec2(5, 5)) {
-			//		Skeletons[i]->getSprite()->setPosition(Skeletons[i]->getPosSpawn());
-			//	}
-			//	if (Skeletons[i]->getPosSpawn().x > Skeletons[i]->getSprite()->getPosition().x) {
-			//		Skeletons[i]->getSprite()->setFlipX(0);
-			//	}
-			//	if (Skeletons[i]->getPosSpawn().x < Skeletons[i]->getSprite()->getPosition().x) {
-			//		Skeletons[i]->getSprite()->setFlipX(180);
-			//	}
-			//	if (Skeletons[i]->getPosSpawn().x == Skeletons[i]->getSprite()->getPosition().x) {
-			//		if (Skeletons[i]->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_IDLE1) == 0) {
-			//			Skeletons[i]->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
-			//			Skeletons[i]->getSprite()->runAction(rpIdleAnimate);
-			//		}
-			//	}
-			//}
-		}
-		else {
-			Skeletons[i]->getSprite()->getPhysicsBody()->setVelocity(vectorMoveToSpawnPoint*SPEED_MB01);
-			if ((Skeletons[i]->getSprite()->getPosition() < Skeletons[i]->getPosSpawn() && Skeletons[i]->getSprite()->getPosition() > Skeletons[i]->getPosSpawn() - Vec2(5, 5)) ||
-				Skeletons[i]->getSprite()->getPosition() > Skeletons[i]->getPosSpawn() && Skeletons[i]->getSprite()->getPosition() < Skeletons[i]->getPosSpawn() + Vec2(5, 5)) {
-				Skeletons[i]->getSprite()->setPosition(Skeletons[i]->getPosSpawn());
-			}
-			if (Skeletons[i]->getPosSpawn().x > Skeletons[i]->getSprite()->getPosition().x) {
-				Skeletons[i]->getSprite()->setFlipX(0);
-			}
-			if (Skeletons[i]->getPosSpawn().x < Skeletons[i]->getSprite()->getPosition().x) {
-				Skeletons[i]->getSprite()->setFlipX(180);
-			}
-			if (Skeletons[i]->getPosSpawn().x == Skeletons[i]->getSprite()->getPosition().x) {
-				if (Skeletons[i]->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_IDLE1) == 0) {
-					Skeletons[i]->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
-					Skeletons[i]->getSprite()->runAction(rpIdleAnimate);
+			else {
+				Skeletons[i]->getSprite()->getPhysicsBody()->setVelocity(vectorMoveToSpawnPoint*SPEED_MB01);
+				if ((Skeletons[i]->getSprite()->getPosition() < Skeletons[i]->getPosSpawn() && Skeletons[i]->getSprite()->getPosition() > Skeletons[i]->getPosSpawn() - Vec2(5, 5)) ||
+					Skeletons[i]->getSprite()->getPosition() > Skeletons[i]->getPosSpawn() && Skeletons[i]->getSprite()->getPosition() < Skeletons[i]->getPosSpawn() + Vec2(5, 5)) {
+					Skeletons[i]->getSprite()->setPosition(Skeletons[i]->getPosSpawn());
 				}
+				if (Skeletons[i]->getPosSpawn().x > Skeletons[i]->getSprite()->getPosition().x) {
+					Skeletons[i]->getSprite()->setFlipX(0);
+				}
+				if (Skeletons[i]->getPosSpawn().x < Skeletons[i]->getSprite()->getPosition().x) {
+					Skeletons[i]->getSprite()->setFlipX(180);
+				}
+				if (Skeletons[i]->getPosSpawn().x == Skeletons[i]->getSprite()->getPosition().x) {
+					if (Skeletons[i]->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_IDLE1) == 0) {
+						Skeletons[i]->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
+						Skeletons[i]->getSprite()->runAction(rpIdleAnimate);
+					}
 
+				}
 			}
 		}
-
 	}
 }
 
