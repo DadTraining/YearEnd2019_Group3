@@ -266,6 +266,5 @@ float  Player::getDamage()
 
 void Player::Die()
 {
-	this->getSprite()->stopAllActions();
-	this->getSprite()->runAction(this->getDeadAnimate());
+	//this->getSprite()->setPhysicsBody(nullptr);
 }
