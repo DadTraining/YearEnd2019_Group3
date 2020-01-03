@@ -16,7 +16,7 @@ bool LoadMapScene::init()
 	{
 		return false;
 	}
-	this->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	//this->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 	this->getPhysicsWorld()->setGravity(Vec2(0, 0));
 	this->getPhysicsWorld()->setSubsteps(5);
 	addMap();
@@ -275,7 +275,6 @@ void LoadMapScene::mb1MoveToPlayer()
 					Skeletons[i]->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
 					Skeletons[i]->getSprite()->runAction(rpIdleAnimate);
 				}
-
 			}
 		}
 	}
