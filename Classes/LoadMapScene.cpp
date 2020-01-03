@@ -113,7 +113,7 @@ void LoadMapScene::addMap()
 	m_meta = m_tileMap->layerNamed("Meta");
 	m_objectGroup = m_tileMap->getObjectGroup("Objects");
 	m_meta->setVisible(false);
-	auto tree = m_tileMap->layerNamed("Treetop");
+	auto tree = m_tileMap->layerNamed("TreeTop");
 	tree->setGlobalZOrder(Model::TREE_ORDER);
 	addChild(m_tileMap, -1);
 
@@ -224,7 +224,6 @@ void LoadMapScene::mb1MoveToPlayer()
 		auto vectorMoveToPlayer = Vec2(player->getSprite()->getPosition().x - Skeletons[i]->getSprite()->getPosition().x, player->getSprite()->getPosition().y - Skeletons[i]->getSprite()->getPosition().y);
 		if (range < VISION_OF_MB) {
 			if (player->getHP() > 0) {
-				if (Skeletons[i]->getHP() > 0) {
 					Skeletons[i]->getSprite()->getPhysicsBody()->setVelocity(vectorMoveToPlayer*SPEED_MB01);
 					if (player->getSprite()->getPosition().x < Skeletons[i]->getSprite()->getPosition().x) {
 						Skeletons[i]->getSprite()->setFlipX(180);
@@ -250,15 +249,8 @@ void LoadMapScene::mb1MoveToPlayer()
 							Skeletons[i]->getSprite()->runAction(rpRunAnimate);
 						}
 					}
-				}
-				/*else {
-					Skeletons[i]->Die();
-					Skeletons[i]=NULL;
-				}*/
 			}
 			else {
-				//player->Die();
-				//player->getSprite()->removeComponent(player->getSprite()->getPhysicsBody());
 				if (Skeletons[i]->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) > 0) {
 					Skeletons[i]->getSprite()->stopAllActionsByTag(TAG_ANIMATE_ATTACK);
 					Skeletons[i]->getSprite()->runAction(rpRunAnimate);
