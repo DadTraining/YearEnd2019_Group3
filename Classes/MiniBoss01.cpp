@@ -113,6 +113,9 @@ void MiniBoss01::init()
 	m_slash = new Slash(100, 100);
 	m_slash->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_ENEMY1_ATTACK);
 	targetScene->addChild(m_slash->getSprite());
+
+	// init isAlive
+	this->isAlive = true;
 }
 
 void MiniBoss01::setSprite(Sprite * sprite)
@@ -237,6 +240,10 @@ void MiniBoss01::gotHit()
 
 void MiniBoss01::update(float deltaTime)
 {
+	if (!this->getAlive())
+	{
+		return;
+	}
 	if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) == 0)
 	{
 		this->m_slash->getSprite()->setPosition(Vec2(-1, -1));
@@ -255,7 +262,7 @@ void MiniBoss01::update(float deltaTime)
 
 void MiniBoss01::addPhysic()
 {
-	auto physicsBody = PhysicsBody::createBox(this->getSprite()->getContentSize() - Size(80, 30));
+	auto physicsBody = PhysicsBody::createBox(this->getSprite()->getContentSize() - Size(80, 30), PhysicsMaterial(1.0f, 0.0f, 1.0f));
 	physicsBody->setGravityEnable(false);
 	physicsBody->setRotationEnable(false);
 	physicsBody->setContactTestBitmask(true);
@@ -276,7 +283,19 @@ void MiniBoss01::Die()
 	{
 		mySprite->removeFromParent();
 	});
+	this->isAlive = false;
+	this->m_slash->getSprite()->removeFromParent();
 	auto dieAnimation = this->getDeadAnimate();
 	auto sequence = Sequence::create(dieAnimation, callbackHide, nullptr);
 	mySprite->runAction(sequence);
+}
+
+void MiniBoss01::setAlive(bool isAlive)
+{
+	this->isAlive = isAlive;
+}
+
+bool MiniBoss01::getAlive()
+{
+	return this->isAlive;
 }

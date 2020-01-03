@@ -44,6 +44,8 @@ public:
 	void addPhysic();
 	void setIndex(int index);
 	void Die();
+	void setAlive(bool isAlive);
+	bool getAlive();
 	//---
 	
 private:
@@ -53,4 +55,5 @@ private:
 	Slash* m_slash;
 	Scene* targetScene;
 	Point posSpawn;
+	bool isAlive;
 };
