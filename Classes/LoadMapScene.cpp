@@ -113,7 +113,7 @@ void LoadMapScene::addMap()
 	m_meta = m_tileMap->layerNamed("Meta");
 	m_objectGroup = m_tileMap->getObjectGroup("Objects");
 	m_meta->setVisible(false);
-	auto tree = m_tileMap->layerNamed("Treetop");
+	auto tree = m_tileMap->layerNamed("TreeTop");
 	tree->setGlobalZOrder(Model::TREE_ORDER);
 	addChild(m_tileMap, -1);
 
@@ -252,9 +252,6 @@ void LoadMapScene::mb1MoveToPlayer()
 			}
 			else {
 				//player->Die();
-				player->getSprite()->stopAllActions();
-				auto box = Sprite::create("Resources/sprites/Player/Box.png");
-				player->setSprite(box);
 				if (Skeletons[i]->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) > 0) {
 					Skeletons[i]->getSprite()->stopAllActionsByTag(TAG_ANIMATE_ATTACK);
 					Skeletons[i]->getSprite()->runAction(rpRunAnimate);
