@@ -164,6 +164,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Slash.cpp" />
     <ClCompile Include="..\Classes\SneakyJoystick.cpp" />
     <ClCompile Include="..\Classes\SneakyJoystickSkinnedBase.cpp" />
+    <ClCompile Include="..\Classes\Update.cpp" />
     <ClCompile Include="..\Classes\Villager.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
@@ -184,6 +185,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Slash.h" />
     <ClInclude Include="..\Classes\SneakyJoystick.h" />
     <ClInclude Include="..\Classes\SneakyJoystickSkinnedBase.h" />
+    <ClInclude Include="..\Classes\Update.h" />
     <ClInclude Include="..\Classes\Villager.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>

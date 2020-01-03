@@ -1,7 +1,7 @@
 #include "Player.h"
-//#include "ResourceManager.h"
 #include "SimpleAudioEngine.h"
 #include "Model.h"
+#include "Update.h"
 USING_NS_CC;
 
 Player::Player(Scene* scene) {
@@ -19,6 +19,9 @@ Player::~Player()
 
 void Player::init()
 {
+	this->damage = Update::GetInstance()->getDamageOfPlayer();
+	this->hP = Update::GetInstance()->getHPOfPlayer();
+	this->villagersNum = 0;
 	//Create sprite
 	this->playerSprite = Sprite::create("Resources/sprites/Player/idle-with-weapon-1.png");
 
@@ -67,7 +70,7 @@ void Player::init()
 		auto frame = spriteCacheDead->getSpriteFrameByName(nameAnimateDead);
 		animDead.pushBack(frame);
 	}
-	Animation* animationDead = Animation::createWithSpriteFrames(animDead, 0.26f);
+	Animation* animationDead = Animation::createWithSpriteFrames(animDead, 0.2f);
 	auto animateDead = Animate::create(animationDead);
 	animateDead->retain();
 	this->deadAnimate = animateDead;
@@ -113,17 +116,10 @@ void Player::init()
 	targetScene->addChild(m_slash->getSprite());
 }
 
-void Player::update(float deltaTime)
-{
-	if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) == 0)
-	{
-		this->m_slash->getSprite()->setPosition(Vec2(-1, -1));
-	}
-}
 
 void Player::addPhysic()
 {
-	auto physicsBody = PhysicsBody::createBox(this->getSprite()->getContentSize() - Size(100, 30));
+	auto physicsBody = PhysicsBody::createBox(this->getSprite()->getContentSize() - Size(100, 40));
 	physicsBody->setGravityEnable(false);
 	physicsBody->setRotationEnable(false);
 	physicsBody->setContactTestBitmask(true);
@@ -161,12 +157,12 @@ void Player::setDeadAnimate(Animate * deadAnimate)
 	this->deadAnimate = deadAnimate;
 }
 
-void Player::setHP(float* hP)
+void Player::setHP(float hP)
 {
 	this->hP = hP;
 }
 
-void Player::setDamage(float* damage)
+void Player::setDamage(float damage)
 {
 	this->damage = damage;
 }
@@ -185,9 +181,18 @@ void Player::normalAttack()
 	m_slash->getSprite()->setPosition(position);
 }
 
+void Player::increaseVillager(int num)
+{
+	villagersNum += num;
+}
+
 void Player::gotHit()
 {
-	playerSprite->stopAllActions();
+	playerSprite->stopActionByTag(TAG_ANIMATE_RUN);
+	playerSprite->stopActionByTag(TAG_ANIMATE_IDLE1);
+	playerSprite->stopActionByTag(TAG_ANIMATE_HIT);
+	playerSprite->stopActionByTag(TAG_ANIMATE_ATTACK);
+
 	auto animation = this->getHitAnimate();
 	animation->setTag(TAG_ANIMATE_HIT);
 	playerSprite->runAction(animation);
@@ -196,6 +201,13 @@ void Player::gotHit()
 	emitter->setScale(m_SCALE / 8);
 	targetScene->addChild(emitter);
 	emitter->setAutoRemoveOnFinish(true);
+	auto dtHP = this->getHP() - Update::GetInstance()->getDamageOfMB1();
+	this->setHP(dtHP);
+	if (this->getHP() <= 0)
+	{
+		this->Die();
+		this->setAlive(false);
+	}
 }
 
 Sprite * Player::getSprite()
@@ -228,13 +240,53 @@ Animate * Player::getDeadAnimate()
 	return this->deadAnimate;
 }
 
-float * Player::getHP()
+float  Player::getHP()
 {
 	return this->hP;
 }
 
-float * Player::getDamage()
+float  Player::getDamage()
 {
 	return this->damage;
 }
 
+void Player::Die()
+{
+	this->getSprite()->stopAllActions();
+	auto mySprite = this->getSprite();
+	auto callbackHide = CallFunc::create([mySprite]()
+	{
+		mySprite->setPosition(4000, 4000);
+	});
+	auto dieAnimation = this->getDeadAnimate();
+	auto sequence = Sequence::create(dieAnimation, callbackHide, nullptr);
+	this->isAlive = false;
+	mySprite->runAction(sequence);
+}
+
+void Player::setAlive(bool isAlive)
+{
+	this->isAlive = isAlive;
+}
+
+bool Player::getAlive()
+{
+	return this->isAlive;
+}
+void Player::update(float deltaTime)
+{
+	if (!this->isAlive)
+	{
+		return;
+	}
+	if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) == 0)
+	{
+		this->m_slash->getSprite()->setPosition(Vec2(-1, -1));
+	}	
+	//this->getSprite()->setPhysicsBody(nullptr);
+}
+
+int Player::getVillagersNum()
+{
+	return this->villagersNum;
+}

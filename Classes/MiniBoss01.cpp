@@ -1,5 +1,5 @@
 #include "MiniBoss01.h"
-//#include "ResourceManager.h"
+#include "Update.h"
 #include "SimpleAudioEngine.h"
 #include "Model.h"
 
@@ -19,6 +19,8 @@ MiniBoss01::~MiniBoss01()
 
 void MiniBoss01::init()
 {
+	this->damage = Update::GetInstance()->getDamageOfMB1();
+	this->hP = Update::GetInstance()->getHPOfMB1();
 	//Create sprite
 	this->sprite = Sprite::create("Resources/sprites/aMiniBoss/Idle/idle-1.png");
 	this->sprite->setScale(m_SCALE / 2);
@@ -111,6 +113,9 @@ void MiniBoss01::init()
 	m_slash = new Slash(100, 100);
 	m_slash->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_ENEMY1_ATTACK);
 	targetScene->addChild(m_slash->getSprite());
+
+	// init isAlive
+	this->isAlive = true;
 }
 
 void MiniBoss01::setSprite(Sprite * sprite)
@@ -143,12 +148,12 @@ void MiniBoss01::setDeadAnimate(Animate * deadAnimate)
 	this->deadAnimate = deadAnimate;
 }
 
-void MiniBoss01::setHP(float* hP)
+void MiniBoss01::setHP(float hP)
 {
 	this->hP = hP;
 }
 
-void MiniBoss01::setDamage(float * damage)
+void MiniBoss01::setDamage(float  damage)
 {
 	this->damage = damage;
 }
@@ -188,12 +193,12 @@ Animate * MiniBoss01::getDeadAnimate()
 	return this->deadAnimate;
 }
 
-float * MiniBoss01::getHP()
+float  MiniBoss01::getHP()
 {
 	return this->hP;
 }
 
-float * MiniBoss01::getDamage()
+float  MiniBoss01::getDamage()
 {
 	return this->damage;
 }
@@ -218,20 +223,36 @@ void MiniBoss01::normalAttack()
 
 void MiniBoss01::gotHit()
 {
+	if (!this->getAlive())
+	{
+		return;
+	}
 	this->sprite->stopAllActions();
 	auto animation = this->getHitAnimate();
 	animation->setTag(TAG_ANIMATE_HIT);
 	this->sprite->runAction(animation);
+	// Adding the effect
+	auto dtHP = this->getHP() - Update::GetInstance()->getDamageOfPlayer();
+	this->setHP(dtHP);
 	auto emitter = CCParticleSystemQuad::create("Resources/Effect/Player/player_got_hit.plist");
 	emitter->setPosition(this->getSprite()->getPosition());
 	emitter->setScale(m_SCALE / 8);
 	targetScene->addChild(emitter);
 	emitter->setAutoRemoveOnFinish(true);
+	if (this->getHP() <= 0)
+	{
+		this->setAlive(false);
+		this->Die();
+	}
 	
 }
 
 void MiniBoss01::update(float deltaTime)
 {
+	if (!this->getAlive())
+	{
+		return;
+	}
 	if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) == 0)
 	{
 		this->m_slash->getSprite()->setPosition(Vec2(-1, -1));
@@ -239,11 +260,18 @@ void MiniBoss01::update(float deltaTime)
 	else {
 		this->normalAttack();
 	}
+
+	if (this->getSprite()->getNumberOfRunningActions() == 0)
+	{
+		auto animationRun = RepeatForever::create(this->getRunAnimate());
+		animationRun->setTag(TAG_ANIMATE_RUN);
+		this->getSprite()->runAction(animationRun);
+	}
 }
 
 void MiniBoss01::addPhysic()
 {
-	auto physicsBody = PhysicsBody::createBox(this->getSprite()->getContentSize() - Size(80, 30));
+	auto physicsBody = PhysicsBody::createBox(this->getSprite()->getContentSize() - Size(80, 30), PhysicsMaterial(1.0f, 0.0f, 1.0f));
 	physicsBody->setGravityEnable(false);
 	physicsBody->setRotationEnable(false);
 	physicsBody->setContactTestBitmask(true);
@@ -254,4 +282,30 @@ void MiniBoss01::addPhysic()
 void MiniBoss01::setIndex(int index)
 {
 	this->getSprite()->getPhysicsBody()->setGroup(index);
+}
+
+void MiniBoss01::Die()
+{
+	this->getSprite()->stopAllActions();
+	auto mySprite = this->getSprite();
+	auto callbackHide = CallFunc::create([mySprite]()
+	{
+		mySprite->removeFromParent();
+	});
+	this->isAlive = false;
+	this->m_slash->getSprite()->setPosition(Vec2(-1, -1));
+	//this->m_slash->getSprite()->removeFromParent();
+	auto dieAnimation = this->getDeadAnimate();
+	auto sequence = Sequence::create(dieAnimation, callbackHide, nullptr);
+	mySprite->runAction(sequence);
+}
+
+void MiniBoss01::setAlive(bool isAlive)
+{
+	this->isAlive = isAlive;
+}
+
+bool MiniBoss01::getAlive()
+{
+	return this->isAlive;
 }

@@ -7,13 +7,15 @@
 class HealthBarLayer : public cocos2d::LayerColor
 {
 private:
-	float healthPercent = 50;
+	float healthPercent;
+	float maxHP;
+	cocos2d::ui::LoadingBar* sliderhealth;
 	int numVillager = 0;
 	cocos2d::Label* textVillager;
 public:
 	static cocos2d::Layer* createLayer();
 	virtual bool init();
-	void update(float dt, int num);
+	void update(float dt);
 	CREATE_FUNC(HealthBarLayer);
 };
 
