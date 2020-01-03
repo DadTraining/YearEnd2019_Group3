@@ -223,6 +223,10 @@ void MiniBoss01::normalAttack()
 
 void MiniBoss01::gotHit()
 {
+	if (!this->getAlive())
+	{
+		return;
+	}
 	this->sprite->stopAllActions();
 	auto animation = this->getHitAnimate();
 	animation->setTag(TAG_ANIMATE_HIT);
@@ -289,7 +293,8 @@ void MiniBoss01::Die()
 		mySprite->removeFromParent();
 	});
 	this->isAlive = false;
-	this->m_slash->getSprite()->removeFromParent();
+	this->m_slash->getSprite()->setPosition(Vec2(-1, -1));
+	//this->m_slash->getSprite()->removeFromParent();
 	auto dieAnimation = this->getDeadAnimate();
 	auto sequence = Sequence::create(dieAnimation, callbackHide, nullptr);
 	mySprite->runAction(sequence);
