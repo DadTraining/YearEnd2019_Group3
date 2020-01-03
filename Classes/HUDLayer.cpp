@@ -36,6 +36,8 @@ void HudLayer::createHud()
 		_hudScore->getContentSize().height / 2 + margin));
 
 	targetScene->addChild(this, 10);
+	healthBar = HealthBarLayer::createLayer();
+	this->addChild(healthBar);
 	this->addChild(_hudScore, 0);
 	CreateJoystick(this);
 	CreateAttackBtn(this);
@@ -160,7 +162,7 @@ void HudLayer::update(float dt)
 		targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
 		targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
 	}
-	
+	//healthBar->update(dt);
 }
 
 void HudLayer::setMap(TMXTiledMap * map)
@@ -184,8 +186,6 @@ void HudLayer::addVilagerPoint()
 
 void HudLayer::addHealthBar()
 {
-	healthBar = HealthBarLayer::createLayer();
-	this->addChild(healthBar);
 }
 
 void HudLayer::createCameraHUD()

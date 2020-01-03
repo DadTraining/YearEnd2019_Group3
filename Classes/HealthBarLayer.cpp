@@ -1,4 +1,6 @@
 #include "HealthBarLayer.h"
+#include "Update.h"
+
 
 cocos2d::Layer * HealthBarLayer::createLayer()
 {
@@ -10,7 +12,7 @@ bool HealthBarLayer::init()
 	if (!LayerColor::initWithColor(cocos2d::Color4B(0, 0, 0, 0))) {
 		return false;
 	}
-
+	maxHP = Update::GetInstance()->getPlayer()->getHP();
 	auto visibleSize = cocos2d::Director::getInstance()->getVisibleSize();
 	
 	auto bg = cocos2d::Sprite::create("Resources/ui/popup/ui_ocean_popup_landscape.png");
@@ -26,9 +28,9 @@ bool HealthBarLayer::init()
 
 	auto bgHealthbar = cocos2d::Sprite::create("Resources/ui/healthbar/healthbar_1.png");
 
-	auto sliderhealth = cocos2d::ui::LoadingBar::create("Resources/ui/healthbar/healthbar_11.png");
+	sliderhealth = cocos2d::ui::LoadingBar::create("Resources/ui/healthbar/healthbar_11.png");
 	sliderhealth->setDirection(cocos2d::ui::LoadingBar::Direction::LEFT);
-	sliderhealth->setPercent(healthPercent);
+	sliderhealth->setPercent(100);
 
 	auto heart = cocos2d::Sprite::create("Resources/ui/healthbar/heart.png");
 
@@ -55,10 +57,12 @@ bool HealthBarLayer::init()
 	return true;
 }
 
-void HealthBarLayer::update(float dt, int num)
+void HealthBarLayer::update(float dt)
 {
-	this->numVillager = num;
-	textVillager->setString(std::to_string(numVillager));
+	/*this->numVillager = num;
+	textVillager->setString(std::to_string(numVillager));*/
+	this->healthPercent = Update::GetInstance()->getPlayer()->getHP() * 100 /maxHP;
+	sliderhealth->setPercent(healthPercent);
 }
 
 

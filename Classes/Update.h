@@ -2,6 +2,7 @@
 
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
+#include "Player.h"
 USING_NS_CC;
 
 class Update
@@ -12,6 +13,7 @@ private:
 	float hpOfPlayer;
 	float damageOfMB1;
 	float hpOfMB1;
+	Player* player;
 public:
 	Update();
 	~Update();
@@ -21,4 +23,6 @@ public:
 	float getHPOfPlayer();
 	float getDamageOfMB1();
 	float getHPOfMB1();
+	Player * getPlayer();
+	void setPlayer(Player* player);
 };

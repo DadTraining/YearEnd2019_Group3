@@ -2,7 +2,7 @@
 #include "LoadMapScene.h"
 #include "SimpleAudioEngine.h"
 #include "Model.h"
-
+#include "Update.h"
 USING_NS_CC;
 
 Scene* LoadMapScene::createScene()
@@ -55,6 +55,7 @@ void LoadMapScene::SpawnPlayer()
 		if (type == Model::MAIN_CHARACTER_TYPE)
 		{
 			player = new Player(this);
+			Update::GetInstance()->setPlayer(player);
 			SpriteFrameCache::getInstance()->removeSpriteFrames();
 			m_player = player->getSprite();
 			m_player->setPosition(Vec2(posX, posY));
