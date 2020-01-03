@@ -2,7 +2,7 @@
 #include "LoadMapScene.h"
 #include "SimpleAudioEngine.h"
 #include "Model.h"
-
+#include "Update.h"
 USING_NS_CC;
 
 Scene* LoadMapScene::createScene()
@@ -15,8 +15,8 @@ bool LoadMapScene::init()
 	if (!Scene::initWithPhysics())
 	{
 		return false;
-	}	
-	this->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	}
+	//this->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 	this->getPhysicsWorld()->setGravity(Vec2(0, 0));
 	this->getPhysicsWorld()->setSubsteps(5);
 	addMap();
@@ -55,6 +55,7 @@ void LoadMapScene::SpawnPlayer()
 		if (type == Model::MAIN_CHARACTER_TYPE)
 		{
 			player = new Player(this);
+			Update::GetInstance()->setPlayer(player);
 			SpriteFrameCache::getInstance()->removeSpriteFrames();
 			m_player = player->getSprite();
 			m_player->setPosition(Vec2(posX, posY));
@@ -86,7 +87,7 @@ void LoadMapScene::SpawnPlayer()
 			boss->getSprite()->runAction(animation);
 			addChild(boss->getSprite());
 		}
- 	}
+	}
 }
 
 void LoadMapScene::setViewPointCenter(Vec2 position)
@@ -113,7 +114,8 @@ void LoadMapScene::addMap()
 	m_meta = m_tileMap->layerNamed("Meta");
 	m_objectGroup = m_tileMap->getObjectGroup("Objects");
 	m_meta->setVisible(false);
-	m_villagerLayer = m_tileMap->layerNamed("Villagers");
+	auto tree = m_tileMap->layerNamed("TreeTop");
+	tree->setGlobalZOrder(Model::TREE_ORDER);
 	addChild(m_tileMap, -1);
 
 }
@@ -140,7 +142,7 @@ void LoadMapScene::createPhysics()
 			auto tileSet = m_meta->getTileAt(Vec2(i, j));
 			if (tileSet != NULL)
 			{
-				auto physics = PhysicsBody::createBox(tileSet->getContentSize(), 
+				auto physics = PhysicsBody::createBox(tileSet->getContentSize(),
 					PhysicsMaterial(1.0f, 0.0f, 1.0f));
 				physics->setCollisionBitmask(Model::BITMASK_GROUND);
 				physics->setContactTestBitmask(false);
@@ -167,6 +169,8 @@ bool LoadMapScene::onContactBegin(cocos2d::PhysicsContact & contact)
 	if ((a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_VILLAGER)
 		|| (a->getCollisionBitmask() == Model::BITMASK_VILLAGER && b->getCollisionBitmask() == Model::BITMASK_PLAYER))
 	{
+		player->increaseVillager(1);
+
 		HUD->addVilagerPoint();
 		if (a->getCollisionBitmask() == Model::BITMASK_VILLAGER)
 		{
@@ -210,36 +214,46 @@ void LoadMapScene::addHud()
 void LoadMapScene::mb1MoveToPlayer()
 {
 	for (int i = 0; i < Skeletons.size(); i++) {
+		if (!Skeletons[i]->getAlive())
+		{
+			continue;
+		}
 		auto rpIdleAnimate = RepeatForever::create(Skeletons[i]->getIdleAnimate());
 		rpIdleAnimate->setTag(TAG_ANIMATE_IDLE1);
-		auto rpAttackAnimate = RepeatForever::create(Skeletons[i]->getAttackAnimate());
+		auto rpAttackAnimate = Skeletons[i]->getAttackAnimate();
 		rpAttackAnimate->setTag(TAG_ANIMATE_ATTACK);
 		auto rpRunAnimate = RepeatForever::create(Skeletons[i]->getRunAnimate());
 		rpRunAnimate->setTag(TAG_ANIMATE_RUN);
 		auto range = std::sqrt(pow((Skeletons[i]->getSprite()->getPosition().x - player->getSprite()->getPosition().x), 2) + pow((Skeletons[i]->getSprite()->getPosition().y - player->getSprite()->getPosition().y), 2));
-		if (range < 300) {
-			auto vectorMove = Vec2(player->getSprite()->getPosition().x - Skeletons[i]->getSprite()->getPosition().x, player->getSprite()->getPosition().y - Skeletons[i]->getSprite()->getPosition().y);
-			Skeletons[i]->getSprite()->getPhysicsBody()->setVelocity(vectorMove*SPEED_MB01);
-			if (player->getSprite()->getPosition().x < Skeletons[i]->getSprite()->getPosition().x) {
-				Skeletons[i]->getSprite()->setFlipX(180);
-			}
-			if (player->getSprite()->getPosition().x > Skeletons[i]->getSprite()->getPosition().x) {
-				Skeletons[i]->getSprite()->setFlipX(0);
-			}
-			if (Skeletons[i]->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_IDLE1) > 0) {
-				Skeletons[i]->getSprite()->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
-				Skeletons[i]->getSprite()->runAction(rpRunAnimate);
-			}
-			if ((player->getSprite()->getPosition().y < (Skeletons[i]->getSprite()->getPosition().y + 50)) && player->getSprite()->getPosition().y >(Skeletons[i]->getSprite()->getPosition().y - 50)&&std::sqrt(pow(player->getSprite()->getPosition().x -Skeletons[i]->getSprite()->getPosition().x, 2))<100) {
-				if (Skeletons[i]->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_RUN) > 0) {
-					Skeletons[i]->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
-					Skeletons[i]->getSprite()->runAction(rpAttackAnimate);
+		auto vectorMoveToSpawnPoint = Vec2(Skeletons[i]->getPosSpawn().x - Skeletons[i]->getSprite()->getPosition().x, Skeletons[i]->getPosSpawn().y - Skeletons[i]->getSprite()->getPosition().y);
+		auto vectorMoveToPlayer = Vec2(player->getSprite()->getPosition().x - Skeletons[i]->getSprite()->getPosition().x, player->getSprite()->getPosition().y - Skeletons[i]->getSprite()->getPosition().y);
+		if (range < VISION_OF_MB) {
+			if (player->getHP() > 0) {
+				Skeletons[i]->getSprite()->getPhysicsBody()->setVelocity(vectorMoveToPlayer*SPEED_MB01);
+				if (player->getSprite()->getPosition().x < Skeletons[i]->getSprite()->getPosition().x) {
+					Skeletons[i]->getSprite()->setFlipX(180);
 				}
-			}
-			else {
-				if (Skeletons[i]->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) > 0) {
-					Skeletons[i]->getSprite()->stopAllActionsByTag(TAG_ANIMATE_ATTACK);
+				if (player->getSprite()->getPosition().x > Skeletons[i]->getSprite()->getPosition().x) {
+					Skeletons[i]->getSprite()->setFlipX(0);
+				}
+				if (Skeletons[i]->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_IDLE1) > 0) {
+					Skeletons[i]->getSprite()->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
 					Skeletons[i]->getSprite()->runAction(rpRunAnimate);
+				}
+				if ((player->getSprite()->getPosition().y < (Skeletons[i]->getSprite()->getPosition().y + 50)) &&
+					player->getSprite()->getPosition().y > (Skeletons[i]->getSprite()->getPosition().y - 50) &&
+					std::sqrt(pow(player->getSprite()->getPosition().x - Skeletons[i]->getSprite()->getPosition().x, 2)) < RANGE_OF_MB) {
+					if (Skeletons[i]->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_RUN) > 0) {
+						Skeletons[i]->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
+						Skeletons[i]->getSprite()->runAction(rpAttackAnimate);
+					}
+				}
+				// When player die
+				else {
+					if (Skeletons[i]->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) > 0) {
+						Skeletons[i]->getSprite()->stopAllActionsByTag(TAG_ANIMATE_ATTACK);
+						Skeletons[i]->getSprite()->runAction(rpRunAnimate);
+					}
 				}
 			}
 		}
@@ -261,7 +275,6 @@ void LoadMapScene::mb1MoveToPlayer()
 					Skeletons[i]->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
 					Skeletons[i]->getSprite()->runAction(rpIdleAnimate);
 				}
-
 			}
 		}
 	}
