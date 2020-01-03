@@ -53,14 +53,13 @@ bool HealthBarLayer::init()
 	bg->addChild(textVillager, 0);
 	this->addChild(bg, 0);
 
-	scheduleUpdate();
 	return true;
 }
 
 void HealthBarLayer::update(float dt)
 {
-	/*this->numVillager = num;
-	textVillager->setString(std::to_string(numVillager));*/
+	this->numVillager = Update::GetInstance()->getPlayer()->getVillagersNum();
+	textVillager->setString(std::to_string(numVillager));
 	this->healthPercent = Update::GetInstance()->getPlayer()->getHP() * 100 /maxHP;
 	sliderhealth->setPercent(healthPercent);
 }

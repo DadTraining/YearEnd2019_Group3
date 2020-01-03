@@ -33,7 +33,6 @@ public:
 	//----
 	void normalAttack();
 	void increaseVillager(int num);
-	void CheckUpdate();
 	void gotHit();
 	//----
 
@@ -47,6 +46,7 @@ public:
 	float getDamage();
 
 	void Die();
+	int getVillagersNum();
 
 private:
 	Sprite* playerSprite;

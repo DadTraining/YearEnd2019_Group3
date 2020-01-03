@@ -162,7 +162,7 @@ void HudLayer::update(float dt)
 		targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
 		targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
 	}
-	//healthBar->update(dt);
+	healthBar->update(dt);
 }
 
 void HudLayer::setMap(TMXTiledMap * map)

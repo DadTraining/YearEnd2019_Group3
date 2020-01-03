@@ -122,10 +122,6 @@ void Player::update(float deltaTime)
 	{
 		this->m_slash->getSprite()->setPosition(Vec2(-1, -1));
 	}
-	CheckUpdate();
-	/*if (this->getHP() <= 0) {
-		this->Die();
-	}*/
 }
 
 void Player::addPhysic()
@@ -196,15 +192,7 @@ void Player::increaseVillager(int num)
 {
 	villagersNum += num;
 }
-void Player::CheckUpdate()
-{
-	if (villagersNum == 10) {
-		this->setDamage(this->getDamage() + 1);
-		this->setHP(this->getHP() + 5);
-		villagersNum = 0;
 
-	}
-}
 void Player::gotHit()
 {
 	playerSprite->stopActionByTag(TAG_ANIMATE_RUN);
@@ -267,4 +255,9 @@ float  Player::getDamage()
 void Player::Die()
 {
 	//this->getSprite()->setPhysicsBody(nullptr);
+}
+
+int Player::getVillagersNum()
+{
+	return this->villagersNum;
 }
