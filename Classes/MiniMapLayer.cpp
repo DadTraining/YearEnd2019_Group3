@@ -45,9 +45,10 @@ void MiniMapLayer::updateMiniPlayerPosition()
 void MiniMapLayer::setMiniPlayer()
 {
 	this->currentPlayer = Update::GetInstance()->getPlayer();
-	this->miniPlayer = Sprite::create("Resources/Map/PlayerIcon.png");
-	this->miniPlayer->setScale(0.1f);
+	this->miniPlayer = Sprite::create("Resources/Map/HeroIcon.png");
+	this->miniPlayer->setScale(SCALE_MINIMAP / 2);
 	this->miniPlayer->setAnchorPoint(Vec2(0, 0));
+	this->miniPlayer->setAnchorPoint(Vec2(0.5, 0.5));
 	this->miniPlayer->setPosition(this->miniMap->getPosition());
 	this->addChild(miniPlayer);
 }
