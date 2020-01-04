@@ -12,11 +12,9 @@ bool MiniMapLayer::init()
 		return false;
 	}
 	addMinimap();
+	setMiniPlayer();
 }
 
-void MiniMapLayer::update(float dt)
-{
-}
 
 void MiniMapLayer::addMinimap()
 {
@@ -35,5 +33,26 @@ void MiniMapLayer::setPositionMiniMap()
 	auto height = visibleSize.height - minimapSize.height;
 	auto width = visibleSize.width - minimapSize.width;
 	miniMap->setPosition(width, height);
+}
 
+void MiniMapLayer::updateMiniPlayerPosition()
+{
+	auto playerCurrentPosition = this->currentPlayer->getSprite()->getPosition() * SCALE_MINIMAP / m_SCALE;
+	auto miniMapPos = this->miniMap->getPosition();
+	this->miniPlayer->setPosition(miniMapPos + playerCurrentPosition);
+}
+
+void MiniMapLayer::setMiniPlayer()
+{
+	this->currentPlayer = Update::GetInstance()->getPlayer();
+	this->miniPlayer = Sprite::create("Resources/Map/PlayerIcon.png");
+	this->miniPlayer->setScale(0.1f);
+	this->miniPlayer->setAnchorPoint(Vec2(0, 0));
+	this->miniPlayer->setPosition(this->miniMap->getPosition());
+	this->addChild(miniPlayer);
+}
+
+void MiniMapLayer::update(float dt)
+{
+	updateMiniPlayerPosition();
 }
