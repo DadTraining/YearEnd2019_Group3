@@ -7,6 +7,9 @@
 # include "SneakyJoystickSkinnedBase.h"
 #include "Player.h"
 #include "HealthBarLayer.h"
+#include "MiniMapLayer.h"
+
+
 class HudLayer : public cocos2d::Layer
 {
 private:
@@ -22,8 +25,9 @@ private:
 	float activeRunRange;
 	PhysicsBody* physicsBody;
 	Camera* cameraHUD;
-
+	// Init minimap and healthBar
 	Layer* healthBar;
+	Layer* miniMap;
 public:
 	HudLayer(cocos2d::Scene* scene, Player* player, TMXTiledMap* map);
 	bool init();
@@ -37,6 +41,7 @@ public:
 	virtual ~HudLayer();
 	void createCameraHUD();
 	void addVilagerPoint();
-	void addHealthBar();
+
+	void addMiniMap();
 };
 #endif	

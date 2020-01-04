@@ -154,6 +154,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClCompile Include="..\Classes\LoadMapScene.cpp" />
     <ClCompile Include="..\Classes\MainMenu.cpp" />
     <ClCompile Include="..\Classes\MiniBoss01.cpp" />
+    <ClCompile Include="..\Classes\MiniMapLayer.cpp" />
     <ClCompile Include="..\Classes\Model.cpp" />
     <ClCompile Include="..\Classes\Objects.cpp" />
     <ClCompile Include="..\Classes\OptionsLayer.cpp" />
@@ -173,6 +174,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClInclude Include="..\Classes\LoadMapScene.h" />
     <ClInclude Include="..\Classes\MainMenu.h" />
     <ClInclude Include="..\Classes\MiniBoss01.h" />
+    <ClInclude Include="..\Classes\MiniMapLayer.h" />
     <ClInclude Include="..\Classes\Model.h" />
     <ClInclude Include="..\Classes\Objects.h" />
     <ClInclude Include="..\Classes\OptionsLayer.h" />
