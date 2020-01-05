@@ -1,168 +1,46 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="win32">
-      <UniqueIdentifier>{84a8ebd7-7cf0-47f6-b75e-d441df67da40}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="resource">
-      <UniqueIdentifier>{715254bc-d70b-4ec5-bf29-467dd3ace079}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src">
-      <UniqueIdentifier>{bb6c862e-70e9-49d9-81b7-3829a6f50471}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Scene">
-      <UniqueIdentifier>{f5a3c733-b510-46d0-af33-00017eb2cbcd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Classes">
-      <UniqueIdentifier>{37b8f260-14f6-4eca-b7ba-4e8b58665c41}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Layer">
-      <UniqueIdentifier>{17894463-f9e7-4228-84e2-f6242aaee25e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Sneaky">
-      <UniqueIdentifier>{10e2c26c-c60f-40e6-9458-da623e28ad0b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Object">
-      <UniqueIdentifier>{cb0c0805-ee4d-44d5-8d6b-7451e77047cd}</UniqueIdentifier>
-    </Filter>
+    <ClCompile Include="..\Classes\AppDelegate.cpp" />
+    <ClCompile Include="..\Classes\HealthBarLayer.cpp" />
+    <ClCompile Include="..\Classes\HUDLayer.cpp" />
+    <ClCompile Include="..\Classes\LoadMapScene.cpp" />
+    <ClCompile Include="..\Classes\MainMenu.cpp" />
+    <ClCompile Include="..\Classes\MiniBoss01.cpp" />
+    <ClCompile Include="..\Classes\Model.cpp" />
+    <ClCompile Include="..\Classes\Objects.cpp" />
+    <ClCompile Include="..\Classes\OptionsLayer.cpp" />
+    <ClCompile Include="..\Classes\Player.cpp" />
+    <ClCompile Include="..\Classes\ResourceManager.cpp" />
+    <ClCompile Include="..\Classes\ResultScene.cpp" />
+    <ClCompile Include="..\Classes\Slash.cpp" />
+    <ClCompile Include="..\Classes\SneakyJoystick.cpp" />
+    <ClCompile Include="..\Classes\SneakyJoystickSkinnedBase.cpp" />
+    <ClCompile Include="..\Classes\Update.cpp" />
+    <ClCompile Include="..\Classes\Villager.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>win32</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\AppDelegate.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\ResourceManager.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\LoadMapScene.cpp">
-      <Filter>src\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\HUDLayer.cpp">
-      <Filter>src\Layer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Model.cpp">
-      <Filter>src\Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Slash.cpp">
-      <Filter>src\Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\MiniBoss01.cpp">
-      <Filter>src\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Villager.cpp">
-      <Filter>src\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\MainMenu.cpp">
-      <Filter>src\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\OptionsLayer.cpp">
-      <Filter>src\Layer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\HealthBarLayer.cpp">
-      <Filter>src\Layer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Objects.cpp">
-      <Filter>src\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Player.cpp">
-      <Filter>src\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\SneakyJoystick.cpp">
-      <Filter>src\Sneaky</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\SneakyJoystickSkinnedBase.cpp">
-      <Filter>src\Sneaky</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Objects.cpp">
-      <Filter>src\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Player.cpp">
-      <Filter>src\Object</Filter>
-    </ClCompile>
-<<<<<<< HEAD
-    <ClCompile Include="..\Classes\PauseLayer.cpp">
-      <Filter>src\Layer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\ResultScene.cpp">
-      <Filter>src\Scene</Filter>
-=======
-    <ClCompile Include="..\Classes\Update.cpp">
-      <Filter>src</Filter>
->>>>>>> e01a69bc59e115ec34d3b4c6931d645fa50f67e1
-    </ClCompile>
+    <ClInclude Include="..\Classes\AppDelegate.h" />
+    <ClInclude Include="..\Classes\HealthBarLayer.h" />
+    <ClInclude Include="..\Classes\HUDLayer.h" />
+    <ClInclude Include="..\Classes\LoadMapScene.h" />
+    <ClInclude Include="..\Classes\MainMenu.h" />
+    <ClInclude Include="..\Classes\MiniBoss01.h" />
+    <ClInclude Include="..\Classes\Model.h" />
+    <ClInclude Include="..\Classes\Objects.h" />
+    <ClInclude Include="..\Classes\OptionsLayer.h" />
+    <ClInclude Include="..\Classes\Player.h" />
+    <ClInclude Include="..\Classes\ResourceManager.h" />
+    <ClInclude Include="..\Classes\ResultScene.h" />
+    <ClInclude Include="..\Classes\Slash.h" />
+    <ClInclude Include="..\Classes\SneakyJoystick.h" />
+    <ClInclude Include="..\Classes\SneakyJoystickSkinnedBase.h" />
+    <ClInclude Include="..\Classes\Update.h" />
+    <ClInclude Include="..\Classes\Villager.h" />
+    <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="main.h">
-      <Filter>win32</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\AppDelegate.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\ResourceManager.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\LoadMapScene.h">
-      <Filter>src\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\HUDLayer.h">
-      <Filter>src\Layer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Model.h">
-      <Filter>src\Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Slash.h">
-      <Filter>src\Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\MiniBoss01.h">
-      <Filter>src\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Villager.h">
-      <Filter>src\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\MainMenu.h">
-      <Filter>src\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\OptionsLayer.h">
-      <Filter>src\Layer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\HealthBarLayer.h">
-      <Filter>src\Layer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Objects.h">
-      <Filter>src\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Player.h">
-      <Filter>src\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\SneakyJoystick.h">
-      <Filter>src\Sneaky</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\SneakyJoystickSkinnedBase.h">
-      <Filter>src\Sneaky</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Objects.h">
-      <Filter>src\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Player.h">
-      <Filter>src\Object</Filter>
-    </ClInclude>
-<<<<<<< HEAD
-    <ClInclude Include="..\Classes\PauseLayer.h">
-      <Filter>src\Layer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\ResultScene.h">
-      <Filter>src\Scene</Filter>
-=======
-    <ClInclude Include="..\Classes\Update.h">
-      <Filter>src</Filter>
->>>>>>> e01a69bc59e115ec34d3b4c6931d645fa50f67e1
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="game.rc">
-      <Filter>resource</Filter>
-    </ResourceCompile>
+    <ResourceCompile Include="game.rc" />
   </ItemGroup>
 </Project>
