@@ -22,6 +22,7 @@ void MiniMapLayer::addMinimap()
 	this->addChild(miniMap);
 	miniMap->setScale(SCALE_MINIMAP);
 	miniMap->setAnchorPoint(Vec2(0, 0));
+	this->setVisibleObject();
 	// Set the Position for the map
 	this->setPositionMiniMap();
 }
@@ -51,6 +52,16 @@ void MiniMapLayer::setMiniPlayer()
 	this->miniPlayer->setAnchorPoint(Vec2(0.5, 0.5));
 	this->miniPlayer->setPosition(this->miniMap->getPosition());
 	this->addChild(miniPlayer);
+}
+
+void MiniMapLayer::setVisibleObject()
+{
+	miniMap->getLayer("TreeTop")->setVisible(false);
+	miniMap->getLayer("TreeBottom")->setVisible(false);
+	miniMap->getLayer("Grass")->setVisible(false);
+	miniMap->getLayer("Statue")->setVisible(false);
+	miniMap->getLayer("Water Object")->setVisible(false);
+	miniMap->getLayer("Meta")->setVisible(false);
 }
 
 void MiniMapLayer::update(float dt)
