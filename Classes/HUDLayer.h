@@ -41,7 +41,6 @@ public:
 	virtual ~HudLayer();
 	void createCameraHUD();
 	void addVilagerPoint();
-
 	void addMiniMap();
 };
 #endif	

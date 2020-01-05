@@ -19,5 +19,6 @@ public:
 	void soundPlayerDie();
 	void soundPlayerHit();
 	void soundCollect();
+	void soundBackGroundDesert();
 	void Init();
 };

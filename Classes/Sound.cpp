@@ -44,6 +44,12 @@ void Sound::soundCollect()
 	audio->playEffect("Resources/sounds/Player/collect.wav", false, 1.0f, 1.0f, 1.0f);
 }
 
+void Sound::soundBackGroundDesert()
+{
+	auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
+	audio->playBackgroundMusic("Resources/sounds/Background/176_Barren_Wastes.mp3", true);
+}
+
 void Sound::Init()
 {
 	this->preLoadSound();
@@ -56,7 +62,7 @@ void Sound::preLoadSound()
 	audio->preloadEffect("Resources/sounds/Player/hit.mp3");
 	audio->preloadEffect("Resources/sounds/Player/die.mp3");
 	audio->preloadEffect("Resources/sounds/Player/collect.wav");
-
+	audio->preloadBackgroundMusic("Resources/sounds/Background/176_Barren_Wastes.mp3");
 }
 
 

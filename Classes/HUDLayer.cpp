@@ -203,4 +203,5 @@ void HudLayer::update(float dt)
 	}
 	healthBar->update(dt);
 	miniMap->update(dt);
+
 }
