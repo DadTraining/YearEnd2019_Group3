@@ -12,6 +12,6 @@ public:
 	
 
 private:
-	bool isDead = false;
-	int numVillager = 10;
+	bool isAlive;
+	int numVillager;
 };

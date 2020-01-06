@@ -2,6 +2,7 @@
 #include "Model.h"
 #include "Update.h"
 #include "Sound.h"
+#include "ResultScene.h"
 USING_NS_CC;
 
 Player::Player(Scene* scene) {
@@ -262,7 +263,8 @@ void Player::Die()
 	auto mySprite = this->getSprite();
 	auto callbackHide = CallFunc::create([mySprite]()
 	{
-		mySprite->setPosition(4000, 4000);
+		auto scene = ResultScene::create();
+		Director::getInstance()->replaceScene(TransitionFade::create(0.0f, scene));
 	});
 	auto dieAnimation = this->getDeadAnimate();
 	auto sequence = Sequence::create(dieAnimation, callbackHide, nullptr);

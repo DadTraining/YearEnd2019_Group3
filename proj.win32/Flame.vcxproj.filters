@@ -118,12 +118,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Classes\Objects.h">
-      <Filter>src\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Player.h">
-      <Filter>src\Object</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="..\Classes\HealthBarLayer.h">
@@ -179,6 +173,12 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ResultScene.h">
       <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Objects.h">
+      <Filter>Class</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Player.h">
+      <Filter>Class</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
