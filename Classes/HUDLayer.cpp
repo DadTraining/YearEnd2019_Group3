@@ -175,26 +175,26 @@ void HudLayer::CreateAttackBtn(Layer * layer)
 void HudLayer::CreateSkillABtn(Layer * layer)
 {
 	// init attackButton
-	skillBtn = ui::Button::create("Resources/Buttons/AttackButtonNormal.png", "Resources/Buttons/AttackButtonPressed.png");
-	layer->addChild(skillBtn);
-	skillBtn->setPosition(Vec2(1250, 300));
+	skillABtn = ui::Button::create("Resources/Buttons/AttackButtonNormal.png", "Resources/Buttons/AttackButtonPressed.png");
+	layer->addChild(skillABtn);
+	skillABtn->setPosition(Vec2(1250, 300));
 
 }
 
 void HudLayer::UpdateSkillABtn(float dt)
 {
-	skillBtn->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+	skillABtn->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
 		auto spriteCacheAttack = SpriteFrameCache::getInstance();
-		spriteCacheAttack->addSpriteFramesWithFile("Resources/sprites/Player/Attacks/attackB.plist", "Resources/sprites/Player/Attacks/attackB.png");
+		spriteCacheAttack->addSpriteFramesWithFile("Resources/sprites/Player/Attacks/attackD.plist", "Resources/sprites/Player/Attacks/attackD.png");
 		char nameAnimateAttack[50] = { 0 };
 		Vector<SpriteFrame*> animAttack;
-		for (int i = 1; i < 7; i++)
+		for (int i = 1; i < 10; i++)
 		{
-			sprintf(nameAnimateAttack, "attack-B%d.png", i);
+			sprintf(nameAnimateAttack, "attack-D%d.png", i);
 			auto frame = spriteCacheAttack->getSpriteFrameByName(nameAnimateAttack);
 			animAttack.pushBack(frame);
 		}
-		Animation* animationAtack = Animation::createWithSpriteFrames(animAttack, 0.07f);
+		Animation* animationAtack = Animation::createWithSpriteFrames(animAttack, 0.1f);
 		auto animateAttack = Animate::create(animationAtack);
 		animateAttack->retain();
 		targetPlayer->setAttackAnimate(animateAttack);
@@ -232,21 +232,21 @@ void HudLayer::UpdateSkillABtn(float dt)
 void HudLayer::CreateSkillBBtn(Layer * layer)
 {
 	// init attackButton
-	attackBtn = ui::Button::create("Resources/Buttons/AttackButtonNormal.png", "Resources/Buttons/AttackButtonPressed.png");
-	layer->addChild(attackBtn);
-	attackBtn->setPosition(Vec2(1150, 100));
-	attackBtn->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+	skillBBtn = ui::Button::create("Resources/Buttons/AttackButtonNormal.png", "Resources/Buttons/AttackButtonPressed.png");
+	layer->addChild(skillBBtn);
+	skillBBtn->setPosition(Vec2(1150, 100));
+	skillBBtn->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
 		auto spriteCacheAttack = SpriteFrameCache::getInstance();
-		spriteCacheAttack->addSpriteFramesWithFile("Resources/sprites/Player/Attacks/attackC.plist", "Resources/sprites/Player/Attacks/attackC.png");
+		spriteCacheAttack->addSpriteFramesWithFile("Resources/sprites/Player/Attacks/attackB.plist", "Resources/sprites/Player/Attacks/attackB.png");
 		char nameAnimateAttack[50] = { 0 };
 		Vector<SpriteFrame*> animAttack;
-		for (int i = 1; i < 8; i++)
+		for (int i = 1; i < 7; i++)
 		{
-			sprintf(nameAnimateAttack, "attack-C%d.png", i);
+			sprintf(nameAnimateAttack, "attack-B%d.png", i);
 			auto frame = spriteCacheAttack->getSpriteFrameByName(nameAnimateAttack);
 			animAttack.pushBack(frame);
 		}
-		Animation* animationAtack = Animation::createWithSpriteFrames(animAttack, 0.07f);
+		Animation* animationAtack = Animation::createWithSpriteFrames(animAttack, 0.1f);
 		auto animateAttack = Animate::create(animationAtack);
 		animateAttack->retain();
 		targetPlayer->setAttackAnimate(animateAttack);
@@ -280,6 +280,7 @@ void HudLayer::CreateSkillBBtn(Layer * layer)
 		}
 	});
 }
+
 
 void HudLayer::setMap(TMXTiledMap * map)
 {

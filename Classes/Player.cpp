@@ -19,9 +19,10 @@ Player::~Player()
 
 void Player::init()
 {
+	
 	this->damage = Update::GetInstance()->getDamageOfPlayer();
 	this->hP = Update::GetInstance()->getHPOfPlayer();
-	this->villagersNum = 0;
+	this->villagersNum = 10000000;
 	//Create sprite
 	this->playerSprite = Sprite::create("Resources/sprites/Player/idle-with-weapon-1.png");
 	this->playerSprite->setAnchorPoint(Vec2(0.5f, 0.5f));

@@ -18,8 +18,7 @@ private:
 	Player* targetPlayer;
 	Label* _hudScore;
 	int _numCollected;
-	ui::Button* attackBtn;
-	ui::Button* skillBtn;
+	ui::Button *attackBtn, *skillABtn, *skillBBtn;
 	// Joystick private variable
 	SneakyJoystick *leftJoystick;
 	SneakyJoystickSkinnedBase* joystickBase;
