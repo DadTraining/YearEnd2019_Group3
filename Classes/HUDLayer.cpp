@@ -1,6 +1,6 @@
 # include "Model.h"
 # include "HUDLayer.h"
-
+# include "Sound.h"
 using namespace cocos2d;
 
 HudLayer::HudLayer(Scene* scene, Player* player, TMXTiledMap* map)
@@ -38,6 +38,8 @@ void HudLayer::createHud()
 	targetScene->addChild(this, 10);
 	healthBar = HealthBarLayer::createLayer();
 	this->addChild(healthBar);
+	//Adding the minimap to the hud
+	addMiniMap();
 	this->addChild(_hudScore, 0);
 	CreateJoystick(this);
 	CreateAttackBtn(this);
@@ -68,7 +70,6 @@ void HudLayer::CreateJoystick(Layer * layer)
 	leftJoystick = joystickBase->getJoystick();
 	activeRunRange = thumb->getBoundingBox().size.height / 2;
 	layer->addChild(joystickBase);
-	addHealthBar();
 }
 
 void HudLayer::UpdateJoystick(float dt)
@@ -136,6 +137,7 @@ void HudLayer::CreateAttackBtn(Layer * layer)
 				targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
 				targetPlayer->getSprite()->runAction(rpAnimateAttack);
 				targetPlayer->normalAttack();
+				Sound::GetInstance()->soundPlayerAttack1();
 			}
 
 			break;
@@ -152,21 +154,6 @@ void HudLayer::CreateAttackBtn(Layer * layer)
 		}
 	});
 
-}
-
-void HudLayer::update(float dt)
-{
-	_hudScore->setString(std::to_string(this->_numCollected));
-	// if player still alive
-	if (targetPlayer->getAlive())
-	{
-		UpdateJoystick(dt);
-	}
-	if (targetPlayer->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) > 0) {
-		targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
-		targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
-	}
-	healthBar->update(dt);
 }
 
 void HudLayer::setMap(TMXTiledMap * map)
@@ -188,8 +175,10 @@ void HudLayer::addVilagerPoint()
 	_numCollected++;
 }
 
-void HudLayer::addHealthBar()
+void HudLayer::addMiniMap()
 {
+	miniMap = MiniMapLayer::createLayer();
+	this->addChild(miniMap);
 }
 
 void HudLayer::createCameraHUD()
@@ -198,4 +187,21 @@ void HudLayer::createCameraHUD()
 	cameraHUD->setCameraFlag(CameraFlag::USER2);
 	this->setCameraMask((unsigned short)CameraFlag::USER2);
 	targetScene->addChild(cameraHUD);
+}
+
+void HudLayer::update(float dt)
+{
+	_hudScore->setString(std::to_string(this->_numCollected));
+	// if player still alive
+	if (targetPlayer->getAlive())
+	{
+		UpdateJoystick(dt);
+	}
+	if (targetPlayer->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) > 0) {
+		targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
+		targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
+	}
+	healthBar->update(dt);
+	miniMap->update(dt);
+
 }

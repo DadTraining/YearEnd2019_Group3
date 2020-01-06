@@ -1,6 +1,7 @@
 #include "AppDelegate.h"
 # include "LoadMapScene.h"
 # include "MainMenu.h"
+# include "Sound.h"
 // #define USE_AUDIO_ENGINE 1
 // #define USE_SIMPLE_AUDIO_ENGINE 1
 
@@ -74,7 +75,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     register_all_packages();
    // ResourceManager::GetInstance()->Init("");
-
+	Sound::GetInstance()->Init();
     // create a scene. it's an autorelease object
     auto scene = MainMenu::createScene();
 
