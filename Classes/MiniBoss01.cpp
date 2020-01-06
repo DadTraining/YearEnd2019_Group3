@@ -225,6 +225,8 @@ void MiniBoss01::setAIforEnemy()
 			}
 		}
 	}
+}
+
 void MiniBoss01::Stun()
 {
 	auto delay = DelayTime::create(1.5f);
