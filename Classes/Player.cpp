@@ -222,7 +222,7 @@ void Player::createSlash()
 {
 	// create m_slashNormal
 	m_slashNormal = new Slash(50, 100);
-	m_slashNormal->setDamge(PLAYER_DAMAGE);
+	m_slashNormal->setDamge(damage);
 	m_slashNormal->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_NORMAL_ATTACK);
 	targetScene->addChild(m_slashNormal->getSprite());
 	// create m_slashSpear
@@ -234,7 +234,7 @@ void Player::createSlash()
 	m_slashUltimate = new Slash(100, 150);
 	m_slashUltimate->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_NORMAL_ATTACK);
 	targetScene->addChild(m_slashUltimate->getSprite());
-	m_slashUltimate->setDamge(Update::GetInstance()->getDamageOfPlayer() * 4);
+	m_slashUltimate->setDamge(damage * 4);
 }
 
 void Player::normalAttack()

@@ -327,7 +327,7 @@ void MiniBoss01::createSlash()
 	m_slash = new Slash(100, 100);
 	m_slash->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_ENEMY1_ATTACK);
 	targetScene->addChild(m_slash->getSprite());
-	m_slash->setDamge(SKELETON_DAMGE);
+	m_slash->setDamge(this->damage);
 }
 
 Slash * MiniBoss01::getSlash()

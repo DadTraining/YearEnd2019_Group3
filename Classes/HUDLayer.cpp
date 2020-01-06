@@ -1,6 +1,7 @@
 # include "Model.h"
 # include "HUDLayer.h"
 # include "Sound.h"
+#define MARGIN_JOYSTICK 50
 using namespace cocos2d;
 
 HudLayer::HudLayer(Scene* scene, Player* player, TMXTiledMap* map)
@@ -53,15 +54,17 @@ void HudLayer::CreateJoystick(Layer * layer)
 	auto joystick = Sprite::create("Resources/sprites/JoyStick/joystick.png");
 	Rect joystickBaseDimensions = Rect(0, 0, 40.f, 40.0f);
 	Point joystickBasePosition;
-	joystickBasePosition = Vec2(thumb->getBoundingBox().size.width / 2 + joystick->getBoundingBox().size.width / 2
-		, thumb->getBoundingBox().size.height / 2 + joystick->getBoundingBox().size.height / 2);
+	joystickBasePosition = Vec2(MARGIN_JOYSTICK + thumb->getBoundingBox().size.width / 2 + joystick->getBoundingBox().size.width / 2
+		, MARGIN_JOYSTICK + thumb->getBoundingBox().size.height / 2 + joystick->getBoundingBox().size.height / 2);
 
 	joystickBase = new SneakyJoystickSkinnedBase();
 	joystickBase->init();
 	joystickBase->setPosition(joystickBasePosition);
 	joystickBase->setBackgroundSprite(thumb);
+	joystickBase->setAnchorPoint(Vec2(0, 0));
 	joystickBase->setThumbSprite(joystick);
 	joystickBase->getThumbSprite()->setScale(0.5f);
+	joystickBase->setScale(2.0f);
 	joystick->setScale(0.5f);
 	SneakyJoystick *aJoystick = new SneakyJoystick();
 	aJoystick->initWithRect(joystickBaseDimensions);
