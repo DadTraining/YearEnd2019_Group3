@@ -28,6 +28,8 @@ private:
 	TMXObjectGroup* m_objectGroup;
 	// private variable for joystick adding
 	HudLayer* HUD;
+	// sand particle
+	cocos2d::ParticleSystemQuad* sandBackground;
 public:
     static cocos2d::Scene* createScene();
     virtual bool init();
@@ -50,7 +52,7 @@ public:
 	// --------------------------------
 	void addHud();
 	// --------------------------------
-
+	void addSandParticle();
 	//---------------------------------
 
 	//Check the conditions to move

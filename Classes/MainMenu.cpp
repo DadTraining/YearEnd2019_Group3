@@ -16,66 +16,73 @@ bool MainMenu::init()
 	float fontSize = 48;
 
     auto visibleSize = cocos2d::Director::getInstance()->getVisibleSize();
+	auto winSize = cocos2d::Director::getInstance()->getWinSize();
     Vec2 origin = cocos2d::Director::getInstance()->getVisibleOrigin();
 
 	auto bg = cocos2d::Sprite::create("Resources/ui/main-menu-bg.jpg");
-
-	auto playLabel = cocos2d::Label::create("Play", font, fontSize);
-	auto settingLabel = cocos2d::Label::create("Options", font, fontSize);
-	auto exitLabel = cocos2d::Label::create("Exit", font, fontSize);
-
-	auto play = cocos2d::MenuItemImage::create("Resources/ui/button/ui_ocean_button.png", "Resources/ui/button/ui_blue_button.png", CC_CALLBACK_0(MainMenu::Play, this));
-	auto setting = cocos2d::MenuItemImage::create("Resources/ui/button/ui_ocean_button.png", "Resources/ui/button/ui_blue_button.png",CC_CALLBACK_0(MainMenu::Options, this));
-	auto exit = cocos2d::MenuItemImage::create("Resources/ui/button/ui_ocean_button.png", "Resources/ui/button/ui_blue_button.png", CC_CALLBACK_0(MainMenu::Exit, this));
-	
 	bg->setPosition(visibleSize / 2);
 	bg->setScale(visibleSize.width / bg->getContentSize().width, visibleSize.height / bg->getContentSize().height);
 
+	auto playLabel = cocos2d::Label::create("Play", font, fontSize);
+	auto play = cocos2d::ui::Button::create("Resources/ui/button/ui_ocean_button.png", "Resources/ui/button/ui_blue_button.png");
 	play->setAnchorPoint(Vec2(0, 0));
-	setting->setAnchorPoint(Vec2(0, 0));
-	exit->setAnchorPoint(Vec2(0, 0));
-
 	play->setScale(0.3f);
-	setting->setScale(0.3f);
-	exit->setScale(0.3f);
-
 	play->addChild(playLabel, 0);
-	setting->addChild(settingLabel, 0);
-	exit->addChild(exitLabel, 0);
+	play->setPosition(cocos2d::Vec2(visibleSize.width*0.7, visibleSize.height * 0.05));
+	play->addTouchEventListener([&](Ref* sender, cocos2d::ui::Widget::TouchEventType type) {
+		switch (type)
+		{
+		case cocos2d::ui::Widget::TouchEventType::BEGAN:
+			break;
+		case cocos2d::ui::Widget::TouchEventType::MOVED:
+			break;
+		case cocos2d::ui::Widget::TouchEventType::ENDED:
+			cocos2d::Director::getInstance()->replaceScene(LoadMapScene::createScene());
+			break;
+		case cocos2d::ui::Widget::TouchEventType::CANCELED:
+			break;
+		default:
+			break;
+		}
+	});
 
 	playLabel->setPosition(play->getContentSize() / 2);
 	playLabel->setScale(5);
 
-	settingLabel->setPosition(setting->getContentSize() / 2);
-	settingLabel->setScale(5);
-
-	exitLabel->setPosition(exit->getContentSize() / 2);
-	exitLabel->setScale(5);
-
-	auto mainMenu = Menu::create(play,setting,exit,nullptr);
-
-	mainMenu->setPosition(visibleSize.width*0.02, visibleSize.height*0.4);
-	mainMenu->alignItemsVertically();
-
-	bg->addChild(mainMenu, 0);
+	bg->addChild(play, 0);
 	this->addChild(bg, -1);
-	// --------------------------------------------------------- //
+	// ------------------------Toggle Button--------------------------------- //
+
+	auto itemOn = MenuItemImage::create("Resources/ui/button/ui_ocean_button_soundon.png", "ui/button/ui_blue_button_soundon.png", [&](Ref* sender) {
+		//SimpleAudioEngine::getInstance()->playBackgroundMusic(GameAssets::Sound::GAME_BACKGROUND_SOUND, true);
+		//PersistenceManager::getInstance()->setProperty(UserData::KEY_ISPLAYBGMUSIC, true);
+	});
+
+	auto itemOff = MenuItemImage::create("Resources/ui/button/ui_ocean_button_soundoff.png", "ui/button/ui_blue_button_soundoff.png", [&](Ref* sender) {
+		//SimpleAudioEngine::getInstance()->stopBackgroundMusic();
+		//PersistenceManager::getInstance()->setProperty(UserData::KEY_ISPLAYBGMUSIC, false);
+	});
+
+	auto itemToggleMusic = MenuItemToggle::createWithCallback([&](Ref* pSender) {
+		MenuItemToggle *toggleItem = (MenuItemToggle *)pSender;
+		if (toggleItem->getSelectedItem() == itemOn) {
+		//	SimpleAudioEngine::getInstance()->playBackgroundMusic(GameAssets::Sound::GAME_BACKGROUND_SOUND, true);
+		//	PersistenceManager::getInstance()->setProperty(UserData::KEY_ISPLAYBGMUSIC, true);
+		}
+		else if (toggleItem->getSelectedItem() == itemOff) {
+		//	SimpleAudioEngine::getInstance()->stopBackgroundMusic();
+		//	PersistenceManager::getInstance()->setProperty(UserData::KEY_ISPLAYBGMUSIC, false);
+		}
+	}, itemOn, itemOff, NULL);
+
+	itemToggleMusic->setScale(0.3);
+	Menu* pMenu = Menu::create(itemToggleMusic, NULL);
+	pMenu->setPosition(visibleSize*0.9);
+	this->addChild(pMenu, 1);
     return true;
 }
 
 void MainMenu::Play()
 {
 	Director::getInstance()->replaceScene(TransitionFade::create(1.0f, LoadMapScene::createScene()));
-}
-
-void MainMenu::Options()
-{
-	auto options = OptionsLayer::createLayer();
-	options->setAnchorPoint(options->getContentSize()/2);
-	this->addChild(options, 1);
-}
-
-void MainMenu::Exit()
-{
-	Director::getInstance()->end();
 }
