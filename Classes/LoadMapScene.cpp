@@ -242,7 +242,7 @@ void LoadMapScene::update(float dt)
 	{
 		Skeletons[i]->update(dt);
 	}
-	mb1MoveToPlayer();
+	enemyMoveToPlayer();
 	for (int i = 0; i < villagers.size(); i++)
 	{
 		villagers[i]->update(dt);
