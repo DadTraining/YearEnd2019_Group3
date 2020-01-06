@@ -175,7 +175,7 @@ void Enemy2::setAIforEnemy()
 	auto vectorMoveToSpawnPoint = Vec2(this->getPosSpawn().x - this->getSprite()->getPosition().x, this->getPosSpawn().y - this->getSprite()->getPosition().y);
 	auto vectorMoveToPlayer = Vec2(player->getSprite()->getPosition().x - this->getSprite()->getPosition().x, player->getSprite()->getPosition().y - this->getSprite()->getPosition().y);
 
-	if (range < VISION_OF_MB) {
+	if (range < VISION_OF_EM2) {
 		if (player->getHP() > 0) {
 			this->getSprite()->getPhysicsBody()->setVelocity(vectorMoveToPlayer*SPEED_MB01);
 			if (player->getSprite()->getPosition().x < this->getSprite()->getPosition().x) {
@@ -382,7 +382,7 @@ void Enemy2::createSlash()
 	m_slash = new Slash(100, 100);
 	m_slash->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_ENEMY1_ATTACK);
 	targetScene->addChild(m_slash->getSprite());
-	m_slash->setDamge(SKELETON_DAMGE);
+	m_slash->setDamge(this->damage);
 }
 
 Slash * Enemy2::getSlash()
