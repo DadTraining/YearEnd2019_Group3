@@ -32,10 +32,10 @@ public:
 	HudLayer(cocos2d::Scene* scene, Player* player, TMXTiledMap* map);
 	bool init();
 	void createHud();
-	void CreateAttackBtn(Layer * layer);
-	void CreateSkillABtn(Layer * layer);
-	void UpdateSkillABtn(float dt);
-	void CreateSkillBBtn(Layer * layer);
+	void CreateAttackNormal(Layer * layer);
+	void CreateSkillUltimate(Layer * layer);
+	void UpdateSkillUltimate(float dt);
+	void CreateSkillSpear(Layer * layer);
 	void CreateJoystick(Layer * layer);
 	void UpdateJoystick(float dt);
 	void update(float deltaTime);

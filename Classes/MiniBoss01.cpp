@@ -110,10 +110,7 @@ void MiniBoss01::init()
 	// Add physics
 	addPhysic();
 	// init slash
-	m_slash = new Slash(100, 100);
-	m_slash->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_ENEMY1_ATTACK);
-	targetScene->addChild(m_slash->getSprite());
-
+	this->createSlash();
 	// init isAlive
 	this->isAlive = true;
 }
@@ -222,7 +219,7 @@ void MiniBoss01::normalAttack()
 
 }
 
-void MiniBoss01::gotHit()
+void MiniBoss01::gotHit(int damage)
 {
 	if (!this->getAlive())
 	{
@@ -234,7 +231,7 @@ void MiniBoss01::gotHit()
 	animation->setTag(TAG_ANIMATE_HIT);
 	this->sprite->runAction(animation);
 	// Adding the effect
-	auto dtHP = this->getHP() - Update::GetInstance()->getDamageOfPlayer();
+	auto dtHP = this->getHP() - damage;
 	this->setHP(dtHP);
 	auto emitter = CCParticleSystemQuad::create("Resources/Effect/Player/player_got_hit.plist");
 	emitter->setPosition(this->getSprite()->getPosition());
@@ -311,4 +308,17 @@ void MiniBoss01::setAlive(bool isAlive)
 bool MiniBoss01::getAlive()
 {
 	return this->isAlive;
+}
+
+void MiniBoss01::createSlash()
+{
+	m_slash = new Slash(100, 100);
+	m_slash->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_ENEMY1_ATTACK);
+	targetScene->addChild(m_slash->getSprite());
+	m_slash->setDamge(SKELETON_DAMGE);
+}
+
+Slash * MiniBoss01::getSlash()
+{
+	return this->m_slash;
 }

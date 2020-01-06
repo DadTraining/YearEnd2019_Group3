@@ -195,11 +195,13 @@ bool LoadMapScene::onContactBegin(cocos2d::PhysicsContact & contact)
 		HUD->addVilagerPoint();
 		if (a->getCollisionBitmask() == Model::BITMASK_ENEMY)
 		{
-			Skeletons.at(a->getGroup())->gotHit();
+			auto currentSkeleton = Skeletons.at(a->getGroup());
+		currentSkeleton->gotHit(player->getSlash()->getDamge());
 		}
 		else if (b->getCollisionBitmask() == Model::BITMASK_ENEMY)
 		{
-			Skeletons.at(b->getGroup())->gotHit();
+			auto currentSkeleton = Skeletons.at(b->getGroup());
+			currentSkeleton->gotHit(player->getSlash()->getDamge());
 		}
 	}
 	// Skeleton attack player
@@ -207,7 +209,16 @@ bool LoadMapScene::onContactBegin(cocos2d::PhysicsContact & contact)
 		|| (a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_ENEMY1_ATTACK))
 	{
 		HUD->addVilagerPoint();
-		player->gotHit();
+		if (a->getCollisionBitmask() == Model::BITMASK_ENEMY1_ATTACK)
+		{
+			auto currentSkeleton = Skeletons.at(a->getGroup());
+			player->gotHit(currentSkeleton->getSlash()->getDamge());
+		}
+		if (b->getCollisionBitmask() == Model::BITMASK_ENEMY1_ATTACK)
+		{
+			auto currentSkeleton = Skeletons.at(b->getGroup());
+			player->gotHit(currentSkeleton->getSlash()->getDamge());
+		}
 	}
 	return false;
 }
