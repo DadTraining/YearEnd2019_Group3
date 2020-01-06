@@ -118,6 +118,8 @@ void LoadMapScene::addMap()
 	m_objectGroup = m_tileMap->getObjectGroup("Objects");
 	m_meta->setVisible(false);
 	auto tree = m_tileMap->layerNamed("TreeTop");
+	auto statueTop = m_tileMap->layerNamed("StatueTop");
+	statueTop->setGlobalZOrder(Model::TREE_ORDER);
 	tree->setGlobalZOrder(Model::TREE_ORDER);
 	addChild(m_tileMap, -1);
 
@@ -172,16 +174,18 @@ bool LoadMapScene::onContactBegin(cocos2d::PhysicsContact & contact)
 	if ((a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_VILLAGER)
 		|| (a->getCollisionBitmask() == Model::BITMASK_VILLAGER && b->getCollisionBitmask() == Model::BITMASK_PLAYER))
 	{
-		player->increaseVillager(1);
-
 		HUD->addVilagerPoint();
 		if (a->getCollisionBitmask() == Model::BITMASK_VILLAGER)
 		{
-			villagers.at(a->getGroup())->Die();
+			auto currentVillager = villagers.at(a->getGroup());
+			player->increaseVillager(currentVillager->getPoint());
+			currentVillager->Die();
 		}
 		else if (b->getCollisionBitmask() == Model::BITMASK_VILLAGER)
 		{
-			villagers.at(b->getGroup())->Die();
+			auto currentVillager = villagers.at(b->getGroup());
+			player->increaseVillager(currentVillager->getPoint());
+			currentVillager->Die();
 		}
 	}
 	// player attack enemy
@@ -220,7 +224,8 @@ void LoadMapScene::addSandParticle()
 	sandBackground = CCParticleSystemQuad::create("Resources/Effect/backgroundSand.plist");
 	sandBackground->setAnchorPoint(Vec2(0, 0));
 	sandBackground->setContentSize(visibleSize);
-	this->addChild(sandBackground, Model::TREE_ORDER + 1);
+	this->addChild(sandBackground);
+	sandBackground->setGlobalZOrder(Model::TREE_ORDER + 1);
 }
 
 void LoadMapScene::mb1MoveToPlayer()
@@ -307,7 +312,6 @@ void LoadMapScene::update(float dt)
 	}
 	sandBackground->setPosition(m_player->getPosition() 
 		+ Vec2(m_player->getContentSize().width, m_player->getContentSize().height));
-
 }
 
 
