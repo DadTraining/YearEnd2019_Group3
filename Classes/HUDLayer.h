@@ -18,7 +18,7 @@ private:
 	Player* targetPlayer;
 	Label* _hudScore;
 	int _numCollected;
-	ui::Button* attackBtn;
+	ui::Button *attackBtn, *skillABtn, *skillBBtn;
 	// Joystick private variable
 	SneakyJoystick *leftJoystick;
 	SneakyJoystickSkinnedBase* joystickBase;
@@ -33,6 +33,9 @@ public:
 	bool init();
 	void createHud();
 	void CreateAttackBtn(Layer * layer);
+	void CreateSkillABtn(Layer * layer);
+	void UpdateSkillABtn(float dt);
+	void CreateSkillBBtn(Layer * layer);
 	void CreateJoystick(Layer * layer);
 	void UpdateJoystick(float dt);
 	void update(float deltaTime);

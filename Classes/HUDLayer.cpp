@@ -43,6 +43,8 @@ void HudLayer::createHud()
 	this->addChild(_hudScore, 0);
 	CreateJoystick(this);
 	CreateAttackBtn(this);
+	CreateSkillABtn(this);
+	CreateSkillBBtn(this);
 }
 
 void HudLayer::CreateJoystick(Layer * layer)
@@ -111,8 +113,8 @@ void HudLayer::UpdateJoystick(float dt)
 				targetPlayer->getSprite()->runAction(rpAnimateIdle);
 			}
 		}
-			targetPlayer->getSprite()->getPhysicsBody()->setVelocity(Vec2(0, 0));
-		
+		targetPlayer->getSprite()->getPhysicsBody()->setVelocity(Vec2(0, 0));
+
 	}
 }
 
@@ -155,6 +157,92 @@ void HudLayer::CreateAttackBtn(Layer * layer)
 	});
 
 }
+
+void HudLayer::CreateSkillABtn(Layer * layer)
+{
+	// init attackButton
+	skillABtn = ui::Button::create("Resources/Buttons/AttackButtonNormal.png", "Resources/Buttons/AttackButtonPressed.png");
+	layer->addChild(skillABtn);
+	skillABtn->setPosition(Vec2(1250, 300));
+
+}
+
+void HudLayer::UpdateSkillABtn(float dt)
+{
+	skillABtn->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+		auto rpAnimateSkillA = targetPlayer->getSkillAAnimate();
+		rpAnimateSkillA->setTag(TAG_ANIMATE_ATTACK);
+		switch (type)
+		{
+			// In case when the player press on the screen
+		case ui::Widget::TouchEventType::BEGAN:
+		{
+			// If the player still have the Idle animation or run animation then remove it
+			if (targetPlayer->getVillagersNum() >= 10 
+				&&(targetPlayer->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_IDLE1) > 0 
+				|| targetPlayer->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_RUN) > 0)) {
+				targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
+				targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
+				targetPlayer->getSprite()->stopAllActions();
+				targetPlayer->getSprite()->runAction(rpAnimateSkillA);
+				targetPlayer->increaseVillager(-10);
+				targetPlayer->normalAttack();
+				Sound::GetInstance()->soundPlayerAttack1();
+			}
+			break;
+		}
+		case ui::Widget::TouchEventType::ENDED:
+		{
+			if (rpAnimateSkillA->isDone()) {
+				targetPlayer->getSprite()->stopAllActions();
+				break;
+			}
+		}
+		default:
+			break;
+		}
+	});
+}
+
+void HudLayer::CreateSkillBBtn(Layer * layer)
+{
+	// init attackButton
+	skillBBtn = ui::Button::create("Resources/Buttons/AttackButtonNormal.png", "Resources/Buttons/AttackButtonPressed.png");
+	layer->addChild(skillBBtn);
+	skillBBtn->setPosition(Vec2(1150, 100));
+	skillBBtn->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+		auto rpAnimateSkillB = targetPlayer->getSkillBAnimate();
+		rpAnimateSkillB->setTag(TAG_ANIMATE_ATTACK);
+		switch (type)
+		{
+			// In case when the player press on the screen
+		case ui::Widget::TouchEventType::BEGAN:
+		{
+			// If the player still have the Idle animation or run animation then remove it
+			if (targetPlayer->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_IDLE1) > 0 || targetPlayer->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_RUN) > 0) {
+				targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
+				targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
+				targetPlayer->getSprite()->stopAllActions();
+				targetPlayer->getSprite()->runAction(rpAnimateSkillB);
+				targetPlayer->normalAttack();
+				Sound::GetInstance()->soundPlayerAttack1();
+			}
+
+			break;
+		}
+		case ui::Widget::TouchEventType::ENDED:
+		{
+			if (rpAnimateSkillB->isDone()) {
+				targetPlayer->getSprite()->stopAllActions();
+				break;
+			}
+		}
+		default:
+			break;
+		}
+	});
+}
+
 
 void HudLayer::setMap(TMXTiledMap * map)
 {
@@ -200,6 +288,9 @@ void HudLayer::update(float dt)
 	if (targetPlayer->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) > 0) {
 		targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
 		targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
+	}
+	if (targetPlayer->getVillagersNum() >= 10) {
+		UpdateSkillABtn(dt);
 	}
 	healthBar->update(dt);
 	miniMap->update(dt);

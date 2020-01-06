@@ -29,7 +29,7 @@ public:
 	void setDeadAnimate(Animate* deadAnimate);
 	void setHP(float hP);
 	void setDamage(float damage);
-
+	
 	//----
 	void normalAttack();
 	void increaseVillager(int num);
@@ -42,6 +42,9 @@ public:
 	Animate* getHitAnimate();
 	Animate* getRunAnimate();
 	Animate* getDeadAnimate();
+	Animate* getSkillAAnimate();
+	Animate* getSkillBAnimate();
+	
 	float getHP();
 	float getDamage();
 	void Die();
@@ -53,7 +56,7 @@ public:
 
 private:
 	Sprite* playerSprite;
-	Animate *attackAnimate, *idleAnimate, *hitAnimate, *runAnimate, *deadAnimate;
+	Animate *attackAnimate, *idleAnimate, *hitAnimate, *runAnimate, *deadAnimate, *skillAAnimate, *skillBAnimate;
 	float hP, damage;
 	Slash* m_slash;
 	Scene* targetScene;
