@@ -21,7 +21,7 @@ Player::~Player()
 
 void Player::init()
 {
-	
+
 	this->damage = Update::GetInstance()->getDamageOfPlayer();
 	this->hP = Update::GetInstance()->getHPOfPlayer();
 	this->villagersNum = 0;
@@ -36,7 +36,7 @@ void Player::init()
 	for (int i = 1; i < 8; i++)
 	{
 		sprintf(nameAnimateAttack, "attack-A%d.png", i);
-			CCLOG("------- Init 10  %s", nameAnimateAttack);
+		CCLOG("------- Init 10  %s", nameAnimateAttack);
 		auto frame = spriteCacheAttack->getSpriteFrameByName(nameAnimateAttack);
 		CCLOG("------- Init 11  ____");
 		animAttack.pushBack(frame);
@@ -45,7 +45,7 @@ void Player::init()
 	auto animateAttack = Animate::create(animationAtack);
 	CCLOG("------- Init 1");
 	animateAttack->retain();
-		CCLOG("------- Init 2");
+	CCLOG("------- Init 2");
 	//	auto animateAttack = ResourceManager::GetInstance()->GetPlayerAction("atkA");
 	this->attackAnimate = animateAttack;
 	//attackAnimate->retain();
@@ -203,15 +203,30 @@ void Player::setDamage(float damage)
 	this->damage = damage;
 }
 
+Vec2 Player::getPositionOfSlash()
+{
+	auto isLeft = this->getSprite()->isFlippedX();
+	auto distance = this->getSprite()->getContentSize().width / 2 - 10;
+	Vec2 position;
+	if (isLeft)
+	{
+		position = Vec2(this->getSprite()->getPosition() - Vec2(distance, 0));
+	}
+	else {
+		position = Vec2(this->getSprite()->getPosition() + Vec2(distance, 0));
+	}
+	return position;
+}
+
 void Player::createSlash()
 {
 	// create m_slashNormal
-	m_slashNormal = new Slash(150, 150);
+	m_slashNormal = new Slash(50, 100);
 	m_slashNormal->setDamge(PLAYER_DAMAGE);
 	m_slashNormal->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_NORMAL_ATTACK);
 	targetScene->addChild(m_slashNormal->getSprite());
 	// create m_slashSpear
-	m_slashSpear = new Slash(20, 100);
+	m_slashSpear = new Slash(110, 50);
 	m_slashSpear->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_NORMAL_ATTACK);
 	targetScene->addChild(m_slashSpear->getSprite());
 	m_slashSpear->setDamge(0);
@@ -219,23 +234,31 @@ void Player::createSlash()
 	m_slashUltimate = new Slash(100, 150);
 	m_slashUltimate->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_NORMAL_ATTACK);
 	targetScene->addChild(m_slashUltimate->getSprite());
-	m_slashUltimate->setDamge(Update::GetInstance()->getDamageOfPlayer() * 2);
+	m_slashUltimate->setDamge(Update::GetInstance()->getDamageOfPlayer() * 4);
 }
 
 void Player::normalAttack()
 {
-	auto isLeft = this->getSprite()->isFlippedX();
-	auto distance = this->getSprite()->getContentSize().width / 2 - 10;
-	Vec2 position;
-	if (isLeft)
-	{
-		position = Vec2(this->getSprite()->getPosition() - Vec2(distance, 0));		
-	}
-	else {
-		position = Vec2(this->getSprite()->getPosition() + Vec2(distance, 0));
-	}
+	auto position = getPositionOfSlash();
 	m_slashNormal->getSprite()->setPosition(position);
+	m_numberOfKeyPress = NORMAL_ATTACK_KEY;
 }
+
+void Player::spearAttack()
+{
+	auto position = getPositionOfSlash();
+	m_slashSpear->getSprite()->setPosition(position);
+	m_numberOfKeyPress = SPEAR_ATTACK_KEY;
+	m_slashSpear->getSprite()->getPhysicsBody()->setTag(Model::KNOCKBACK);
+}
+
+void Player::UltimateAttack()
+{
+	auto position = getPositionOfSlash();
+	m_slashUltimate->getSprite()->setPosition(position);
+	m_numberOfKeyPress = ULTIMATE_ATTACK_KEY;
+}
+
 
 void Player::increaseVillager(int num)
 {
@@ -248,7 +271,7 @@ void Player::gotHit(int damage)
 	playerSprite->stopActionByTag(TAG_ANIMATE_IDLE1);
 	playerSprite->stopActionByTag(TAG_ANIMATE_HIT);
 	playerSprite->stopActionByTag(TAG_ANIMATE_ATTACK);
-	
+
 	// Play sound hit
 	Sound::GetInstance()->soundPlayerHit();
 	auto animation = this->getHitAnimate();
@@ -270,7 +293,15 @@ void Player::gotHit(int damage)
 
 Slash * Player::getSlash()
 {
-	return this->m_slashNormal;
+	switch (this->m_numberOfKeyPress)
+	{
+	case NORMAL_ATTACK_KEY:
+		return this->m_slashNormal;
+	case SPEAR_ATTACK_KEY:
+		return this->m_slashSpear;	
+	case ULTIMATE_ATTACK_KEY:
+		return this->m_slashUltimate;
+	}
 }
 
 Sprite * Player::getSprite()
@@ -358,7 +389,9 @@ void Player::update(float deltaTime)
 	if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) == 0)
 	{
 		this->m_slashNormal->getSprite()->setPosition(Vec2(-1, -1));
-	}	
+		this->m_slashSpear->getSprite()->setPosition(Vec2(-1, -1));
+		this->m_slashUltimate->getSprite()->setPosition(Vec2(-1, -1));
+	}
 }
 
 int Player::getVillagersNum()

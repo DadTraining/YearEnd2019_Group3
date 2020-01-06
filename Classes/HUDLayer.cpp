@@ -186,7 +186,7 @@ void HudLayer::UpdateSkillUltimate(float dt)
 				targetPlayer->getSprite()->stopAllActions();
 				targetPlayer->getSprite()->runAction(rpAnimateSkillA);
 				targetPlayer->increaseVillager(-10);
-				targetPlayer->normalAttack();
+				targetPlayer->UltimateAttack();
 				Sound::GetInstance()->soundPlayerAttack1();
 			}
 			break;
@@ -224,7 +224,7 @@ void HudLayer::CreateSkillSpear(Layer * layer)
 				targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
 				targetPlayer->getSprite()->stopAllActions();
 				targetPlayer->getSprite()->runAction(rpAnimateSkillB);
-				targetPlayer->normalAttack();
+				targetPlayer->spearAttack();
 				Sound::GetInstance()->soundPlayerAttack1();
 			}
 

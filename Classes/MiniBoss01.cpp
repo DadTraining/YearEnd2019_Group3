@@ -160,6 +160,19 @@ void MiniBoss01::setPosSpawn(Point point)
 	this->posSpawn = point;
 }
 
+void MiniBoss01::Stun()
+{
+	auto delay = DelayTime::create(1.0f);
+	sprite->stopAllActions();
+	sprite->getPhysicsBody()->setVelocity(Vec2(0, 0));
+	sprite->runAction(delay);
+	auto emitter = CCParticleSystemQuad::create("Resources/Effect/Monster/freezer.plist");
+	emitter->setPosition(this->getSprite()->getPosition());
+	//emitter->setScale(m_SCALE / 8);
+	targetScene->addChild(emitter);
+	emitter->setAutoRemoveOnFinish(true);
+}
+
 Sprite * MiniBoss01::getSprite()
 {
 	return this->sprite;
@@ -243,7 +256,6 @@ void MiniBoss01::gotHit(int damage)
 		this->setAlive(false);
 		this->Die();
 	}
-	
 }
 
 void MiniBoss01::update(float deltaTime)

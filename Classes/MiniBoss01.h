@@ -26,6 +26,8 @@ public:
 	void setDamage(float damage);
 	void setPosSpawn(Point point);
 	
+	// Got stun
+	void Stun();
 
 	Sprite* getSprite();
 	Animate* getAttackAnimate();
