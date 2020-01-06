@@ -61,6 +61,9 @@
     <ClCompile Include="..\Classes\Enemy2.cpp">
       <Filter>Class</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Enemy3.cpp">
+      <Filter>Class</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -187,6 +190,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Model.h">
       <Filter>SingletonClass</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Enemy3.h">
+      <Filter>Class</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

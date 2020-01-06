@@ -1,18 +1,18 @@
 #pragma once
 #include "Objects.h"
 #include "Slash.h"
-#define TIME_ONE_ATTACK 0.1f
+#define TIME_ONE_ATTACK 0.3f
 #define TIME_ONE_HIT 0.1f
 #define TIME_ONE_IDLE 0.2f
 #define TIME_ONE_RUN 0.1f
 #define TIME_ONE_DEAD 0.15f
 #define TIME_ONE_WALK 0.1f
-#define SKELETON_DAMGE 100.0f
-class MiniBoss01 : public Objects
+#define TIME_DELAY_BOW 1.0f
+class Enemy3 : public Objects
 {
 public:
-	MiniBoss01(Scene* scene);
-	~MiniBoss01();
+	Enemy3(Scene* scene);
+	~Enemy3();
 	void init();
 	void update(float deltaTime);
 
@@ -51,7 +51,7 @@ public:
 	void createSlash();
 	Slash* getSlash();
 	//---
-	
+	void Stun();
 private:
 	Sprite* sprite;
 	Animate *attackAnimate, *idleAnimate, *hitAnimate, *runAnimate, *deadAnimate;

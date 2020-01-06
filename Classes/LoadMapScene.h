@@ -9,6 +9,7 @@
 #include "HUDLayer.h"
 #include "MiniBoss01.h"
 #include "Enemy2.h"
+#include "Enemy3.h"
 #include "Villager.h"
 
 using namespace cocos2d;
@@ -27,6 +28,7 @@ private:
 	vector<MiniBoss01*> Skeletons;
 	vector<Villager*> villagers;
 	vector<Enemy2*> enemys2;
+	vector<Enemy3*> enemys3;
 	TMXObjectGroup* m_objectGroup;
 	// private variable for joystick adding
 	HudLayer* HUD;
