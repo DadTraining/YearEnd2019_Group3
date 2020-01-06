@@ -162,7 +162,7 @@ void MiniBoss01::setPosSpawn(Point point)
 
 void MiniBoss01::Stun()
 {
-	auto delay = DelayTime::create(1.0f);
+	auto delay = DelayTime::create(1.5f);
 	sprite->stopAllActions();
 	sprite->getPhysicsBody()->setVelocity(Vec2(0, 0));
 	sprite->runAction(delay);
