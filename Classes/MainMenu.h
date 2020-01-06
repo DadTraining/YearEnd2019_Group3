@@ -3,10 +3,10 @@
 #pragma once
 
 #include "cocos2d.h"
-#include "ResourceManager.h"
 #include "OptionsLayer.h"
 #include "LoadMapScene.h"
 #include "ResultScene.h"
+#include "SimpleAudioEngine.h"
 
 class MainMenu : public cocos2d::Scene
 {
@@ -14,8 +14,6 @@ public:
     static cocos2d::Scene* createScene();
     virtual bool init();
 	void Play();
-	void Options();
-	void Exit();
     CREATE_FUNC(MainMenu);
 };
 

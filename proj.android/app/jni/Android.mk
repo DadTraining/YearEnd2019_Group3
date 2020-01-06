@@ -21,6 +21,7 @@ LOCAL_SRC_FILES := $(LOCAL_PATH)/hellocpp/main.cpp \
                    $(LOCAL_PATH)/../../../Classes/Slash.cpp \
                    $(LOCAL_PATH)/../../../Classes/SneakyJoystick.cpp \
                    $(LOCAL_PATH)/../../../Classes/SneakyJoystickSkinnedBase.cpp \
+                   $(LOCAL_PATH)/../../../Classes/Update.cpp \
                    $(LOCAL_PATH)/../../../Classes/Villager.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../Classes

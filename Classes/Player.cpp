@@ -33,15 +33,19 @@ void Player::init()
 	for (int i = 1; i < 8; i++)
 	{
 		sprintf(nameAnimateAttack, "attack-A%d.png", i);
+			CCLOG("------- Init 10  %s", nameAnimateAttack);
 		auto frame = spriteCacheAttack->getSpriteFrameByName(nameAnimateAttack);
+		CCLOG("------- Init 11  ____");
 		animAttack.pushBack(frame);
 	}
 	Animation* animationAtack = Animation::createWithSpriteFrames(animAttack, 0.07f);
 	auto animateAttack = Animate::create(animationAtack);
+	CCLOG("------- Init 1");
 	animateAttack->retain();
+		CCLOG("------- Init 2");
 	//	auto animateAttack = ResourceManager::GetInstance()->GetPlayerAction("atkA");
 	this->attackAnimate = animateAttack;
-	attackAnimate->retain();
+	//attackAnimate->retain();
 	//Create animate idle
 	auto spriteCacheIdle = SpriteFrameCache::getInstance();
 	spriteCacheIdle->addSpriteFramesWithFile("Resources/sprites/Player/Idle/idle-with-weapon.plist", "Resources/sprites/Player/Idle/idle-with-weapon.png");
@@ -93,7 +97,7 @@ void Player::init()
 	runAnimate->retain();
 
 	auto spriteCacheHit_Player = SpriteFrameCache::getInstance();
-	spriteCacheHit_Player->addSpriteFramesWithFile("Resources/sprites/Player/Hit/hit-with-weapon-front.plist", "Resources/sprites/Player//Hit/hit-with-weapon-front.png");
+	spriteCacheHit_Player->addSpriteFramesWithFile("Resources/sprites/Player/Hit/hit-with-weapon-front.plist", "Resources/sprites/Player/Hit/hit-with-weapon-front.png");
 	char nameAnimateHit[50] = { 0 };
 	Vector<SpriteFrame*> animHit;
 	for (int i = 1; i < 5; i++)
@@ -119,7 +123,7 @@ void Player::init()
 
 void Player::addPhysic()
 {
-	auto physicsBody = PhysicsBody::createBox(this->getSprite()->getContentSize() - Size(100, 40));
+	auto physicsBody = PhysicsBody::createBox(this->getSprite()->getContentSize() - Size(100, 40), cocos2d::PhysicsMaterial(1.0f, 0.0f, 1.0f));
 	physicsBody->setGravityEnable(false);
 	physicsBody->setRotationEnable(false);
 	physicsBody->setContactTestBitmask(true);
