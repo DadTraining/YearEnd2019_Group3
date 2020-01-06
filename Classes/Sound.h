@@ -22,7 +22,9 @@ public:
 	void soundCollect();
 	void soundBackGroundDesert();
 	void Init();
-
+	// SkeletonSound
+	void soundSkeletonHit();
+	void soundSkeletonDie();
 	// getMute
 	void setIsMute(bool mute);
 	bool getIsMute();

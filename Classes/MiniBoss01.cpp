@@ -2,7 +2,7 @@
 #include "Update.h"
 #include "SimpleAudioEngine.h"
 #include "Model.h"
-
+#include "Sound.h"
 USING_NS_CC;
 
 MiniBoss01::MiniBoss01(Scene* scene) {
@@ -219,6 +219,7 @@ void MiniBoss01::normalAttack()
 	else {
 		m_slash->getSprite()->setPosition(this->getSprite()->getPosition() + Vec2(distance, 0));
 	}
+
 }
 
 void MiniBoss01::gotHit()
@@ -227,6 +228,7 @@ void MiniBoss01::gotHit()
 	{
 		return;
 	}
+	Sound::GetInstance()->soundSkeletonHit();
 	this->sprite->stopAllActions();
 	auto animation = this->getHitAnimate();
 	animation->setTag(TAG_ANIMATE_HIT);
@@ -286,6 +288,7 @@ void MiniBoss01::setIndex(int index)
 
 void MiniBoss01::Die()
 {
+	Sound::GetInstance()->soundSkeletonDie();
 	this->getSprite()->stopAllActions();
 	auto mySprite = this->getSprite();
 	auto callbackHide = CallFunc::create([mySprite]()
