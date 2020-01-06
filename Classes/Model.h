@@ -23,12 +23,15 @@ public:
 	static const int BITMASK_GROUND = BITMASK_PLAYER + 1;
 	static const int BITMASK_ENEMY = BITMASK_GROUND + 1;
 	static const int BITMASK_VILLAGER = BITMASK_ENEMY + 1;
+	static const int BITMASK_ENEMY2 = BITMASK_VILLAGER + 1;
 	static const int BITMASK_NORMAL_ATTACK = 50;
 	static const int BITMASK_ENEMY1_ATTACK = BITMASK_NORMAL_ATTACK + 10;
+	static const int BITMASK_ENEMY2_ATTACK = BITMASK_ENEMY1_ATTACK + 10;
 
 	static const int MAIN_CHARACTER_TYPE = 1;
 	static const int MAIN_MONSTER_TYPE = 2;
 	static const int MAIN_VILLAGER_TYPE = 3;
+	static const int MAIN_ENEMY2_TYPE = 4;
 	// Order of the map
 	static const int TREE_ORDER = 3;
 };

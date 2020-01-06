@@ -44,6 +44,7 @@ void LoadMapScene::SpawnPlayer()
 	//number of Villager
 	int numberOfVillager = 0;
 	int numberOfSkeleton = 0;
+	int numberOfEnemy2 = 0;
 	// ---
 	auto objects = m_objectGroup->getObjects();
 	for (int i = 0; i < objects.size(); i++)
@@ -89,6 +90,19 @@ void LoadMapScene::SpawnPlayer()
 			animation->setTag(TAG_ANIMATE_IDLE1);
 			boss->getSprite()->runAction(animation);
 			addChild(boss->getSprite());
+		}
+		else if (type == Model::MAIN_ENEMY2_TYPE)
+		{
+			auto enemy = new Enemy2(this);
+			enemy->setPosSpawn(Vec2(posX, posY));
+			enemy->setIndex(enemys2.size());
+			enemys2.push_back(enemy);
+			SpriteFrameCache::getInstance()->removeSpriteFrames();
+			enemy->getSprite()->setPosition(Vec2(posX, posY));
+			auto animation = RepeatForever::create(enemy->getIdleAnimate());
+			animation->setTag(TAG_ANIMATE_IDLE1);
+			enemy->getSprite()->runAction(animation);
+			addChild(enemy->getSprite());
 		}
 	}
 }
@@ -188,7 +202,7 @@ bool LoadMapScene::onContactBegin(cocos2d::PhysicsContact & contact)
 			currentVillager->Die();
 		}
 	}
-	// player attack enemy
+	// player attack enemy1
 	if ((a->getCollisionBitmask() == Model::BITMASK_ENEMY && b->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK)
 		|| (a->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK && b->getCollisionBitmask() == Model::BITMASK_ENEMY))
 	{
@@ -220,6 +234,38 @@ bool LoadMapScene::onContactBegin(cocos2d::PhysicsContact & contact)
 			player->gotHit(currentSkeleton->getSlash()->getDamge());
 		}
 	}
+	// player attack enemy2
+	if ((a->getCollisionBitmask() == Model::BITMASK_ENEMY2 && b->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK)
+		|| (a->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK && b->getCollisionBitmask() == Model::BITMASK_ENEMY2))
+	{
+		HUD->addVilagerPoint();
+		if (a->getCollisionBitmask() == Model::BITMASK_ENEMY2)
+		{
+			auto currentEnemy2 = enemys2.at(a->getGroup());
+			currentEnemy2->gotHit(player->getSlash()->getDamge());
+		}
+		else if (b->getCollisionBitmask() == Model::BITMASK_ENEMY2)
+		{
+			auto currentEnemy2 = enemys2.at(b->getGroup());
+			currentEnemy2->gotHit(player->getSlash()->getDamge());
+		}
+	}
+	// enemy2 attack player
+	if ((a->getCollisionBitmask() == Model::BITMASK_ENEMY2_ATTACK && b->getCollisionBitmask() == Model::BITMASK_PLAYER)
+		|| (a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_ENEMY2_ATTACK))
+	{
+		HUD->addVilagerPoint();
+		if (a->getCollisionBitmask() == Model::BITMASK_ENEMY2_ATTACK)
+		{
+			auto currentEnemy2 = enemys2.at(a->getGroup());
+			player->gotHit(currentEnemy2->getSlash()->getDamge());
+		}
+		if (b->getCollisionBitmask() == Model::BITMASK_ENEMY2_ATTACK)
+		{
+			auto currentEnemy2 = enemys2.at(b->getGroup());
+			player->gotHit(currentEnemy2->getSlash()->getDamge());
+		}
+	}
 	return false;
 }
 
@@ -248,6 +294,13 @@ void LoadMapScene::enemyMoveToPlayer()
 		}
 		Skeletons[i]->setAIforEnemy();
 	}
+	for (int i = 0; i < enemys2.size(); i++) {
+		if (!enemys2[i]->getAlive())
+		{
+			continue;
+		}
+		enemys2[i]->setAIforEnemy();
+	}
 }
 
 void LoadMapScene::update(float dt)
@@ -257,6 +310,10 @@ void LoadMapScene::update(float dt)
 	for (int i = 0; i < Skeletons.size(); i++)
 	{
 		Skeletons[i]->update(dt);
+	}
+	for (int i = 0; i < enemys2.size(); i++)
+	{
+		enemys2[i]->update(dt);
 	}
 	enemyMoveToPlayer();
 	for (int i = 0; i < villagers.size(); i++)

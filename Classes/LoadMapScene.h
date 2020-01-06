@@ -8,6 +8,7 @@
 #include "SneakyJoystickSkinnedBase.h"
 #include "HUDLayer.h"
 #include "MiniBoss01.h"
+#include "Enemy2.h"
 #include "Villager.h"
 
 using namespace cocos2d;
@@ -25,6 +26,7 @@ private:
 	//enemy
 	vector<MiniBoss01*> Skeletons;
 	vector<Villager*> villagers;
+	vector<Enemy2*> enemys2;
 	TMXObjectGroup* m_objectGroup;
 	// private variable for joystick adding
 	HudLayer* HUD;

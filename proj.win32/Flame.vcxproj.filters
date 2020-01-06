@@ -57,6 +57,10 @@
     <ClCompile Include="..\Classes\ResultScene.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\PauseLayer.cpp" />
+    <ClCompile Include="..\Classes\Enemy2.cpp">
+      <Filter>Class</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -156,9 +160,6 @@
     <ClInclude Include="..\Classes\Villager.h">
       <Filter>Class</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Model.h">
-      <Filter>SingletonClass</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\Sound.h">
       <Filter>SingletonClass</Filter>
     </ClInclude>
@@ -179,6 +180,13 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Player.h">
       <Filter>Class</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PauseLayer.h" />
+    <ClInclude Include="..\Classes\Enemy2.h">
+      <Filter>Class</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Model.h">
+      <Filter>SingletonClass</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

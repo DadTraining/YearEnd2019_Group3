@@ -13,6 +13,10 @@ private:
 	float hpOfPlayer;
 	float damageOfMB1;
 	float hpOfMB1;
+	float damageOfEm2;
+	float hpOfEm2;
+	float damageOfEm3;
+	float hpOfEm3;
 	Player* player;
 public:
 	Update();
@@ -23,6 +27,10 @@ public:
 	float getHPOfPlayer();
 	float getDamageOfMB1();
 	float getHPOfMB1();
+	float getDamageOfEm2();
+	float getHPOfEm2();
+	float getDamageOfEm3();
+	float getHPOfEm3();
 	Player * getPlayer();
 	void setPlayer(Player* player);
 };
