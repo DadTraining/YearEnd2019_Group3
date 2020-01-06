@@ -27,6 +27,8 @@ public:
 	void setPosSpawn(Point point);
 	void setAIforEnemy();
 	
+	// Got stun
+	void Stun();
 
 	Sprite* getSprite();
 	Animate* getAttackAnimate();

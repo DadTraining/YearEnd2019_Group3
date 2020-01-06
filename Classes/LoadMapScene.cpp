@@ -196,12 +196,20 @@ bool LoadMapScene::onContactBegin(cocos2d::PhysicsContact & contact)
 		if (a->getCollisionBitmask() == Model::BITMASK_ENEMY)
 		{
 			auto currentSkeleton = Skeletons.at(a->getGroup());
-		currentSkeleton->gotHit(player->getSlash()->getDamge());
+			currentSkeleton->gotHit(player->getSlash()->getDamge());
+			if (b->getTag() == Model::KNOCKBACK)
+			{
+				currentSkeleton->Stun();
+			}
 		}
 		else if (b->getCollisionBitmask() == Model::BITMASK_ENEMY)
 		{
 			auto currentSkeleton = Skeletons.at(b->getGroup());
 			currentSkeleton->gotHit(player->getSlash()->getDamge());
+			if (a->getTag() == Model::KNOCKBACK)
+			{
+				currentSkeleton->Stun();
+			}
 		}
 	}
 	// Skeleton attack player

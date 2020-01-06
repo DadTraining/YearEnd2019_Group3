@@ -225,6 +225,17 @@ void MiniBoss01::setAIforEnemy()
 			}
 		}
 	}
+void MiniBoss01::Stun()
+{
+	auto delay = DelayTime::create(1.5f);
+	sprite->stopAllActions();
+	sprite->getPhysicsBody()->setVelocity(Vec2(0, 0));
+	sprite->runAction(delay);
+	auto emitter = CCParticleSystemQuad::create("Resources/Effect/Monster/freezer.plist");
+	emitter->setPosition(this->getSprite()->getPosition());
+	//emitter->setScale(m_SCALE / 8);
+	targetScene->addChild(emitter);
+	emitter->setAutoRemoveOnFinish(true);
 }
 
 Sprite * MiniBoss01::getSprite()
@@ -310,7 +321,6 @@ void MiniBoss01::gotHit(int damage)
 		this->setAlive(false);
 		this->Die();
 	}
-	
 }
 
 void MiniBoss01::update(float deltaTime)
@@ -382,7 +392,7 @@ void MiniBoss01::createSlash()
 	m_slash = new Slash(100, 100);
 	m_slash->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_ENEMY1_ATTACK);
 	targetScene->addChild(m_slash->getSprite());
-	m_slash->setDamge(SKELETON_DAMGE);
+	m_slash->setDamge(this->damage);
 }
 
 Slash * MiniBoss01::getSlash()

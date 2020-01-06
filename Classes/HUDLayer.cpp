@@ -1,6 +1,7 @@
 # include "Model.h"
 # include "HUDLayer.h"
 # include "Sound.h"
+#define MARGIN_JOYSTICK 50
 using namespace cocos2d;
 
 HudLayer::HudLayer(Scene* scene, Player* player, TMXTiledMap* map)
@@ -53,15 +54,17 @@ void HudLayer::CreateJoystick(Layer * layer)
 	auto joystick = Sprite::create("Resources/sprites/JoyStick/joystick.png");
 	Rect joystickBaseDimensions = Rect(0, 0, 40.f, 40.0f);
 	Point joystickBasePosition;
-	joystickBasePosition = Vec2(thumb->getBoundingBox().size.width / 2 + joystick->getBoundingBox().size.width / 2
-		, thumb->getBoundingBox().size.height / 2 + joystick->getBoundingBox().size.height / 2);
+	joystickBasePosition = Vec2(MARGIN_JOYSTICK + thumb->getBoundingBox().size.width / 2 + joystick->getBoundingBox().size.width / 2
+		, MARGIN_JOYSTICK + thumb->getBoundingBox().size.height / 2 + joystick->getBoundingBox().size.height / 2);
 
 	joystickBase = new SneakyJoystickSkinnedBase();
 	joystickBase->init();
 	joystickBase->setPosition(joystickBasePosition);
 	joystickBase->setBackgroundSprite(thumb);
+	joystickBase->setAnchorPoint(Vec2(0, 0));
 	joystickBase->setThumbSprite(joystick);
 	joystickBase->getThumbSprite()->setScale(0.5f);
+	joystickBase->setScale(2.0f);
 	joystick->setScale(0.5f);
 	SneakyJoystick *aJoystick = new SneakyJoystick();
 	aJoystick->initWithRect(joystickBaseDimensions);
@@ -121,10 +124,11 @@ void HudLayer::UpdateJoystick(float dt)
 void HudLayer::CreateAttackNormal(Layer * layer)
 {
 	// init attackButton
-	attackBtn = ui::Button::create("Resources/Buttons/AttackButtonNormal.png", "Resources/Buttons/AttackButtonPressed.png");
+	attackBtn = ui::Button::create("Resources/Buttons/SkillButtonNormal.png");
+	attackBtn->setScale(0.5f);
 	//add touch event to attackButton
 	layer->addChild(attackBtn);
-	attackBtn->setPosition(Vec2(1200, 200));
+	attackBtn->setPosition(Vec2(1450, 150));
 	attackBtn->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
 		auto rpAnimateAttack = targetPlayer->getAttackAnimate();
 		rpAnimateAttack->setTag(TAG_ANIMATE_ATTACK);
@@ -161,9 +165,10 @@ void HudLayer::CreateAttackNormal(Layer * layer)
 void HudLayer::CreateSkillUltimate(Layer * layer)
 {
 	// init attackButton
-	skillABtn = ui::Button::create("Resources/Buttons/AttackButtonNormal.png", "Resources/Buttons/AttackButtonPressed.png");
+	skillABtn = ui::Button::create("Resources/Buttons/SkillButton Ultimate.png");
+	skillABtn->setScale(0.5f);
 	layer->addChild(skillABtn);
-	skillABtn->setPosition(Vec2(1250, 300));
+	skillABtn->setPosition(Vec2(1450, 300));
 
 }
 
@@ -186,7 +191,7 @@ void HudLayer::UpdateSkillUltimate(float dt)
 				targetPlayer->getSprite()->stopAllActions();
 				targetPlayer->getSprite()->runAction(rpAnimateSkillA);
 				targetPlayer->increaseVillager(-10);
-				targetPlayer->normalAttack();
+				targetPlayer->UltimateAttack();
 				Sound::GetInstance()->soundPlayerAttack1();
 			}
 			break;
@@ -207,9 +212,10 @@ void HudLayer::UpdateSkillUltimate(float dt)
 void HudLayer::CreateSkillSpear(Layer * layer)
 {
 	// init attackButton
-	skillBBtn = ui::Button::create("Resources/Buttons/AttackButtonNormal.png", "Resources/Buttons/AttackButtonPressed.png");
+	skillBBtn = ui::Button::create("Resources/Buttons/SkillButtonSpear.png");
+	skillBBtn->setScale(0.5f);
 	layer->addChild(skillBBtn);
-	skillBBtn->setPosition(Vec2(1150, 100));
+	skillBBtn->setPosition(Vec2(1300, 150));
 	skillBBtn->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
 		auto rpAnimateSkillB = targetPlayer->getSkillBAnimate();
 		rpAnimateSkillB->setTag(TAG_ANIMATE_ATTACK);
@@ -224,7 +230,7 @@ void HudLayer::CreateSkillSpear(Layer * layer)
 				targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
 				targetPlayer->getSprite()->stopAllActions();
 				targetPlayer->getSprite()->runAction(rpAnimateSkillB);
-				targetPlayer->normalAttack();
+				targetPlayer->spearAttack();
 				Sound::GetInstance()->soundPlayerAttack1();
 			}
 
