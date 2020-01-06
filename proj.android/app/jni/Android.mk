@@ -8,7 +8,20 @@ LOCAL_MODULE_FILENAME := libMyGame
 
 LOCAL_SRC_FILES := $(LOCAL_PATH)/hellocpp/main.cpp \
                    $(LOCAL_PATH)/../../../Classes/AppDelegate.cpp \
-                   $(LOCAL_PATH)/../../../Classes/HelloWorldScene.cpp
+                   $(LOCAL_PATH)/../../../Classes/HealthBarLayer.cpp \
+                   $(LOCAL_PATH)/../../../Classes/HUDLayer.cpp \
+                   $(LOCAL_PATH)/../../../Classes/LoadMapScene.cpp \
+                   $(LOCAL_PATH)/../../../Classes/MainMenu.cpp \
+                   $(LOCAL_PATH)/../../../Classes/MiniBoss01.cpp \
+                   $(LOCAL_PATH)/../../../Classes/Model.cpp \
+                   $(LOCAL_PATH)/../../../Classes/Objects.cpp \
+                   $(LOCAL_PATH)/../../../Classes/OptionsLayer.cpp \
+                   $(LOCAL_PATH)/../../../Classes/PauseLayer.cpp \
+                   $(LOCAL_PATH)/../../../Classes/Player.cpp \
+                   $(LOCAL_PATH)/../../../Classes/Slash.cpp \
+                   $(LOCAL_PATH)/../../../Classes/SneakyJoystick.cpp \
+                   $(LOCAL_PATH)/../../../Classes/SneakyJoystickSkinnedBase.cpp \
+                   $(LOCAL_PATH)/../../../Classes/Villager.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../Classes
 

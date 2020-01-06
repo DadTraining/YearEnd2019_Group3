@@ -73,6 +73,8 @@ void MainMenu::Options()
 	auto options = OptionsLayer::createLayer();
 	options->setAnchorPoint(options->getContentSize()/2);
 	this->addChild(options, 1);
+	//auto rs = ResultScene::createScene();
+	//cocos2d::Director::getInstance()->replaceScene(rs);
 }
 
 void MainMenu::Exit()
