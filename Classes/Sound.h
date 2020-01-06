@@ -9,6 +9,7 @@ class Sound
 {
 private:
 	static Sound* s_instance;
+	bool isMute;
 public:
 	Sound();
 	~Sound();
@@ -21,4 +22,8 @@ public:
 	void soundCollect();
 	void soundBackGroundDesert();
 	void Init();
+
+	// getMute
+	void setIsMute(bool mute);
+	bool getIsMute();
 };

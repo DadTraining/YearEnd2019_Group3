@@ -1,5 +1,5 @@
 #include "MainMenu.h"
-
+#include "Sound.h"
 Scene* MainMenu::createScene()
 {
     return MainMenu::create();
@@ -53,12 +53,12 @@ bool MainMenu::init()
 	this->addChild(bg, -1);
 	// ------------------------Toggle Button--------------------------------- //
 
-	auto itemOn = MenuItemImage::create("Resources/ui/button/ui_ocean_button_soundon.png", "ui/button/ui_blue_button_soundon.png", [&](Ref* sender) {
+	itemOn = MenuItemImage::create("Resources/ui/button/ui_ocean_button_soundon.png", "Resources/ui/button/ui_blue_button_soundon.png", [&](Ref* sender) {
 		//SimpleAudioEngine::getInstance()->playBackgroundMusic(GameAssets::Sound::GAME_BACKGROUND_SOUND, true);
 		//PersistenceManager::getInstance()->setProperty(UserData::KEY_ISPLAYBGMUSIC, true);
 	});
 
-	auto itemOff = MenuItemImage::create("Resources/ui/button/ui_ocean_button_soundoff.png", "ui/button/ui_blue_button_soundoff.png", [&](Ref* sender) {
+	itemOff = MenuItemImage::create("Resources/ui/button/ui_ocean_button_soundoff.png", "Resources/ui/button/ui_blue_button_soundoff.png", [&](Ref* sender) {
 		//SimpleAudioEngine::getInstance()->stopBackgroundMusic();
 		//PersistenceManager::getInstance()->setProperty(UserData::KEY_ISPLAYBGMUSIC, false);
 	});
@@ -66,12 +66,14 @@ bool MainMenu::init()
 	auto itemToggleMusic = MenuItemToggle::createWithCallback([&](Ref* pSender) {
 		MenuItemToggle *toggleItem = (MenuItemToggle *)pSender;
 		if (toggleItem->getSelectedItem() == itemOn) {
-		//	SimpleAudioEngine::getInstance()->playBackgroundMusic(GameAssets::Sound::GAME_BACKGROUND_SOUND, true);
-		//	PersistenceManager::getInstance()->setProperty(UserData::KEY_ISPLAYBGMUSIC, true);
+			Sound::GetInstance()->setIsMute(false);
+			//SimpleAudioEngine::getInstance()->playBackgroundMusic(GameAssets::Sound::GAME_BACKGROUND_SOUND, true);
+			//PersistenceManager::getInstance()->setProperty(UserData::KEY_ISPLAYBGMUSIC, true);
 		}
 		else if (toggleItem->getSelectedItem() == itemOff) {
+			Sound::GetInstance()->setIsMute(true);
 		//	SimpleAudioEngine::getInstance()->stopBackgroundMusic();
-		//	PersistenceManager::getInstance()->setProperty(UserData::KEY_ISPLAYBGMUSIC, false);
+			//PersistenceManager::getInstance()->setProperty(UserData::KEY_ISPLAYBGMUSIC, false);
 		}
 	}, itemOn, itemOff, NULL);
 

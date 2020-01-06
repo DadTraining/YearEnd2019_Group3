@@ -2,18 +2,7 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
-    <ClCompile Include="..\Classes\MiniBoss01.cpp" />
-    <ClCompile Include="..\Classes\Model.cpp" />
-    <ClCompile Include="..\Classes\Objects.cpp" />
-    <ClCompile Include="..\Classes\OptionsLayer.cpp" />
-    <ClCompile Include="..\Classes\Player.cpp" />
-    <ClCompile Include="..\Classes\ResourceManager.cpp" />
-    <ClCompile Include="..\Classes\ResultScene.cpp" />
-    <ClCompile Include="..\Classes\Slash.cpp" />
-    <ClCompile Include="..\Classes\Update.cpp" />
-    <ClCompile Include="..\Classes\Villager.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="..\Classes\Sound.cpp" />
     <ClCompile Include="..\Classes\HealthBarLayer.cpp">
       <Filter>Layer</Filter>
     </ClCompile>
@@ -34,6 +23,39 @@
     </ClCompile>
     <ClCompile Include="..\Classes\SneakyJoystick.cpp">
       <Filter>Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\MiniBoss01.cpp">
+      <Filter>Class</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Objects.cpp">
+      <Filter>Class</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Player.cpp">
+      <Filter>Class</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Slash.cpp">
+      <Filter>Class</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Villager.cpp">
+      <Filter>Class</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Model.cpp">
+      <Filter>SingletonClass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Sound.cpp">
+      <Filter>SingletonClass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Update.cpp">
+      <Filter>SingletonClass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\OptionsLayer.cpp">
+      <Filter>Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ResourceManager.cpp">
+      <Filter>SingletonClass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ResultScene.cpp">
+      <Filter>Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -103,17 +125,6 @@
       <Filter>src\Object</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\AppDelegate.h" />
-    <ClInclude Include="..\Classes\MiniBoss01.h" />
-    <ClInclude Include="..\Classes\Model.h" />
-    <ClInclude Include="..\Classes\Objects.h" />
-    <ClInclude Include="..\Classes\OptionsLayer.h" />
-    <ClInclude Include="..\Classes\Player.h" />
-    <ClInclude Include="..\Classes\ResourceManager.h" />
-    <ClInclude Include="..\Classes\ResultScene.h" />
-    <ClInclude Include="..\Classes\Slash.h" />
-    <ClInclude Include="..\Classes\Sound.h" />
-    <ClInclude Include="..\Classes\Update.h" />
-    <ClInclude Include="..\Classes\Villager.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="..\Classes\HealthBarLayer.h">
       <Filter>Layer</Filter>
@@ -136,6 +147,39 @@
     <ClInclude Include="..\Classes\SneakyJoystickSkinnedBase.h">
       <Filter>Layer</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\MiniBoss01.h">
+      <Filter>Class</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Objects.h">
+      <Filter>Class</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Player.h">
+      <Filter>Class</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Slash.h">
+      <Filter>Class</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Villager.h">
+      <Filter>Class</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Model.h">
+      <Filter>SingletonClass</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Sound.h">
+      <Filter>SingletonClass</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Update.h">
+      <Filter>SingletonClass</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\OptionsLayer.h">
+      <Filter>Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ResourceManager.h">
+      <Filter>SingletonClass</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ResultScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc" />
@@ -149,6 +193,9 @@
     </Filter>
     <Filter Include="Scene">
       <UniqueIdentifier>{ce70044b-f472-4510-82e4-0e708f0f344d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SingletonClass">
+      <UniqueIdentifier>{d49f9553-cc45-403c-8d45-43ba759237dd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
