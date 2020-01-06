@@ -261,6 +261,7 @@ void Player::Die()
 {
 	this->getSprite()->stopAllActions();
 	auto mySprite = this->getSprite();
+	mySprite->getPhysicsBody()->setVelocity(Vec2(0, 0));
 	auto callbackHide = CallFunc::create([mySprite]()
 	{
 		auto scene = ResultScene::create();
@@ -292,7 +293,6 @@ void Player::update(float deltaTime)
 	{
 		this->m_slash->getSprite()->setPosition(Vec2(-1, -1));
 	}	
-	//this->getSprite()->setPhysicsBody(nullptr);
 }
 
 int Player::getVillagersNum()
