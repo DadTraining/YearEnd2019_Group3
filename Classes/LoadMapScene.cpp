@@ -5,6 +5,7 @@
 #include "Sound.h"
 USING_NS_CC;
 
+
 Scene* LoadMapScene::createScene()
 {
 	return LoadMapScene::create();
@@ -18,7 +19,7 @@ bool LoadMapScene::init()
 	}
 	this->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 	this->getPhysicsWorld()->setGravity(Vec2(0, 0));
-	this->getPhysicsWorld()->setSubsteps(5);
+	this->getPhysicsWorld()->setSubsteps(2);
 	Sound::GetInstance()->soundBackGroundDesert();
 	addMap();
 	SpawnPlayer();
@@ -219,7 +220,7 @@ void LoadMapScene::addSandParticle()
 	sandBackground = CCParticleSystemQuad::create("Resources/Effect/backgroundSand.plist");
 	sandBackground->setAnchorPoint(Vec2(0, 0));
 	sandBackground->setContentSize(visibleSize);
-	this->addChild(sandBackground);
+	this->addChild(sandBackground, Model::TREE_ORDER + 1);
 }
 
 void LoadMapScene::mb1MoveToPlayer()

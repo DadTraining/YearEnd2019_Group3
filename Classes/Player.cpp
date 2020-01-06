@@ -119,7 +119,7 @@ void Player::init()
 
 void Player::addPhysic()
 {
-	auto physicsBody = PhysicsBody::createBox(this->getSprite()->getContentSize() - Size(100, 40));
+	auto physicsBody = PhysicsBody::createBox(this->getSprite()->getContentSize() - Size(100, 40), cocos2d::PhysicsMaterial(1.0f, 0.0f, 1.0f));
 	physicsBody->setGravityEnable(false);
 	physicsBody->setRotationEnable(false);
 	physicsBody->setContactTestBitmask(true);
