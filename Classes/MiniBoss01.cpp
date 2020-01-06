@@ -163,6 +163,73 @@ void MiniBoss01::setPosSpawn(Point point)
 	this->posSpawn = point;
 }
 
+void MiniBoss01::setAIforEnemy()
+{
+	auto rpIdleAnimate = RepeatForever::create(this->getIdleAnimate());
+	rpIdleAnimate->setTag(TAG_ANIMATE_IDLE1);
+	auto rpAttackAnimate = this->getAttackAnimate();
+	rpAttackAnimate->setTag(TAG_ANIMATE_ATTACK);
+	auto rpRunAnimate = RepeatForever::create(this->getRunAnimate());
+	rpRunAnimate->setTag(TAG_ANIMATE_RUN);
+
+	auto player = Update::GetInstance()->getPlayer();
+
+	auto range = std::sqrt(pow((this->getSprite()->getPosition().x - player->getSprite()->getPosition().x), 2) + pow((this->getSprite()->getPosition().y - player->getSprite()->getPosition().y), 2));
+	auto vectorMoveToSpawnPoint = Vec2(this->getPosSpawn().x - this->getSprite()->getPosition().x, this->getPosSpawn().y - this->getSprite()->getPosition().y);
+	auto vectorMoveToPlayer = Vec2(player->getSprite()->getPosition().x - this->getSprite()->getPosition().x, player->getSprite()->getPosition().y - this->getSprite()->getPosition().y);
+
+	if (range < VISION_OF_MB) {
+		if (player->getHP() > 0) {
+			this->getSprite()->getPhysicsBody()->setVelocity(vectorMoveToPlayer*SPEED_MB01);
+			if (player->getSprite()->getPosition().x < this->getSprite()->getPosition().x) {
+				this->getSprite()->setFlipX(180);
+			}
+			if (player->getSprite()->getPosition().x > this->getSprite()->getPosition().x) {
+				this->getSprite()->setFlipX(0);
+			}
+			if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_IDLE1) > 0) {
+				this->getSprite()->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
+				this->getSprite()->runAction(rpRunAnimate);
+			}
+			if ((player->getSprite()->getPosition().y < (this->getSprite()->getPosition().y + 50)) &&
+				player->getSprite()->getPosition().y >(this->getSprite()->getPosition().y - 50) &&
+				std::sqrt(pow(player->getSprite()->getPosition().x - this->getSprite()->getPosition().x, 2)) < RANGE_OF_MB) {
+				if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_RUN) > 0) {
+					this->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
+					this->getSprite()->runAction(rpAttackAnimate);
+				}
+			}
+			// When player die
+			else {
+				if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) > 0) {
+					this->getSprite()->stopAllActionsByTag(TAG_ANIMATE_ATTACK);
+					this->getSprite()->runAction(rpRunAnimate);
+				}
+			}
+		}
+	}
+	else {
+		auto vectorMove = Vec2(this->getPosSpawn().x - this->getSprite()->getPosition().x, this->getPosSpawn().y - this->getSprite()->getPosition().y);
+		this->getSprite()->getPhysicsBody()->setVelocity(vectorMove*SPEED_MB01);
+		if ((this->getSprite()->getPosition() < this->getPosSpawn() && this->getSprite()->getPosition() > this->getPosSpawn() - Vec2(5, 5)) ||
+			this->getSprite()->getPosition() > this->getPosSpawn() && this->getSprite()->getPosition() < this->getPosSpawn() + Vec2(5, 5)) {
+			this->getSprite()->setPosition(this->getPosSpawn());
+		}
+		if (this->getPosSpawn().x > this->getSprite()->getPosition().x) {
+			this->getSprite()->setFlipX(0);
+		}
+		if (this->getPosSpawn().x < this->getSprite()->getPosition().x) {
+			this->getSprite()->setFlipX(180);
+		}
+		if (this->getPosSpawn().x == this->getSprite()->getPosition().x) {
+			if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_IDLE1) == 0) {
+				this->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
+				this->getSprite()->runAction(rpIdleAnimate);
+			}
+		}
+	}
+}
+
 Sprite * MiniBoss01::getSprite()
 {
 	return this->sprite;

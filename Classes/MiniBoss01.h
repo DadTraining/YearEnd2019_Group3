@@ -25,6 +25,7 @@ public:
 	void setHP(float hP);
 	void setDamage(float damage);
 	void setPosSpawn(Point point);
+	void setAIforEnemy();
 	
 
 	Sprite* getSprite();
@@ -46,6 +47,7 @@ public:
 	void Die();
 	void setAlive(bool isAlive);
 	bool getAlive();
+
 	//---
 	
 private:

@@ -56,7 +56,7 @@ public:
 	//---------------------------------
 
 	//Check the conditions to move
-	void mb1MoveToPlayer();
+	void enemyMoveToPlayer();
 	void update(float dt);
 };
 
