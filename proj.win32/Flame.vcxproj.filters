@@ -39,9 +39,6 @@
     <ClCompile Include="..\Classes\Model.cpp">
       <Filter>src\Classes</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Slash.cpp">
-      <Filter>src\Classes</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\MiniBoss01.cpp">
       <Filter>src\Object</Filter>
     </ClCompile>
@@ -75,11 +72,17 @@
     <ClCompile Include="..\Classes\Player.cpp">
       <Filter>src\Object</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Update.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\MiniMapLayer.cpp">
       <Filter>src\Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Update.cpp">
+      <Filter>src\Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Slash.cpp">
+      <Filter>src\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Sound.cpp">
+      <Filter>src\Classes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -99,9 +102,6 @@
       <Filter>src\Layer</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Model.h">
-      <Filter>src\Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Slash.h">
       <Filter>src\Classes</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\MiniBoss01.h">
@@ -137,11 +137,17 @@
     <ClInclude Include="..\Classes\Player.h">
       <Filter>src\Object</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Update.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\MiniMapLayer.h">
       <Filter>src\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Update.h">
+      <Filter>src\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Slash.h">
+      <Filter>src\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Sound.h">
+      <Filter>src\Classes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,9 +1,10 @@
 #pragma once
 #include "LoadMapScene.h"
-#include "SimpleAudioEngine.h"
 #include "Model.h"
 #include "Update.h"
+#include "Sound.h"
 USING_NS_CC;
+
 
 Scene* LoadMapScene::createScene()
 {
@@ -18,12 +19,14 @@ bool LoadMapScene::init()
 	}
 	this->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 	this->getPhysicsWorld()->setGravity(Vec2(0, 0));
-	this->getPhysicsWorld()->setSubsteps(5);
+	this->getPhysicsWorld()->setSubsteps(2);
+	Sound::GetInstance()->soundBackGroundDesert();
 	addMap();
 	SpawnPlayer();
 	addHud();
 	createPhysics();
 	addListener();
+	addSandParticle();
 	scheduleUpdate();
 	return true;
 }
@@ -211,6 +214,15 @@ void LoadMapScene::addHud()
 	HUD->setMap(m_tileMap);
 }
 
+void LoadMapScene::addSandParticle()
+{
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+	sandBackground = CCParticleSystemQuad::create("Resources/Effect/backgroundSand.plist");
+	sandBackground->setAnchorPoint(Vec2(0, 0));
+	sandBackground->setContentSize(visibleSize);
+	this->addChild(sandBackground, Model::TREE_ORDER + 1);
+}
+
 void LoadMapScene::mb1MoveToPlayer()
 {
 	for (int i = 0; i < Skeletons.size(); i++) {
@@ -293,6 +305,9 @@ void LoadMapScene::update(float dt)
 	{
 		villagers[i]->update(dt);
 	}
+	sandBackground->setPosition(m_player->getPosition() 
+		+ Vec2(m_player->getContentSize().width, m_player->getContentSize().height));
+
 }
 
 

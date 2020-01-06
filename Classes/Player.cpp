@@ -1,7 +1,7 @@
 #include "Player.h"
-#include "SimpleAudioEngine.h"
 #include "Model.h"
 #include "Update.h"
+#include "Sound.h"
 USING_NS_CC;
 
 Player::Player(Scene* scene) {
@@ -24,7 +24,7 @@ void Player::init()
 	this->villagersNum = 0;
 	//Create sprite
 	this->playerSprite = Sprite::create("Resources/sprites/Player/idle-with-weapon-1.png");
-
+	this->playerSprite->setAnchorPoint(Vec2(0.5f, 0.5f));
 	//Create animate attack
 	auto spriteCacheAttack = SpriteFrameCache::getInstance();
 	spriteCacheAttack->addSpriteFramesWithFile("Resources/sprites/Player/Attacks/attackA.plist", "Resources/sprites/Player/Attacks/attackA.png");
@@ -123,7 +123,7 @@ void Player::init()
 
 void Player::addPhysic()
 {
-	auto physicsBody = PhysicsBody::createBox(this->getSprite()->getContentSize() - Size(100, 40));
+	auto physicsBody = PhysicsBody::createBox(this->getSprite()->getContentSize() - Size(100, 40), cocos2d::PhysicsMaterial(1.0f, 0.0f, 1.0f));
 	physicsBody->setGravityEnable(false);
 	physicsBody->setRotationEnable(false);
 	physicsBody->setContactTestBitmask(true);
@@ -196,7 +196,9 @@ void Player::gotHit()
 	playerSprite->stopActionByTag(TAG_ANIMATE_IDLE1);
 	playerSprite->stopActionByTag(TAG_ANIMATE_HIT);
 	playerSprite->stopActionByTag(TAG_ANIMATE_ATTACK);
-
+	
+	// Play sound hit
+	Sound::GetInstance()->soundPlayerHit();
 	auto animation = this->getHitAnimate();
 	animation->setTag(TAG_ANIMATE_HIT);
 	playerSprite->runAction(animation);
@@ -265,6 +267,7 @@ void Player::Die()
 	auto dieAnimation = this->getDeadAnimate();
 	auto sequence = Sequence::create(dieAnimation, callbackHide, nullptr);
 	this->isAlive = false;
+	Sound::GetInstance()->soundPlayerDie();
 	mySprite->runAction(sequence);
 }
 

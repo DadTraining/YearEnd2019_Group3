@@ -1,6 +1,6 @@
 # include "Model.h"
 # include "HUDLayer.h"
-
+# include "Sound.h"
 using namespace cocos2d;
 
 HudLayer::HudLayer(Scene* scene, Player* player, TMXTiledMap* map)
@@ -137,6 +137,7 @@ void HudLayer::CreateAttackBtn(Layer * layer)
 				targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
 				targetPlayer->getSprite()->runAction(rpAnimateAttack);
 				targetPlayer->normalAttack();
+				Sound::GetInstance()->soundPlayerAttack1();
 			}
 
 			break;
@@ -202,4 +203,5 @@ void HudLayer::update(float dt)
 	}
 	healthBar->update(dt);
 	miniMap->update(dt);
+
 }

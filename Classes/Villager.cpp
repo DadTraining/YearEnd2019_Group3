@@ -1,6 +1,7 @@
 #include "Villager.h"
 #include "Model.h"
 #include "SimpleAudioEngine.h"
+#include "Sound.h"
 #define ONE_TIME_IDLE_VILLAGER 0.05f
 Villager::Villager(Scene * scene)
 {
@@ -65,6 +66,7 @@ Animate * Villager::getIdleAnimate()
 
 void Villager::Die()
 {
+	Sound::GetInstance()->soundCollect();
 	auto villagerSprite = this->getSprite();
 	auto callbackHide = CallFunc::create([villagerSprite]()
 	{
