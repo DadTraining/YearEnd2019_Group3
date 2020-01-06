@@ -341,7 +341,7 @@ void Enemy2::addPhysic()
 	physicsBody->setGravityEnable(false);
 	physicsBody->setRotationEnable(false);
 	physicsBody->setContactTestBitmask(true);
-	physicsBody->setCollisionBitmask(Model::BITMASK_ENEMY);
+	physicsBody->setCollisionBitmask(Model::BITMASK_ENEMY2);
 	this->getSprite()->setPhysicsBody(physicsBody);
 }
 
@@ -380,7 +380,7 @@ bool Enemy2::getAlive()
 void Enemy2::createSlash()
 {
 	m_slash = new Slash(100, 100);
-	m_slash->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_ENEMY1_ATTACK);
+	m_slash->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_ENEMY2_ATTACK);
 	targetScene->addChild(m_slash->getSprite());
 	m_slash->setDamge(this->damage);
 }
@@ -388,4 +388,17 @@ void Enemy2::createSlash()
 Slash * Enemy2::getSlash()
 {
 	return this->m_slash;
+}
+
+void Enemy2::Stun()
+{
+	auto delay = DelayTime::create(1.5f);
+	sprite->stopAllActions();
+	sprite->getPhysicsBody()->setVelocity(Vec2(0, 0));
+	sprite->runAction(delay);
+	auto emitter = CCParticleSystemQuad::create("Resources/Effect/Monster/freezer.plist");
+	emitter->setPosition(this->getSprite()->getPosition());
+	//emitter->setScale(m_SCALE / 8);
+	targetScene->addChild(emitter);
+	emitter->setAutoRemoveOnFinish(true);
 }

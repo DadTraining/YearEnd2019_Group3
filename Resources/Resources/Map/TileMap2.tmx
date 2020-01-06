@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="60" height="60" tilewidth="32" tileheight="32" infinite="0" nextlayerid="31" nextobjectid="137">
+<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="60" height="60" tilewidth="32" tileheight="32" infinite="0" nextlayerid="31" nextobjectid="175">
  <tileset firstgid="1" name="meta_tiles" tilewidth="32" tileheight="32" spacing="1" margin="1" tilecount="2" columns="2">
   <image source="meta_tiles.png" width="67" height="34"/>
   <tile id="0">
@@ -1065,12 +1065,27 @@
   <object id="113" name="Enemy" type="2" x="1277.33" y="913.33"/>
   <object id="124" name="Enemy" type="2" x="1633.33" y="1441.33"/>
   <object id="125" name="Enemy" type="2" x="1182.67" y="1422.67"/>
-  <object id="130" name="Enemy2" type="4" x="343.333" y="236"/>
-  <object id="131" name="Enemy2" type="4" x="404" y="211.333"/>
   <object id="132" name="Enemy2" type="4" x="366" y="170.667"/>
-  <object id="133" name="Enemy2" type="4" x="354" y="249.333"/>
-  <object id="134" name="Enemy2" type="4" x="370.667" y="278.667"/>
-  <object id="135" name="Enemy2" type="4" x="463.333" y="213.333"/>
-  <object id="136" name="Enemy2" type="4" x="484" y="260.667"/>
+  <object id="137" name="Enemy2" type="4" x="314" y="197.333"/>
+  <object id="138" name="Enemy2" type="4" x="338.667" y="227.333"/>
+  <object id="139" name="Enemy2" type="4" x="262.667" y="256"/>
+  <object id="140" name="Enemy2" type="4" x="334" y="277.333"/>
+  <object id="141" name="Enemy2" type="4" x="264" y="212"/>
+  <object id="142" name="Enemy2" type="4" x="549.333" y="235.333"/>
+  <object id="143" name="Enemy2" type="4" x="628.667" y="200.667"/>
+  <object id="144" name="Enemy2" type="4" x="580.667" y="148"/>
+  <object id="145" name="Enemy2" type="4" x="490.667" y="168"/>
+  <object id="146" name="Enemy2" type="4" x="554.667" y="178.667"/>
+  <object id="147" name="Enemy2" type="4" x="496" y="202"/>
+  <object id="148" name="Enemy2" type="4" x="504" y="278.667"/>
+  <object id="149" name="Enemy2" type="4" x="633.333" y="290.667"/>
+  <object id="150" name="Enemy2" type="4" x="622.667" y="350.667"/>
+  <object id="151" name="Enemy2" type="4" x="716.667" y="370.667"/>
+  <object id="152" name="Enemy2" type="4" x="724.667" y="287.333"/>
+  <object id="153" name="Enemy2" type="4" x="705.333" y="296.667"/>
+  <object id="154" name="Enemy2" type="4" x="629.333" y="413.333"/>
+  <object id="163" name="Enemy2" type="4" x="619.333" y="376.667"/>
+  <object id="173" name="Enemy2" type="4" x="719.333" y="471.333"/>
+  <object id="174" name="Enemy2" type="4" x="688" y="483.333"/>
  </objectgroup>
 </map>

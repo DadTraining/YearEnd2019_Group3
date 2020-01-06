@@ -51,7 +51,7 @@ public:
 	void createSlash();
 	Slash* getSlash();
 	//---
-	
+	void Stun();
 private:
 	Sprite* sprite;
 	Animate *attackAnimate, *idleAnimate, *hitAnimate, *runAnimate, *deadAnimate;

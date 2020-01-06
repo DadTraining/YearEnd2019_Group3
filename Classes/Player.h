@@ -9,6 +9,10 @@
 #define TIME_ONE_WALK 0.1f
 #define INIT_HP 100
 #define INIT_DAMAGE 20 
+#define NORMAL_ATTACK_KEY 1
+#define SPEAR_ATTACK_KEY 2
+#define ULTIMATE_ATTACK_KEY 3
+
 
 class Player : public Objects
 {
@@ -30,9 +34,11 @@ public:
 	void setDeadAnimate(Animate* deadAnimate);
 	void setHP(float hP);
 	void setDamage(float damage);
-	
+	Vec2 getPositionOfSlash();
 	//----
 	void normalAttack();
+	void spearAttack();
+	void UltimateAttack();
 	void increaseVillager(int num);
 	void gotHit(int damage);
 	Slash* getSlash();

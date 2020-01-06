@@ -27,7 +27,7 @@ void Update::Init()
 	this->damageOfMB1 = 100.0f;
 	this->hpOfMB1 = 500.0f;
 	this->damageOfEm2 = 10.0f;
-	this->hpOfEm2 = 100.0f;
+	this->hpOfEm2 = 1000.0f;
 	this->damageOfEm3 = 10.0f;
 	this->hpOfEm3 = 100.0f;
 }
