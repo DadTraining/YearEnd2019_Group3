@@ -2,6 +2,8 @@
 #include "Model.h"
 #include "Update.h"
 #include "Sound.h"
+#include "ResultScene.h"
+#define PLAYER_DAMAGE 100.0f
 USING_NS_CC;
 
 Player::Player(Scene* scene) {
@@ -22,7 +24,7 @@ void Player::init()
 	
 	this->damage = Update::GetInstance()->getDamageOfPlayer();
 	this->hP = Update::GetInstance()->getHPOfPlayer();
-	this->villagersNum = 10000000;
+	this->villagersNum = 0;
 	//Create sprite
 	this->playerSprite = Sprite::create("Resources/sprites/Player/idle-with-weapon-1.png");
 	this->playerSprite->setAnchorPoint(Vec2(0.5f, 0.5f));
@@ -147,10 +149,7 @@ void Player::init()
 	this->skillBAnimate = animateSkillB;
 	// Adding the physic to player
 	addPhysic();
-	// init slash
-	m_slash = new Slash(150, 150);
-	m_slash->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_NORMAL_ATTACK);
-	targetScene->addChild(m_slash->getSprite());
+	createSlash();
 }
 
 
@@ -203,6 +202,26 @@ void Player::setDamage(float damage)
 {
 	this->damage = damage;
 }
+
+void Player::createSlash()
+{
+	// create m_slashNormal
+	m_slashNormal = new Slash(150, 150);
+	m_slashNormal->setDamge(PLAYER_DAMAGE);
+	m_slashNormal->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_NORMAL_ATTACK);
+	targetScene->addChild(m_slashNormal->getSprite());
+	// create m_slashSpear
+	m_slashSpear = new Slash(20, 100);
+	m_slashSpear->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_NORMAL_ATTACK);
+	targetScene->addChild(m_slashSpear->getSprite());
+	m_slashSpear->setDamge(0);
+	// create m_slashUltimate
+	m_slashUltimate = new Slash(100, 150);
+	m_slashUltimate->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_NORMAL_ATTACK);
+	targetScene->addChild(m_slashUltimate->getSprite());
+	m_slashUltimate->setDamge(Update::GetInstance()->getDamageOfPlayer() * 2);
+}
+
 void Player::normalAttack()
 {
 	auto isLeft = this->getSprite()->isFlippedX();
@@ -215,7 +234,7 @@ void Player::normalAttack()
 	else {
 		position = Vec2(this->getSprite()->getPosition() + Vec2(distance, 0));
 	}
-	m_slash->getSprite()->setPosition(position);
+	m_slashNormal->getSprite()->setPosition(position);
 }
 
 void Player::increaseVillager(int num)
@@ -223,7 +242,7 @@ void Player::increaseVillager(int num)
 	villagersNum += num;
 }
 
-void Player::gotHit()
+void Player::gotHit(int damage)
 {
 	playerSprite->stopActionByTag(TAG_ANIMATE_RUN);
 	playerSprite->stopActionByTag(TAG_ANIMATE_IDLE1);
@@ -240,13 +259,18 @@ void Player::gotHit()
 	emitter->setScale(m_SCALE / 8);
 	targetScene->addChild(emitter);
 	emitter->setAutoRemoveOnFinish(true);
-	auto dtHP = this->getHP() - Update::GetInstance()->getDamageOfMB1();
+	auto dtHP = this->getHP() - damage;
 	this->setHP(dtHP);
 	if (this->getHP() <= 0)
 	{
 		this->Die();
 		this->setAlive(false);
 	}
+}
+
+Slash * Player::getSlash()
+{
+	return this->m_slashNormal;
 }
 
 Sprite * Player::getSprite()
@@ -303,9 +327,11 @@ void Player::Die()
 {
 	this->getSprite()->stopAllActions();
 	auto mySprite = this->getSprite();
+	mySprite->getPhysicsBody()->setVelocity(Vec2(0, 0));
 	auto callbackHide = CallFunc::create([mySprite]()
 	{
-		mySprite->setPosition(4000, 4000);
+		auto scene = ResultScene::create();
+		Director::getInstance()->replaceScene(TransitionFade::create(0.0f, scene));
 	});
 	auto dieAnimation = this->getDeadAnimate();
 	auto sequence = Sequence::create(dieAnimation, callbackHide, nullptr);
@@ -331,9 +357,8 @@ void Player::update(float deltaTime)
 	}
 	if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) == 0)
 	{
-		this->m_slash->getSprite()->setPosition(Vec2(-1, -1));
+		this->m_slashNormal->getSprite()->setPosition(Vec2(-1, -1));
 	}	
-	//this->getSprite()->setPhysicsBody(nullptr);
 }
 
 int Player::getVillagersNum()

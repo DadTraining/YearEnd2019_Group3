@@ -6,6 +6,7 @@ using namespace std;
 class Villager
 {
 private:
+	int point;
 	Sprite* sprite;
 	Animate* idleAnimate;
 	Scene* targetScene;
@@ -19,5 +20,8 @@ public:
 	Sprite* getSprite();
 	Animate* getIdleAnimate();
 	void Die();
+	void initPoint();
+	int getPoint();
+	void setPoint(int point);
 	void setIndex(int index);
 };

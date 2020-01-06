@@ -42,9 +42,9 @@ void HudLayer::createHud()
 	addMiniMap();
 	this->addChild(_hudScore, 0);
 	CreateJoystick(this);
-	CreateAttackBtn(this);
-	CreateSkillABtn(this);
-	CreateSkillBBtn(this);
+	CreateAttackNormal(this);
+	CreateSkillUltimate(this);
+	CreateSkillSpear(this);
 }
 
 void HudLayer::CreateJoystick(Layer * layer)
@@ -118,7 +118,7 @@ void HudLayer::UpdateJoystick(float dt)
 	}
 }
 
-void HudLayer::CreateAttackBtn(Layer * layer)
+void HudLayer::CreateAttackNormal(Layer * layer)
 {
 	// init attackButton
 	attackBtn = ui::Button::create("Resources/Buttons/AttackButtonNormal.png", "Resources/Buttons/AttackButtonPressed.png");
@@ -158,7 +158,7 @@ void HudLayer::CreateAttackBtn(Layer * layer)
 
 }
 
-void HudLayer::CreateSkillABtn(Layer * layer)
+void HudLayer::CreateSkillUltimate(Layer * layer)
 {
 	// init attackButton
 	skillABtn = ui::Button::create("Resources/Buttons/AttackButtonNormal.png", "Resources/Buttons/AttackButtonPressed.png");
@@ -167,7 +167,7 @@ void HudLayer::CreateSkillABtn(Layer * layer)
 
 }
 
-void HudLayer::UpdateSkillABtn(float dt)
+void HudLayer::UpdateSkillUltimate(float dt)
 {
 	skillABtn->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
 		auto rpAnimateSkillA = targetPlayer->getSkillAAnimate();
@@ -204,7 +204,7 @@ void HudLayer::UpdateSkillABtn(float dt)
 	});
 }
 
-void HudLayer::CreateSkillBBtn(Layer * layer)
+void HudLayer::CreateSkillSpear(Layer * layer)
 {
 	// init attackButton
 	skillBBtn = ui::Button::create("Resources/Buttons/AttackButtonNormal.png", "Resources/Buttons/AttackButtonPressed.png");
@@ -290,7 +290,7 @@ void HudLayer::update(float dt)
 		targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
 	}
 	if (targetPlayer->getVillagersNum() >= 10) {
-		UpdateSkillABtn(dt);
+		UpdateSkillUltimate(dt);
 	}
 	healthBar->update(dt);
 	miniMap->update(dt);

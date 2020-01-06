@@ -11,6 +11,7 @@ Slash::Slash(int width, int height)
 
 void Slash::init()
 {
+	this->damage = 0;
 	this->createPhysics();
 }
 
@@ -27,6 +28,16 @@ void Slash::createPhysics()
 	physicBody->setDynamic(false);
 	physicBody->setContactTestBitmask(true);
 	m_Sprite->setPhysicsBody(physicBody);
+}
+
+int Slash::getDamge()
+{
+	return this->damage;
+}
+
+void Slash::setDamge(int damage)
+{
+	this->damage = damage;
 }
 
 Slash::~Slash()

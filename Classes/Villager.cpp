@@ -3,6 +3,7 @@
 #include "SimpleAudioEngine.h"
 #include "Sound.h"
 #define ONE_TIME_IDLE_VILLAGER 0.05f
+#define DEFAULT_POINT 30
 Villager::Villager(Scene * scene)
 {
 	targetScene = scene;
@@ -15,6 +16,7 @@ Villager::~Villager()
 
 void Villager::init()
 {
+	this->initPoint();
 	this->createIdleAnimation();
 	this->addPhysic();
 }
@@ -27,7 +29,8 @@ void Villager::createIdleAnimation()
 {
 	// Create Sprite
 	this->sprite = Sprite::create("Resources/sprites/Village/Idle/spr_Idle_strip_1.png");
-	this->sprite->setScale(m_SCALE / 2);
+	float scalePoint = (float)point / (DEFAULT_POINT);
+	this->sprite->setScale((m_SCALE / 2) * scalePoint);
 	auto spriteCacheFrame = SpriteFrameCache::getInstance();
 	spriteCacheFrame->addSpriteFramesWithFile("Resources/sprites/Village/Idle/sideCityzen.plist", "Resources/sprites/Village/Idle/sideCityzen.png");
 	char nameAnimateIdle[50] = { 0 };
@@ -80,6 +83,21 @@ void Villager::Die()
 	emitter->setScale(m_SCALE / 32);
 	targetScene->addChild(emitter);
 	emitter->setAutoRemoveOnFinish(true);
+}
+
+void Villager::initPoint()
+{
+	point = DEFAULT_POINT + rand() % 10;
+}
+
+int Villager::getPoint()
+{
+	return this->point;
+}
+
+void Villager::setPoint(int point)
+{
+	this->point = point;
 }
 
 void Villager::setIndex(int index)

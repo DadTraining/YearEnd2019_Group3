@@ -1,5 +1,5 @@
 #include "MainMenu.h"
-
+#include "Sound.h"
 Scene* MainMenu::createScene()
 {
     return MainMenu::create();
@@ -53,25 +53,19 @@ bool MainMenu::init()
 	this->addChild(bg, -1);
 	// ------------------------Toggle Button--------------------------------- //
 
-	auto itemOn = MenuItemImage::create("Resources/ui/button/ui_ocean_button_soundon.png", "ui/button/ui_blue_button_soundon.png", [&](Ref* sender) {
-		//SimpleAudioEngine::getInstance()->playBackgroundMusic(GameAssets::Sound::GAME_BACKGROUND_SOUND, true);
-		//PersistenceManager::getInstance()->setProperty(UserData::KEY_ISPLAYBGMUSIC, true);
+	itemOn = MenuItemImage::create("Resources/ui/button/ui_ocean_button_soundon.png", "Resources/ui/button/ui_blue_button_soundon.png", [&](Ref* sender) {
 	});
 
-	auto itemOff = MenuItemImage::create("Resources/ui/button/ui_ocean_button_soundoff.png", "ui/button/ui_blue_button_soundoff.png", [&](Ref* sender) {
-		//SimpleAudioEngine::getInstance()->stopBackgroundMusic();
-		//PersistenceManager::getInstance()->setProperty(UserData::KEY_ISPLAYBGMUSIC, false);
+	itemOff = MenuItemImage::create("Resources/ui/button/ui_ocean_button_soundoff.png", "Resources/ui/button/ui_blue_button_soundoff.png", [&](Ref* sender) {
 	});
 
 	auto itemToggleMusic = MenuItemToggle::createWithCallback([&](Ref* pSender) {
 		MenuItemToggle *toggleItem = (MenuItemToggle *)pSender;
 		if (toggleItem->getSelectedItem() == itemOn) {
-		//	SimpleAudioEngine::getInstance()->playBackgroundMusic(GameAssets::Sound::GAME_BACKGROUND_SOUND, true);
-		//	PersistenceManager::getInstance()->setProperty(UserData::KEY_ISPLAYBGMUSIC, true);
+			Sound::GetInstance()->setIsMute(false);
 		}
 		else if (toggleItem->getSelectedItem() == itemOff) {
-		//	SimpleAudioEngine::getInstance()->stopBackgroundMusic();
-		//	PersistenceManager::getInstance()->setProperty(UserData::KEY_ISPLAYBGMUSIC, false);
+			Sound::GetInstance()->setIsMute(true);
 		}
 	}, itemOn, itemOff, NULL);
 

@@ -7,7 +7,7 @@
 #define TIME_ONE_RUN 0.1f
 #define TIME_ONE_DEAD 0.15f
 #define TIME_ONE_WALK 0.1f
-
+#define SKELETON_DAMGE 100.0f
 class MiniBoss01 : public Objects
 {
 public:
@@ -40,7 +40,7 @@ public:
 	//---
 	//Attack
 	void normalAttack();
-	void gotHit();
+	void gotHit(int damage);
 	// Add physics
 	void addPhysic();
 	void setIndex(int index);
@@ -48,6 +48,8 @@ public:
 	void setAlive(bool isAlive);
 	bool getAlive();
 
+	void createSlash();
+	Slash* getSlash();
 	//---
 	
 private:

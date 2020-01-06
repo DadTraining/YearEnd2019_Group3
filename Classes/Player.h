@@ -20,6 +20,7 @@ public:
 	void init();
 	void update(float deltaTime);
 	void addPhysic();
+	void createSlash();
 
 	void setSprite(Sprite* sprite);
 	void setAttackAnimate(Animate* attackAnimate);
@@ -33,7 +34,8 @@ public:
 	//----
 	void normalAttack();
 	void increaseVillager(int num);
-	void gotHit();
+	void gotHit(int damage);
+	Slash* getSlash();
 	//----
 
 	Sprite* getSprite();
@@ -58,7 +60,9 @@ private:
 	Sprite* playerSprite;
 	Animate *attackAnimate, *idleAnimate, *hitAnimate, *runAnimate, *deadAnimate, *skillAAnimate, *skillBAnimate;
 	float hP, damage;
-	Slash* m_slash;
+	Slash* m_slashNormal;
+	Slash* m_slashSpear;
+	Slash* m_slashUltimate;
 	Scene* targetScene;
 	int villagersNum;
 	bool isAlive;

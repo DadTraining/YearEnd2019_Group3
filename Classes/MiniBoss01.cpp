@@ -2,7 +2,7 @@
 #include "Update.h"
 #include "SimpleAudioEngine.h"
 #include "Model.h"
-
+#include "Sound.h"
 USING_NS_CC;
 
 MiniBoss01::MiniBoss01(Scene* scene) {
@@ -110,10 +110,7 @@ void MiniBoss01::init()
 	// Add physics
 	addPhysic();
 	// init slash
-	m_slash = new Slash(100, 100);
-	m_slash->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_ENEMY1_ATTACK);
-	targetScene->addChild(m_slash->getSprite());
-
+	this->createSlash();
 	// init isAlive
 	this->isAlive = true;
 }
@@ -286,20 +283,22 @@ void MiniBoss01::normalAttack()
 	else {
 		m_slash->getSprite()->setPosition(this->getSprite()->getPosition() + Vec2(distance, 0));
 	}
+
 }
 
-void MiniBoss01::gotHit()
+void MiniBoss01::gotHit(int damage)
 {
 	if (!this->getAlive())
 	{
 		return;
 	}
+	Sound::GetInstance()->soundSkeletonHit();
 	this->sprite->stopAllActions();
 	auto animation = this->getHitAnimate();
 	animation->setTag(TAG_ANIMATE_HIT);
 	this->sprite->runAction(animation);
 	// Adding the effect
-	auto dtHP = this->getHP() - Update::GetInstance()->getDamageOfPlayer();
+	auto dtHP = this->getHP() - damage;
 	this->setHP(dtHP);
 	auto emitter = CCParticleSystemQuad::create("Resources/Effect/Player/player_got_hit.plist");
 	emitter->setPosition(this->getSprite()->getPosition());
@@ -353,6 +352,7 @@ void MiniBoss01::setIndex(int index)
 
 void MiniBoss01::Die()
 {
+	Sound::GetInstance()->soundSkeletonDie();
 	this->getSprite()->stopAllActions();
 	auto mySprite = this->getSprite();
 	auto callbackHide = CallFunc::create([mySprite]()
@@ -375,4 +375,17 @@ void MiniBoss01::setAlive(bool isAlive)
 bool MiniBoss01::getAlive()
 {
 	return this->isAlive;
+}
+
+void MiniBoss01::createSlash()
+{
+	m_slash = new Slash(100, 100);
+	m_slash->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_ENEMY1_ATTACK);
+	targetScene->addChild(m_slash->getSprite());
+	m_slash->setDamge(SKELETON_DAMGE);
+}
+
+Slash * MiniBoss01::getSlash()
+{
+	return this->m_slash;
 }

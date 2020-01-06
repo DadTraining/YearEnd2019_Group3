@@ -10,6 +10,10 @@
 
 class MainMenu : public cocos2d::Scene
 {
+private:
+	cocos2d::MenuItemImage* itemOn;
+	cocos2d::MenuItemImage* itemOff;
+
 public:
     static cocos2d::Scene* createScene();
     virtual bool init();

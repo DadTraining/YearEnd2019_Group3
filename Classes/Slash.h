@@ -10,10 +10,13 @@ private:
 	Sprite* m_Sprite;
 	int m_width;
 	int m_height;
+	int damage;
 public:
 	Slash(int width, int height);
 	void init();
 	Sprite* getSprite();
 	void createPhysics();
+	int getDamge();
+	void setDamge(int damage);
 	~Slash();
 };

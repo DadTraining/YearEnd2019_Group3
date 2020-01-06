@@ -59,7 +59,8 @@ void MiniMapLayer::setVisibleObject()
 	miniMap->getLayer("TreeTop")->setVisible(false);
 	miniMap->getLayer("TreeBottom")->setVisible(false);
 	miniMap->getLayer("Grass")->setVisible(false);
-	miniMap->getLayer("Statue")->setVisible(false);
+	miniMap->getLayer("StatueTop")->setVisible(false);
+	miniMap->getLayer("StatueBottom")->setVisible(false);
 	miniMap->getLayer("Water Object")->setVisible(false);
 	miniMap->getLayer("Meta")->setVisible(false);
 }
