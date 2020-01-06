@@ -113,6 +113,38 @@ void Player::init()
 	this->hitAnimate = animateHit;
 	hitAnimate->retain();
 
+	//Add skill A
+	auto spriteCacheSkillA = SpriteFrameCache::getInstance();
+	spriteCacheSkillA->addSpriteFramesWithFile("Resources/sprites/Player/Attacks/attackD.plist", "Resources/sprites/Player/Attacks/attackD.png");
+	char nameAnimateSkillA[50] = { 0 };
+	Vector<SpriteFrame*> animSkillA;
+	for (int i = 1; i < 10; i++)
+	{
+		sprintf(nameAnimateSkillA, "attack-D%d.png", i);
+		auto frame = spriteCacheSkillA->getSpriteFrameByName(nameAnimateSkillA);
+		animSkillA.pushBack(frame);
+	}
+	Animation* animationSkillA = Animation::createWithSpriteFrames(animSkillA, 0.1f);
+	auto animateSkillA = Animate::create(animationSkillA);
+	animateSkillA->retain();
+	this->skillAAnimate = animateSkillA;
+
+	//Add skill B
+
+	auto spriteCacheSkillB = SpriteFrameCache::getInstance();
+	spriteCacheSkillB->addSpriteFramesWithFile("Resources/sprites/Player/Attacks/attackB.plist", "Resources/sprites/Player/Attacks/attackB.png");
+	char nameAnimateSkillB[50] = { 0 };
+	Vector<SpriteFrame*> animSkillB;
+	for (int i = 1; i < 7; i++)
+	{
+		sprintf(nameAnimateSkillB, "attack-B%d.png", i);
+		auto frame = spriteCacheSkillB->getSpriteFrameByName(nameAnimateSkillB);
+		animSkillB.pushBack(frame);
+	}
+	Animation* animationSkillB = Animation::createWithSpriteFrames(animSkillB, 0.1f);
+	auto animateSkillB = Animate::create(animationSkillB);
+	animateSkillB->retain();
+	this->skillBAnimate = animateSkillB;
 	// Adding the physic to player
 	addPhysic();
 	// init slash
@@ -245,6 +277,16 @@ Animate * Player::getRunAnimate()
 Animate * Player::getDeadAnimate()
 {
 	return this->deadAnimate;
+}
+
+Animate * Player::getSkillAAnimate()
+{
+	return this->skillAAnimate;
+}
+
+Animate * Player::getSkillBAnimate()
+{
+	return this->skillBAnimate;
 }
 
 float  Player::getHP()

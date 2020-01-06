@@ -126,20 +126,6 @@ void HudLayer::CreateAttackBtn(Layer * layer)
 	layer->addChild(attackBtn);
 	attackBtn->setPosition(Vec2(1200, 200));
 	attackBtn->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
-		auto spriteCacheAttack = SpriteFrameCache::getInstance();
-		spriteCacheAttack->addSpriteFramesWithFile("Resources/sprites/Player/Attacks/attackA.plist", "Resources/sprites/Player/Attacks/attackA.png");
-		char nameAnimateAttack[50] = { 0 };
-		Vector<SpriteFrame*> animAttack;
-		for (int i = 1; i < 8; i++)
-		{
-			sprintf(nameAnimateAttack, "attack-A%d.png", i);
-			auto frame = spriteCacheAttack->getSpriteFrameByName(nameAnimateAttack);
-			animAttack.pushBack(frame);
-		}
-		Animation* animationAtack = Animation::createWithSpriteFrames(animAttack, 0.07f);
-		auto animateAttack = Animate::create(animationAtack);
-		animateAttack->retain();
-		targetPlayer->setAttackAnimate(animateAttack);
 		auto rpAnimateAttack = targetPlayer->getAttackAnimate();
 		rpAnimateAttack->setTag(TAG_ANIMATE_ATTACK);
 		switch (type)
@@ -184,32 +170,21 @@ void HudLayer::CreateSkillABtn(Layer * layer)
 void HudLayer::UpdateSkillABtn(float dt)
 {
 	skillABtn->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
-		auto spriteCacheAttack = SpriteFrameCache::getInstance();
-		spriteCacheAttack->addSpriteFramesWithFile("Resources/sprites/Player/Attacks/attackD.plist", "Resources/sprites/Player/Attacks/attackD.png");
-		char nameAnimateAttack[50] = { 0 };
-		Vector<SpriteFrame*> animAttack;
-		for (int i = 1; i < 10; i++)
-		{
-			sprintf(nameAnimateAttack, "attack-D%d.png", i);
-			auto frame = spriteCacheAttack->getSpriteFrameByName(nameAnimateAttack);
-			animAttack.pushBack(frame);
-		}
-		Animation* animationAtack = Animation::createWithSpriteFrames(animAttack, 0.1f);
-		auto animateAttack = Animate::create(animationAtack);
-		animateAttack->retain();
-		targetPlayer->setAttackAnimate(animateAttack);
-		auto rpAnimateAttack = targetPlayer->getAttackAnimate();
-		rpAnimateAttack->setTag(TAG_ANIMATE_ATTACK);
+		auto rpAnimateSkillA = targetPlayer->getSkillAAnimate();
+		rpAnimateSkillA->setTag(TAG_ANIMATE_ATTACK);
 		switch (type)
 		{
 			// In case when the player press on the screen
 		case ui::Widget::TouchEventType::BEGAN:
 		{
 			// If the player still have the Idle animation or run animation then remove it
-			if (targetPlayer->getVillagersNum() >= 10 && targetPlayer->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_IDLE1) > 0 || targetPlayer->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_RUN) > 0) {
+			if (targetPlayer->getVillagersNum() >= 10 
+				&&(targetPlayer->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_IDLE1) > 0 
+				|| targetPlayer->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_RUN) > 0)) {
 				targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
 				targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
-				targetPlayer->getSprite()->runAction(rpAnimateAttack);
+				targetPlayer->getSprite()->stopAllActions();
+				targetPlayer->getSprite()->runAction(rpAnimateSkillA);
 				targetPlayer->increaseVillager(-10);
 				targetPlayer->normalAttack();
 				Sound::GetInstance()->soundPlayerAttack1();
@@ -218,7 +193,7 @@ void HudLayer::UpdateSkillABtn(float dt)
 		}
 		case ui::Widget::TouchEventType::ENDED:
 		{
-			if (rpAnimateAttack->isDone()) {
+			if (rpAnimateSkillA->isDone()) {
 				targetPlayer->getSprite()->stopAllActions();
 				break;
 			}
@@ -236,22 +211,8 @@ void HudLayer::CreateSkillBBtn(Layer * layer)
 	layer->addChild(skillBBtn);
 	skillBBtn->setPosition(Vec2(1150, 100));
 	skillBBtn->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
-		auto spriteCacheAttack = SpriteFrameCache::getInstance();
-		spriteCacheAttack->addSpriteFramesWithFile("Resources/sprites/Player/Attacks/attackB.plist", "Resources/sprites/Player/Attacks/attackB.png");
-		char nameAnimateAttack[50] = { 0 };
-		Vector<SpriteFrame*> animAttack;
-		for (int i = 1; i < 7; i++)
-		{
-			sprintf(nameAnimateAttack, "attack-B%d.png", i);
-			auto frame = spriteCacheAttack->getSpriteFrameByName(nameAnimateAttack);
-			animAttack.pushBack(frame);
-		}
-		Animation* animationAtack = Animation::createWithSpriteFrames(animAttack, 0.1f);
-		auto animateAttack = Animate::create(animationAtack);
-		animateAttack->retain();
-		targetPlayer->setAttackAnimate(animateAttack);
-		auto rpAnimateAttack = targetPlayer->getAttackAnimate();
-		rpAnimateAttack->setTag(TAG_ANIMATE_ATTACK);
+		auto rpAnimateSkillB = targetPlayer->getSkillBAnimate();
+		rpAnimateSkillB->setTag(TAG_ANIMATE_ATTACK);
 		switch (type)
 		{
 			// In case when the player press on the screen
@@ -261,7 +222,8 @@ void HudLayer::CreateSkillBBtn(Layer * layer)
 			if (targetPlayer->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_IDLE1) > 0 || targetPlayer->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_RUN) > 0) {
 				targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
 				targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
-				targetPlayer->getSprite()->runAction(rpAnimateAttack);
+				targetPlayer->getSprite()->stopAllActions();
+				targetPlayer->getSprite()->runAction(rpAnimateSkillB);
 				targetPlayer->normalAttack();
 				Sound::GetInstance()->soundPlayerAttack1();
 			}
@@ -270,7 +232,7 @@ void HudLayer::CreateSkillBBtn(Layer * layer)
 		}
 		case ui::Widget::TouchEventType::ENDED:
 		{
-			if (rpAnimateAttack->isDone()) {
+			if (rpAnimateSkillB->isDone()) {
 				targetPlayer->getSprite()->stopAllActions();
 				break;
 			}
@@ -330,7 +292,7 @@ void HudLayer::update(float dt)
 	if (targetPlayer->getVillagersNum() >= 10) {
 		UpdateSkillABtn(dt);
 	}
-		healthBar->update(dt);
+	healthBar->update(dt);
 	miniMap->update(dt);
 
 }
