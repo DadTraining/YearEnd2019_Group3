@@ -15,6 +15,7 @@ public:
 	Slash(int width, int height);
 	void init();
 	Sprite* getSprite();
+	void setSprite(Sprite* sprite);
 	void createPhysics();
 	int getDamge();
 	void setDamge(int damage);
