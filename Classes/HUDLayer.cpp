@@ -277,7 +277,7 @@ void HudLayer::addMiniMap()
 }
 void HudLayer::addPauseButton()
 {
-	auto pauseBtn = cocos2d::ui::Button::create("ui/button/ui_ocean_button_pause.png", "ui/button/ui_blue_button_pause.png");
+	auto pauseBtn = cocos2d::ui::Button::create("Resources/ui/button/ui_ocean_button_pause.png", "Resources/ui/button/ui_blue_button_pause.png");
 	
 	pauseBtn->setScale(0.2);
 	pauseBtn->setAnchorPoint(cocos2d::Vec2(0,1));
