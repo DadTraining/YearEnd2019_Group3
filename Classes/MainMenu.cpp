@@ -75,7 +75,7 @@ bool MainMenu::init()
 	pMenu->setPosition(visibleSize.width-75,visibleSize.height-75);
 	this->addChild(pMenu, 1);
 	// --------------------------Lvlup------------------------------- //
-	auto bgLvlup = cocos2d::Sprite::create("ui/popup/ui_ocean_popup_landscape.png");
+	auto bgLvlup = cocos2d::Sprite::create("Resources/ui/popup/ui_ocean_popup_landscape.png");
 
 	auto upHpBtn = cocos2d::ui::Button::create("Resources/ui/button/ui_ocean_button.png", "Resources/ui/button/ui_blue_button.png");
 
