@@ -361,7 +361,6 @@ void Enemy2::Die()
 	});
 	this->isAlive = false;
 	this->m_slash->getSprite()->setPosition(Vec2(-1, -1));
-	//this->m_slash->getSprite()->removeFromParent();
 	auto dieAnimation = this->getDeadAnimate();
 	auto sequence = Sequence::create(dieAnimation, callbackHide, nullptr);
 	mySprite->runAction(sequence);
@@ -379,7 +378,7 @@ bool Enemy2::getAlive()
 
 void Enemy2::createSlash()
 {
-	m_slash = new Slash(100, 100);
+	m_slash = new Slash(150, 50);
 	m_slash->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_ENEMY2_ATTACK);
 	targetScene->addChild(m_slash->getSprite());
 	m_slash->setDamge(this->damage);
@@ -398,7 +397,6 @@ void Enemy2::Stun()
 	sprite->runAction(delay);
 	auto emitter = CCParticleSystemQuad::create("Resources/Effect/Monster/freezer.plist");
 	emitter->setPosition(this->getSprite()->getPosition());
-	//emitter->setScale(m_SCALE / 8);
 	targetScene->addChild(emitter);
 	emitter->setAutoRemoveOnFinish(true);
 }
