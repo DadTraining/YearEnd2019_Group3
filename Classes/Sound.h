@@ -22,6 +22,7 @@ public:
 	void soundCollect();
 	void soundBackGroundDesert();
 	void soundBackGroundCastle();
+	void soundMainMenu();
 	void Init();
 	// SkeletonSound
 	void soundSkeletonHit();

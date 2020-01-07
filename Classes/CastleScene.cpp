@@ -39,10 +39,8 @@ void CastleScene::addMap()
 	m_meta = m_tileMap->layerNamed("Meta");
 	m_objectGroup = m_tileMap->getObjectGroup("Objects");
 	m_meta->setVisible(false);
-	//auto tree = m_tileMap->layerNamed("TreeTop");
-	//auto statueTop = m_tileMap->layerNamed("StatueTop");
-	//statueTop->setGlobalZOrder(Model::TREE_ORDER);
-	//tree->setGlobalZOrder(Model::TREE_ORDER);
+	auto bossDoorTop = m_tileMap->layerNamed("BossDoorTop");
+	bossDoorTop->setGlobalZOrder(Model::TREE_ORDER);
 	addChild(m_tileMap, -1);
 }
 

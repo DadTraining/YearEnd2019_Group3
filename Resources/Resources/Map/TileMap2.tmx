@@ -986,7 +986,7 @@
 </data>
  </layer>
  <objectgroup id="3" name="Objects">
-  <object id="4" name="SpawnPoint" type="1" x="174.327" y="1483"/>
+  <object id="4" name="SpawnPoint" type="1" x="1413.66" y="181.667"/>
   <object id="10" name="Villager" type="3" x="1675.67" y="564"/>
   <object id="19" name="Villager" type="3" x="1668" y="534"/>
   <object id="20" name="Villager" type="3" x="1714" y="525"/>

@@ -12,6 +12,7 @@ bool MainMenu::init()
     {
         return false;
     }
+	Sound::GetInstance()->soundMainMenu();
 	string font = "Resources/fonts/joystix monospace.ttf";
 	float fontSize = 48;
 
