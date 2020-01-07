@@ -30,7 +30,7 @@ void Villager::createIdleAnimation()
 	// Create Sprite
 	this->sprite = Sprite::create("Resources/sprites/Village/Idle/spr_Idle_strip_1.png");
 	float scalePoint = (float)point / (DEFAULT_POINT);
-	this->sprite->setScale((m_SCALE / 2) * scalePoint);
+	this->sprite->setScale((m_SCALE_32x32 / 2) * scalePoint);
 	auto spriteCacheFrame = SpriteFrameCache::getInstance();
 	spriteCacheFrame->addSpriteFramesWithFile("Resources/sprites/Village/Idle/sideCityzen.plist", "Resources/sprites/Village/Idle/sideCityzen.png");
 	char nameAnimateIdle[50] = { 0 };
@@ -80,7 +80,7 @@ void Villager::Die()
 	villagerSprite->runAction(sequence);
 	auto emitter = CCParticleSystemQuad::create("Resources/Effect/Villager/collected_effect.plist");
 	emitter->setPosition(sprite->getPosition());
-	emitter->setScale(m_SCALE / 32);
+	emitter->setScale(m_SCALE_32x32 / 32);
 	targetScene->addChild(emitter);
 	emitter->setAutoRemoveOnFinish(true);
 }

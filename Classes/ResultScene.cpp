@@ -12,7 +12,10 @@ bool ResultScene::init()
 		return false;
 	}
 	isAlive = Update::GetInstance()->getPlayer()->getAlive();
+	if (isAlive) {
 	numVillager = Update::GetInstance()->getPlayer()->getVillagersNum();
+	}
+
 	auto visibleSize = cocos2d::Director::getInstance()->getVisibleSize();
 
 	auto rsLayer = cocos2d::LayerColor::create(cocos2d::Color4B(255, 0, 0, 255));

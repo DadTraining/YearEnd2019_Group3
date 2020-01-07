@@ -3,140 +3,120 @@
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="..\Classes\HealthBarLayer.cpp">
-      <Filter>Layer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\HUDLayer.cpp">
-      <Filter>Layer</Filter>
+    <ClCompile Include="..\Classes\ResultScene.cpp">
+      <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\LoadMapScene.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\MainMenu.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\SneakyJoystickSkinnedBase.cpp">
-      <Filter>Layer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\SneakyJoystick.cpp">
-      <Filter>Layer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\MiniBoss01.cpp">
+    <ClCompile Include="..\Classes\Player.cpp">
       <Filter>Class</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Objects.cpp">
       <Filter>Class</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Player.cpp">
+    <ClCompile Include="..\Classes\Villager.cpp">
       <Filter>Class</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Slash.cpp">
       <Filter>Class</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Villager.cpp">
-      <Filter>Class</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Model.cpp">
-      <Filter>SingletonClass</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Sound.cpp">
-      <Filter>SingletonClass</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Update.cpp">
-      <Filter>SingletonClass</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\OptionsLayer.cpp">
-      <Filter>Layer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\ResourceManager.cpp">
-      <Filter>SingletonClass</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\ResultScene.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\PauseLayer.cpp" />
     <ClCompile Include="..\Classes\Enemy2.cpp">
       <Filter>Class</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Enemy3.cpp">
       <Filter>Class</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\HealthBarLayer.cpp">
+      <Filter>Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\HUDLayer.cpp">
+      <Filter>Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\MainMenu.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
     <ClCompile Include="..\Classes\MiniMapLayer.cpp">
       <Filter>Layer</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>win32</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\AppDelegate.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\ResourceManager.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\LoadMapScene.cpp">
-      <Filter>src\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\HUDLayer.cpp">
-      <Filter>src\Layer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Model.cpp">
-      <Filter>src\Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\MiniBoss01.cpp">
-      <Filter>src\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Villager.cpp">
-      <Filter>src\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\MainMenu.cpp">
-      <Filter>src\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\OptionsLayer.cpp">
-      <Filter>src\Layer</Filter>
+      <Filter>Layer</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\HealthBarLayer.cpp">
-      <Filter>src\Layer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Objects.cpp">
-      <Filter>src\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Player.cpp">
-      <Filter>src\Object</Filter>
+    <ClCompile Include="..\Classes\PauseLayer.cpp">
+      <Filter>Layer</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\SneakyJoystick.cpp">
-      <Filter>src\Sneaky</Filter>
+      <Filter>Layer</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\SneakyJoystickSkinnedBase.cpp">
-      <Filter>src\Sneaky</Filter>
+      <Filter>Layer</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Objects.cpp">
-      <Filter>src\Object</Filter>
+    <ClCompile Include="..\Classes\Model.cpp">
+      <Filter>Singleton Class</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Player.cpp">
-      <Filter>src\Object</Filter>
+    <ClCompile Include="..\Classes\Sound.cpp">
+      <Filter>Singleton Class</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ResourceManager.cpp">
+      <Filter>Singleton Class</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Update.cpp">
-      <Filter>src\Classes</Filter>
+      <Filter>Singleton Class</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Slash.cpp">
-      <Filter>src\Object</Filter>
+    <ClCompile Include="..\Classes\MiniBoss01.cpp">
+      <Filter>Class</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Portal.cpp">
+      <Filter>Class</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\CastleScene.cpp">
+      <Filter>Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="..\Classes\ResultScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\LoadMapScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Player.h">
+      <Filter>Class</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Objects.h">
+      <Filter>Class</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Villager.h">
+      <Filter>Class</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Slash.h">
+      <Filter>Class</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Enemy2.h">
+      <Filter>Class</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Enemy3.h">
+      <Filter>Class</Filter>
+    </ClInclude>
     <ClInclude Include="..\Classes\HealthBarLayer.h">
       <Filter>Layer</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\HUDLayer.h">
       <Filter>Layer</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\LoadMapScene.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\MainMenu.h">
       <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MiniMapLayer.h">
+      <Filter>Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\OptionsLayer.h">
+      <Filter>Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PauseLayer.h">
+      <Filter>Layer</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\SneakyJoystick.h">
       <Filter>Layer</Filter>
@@ -144,70 +124,43 @@
     <ClInclude Include="..\Classes\SneakyJoystickSkinnedBase.h">
       <Filter>Layer</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\Model.h">
+      <Filter>Singleton Class</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Sound.h">
+      <Filter>Singleton Class</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ResourceManager.h">
+      <Filter>Singleton Class</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Update.h">
+      <Filter>Singleton Class</Filter>
+    </ClInclude>
     <ClInclude Include="..\Classes\MiniBoss01.h">
       <Filter>Class</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Objects.h">
+    <ClInclude Include="..\Classes\Portal.h">
       <Filter>Class</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Player.h">
-      <Filter>Class</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Slash.h">
-      <Filter>Class</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Villager.h">
-      <Filter>Class</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Sound.h">
-      <Filter>SingletonClass</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Update.h">
-      <Filter>SingletonClass</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\OptionsLayer.h">
-      <Filter>Layer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\ResourceManager.h">
-      <Filter>SingletonClass</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\ResultScene.h">
+    <ClInclude Include="..\Classes\CastleScene.h">
       <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Objects.h">
-      <Filter>Class</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Player.h">
-      <Filter>Class</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PauseLayer.h" />
-    <ClInclude Include="..\Classes\Enemy2.h">
-      <Filter>Class</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Model.h">
-      <Filter>SingletonClass</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Enemy3.h">
-      <Filter>Class</Filter>
-    <ClInclude Include="..\Classes\MiniMapLayer.h">
-      <Filter>Layer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{84789331-15cf-455c-9e01-b11fc9c91754}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Class">
-      <UniqueIdentifier>{3a098b86-b3bb-43b4-9b29-d3f92bb382da}</UniqueIdentifier>
+      <UniqueIdentifier>{e0f330de-ea81-4f9e-af1b-2eba7dd6f8bd}</UniqueIdentifier>
     </Filter>
     <Filter Include="Layer">
-      <UniqueIdentifier>{379ab470-4ea8-4d22-8f13-5ead7f902edd}</UniqueIdentifier>
+      <UniqueIdentifier>{0f840826-c35f-46db-bc3a-e1f308e415f1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scene">
-      <UniqueIdentifier>{ce70044b-f472-4510-82e4-0e708f0f344d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="SingletonClass">
-      <UniqueIdentifier>{d49f9553-cc45-403c-8d45-43ba759237dd}</UniqueIdentifier>
+    <Filter Include="Singleton Class">
+      <UniqueIdentifier>{59c23230-e693-4c8e-8bdd-20f17041fbc4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

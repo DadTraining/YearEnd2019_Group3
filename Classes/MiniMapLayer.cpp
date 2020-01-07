@@ -38,7 +38,7 @@ void MiniMapLayer::setPositionMiniMap()
 
 void MiniMapLayer::updateMiniPlayerPosition()
 {
-	auto playerCurrentPosition = this->currentPlayer->getSprite()->getPosition() * SCALE_MINIMAP / m_SCALE;
+	auto playerCurrentPosition = this->currentPlayer->getSprite()->getPosition() * SCALE_MINIMAP / m_SCALE_32x32;
 	auto miniMapPos = this->miniMap->getPosition();
 	this->miniPlayer->setPosition(miniMapPos + playerCurrentPosition);
 }

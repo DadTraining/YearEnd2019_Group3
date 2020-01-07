@@ -23,7 +23,7 @@ void Enemy3::init()
 	this->hP = Update::GetInstance()->getHPOfEm3();
 	//Create sprite
 	this->sprite = Sprite::create("Resources/sprites/rEnemy/Idle/idle-1.png");
-	this->sprite->setScale(m_SCALE / 2);
+	this->sprite->setScale(m_SCALE_32x32 / 2);
 	//Create animate attackA
 	auto spriteCacheAttack_MB1 = SpriteFrameCache::getInstance();
 	spriteCacheAttack_MB1->addSpriteFramesWithFile("Resources/sprites/rEnemy/Attack/attackA.plist", "Resources/sprites/rEnemy/Attack/attackA.png");
@@ -281,7 +281,7 @@ void Enemy3::gotHit(int damage)
 	this->setHP(dtHP);
 	auto emitter = CCParticleSystemQuad::create("Resources/Effect/Player/player_got_hit.plist");
 	emitter->setPosition(this->getSprite()->getPosition());
-	emitter->setScale(m_SCALE / 8);
+	emitter->setScale(m_SCALE_32x32 / 8);
 	targetScene->addChild(emitter);
 	emitter->setAutoRemoveOnFinish(true);
 	if (this->getHP() <= 0)
@@ -300,7 +300,7 @@ void Enemy3::update(float deltaTime)
 	}
 	if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) == 0)
 	{
-		this->m_slash->getSprite()->setPosition(Vec2(-1, -1));
+		this->m_slash->getSprite()->setPosition(Vec2(-100, -100));
 	}
 	else {
 		this->normalAttack();
@@ -339,7 +339,7 @@ void Enemy3::Die()
 		mySprite->removeFromParent();
 	});
 	this->isAlive = false;
-	this->m_slash->getSprite()->setPosition(Vec2(-1, -1));
+	this->m_slash->getSprite()->setPosition(Vec2(-100, -100));
 	//this->m_slash->getSprite()->removeFromParent();
 	auto dieAnimation = this->getDeadAnimate();
 	auto sequence = Sequence::create(dieAnimation, callbackHide, nullptr);
