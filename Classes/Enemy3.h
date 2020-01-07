@@ -60,4 +60,5 @@ private:
 	Scene* targetScene;
 	Point posSpawn;
 	bool isAlive;
+	vector<Slash*> slashs;
 };

@@ -35,7 +35,7 @@ void Enemy3::init()
 		auto frame = spriteCacheAttack_MB1->getSpriteFrameByName(nameAnimateAttack);
 		animAttack.pushBack(frame);
 	}
-	Animation* animationAtack = Animation::createWithSpriteFrames(animAttack, TIME_ONE_ATTACK);
+	Animation* animationAtack = Animation::createWithSpriteFrames(animAttack, 0.3f);
 	auto animateAttack = Animate::create(animationAtack);
 	animateAttack->retain();
 	this->attackAnimate = animateAttack;
@@ -110,7 +110,10 @@ void Enemy3::init()
 	// Add physics
 	addPhysic();
 	// init slash
-	this->createSlash();
+	for (int i = 0; i < 20; i++) {
+		this->createSlash();
+		slashs.push_back(m_slash);
+	}
 	// init isAlive
 	this->isAlive = true;
 }
@@ -165,7 +168,7 @@ void Enemy3::setAIforEnemy()
 	auto rpIdleAnimate = RepeatForever::create(this->getIdleAnimate());
 	rpIdleAnimate->setTag(TAG_ANIMATE_IDLE1);
 	auto delay = DelayTime::create(TIME_DELAY_BOW);
-	auto rpAttackAnimate = RepeatForever::create(Sequence::createWithTwoActions(this->getAttackAnimate(), delay));
+	auto rpAttackAnimate = RepeatForever::create(this->getAttackAnimate());
 	rpAttackAnimate->setTag(TAG_ANIMATE_ATTACK);
 	auto player = Update::GetInstance()->getPlayer();
 
@@ -183,7 +186,6 @@ void Enemy3::setAIforEnemy()
 			if (player->getSprite()->getPosition().x > this->getSprite()->getPosition().x) {
 				this->getSprite()->setFlipX(0);
 			}
-			
 		}
 		// When player die
 		else {
@@ -248,18 +250,6 @@ Point Enemy3::getPosSpawn()
 
 void Enemy3::normalAttack()
 {
-	auto isLeft = this->getSprite()->isFlippedX();
-	auto distance = this->getSprite()->getContentSize().width / 2;
-	if (isLeft)
-	{
-		m_slash->getSprite()->getPhysicsBody()->setVelocity(Update::GetInstance()->getPlayer()->getSprite()->getPosition()*0.1);
-		m_slash->getSprite()->setPosition(this->getSprite()->getPosition() - Vec2(distance, 0));
-		
-	}
-	else {
-		m_slash->getSprite()->setPosition(this->getSprite()->getPosition() + Vec2(distance, 0));
-		m_slash->getSprite()->getPhysicsBody()->setVelocity(Update::GetInstance()->getPlayer()->getSprite()->getPosition()*0.1);
-	}
 
 	
 
@@ -298,19 +288,20 @@ void Enemy3::update(float deltaTime)
 	{
 		return;
 	}
-	if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) == 0)
+	if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) > 0)
 	{
-		this->m_slash->getSprite()->setPosition(Vec2(-1, -1));
+		auto playerPos = Update::GetInstance()->getPlayer()->getSprite()->getPosition();
+		auto arrowMoveTo = MoveTo::create(2.0f, playerPos);
+		
+	//	this->m_slash->getSprite()->runAction(arrowMoveTo);
+	/*	for (int i = 0; i < slashs.size(); i++) {
+			slashs[i]->getSprite()->runAction(arrowMoveTo);
+		}*/
+		
 	}
 	else {
-		this->normalAttack();
-	}
-
-	if (this->getSprite()->getNumberOfRunningActions() == 0)
-	{
-		auto animationRun = RepeatForever::create(this->getRunAnimate());
-		animationRun->setTag(TAG_ANIMATE_RUN);
-		this->getSprite()->runAction(animationRun);
+		this->m_slash->getSprite()->setPosition(this->getSprite()->getPosition());
+		
 	}
 }
 
@@ -359,6 +350,8 @@ bool Enemy3::getAlive()
 void Enemy3::createSlash()
 {
 	m_slash = new Slash(100, 100);
+	//auto arrow = Sprite::create("Resources/sprites/rEnemy/Arrow/arrow.png");
+	m_slash->getSprite()->setTexture("Resources/sprites/rEnemy/Arrow/arrow.png");
 	m_slash->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_ENEMY3_ATTACK);
 	targetScene->addChild(m_slash->getSprite());
 	m_slash->setDamge(this->damage);
