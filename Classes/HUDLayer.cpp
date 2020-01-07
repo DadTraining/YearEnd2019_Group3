@@ -274,14 +274,14 @@ void HudLayer::addMiniMap()
 {
 	miniMap = MiniMapLayer::createLayer();
 	this->addChild(miniMap);
-	
+}
 void HudLayer::addPauseButton()
 {
 	auto pauseBtn = cocos2d::ui::Button::create("ui/button/ui_ocean_button_pause.png", "ui/button/ui_blue_button_pause.png");
 	
 	pauseBtn->setScale(0.2);
-	pauseBtn->setAnchorPoint(cocos2d::Vec2(1,1));
-	pauseBtn->setPosition(this->getContentSize()*0.99);
+	pauseBtn->setAnchorPoint(cocos2d::Vec2(0,1));
+	pauseBtn->setPosition(cocos2d::Vec2(0,this->getContentSize().height*0.85));
 	this->addChild(pauseBtn, 0);
 
 
