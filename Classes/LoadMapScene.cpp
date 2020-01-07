@@ -3,6 +3,8 @@
 #include "Model.h"
 #include "Update.h"
 #include "Sound.h"
+#include "CastleScene.h"
+#include "MainMenu.h"
 USING_NS_CC;
 
 
@@ -117,6 +119,22 @@ void LoadMapScene::SpawnPlayer()
 			animation->setTag(TAG_ANIMATE_IDLE1);
 			enemy->getSprite()->runAction(animation);
 			addChild(enemy->getSprite());
+		}
+		else if (type == Model::FINAL_BOSS_PORTAL_TYPE)
+		{
+			portal = new Portal();
+			portal->InitSprite();
+			portal->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_PORTAL_FINALBOSS);
+			portal->getSprite()->setPosition(posX, posY);
+			addChild(portal->getSprite());
+		}
+		else if (type == Model::BASE_PORTAL_TYPE)
+		{
+			portal = new Portal();
+			portal->InitSprite();
+			portal->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_PORTAL_BASE);
+			portal->getSprite()->setPosition(posX, posY);
+			addChild(portal->getSprite());
 		}
 	}
 }
@@ -324,6 +342,7 @@ bool LoadMapScene::onContactBegin(cocos2d::PhysicsContact & contact)
 			player->gotHit(currentEnemy2->getSlash()->getDamge());
 		}
 	}
+	portal->onContact(contact);
 	return false;
 }
 
