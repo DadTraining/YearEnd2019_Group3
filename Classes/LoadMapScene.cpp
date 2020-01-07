@@ -140,8 +140,6 @@ void LoadMapScene::addMap()
 {
 	m_tileMap = TMXTiledMap::create("Resources/Map/TileMap2.tmx");
 	m_tileMap->setScale(m_SCALE);
-	auto physicsBody = PhysicsBody::createEdgeBox(m_tileMap->getContentSize());
-	m_tileMap->setPhysicsBody(physicsBody);
 	m_meta = m_tileMap->layerNamed("Meta");
 	m_objectGroup = m_tileMap->getObjectGroup("Objects");
 	m_meta->setVisible(false);
@@ -156,16 +154,6 @@ void LoadMapScene::addMap()
 void LoadMapScene::createPhysics()
 {
 	auto visibleSize = Director::getInstance()->getVisibleSize();
-	// world
-	auto edgeBody = PhysicsBody::createEdgeBox(visibleSize + Size(0, 200),
-		PHYSICSBODY_MATERIAL_DEFAULT, 3);
-	edgeBody->setCollisionBitmask(Model::BITMASK_WORLD);
-
-	auto edgeNode = Node::create();
-	edgeNode->setPosition(visibleSize.width / 2, visibleSize.height / 2 - 100);
-	edgeNode->setPhysicsBody(edgeBody);
-	addChild(edgeNode);
-
 	// Meta
 	auto layerSize = m_meta->getLayerSize();
 	for (int i = 0; i < layerSize.width; i++)

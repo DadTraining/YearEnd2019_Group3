@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="60" height="60" tilewidth="32" tileheight="32" infinite="0" nextlayerid="31" nextobjectid="258">
+<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="60" height="60" tilewidth="32" tileheight="32" infinite="0" nextlayerid="31" nextobjectid="177">
  <tileset firstgid="1" name="meta_tiles" tilewidth="32" tileheight="32" spacing="1" margin="1" tilecount="2" columns="2">
   <image source="meta_tiles.png" width="67" height="34"/>
   <tile id="0">
@@ -1007,9 +1007,25 @@
   <object id="53" name="Enemy" type="2" x="905.67" y="1427.67"/>
   <object id="54" name="Enemy" type="2" x="972" y="1493"/>
   <object id="57" name="Enemy" type="2" x="1054.67" y="1162"/>
+<<<<<<< HEAD
   <object id="68" name="Enemy" type="2" x="466" y="497.667"/>
   <object id="70" name="Enemy" type="2" x="175.667" y="211.333"/>
   <object id="71" name="Enemy" type="2" x="180" y="502.333"/>
+=======
+  <object id="58" name="Enemy" type="2" x="1430.67" y="1346.67"/>
+  <object id="59" name="Villager" type="3" x="480" y="373.333"/>
+  <object id="60" name="Villager" type="3" x="480" y="425.333"/>
+  <object id="61" name="Villager" type="3" x="549.333" y="420"/>
+  <object id="62" name="Villager" type="3" x="522.667" y="373.333"/>
+  <object id="63" name="Villager" type="3" x="520" y="448"/>
+  <object id="64" name="Villager" type="3" x="562.667" y="370.667"/>
+  <object id="65" name="Villager" type="3" x="444" y="414.667"/>
+  <object id="66" name="Enemy" type="2" x="540" y="304"/>
+  <object id="67" name="Enemy" type="2" x="452" y="318.667"/>
+  <object id="68" name="Enemy" type="2" x="368" y="346.667"/>
+  <object id="70" name="Enemy" type="2" x="214.667" y="429.333"/>
+  <object id="71" name="Enemy" type="2" x="172" y="601.333"/>
+>>>>>>> 1d20ce46ce88fc8fbc45c8700820c7c3682fa971
   <object id="72" name="Enemy" type="2" x="364" y="544"/>
   <object id="73" name="Enemy" type="2" x="494.33" y="947"/>
   <object id="77" name="Villager" type="3" x="1540.33" y="234.667"/>
@@ -1050,6 +1066,7 @@
   <object id="112" name="Enemy" type="2" x="1170.67" y="933.33"/>
   <object id="113" name="Enemy" type="2" x="1277.33" y="913.33"/>
   <object id="124" name="Enemy" type="2" x="1633.33" y="1441.33"/>
+<<<<<<< HEAD
   <object id="132" name="Enemy2" type="4" x="212" y="465.667"/>
   <object id="137" name="Enemy2" type="4" x="207" y="532.333"/>
   <object id="138" name="Enemy2" type="4" x="592.667" y="1013.33"/>
@@ -1137,5 +1154,14 @@
   <object id="255" name="Enemy" type="2" x="222.898" y="1344.97" rotation="-271.882"/>
   <object id="256" name="Enemy3" type="5" x="325.685" y="1275.89" rotation="-271.882"/>
   <object id="257" name="Enemy3" type="5" x="255.77" y="1249.17" rotation="-271.882"/>
+=======
+  <object id="125" name="Enemy" type="2" x="1182.67" y="1422.67"/>
+  <object id="144" name="Enemy2" type="4" x="580.667" y="148"/>
+  <object id="151" name="Enemy2" type="4" x="716.667" y="370.667"/>
+  <object id="152" name="Enemy2" type="4" x="724.667" y="287.333"/>
+  <object id="173" name="Enemy2" type="4" x="719.333" y="471.333"/>
+  <object id="175" name="Enemy3" type="5" x="481.333" y="529.333"/>
+  <object id="176" name="Enemy3" type="5" x="554" y="541.333"/>
+>>>>>>> 1d20ce46ce88fc8fbc45c8700820c7c3682fa971
  </objectgroup>
 </map>
