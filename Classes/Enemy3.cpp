@@ -35,7 +35,7 @@ void Enemy3::init()
 		auto frame = spriteCacheAttack_MB1->getSpriteFrameByName(nameAnimateAttack);
 		animAttack.pushBack(frame);
 	}
-	Animation* animationAtack = Animation::createWithSpriteFrames(animAttack, 0.3f);
+	Animation* animationAtack = Animation::createWithSpriteFrames(animAttack, 0.2f);
 	auto animateAttack = Animate::create(animationAtack);
 	animateAttack->retain();
 	this->attackAnimate = animateAttack;
@@ -110,10 +110,11 @@ void Enemy3::init()
 	// Add physics
 	addPhysic();
 	// init slash
-	//for (int i = 0; i < 20; i++) {
+	for (int i = 0; i < 1; i++) {
 		this->createSlash();
-	/*	slashs.push_back(m_slash);
-	}*/
+		slashs.push_back(m_slash);
+
+	}
 	// init isAlive
 	this->isAlive = true;
 }
@@ -167,25 +168,20 @@ void Enemy3::setAIforEnemy()
 {
 	auto rpIdleAnimate = RepeatForever::create(this->getIdleAnimate());
 	rpIdleAnimate->setTag(TAG_ANIMATE_IDLE1);
-	auto delay = DelayTime::create(TIME_DELAY_BOW);
-	auto rpAttackAnimate = RepeatForever::create(this->getAttackAnimate());
-	rpAttackAnimate->setTag(TAG_ANIMATE_ATTACK);
+	auto sequence = Sequence::create(this->getAttackAnimate(), idleAnimate, nullptr);
+	auto rp = RepeatForever::create(sequence);
+	rp->setTag(TAG_ANIMATE_ATTACK);
 	auto player = Update::GetInstance()->getPlayer();
 	auto playerPos = player->getSprite()->getPosition();
 	auto vec = Vec2(playerPos.x - this->getSprite()->getPosition().x, playerPos.y - this->getSprite()->getPosition().y);
-	auto arrowMove = MoveBy::create(2.0f, vec*2);
 	auto range = std::sqrt(pow((this->getSprite()->getPosition().x - player->getSprite()->getPosition().x), 2) + pow((this->getSprite()->getPosition().y - player->getSprite()->getPosition().y), 2));
-
 	if (range < VISION_OF_EM3) {
 		if (player->getHP() > 0) {
+			this->Shoot(vec);
 			if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_IDLE1) > 0) {
 				this->getSprite()->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
-				this->getSprite()->runAction(rpAttackAnimate);
-				this->m_slash->getSprite()->runAction(arrowMove);
-				auto shootingRange = std::sqrt(pow((this->getSprite()->getPosition().x - m_slash->getSprite()->getPosition().x), 2) + pow((this->getSprite()->getPosition().y - m_slash->getSprite()->getPosition().y), 2));
-				if (shootingRange >= 600||player->getSprite()->getPosition()==m_slash->getSprite()->getPosition()) {
-					this->m_slash->getSprite()->setPosition(Vec2(-1, -1));
-				}
+				this->getSprite()->runAction(rp);
+				
 			}
 			if (player->getSprite()->getPosition().x < this->getSprite()->getPosition().x) {
 				this->getSprite()->setFlipX(180);
@@ -297,6 +293,22 @@ void Enemy3::update(float deltaTime)
 	{
 		this->m_slash->getSprite()->setPosition(this->getSprite()->getPosition());
 	}
+	for (int i = 0; i < slashs.size(); i++)
+	{
+		if (slashs[i]->getSprite()->isVisible())
+		{
+			auto shootingRange = std::sqrt(pow((this->getSprite()->getPosition().x - slashs[i]->getSprite()->getPosition().x), 2) + pow((this->getSprite()->getPosition().y - slashs[i]->getSprite()->getPosition().y), 2));
+			if (shootingRange >= 600) {
+				slashs[i]->getSprite()->getPhysicsBody()->setVelocity(Vec2(0, 0));
+				slashs[i]->getSprite()->setPosition(this->getSprite()->getPosition());
+				slashs[i]->getSprite()->setVisible(false);
+			}
+			if (this->getHP() <= 0) {
+				slashs[i]->getSprite()->getPhysicsBody()->setVelocity(Vec2(0, 0));
+				slashs[i]->getSprite()->setVisible(false);
+			}
+		}
+	}
 }
 
 void Enemy3::addPhysic()
@@ -349,6 +361,7 @@ void Enemy3::createSlash()
 	m_slash->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_ENEMY3_ATTACK);
 	targetScene->addChild(m_slash->getSprite());
 	m_slash->setDamge(this->damage);
+	m_slash->getSprite()->setVisible(false);
 }
 
 Slash * Enemy3::getSlash()
@@ -366,4 +379,18 @@ void Enemy3::Stun()
 	emitter->setPosition(this->getSprite()->getPosition());
 	targetScene->addChild(emitter);
 	emitter->setAutoRemoveOnFinish(true);
+}
+
+void Enemy3::Shoot(Vec2 vec)
+{
+	for (int i = 0; i < slashs.size(); i++)
+	{
+		if (!slashs[i]->getSprite()->isVisible())
+		{
+			slashs[i]->getSprite()->setVisible(true);
+			this->slashs[i]->getSprite()->getPhysicsBody()->setVelocity(vec*1.5);
+			continue;
+		}
+	}
+	
 }

@@ -20,11 +20,6 @@ Sprite * Slash::getSprite()
 	return m_Sprite;
 }
 
-void Slash::setSprite(Sprite* sprite)
-{
-	this->m_Sprite = sprite;
-}
-
 void Slash::createPhysics()
 {
 	m_Sprite = Sprite::create();
