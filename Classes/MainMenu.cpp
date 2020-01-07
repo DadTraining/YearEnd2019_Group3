@@ -26,9 +26,9 @@ bool MainMenu::init()
 	auto playLabel = cocos2d::Label::create("Play", font, fontSize);
 	auto play = cocos2d::ui::Button::create("Resources/ui/button/ui_ocean_button.png", "Resources/ui/button/ui_blue_button.png");
 	play->setAnchorPoint(Vec2(0, 0));
-	play->setScale(0.3f);
+	play->setScale(0.2f);
 	play->addChild(playLabel, 0);
-	play->setPosition(cocos2d::Vec2(visibleSize.width*0.7, visibleSize.height * 0.05));
+	play->setPosition(cocos2d::Vec2(visibleSize.width*0.75, visibleSize.height * 0.15));
 	play->addTouchEventListener([&](Ref* sender, cocos2d::ui::Widget::TouchEventType type) {
 		switch (type)
 		{
@@ -69,14 +69,20 @@ bool MainMenu::init()
 		}
 	}, itemOn, itemOff, NULL);
 
-	itemToggleMusic->setScale(0.3);
+	itemToggleMusic->setScale(0.2);
 	Menu* pMenu = Menu::create(itemToggleMusic, NULL);
-	pMenu->setPosition(visibleSize*0.9);
+	pMenu->setPosition(visibleSize.width-75,visibleSize.height-75);
 	this->addChild(pMenu, 1);
-    return true;
-}
+	// --------------------------Lvlup------------------------------- //
+	auto bgLvlup = cocos2d::Sprite::create("ui/popup/ui_ocean_popup_landscape.png");
 
-void MainMenu::Play()
-{
-	Director::getInstance()->replaceScene(TransitionFade::create(1.0f, LoadMapScene::createScene()));
+	auto upHpBtn = cocos2d::ui::Button::create("Resources/ui/button/ui_ocean_button.png", "Resources/ui/button/ui_blue_button.png");
+
+	bgLvlup->setAnchorPoint(cocos2d::Vec2(0,0));
+	bgLvlup->setPosition(visibleSize.width*0.05, visibleSize.height*0.05);
+	bgLvlup->setScaleY(0.2);
+	bgLvlup->setScaleX(0.3);
+	this->addChild(bgLvlup, 0);
+
+    return true;
 }

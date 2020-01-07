@@ -46,6 +46,7 @@ void HudLayer::createHud()
 	CreateAttackNormal(this);
 	CreateSkillUltimate(this);
 	CreateSkillSpear(this);
+	addPauseButton();
 }
 
 void HudLayer::CreateJoystick(Layer * layer)
@@ -273,6 +274,25 @@ void HudLayer::addMiniMap()
 {
 	miniMap = MiniMapLayer::createLayer();
 	this->addChild(miniMap);
+	
+void HudLayer::addPauseButton()
+{
+	auto pauseBtn = cocos2d::ui::Button::create("ui/button/ui_ocean_button_pause.png", "ui/button/ui_blue_button_pause.png");
+	
+	pauseBtn->setScale(0.2);
+	pauseBtn->setAnchorPoint(cocos2d::Vec2(1,1));
+	pauseBtn->setPosition(this->getContentSize()*0.99);
+	this->addChild(pauseBtn, 0);
+
+
+	pauseBtn->addTouchEventListener([&](Ref* Sender,cocos2d::ui::Widget::TouchEventType type) {
+		if(type == cocos2d::ui::Widget::TouchEventType::ENDED){
+			//auto pauseLayer = OptionsLayer::createLayer();
+			//this->addChild(pauseLayer, 2);
+			cocos2d::Director::getInstance()->pause();
+
+		}
+	});
 }
 
 void HudLayer::createCameraHUD()

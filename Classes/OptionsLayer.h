@@ -7,15 +7,11 @@
 class OptionsLayer : public cocos2d::LayerColor
 {
 private:
-	int soundPercent = 0;
-	int sfxPercent = 0;
+
 public:
 	static cocos2d::Layer* createLayer();
 	virtual bool init();
-	void setSoundPercent(int percent);
-	int getSoundPercent();
-	void setSfxPercent(int percent);
-	int getSfxPercent();
+	void Pause();
 	CREATE_FUNC(OptionsLayer);
 };
 
