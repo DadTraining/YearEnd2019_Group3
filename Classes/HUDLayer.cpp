@@ -30,7 +30,7 @@ void HudLayer::createHud()
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	// Init the layer of hud
 	// create a label to increase the score
-	_hudScore = Label::create(std::to_string(this->_numCollected), "fonts/arial.ttf", 24);
+	_hudScore = Label::create(std::to_string(this->_numCollected), "Resources/fonts/arial.ttf", 24);
 	int margin = 20;
 
 	_hudScore->setPosition(Vec2(visibleSize.width - (_hudScore->getContentSize().width / 2) - margin,
