@@ -41,6 +41,7 @@ void HudLayer::createHud()
 	this->addChild(_hudScore, 0);
 	CreateJoystick(this);
 	CreateAttackBtn(this);
+	addPauseButton();
 }
 
 void HudLayer::CreateJoystick(Layer * layer)
@@ -68,7 +69,6 @@ void HudLayer::CreateJoystick(Layer * layer)
 	leftJoystick = joystickBase->getJoystick();
 	activeRunRange = thumb->getBoundingBox().size.height / 2;
 	layer->addChild(joystickBase);
-	addHealthBar();
 }
 
 void HudLayer::UpdateJoystick(float dt)
@@ -188,8 +188,24 @@ void HudLayer::addVilagerPoint()
 	_numCollected++;
 }
 
-void HudLayer::addHealthBar()
+void HudLayer::addPauseButton()
 {
+	auto pauseBtn = cocos2d::ui::Button::create("ui/button/ui_ocean_button_pause.png", "ui/button/ui_blue_button_pause.png");
+	
+	pauseBtn->setScale(0.2);
+	pauseBtn->setAnchorPoint(cocos2d::Vec2(1,1));
+	pauseBtn->setPosition(this->getContentSize()*0.99);
+	this->addChild(pauseBtn, 0);
+
+
+	pauseBtn->addTouchEventListener([&](Ref* Sender,cocos2d::ui::Widget::TouchEventType type) {
+		if(type == cocos2d::ui::Widget::TouchEventType::ENDED){
+			//auto pauseLayer = OptionsLayer::createLayer();
+			//this->addChild(pauseLayer, 2);
+			cocos2d::Director::getInstance()->pause();
+
+		}
+	});
 }
 
 void HudLayer::createCameraHUD()

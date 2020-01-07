@@ -7,6 +7,7 @@
 # include "SneakyJoystickSkinnedBase.h"
 #include "Player.h"
 #include "HealthBarLayer.h"
+#include "OptionsLayer.h"
 class HudLayer : public cocos2d::Layer
 {
 private:
@@ -37,6 +38,6 @@ public:
 	virtual ~HudLayer();
 	void createCameraHUD();
 	void addVilagerPoint();
-	void addHealthBar();
+	void addPauseButton();
 };
 #endif	
