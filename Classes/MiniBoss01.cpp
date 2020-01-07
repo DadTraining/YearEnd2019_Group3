@@ -230,7 +230,10 @@ void MiniBoss01::setAIforEnemy()
 void MiniBoss01::Stun()
 {
 	auto delay = DelayTime::create(1.5f);
-	sprite->stopAllActions();
+	if (sprite->getNumberOfRunningActionsByTag(TAG_ANIMATE_DIE) == 0)
+	{
+		sprite->stopAllActions();
+	}
 	sprite->getPhysicsBody()->setVelocity(Vec2(0, 0));
 	sprite->runAction(delay);
 	auto emitter = CCParticleSystemQuad::create("Resources/Effect/Monster/freezer.plist");
@@ -376,6 +379,7 @@ void MiniBoss01::Die()
 	//this->m_slash->getSprite()->removeFromParent();
 	auto dieAnimation = this->getDeadAnimate();
 	auto sequence = Sequence::create(dieAnimation, callbackHide, nullptr);
+	sequence->setTag(TAG_ANIMATE_DIE);
 	mySprite->runAction(sequence);
 }
 

@@ -21,6 +21,7 @@ public:
 	void soundPlayerHit();
 	void soundCollect();
 	void soundBackGroundDesert();
+	void soundBackGroundCastle();
 	void Init();
 	// SkeletonSound
 	void soundSkeletonHit();

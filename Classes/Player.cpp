@@ -388,9 +388,9 @@ void Player::update(float deltaTime)
 	}
 	if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) == 0)
 	{
-		this->m_slashNormal->getSprite()->setPosition(Vec2(-1, -1));
-		this->m_slashSpear->getSprite()->setPosition(Vec2(-1, -1));
-		this->m_slashUltimate->getSprite()->setPosition(Vec2(-1, -1));
+		this->m_slashNormal->getSprite()->setPosition(Vec2(-100, -100));
+		this->m_slashSpear->getSprite()->setPosition(Vec2(-100, -100));
+		this->m_slashUltimate->getSprite()->setPosition(Vec2(-100, -100));
 	}
 }
 

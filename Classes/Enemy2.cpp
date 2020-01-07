@@ -321,7 +321,7 @@ void Enemy2::update(float deltaTime)
 	}
 	if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) == 0)
 	{
-		this->m_slash->getSprite()->setPosition(Vec2(-1, -1));
+		this->m_slash->getSprite()->setPosition(Vec2(-100, -100));
 	}
 	else {
 		this->normalAttack();
@@ -360,7 +360,7 @@ void Enemy2::Die()
 		mySprite->removeFromParent();
 	});
 	this->isAlive = false;
-	this->m_slash->getSprite()->setPosition(Vec2(-1, -1));
+	this->m_slash->getSprite()->setPosition(Vec2(-100, -100));
 	auto dieAnimation = this->getDeadAnimate();
 	auto sequence = Sequence::create(dieAnimation, callbackHide, nullptr);
 	mySprite->runAction(sequence);

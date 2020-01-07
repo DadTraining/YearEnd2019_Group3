@@ -21,6 +21,7 @@ bool CastleScene::init()
 	this->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 	this->getPhysicsWorld()->setGravity(Vec2(0, 0));
 	this->getPhysicsWorld()->setSubsteps(2);
+	Sound::GetInstance()->soundBackGroundCastle();
 	addMap();
 	SpawnPlayer();
 	addHud();
@@ -333,6 +334,31 @@ bool CastleScene::onContactBegin(cocos2d::PhysicsContact & contact)
 	return false;
 }
 
+void CastleScene::enemyMoveToPlayer()
+{
+	for (int i = 0; i < Skeletons.size(); i++) {
+		if (!Skeletons[i]->getAlive())
+		{
+			continue;
+		}
+		Skeletons[i]->setAIforEnemy();
+	}
+	for (int i = 0; i < enemys2.size(); i++) {
+		if (!enemys2[i]->getAlive())
+		{
+			continue;
+		}
+		enemys2[i]->setAIforEnemy();
+	}
+	for (int i = 0; i < enemys3.size(); i++) {
+		if (!enemys3[i]->getAlive())
+		{
+			continue;
+		}
+		enemys3[i]->setAIforEnemy();
+	}
+}
+
 void CastleScene::addHud()
 {
 	HUD = new HudLayer(this, player, m_tileMap);
@@ -343,4 +369,21 @@ void CastleScene::update(float dt)
 {
 	setViewPointCenter(this->m_player->getPosition());
 	player->update(dt);
+	enemyMoveToPlayer();
+	for (int i = 0; i < Skeletons.size(); i++)
+	{
+		Skeletons[i]->update(dt);
+	}
+	for (int i = 0; i < enemys2.size(); i++)
+	{
+		enemys2[i]->update(dt);
+	}
+	for (int i = 0; i < enemys3.size(); i++)
+	{
+		enemys3[i]->update(dt);
+	}
+	for (int i = 0; i < villagers.size(); i++)
+	{
+		villagers[i]->update(dt);
+	}
 }

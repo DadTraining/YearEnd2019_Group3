@@ -106,6 +106,16 @@ void Sound::soundBackGroundDesert()
 	audio->playBackgroundMusic("Resources/sounds/Background/176_Barren_Wastes.mp3", true);
 }
 
+void Sound::soundBackGroundCastle()
+{
+	if (this->isMute)
+	{
+		return;
+	}
+	auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
+	audio->playBackgroundMusic("Resources/sounds/Background/Background_castle.mp3", true);
+}
+
 void Sound::preLoadSound()
 {
 	if (this->isMute)
@@ -122,6 +132,7 @@ void Sound::preLoadSound()
 	audio->preloadEffect("Resources/sounds/Skeleton/die.wav");
 
 	audio->preloadBackgroundMusic("Resources/sounds/Background/176_Barren_Wastes.mp3");
+	audio->preloadBackgroundMusic("Resources/sounds/Background/Background_castle.mp3");
 }
 
 
