@@ -9,4 +9,39 @@
 #include "Enemy2.h"
 #include "Enemy3.h"
 #include "Villager.h"
+using namespace cocos2d;
+class CastleScene : public cocos2d::Scene
+{
+private:
+	TMXTiledMap* m_tileMap;
+	TMXLayer* m_meta;
+	TMXObjectGroup* m_objectGroup;
+	Sprite* m_player;
+	Player* player;
+	//enemy
+	vector<MiniBoss01*> Skeletons;
+	vector<Villager*> villagers;
+	vector<Enemy2*> enemys2;
+	vector<Enemy3*> enemys3;
+	Portal* portal;
+	HudLayer* HUD;
+
+
+public:
+	static cocos2d::Scene* createScene();
+	virtual bool init();
+	void addMap();
+	void SpawnPlayer();
+	void setViewPointCenter(Vec2 position);
+	Vec2 tileCoordForPosition(Vec2 position);
+	void createPhysics();
+	void addListener();
+	bool onContactBegin(cocos2d::PhysicsContact& contact);
+	void enemyMoveToPlayer();
+	void addHud();
+	void update(float dt);
+
+
+	CREATE_FUNC(CastleScene);
+};
 #endif // __LOADMAP_SCENE_H__

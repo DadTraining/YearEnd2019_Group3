@@ -23,7 +23,7 @@ void MiniBoss01::init()
 	this->hP = Update::GetInstance()->getHPOfMB1();
 	//Create sprite
 	this->sprite = Sprite::create("Resources/sprites/aMiniBoss/Idle/idle-1.png");
-	this->sprite->setScale(m_SCALE / 2);
+	this->sprite->setScale(m_SCALE_32x32 / 2);
 	//Create animate attackA
 	auto spriteCacheAttack_MB1 = SpriteFrameCache::getInstance();
 	spriteCacheAttack_MB1->addSpriteFramesWithFile("Resources/sprites/aMiniBoss/Attacks/attackA.plist", "Resources/sprites/aMiniBoss/Attacks/attackA.png");
@@ -315,7 +315,7 @@ void MiniBoss01::gotHit(int damage)
 	this->setHP(dtHP);
 	auto emitter = CCParticleSystemQuad::create("Resources/Effect/Player/player_got_hit.plist");
 	emitter->setPosition(this->getSprite()->getPosition());
-	emitter->setScale(m_SCALE / 8);
+	emitter->setScale(m_SCALE_32x32 / 8);
 	targetScene->addChild(emitter);
 	emitter->setAutoRemoveOnFinish(true);
 	if (this->getHP() <= 0)

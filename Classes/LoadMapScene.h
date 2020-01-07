@@ -20,9 +20,7 @@ private:
 	// Map private object
 	TMXTiledMap* m_tileMap;
 	TMXLayer* m_meta;
-	TMXLayer* m_villagerLayer;
 	int _numCollected = 0;
-	bool stuck = false;
 	Sprite* m_player;
 	Player* player;
 	//enemy

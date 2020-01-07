@@ -55,8 +55,8 @@ void LoadMapScene::SpawnPlayer()
 		auto object = objects.at(i);
 
 		auto properties = object.asValueMap();
-		int posX = properties.at("x").asFloat() * m_SCALE;
-		int posY = properties.at("y").asFloat() * m_SCALE;
+		int posX = properties.at("x").asFloat() * m_SCALE_32x32;
+		int posY = properties.at("y").asFloat() * m_SCALE_32x32;
 		int type = object.asValueMap().at("type").asInt();
 		// Case the player is the main character
 		if (type == Model::MAIN_CHARACTER_TYPE)
@@ -66,7 +66,7 @@ void LoadMapScene::SpawnPlayer()
 			SpriteFrameCache::getInstance()->removeSpriteFrames();
 			m_player = player->getSprite();
 			m_player->setPosition(Vec2(posX, posY));
-			m_player->setScale(m_SCALE / 2);
+			m_player->setScale(m_SCALE_32x32 / 2);
 			addChild(m_player);
 		}
 		else if (type == Model::MAIN_VILLAGER_TYPE)
@@ -146,9 +146,9 @@ void LoadMapScene::setViewPointCenter(Vec2 position)
 
 Vec2 LoadMapScene::tileCoordForPosition(Vec2 position)
 {
-	int x = position.x / (m_tileMap->getTileSize().width * m_SCALE);
-	int y = ((m_tileMap->getMapSize().height * m_tileMap->getTileSize().height * m_SCALE) - position.y)
-		/ (m_tileMap->getTileSize().height * m_SCALE);
+	int x = position.x / (m_tileMap->getTileSize().width * m_SCALE_32x32);
+	int y = ((m_tileMap->getMapSize().height * m_tileMap->getTileSize().height * m_SCALE_32x32) - position.y)
+		/ (m_tileMap->getTileSize().height * m_SCALE_32x32);
 	return Vec2(x, y);
 }
 
@@ -157,7 +157,7 @@ Vec2 LoadMapScene::tileCoordForPosition(Vec2 position)
 void LoadMapScene::addMap()
 {
 	m_tileMap = TMXTiledMap::create("Resources/Map/TileMap2.tmx");
-	m_tileMap->setScale(m_SCALE);
+	m_tileMap->setScale(m_SCALE_32x32);
 	m_meta = m_tileMap->layerNamed("Meta");
 	m_objectGroup = m_tileMap->getObjectGroup("Objects");
 	m_meta->setVisible(false);

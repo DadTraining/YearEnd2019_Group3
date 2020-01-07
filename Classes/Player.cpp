@@ -279,7 +279,7 @@ void Player::gotHit(int damage)
 	playerSprite->runAction(animation);
 	auto emitter = CCParticleSystemQuad::create("Resources/Effect/Player/player_got_hit.plist");
 	emitter->setPosition(playerSprite->getPosition());
-	emitter->setScale(m_SCALE / 8);
+	emitter->setScale(m_SCALE_32x32 / 8);
 	targetScene->addChild(emitter);
 	emitter->setAutoRemoveOnFinish(true);
 	auto dtHP = this->getHP() - damage;

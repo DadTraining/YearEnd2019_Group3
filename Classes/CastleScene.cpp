@@ -1,0 +1,346 @@
+#pragma once
+#include "LoadMapScene.h"
+#include "Model.h"
+#include "Update.h"
+#include "Sound.h"
+#include "CastleScene.h"
+#include "MainMenu.h"
+USING_NS_CC;
+
+cocos2d::Scene * CastleScene::createScene()
+{
+	return CastleScene::create();
+}
+
+bool CastleScene::init()
+{
+	if (!Scene::initWithPhysics())
+	{
+		return false;
+	}
+	this->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	this->getPhysicsWorld()->setGravity(Vec2(0, 0));
+	this->getPhysicsWorld()->setSubsteps(2);
+	addMap();
+	SpawnPlayer();
+	addHud();
+	createPhysics();
+	addListener();
+	scheduleUpdate();
+
+	return true;
+}
+
+void CastleScene::addMap()
+{
+	m_tileMap = TMXTiledMap::create("Resources/Map/CastleMap/Castle.tmx");
+	m_tileMap->setScale(2);
+	m_meta = m_tileMap->layerNamed("Meta");
+	m_objectGroup = m_tileMap->getObjectGroup("Objects");
+	m_meta->setVisible(false);
+	//auto tree = m_tileMap->layerNamed("TreeTop");
+	//auto statueTop = m_tileMap->layerNamed("StatueTop");
+	//statueTop->setGlobalZOrder(Model::TREE_ORDER);
+	//tree->setGlobalZOrder(Model::TREE_ORDER);
+	addChild(m_tileMap, -1);
+}
+
+void CastleScene::SpawnPlayer()
+{
+	//number of Villager
+	int numberOfVillager = 0;
+	int numberOfSkeleton = 0;
+	int numberOfEnemy2 = 0;
+	int numberOfEnemy3 = 0;
+	// ---
+	auto objects = m_objectGroup->getObjects();
+	for (int i = 0; i < objects.size(); i++)
+	{
+		auto object = objects.at(i);
+
+		auto properties = object.asValueMap();
+		int posX = properties.at("x").asFloat() * m_SCALE_16x16;
+		int posY = properties.at("y").asFloat() * m_SCALE_16x16;
+		int type = object.asValueMap().at("type").asInt();
+		// Case the player is the main character
+		if (type == Model::MAIN_CHARACTER_TYPE)
+		{
+			player = new Player(this);
+			Update::GetInstance()->setPlayer(player);
+			SpriteFrameCache::getInstance()->removeSpriteFrames();
+			m_player = player->getSprite();
+			m_player->setPosition(Vec2(posX, posY));
+			m_player->setScale(m_SCALE_32x32 / 2);
+			addChild(m_player);
+		}
+		else if (type == Model::MAIN_VILLAGER_TYPE)
+		{
+			auto villager = new Villager(this);
+			villager->setIndex(villagers.size());
+			villagers.push_back(villager);
+			SpriteFrameCache::getInstance()->removeSpriteFrames();
+			villager->getSprite()->setPosition(Vec2(posX, posY));
+			auto animation = RepeatForever::create(villager->getIdleAnimate());
+			animation->setTag(TAG_ANIMATE_IDLE1);
+			villager->getSprite()->runAction(animation);
+			addChild(villager->getSprite());
+		}
+		else if (type == Model::MAIN_MONSTER_TYPE)
+		{
+			auto boss = new MiniBoss01(this);
+			boss->setPosSpawn(Vec2(posX, posY));
+			boss->setIndex(Skeletons.size());
+			Skeletons.push_back(boss);
+			SpriteFrameCache::getInstance()->removeSpriteFrames();
+			boss->getSprite()->setPosition(Vec2(posX, posY));
+			auto animation = RepeatForever::create(boss->getIdleAnimate());
+			animation->setTag(TAG_ANIMATE_IDLE1);
+			boss->getSprite()->runAction(animation);
+			addChild(boss->getSprite());
+		}
+		else if (type == Model::MAIN_ENEMY2_TYPE)
+		{
+			auto enemy = new Enemy2(this);
+			enemy->setPosSpawn(Vec2(posX, posY));
+			enemy->setIndex(enemys2.size());
+			enemys2.push_back(enemy);
+			SpriteFrameCache::getInstance()->removeSpriteFrames();
+			enemy->getSprite()->setPosition(Vec2(posX, posY));
+			auto animation = RepeatForever::create(enemy->getIdleAnimate());
+			animation->setTag(TAG_ANIMATE_IDLE1);
+			enemy->getSprite()->runAction(animation);
+			addChild(enemy->getSprite());
+		}
+		else if (type == Model::MAIN_ENEMY3_TYPE)
+		{
+			auto enemy = new Enemy3(this);
+			enemy->setPosSpawn(Vec2(posX, posY));
+			enemy->setIndex(enemys3.size());
+			enemys3.push_back(enemy);
+			SpriteFrameCache::getInstance()->removeSpriteFrames();
+			enemy->getSprite()->setPosition(Vec2(posX, posY));
+			auto animation = RepeatForever::create(enemy->getIdleAnimate());
+			animation->setTag(TAG_ANIMATE_IDLE1);
+			enemy->getSprite()->runAction(animation);
+			addChild(enemy->getSprite());
+		}
+		else if (type == Model::FINAL_BOSS_PORTAL_TYPE)
+		{
+			portal = new Portal();
+			portal->InitSprite();
+			portal->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_PORTAL_FINALBOSS);
+			portal->getSprite()->setPosition(posX, posY);
+			addChild(portal->getSprite());
+		}
+		else if (type == Model::BASE_PORTAL_TYPE)
+		{
+			portal = new Portal();
+			portal->InitSprite();
+			portal->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_PORTAL_BASE);
+			portal->getSprite()->setPosition(posX, posY);
+			addChild(portal->getSprite());
+		}
+	}
+}
+
+void CastleScene::setViewPointCenter(Vec2 position)
+{
+	this->getDefaultCamera()->setPosition(position);
+}
+
+Vec2 CastleScene::tileCoordForPosition(Vec2 position)
+{
+	int x = position.x / (m_tileMap->getTileSize().width * m_SCALE_32x32);
+	int y = ((m_tileMap->getMapSize().height * m_tileMap->getTileSize().height * m_SCALE_32x32) - position.y)
+		/ (m_tileMap->getTileSize().height * m_SCALE_32x32);
+	return Vec2(x, y);
+}
+
+void CastleScene::createPhysics()
+{
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+	// Meta
+	auto layerSize = m_meta->getLayerSize();
+	for (int i = 0; i < layerSize.width; i++)
+	{
+		for (int j = 0; j < layerSize.height; j++)
+		{
+			auto tileSet = m_meta->getTileAt(Vec2(i, j));
+			if (tileSet != NULL)
+			{
+				auto physics = PhysicsBody::createBox(tileSet->getContentSize(),
+					PhysicsMaterial(1.0f, 0.0f, 1.0f));
+				physics->setCollisionBitmask(Model::BITMASK_GROUND);
+				physics->setContactTestBitmask(false);
+				physics->setDynamic(false);
+				physics->setMass(100);
+				tileSet->setPhysicsBody(physics);
+			}
+		}
+	}
+}
+
+void CastleScene::addListener()
+{
+	auto contactListener = EventListenerPhysicsContact::create();
+	contactListener->onContactBegin = CC_CALLBACK_1(CastleScene::onContactBegin, this);
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
+}
+
+bool CastleScene::onContactBegin(cocos2d::PhysicsContact & contact)
+{
+	auto a = contact.getShapeA()->getBody();
+	auto b = contact.getShapeB()->getBody();
+	// player touch villager
+	if ((a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_VILLAGER)
+		|| (a->getCollisionBitmask() == Model::BITMASK_VILLAGER && b->getCollisionBitmask() == Model::BITMASK_PLAYER))
+	{
+		HUD->addVilagerPoint();
+		if (a->getCollisionBitmask() == Model::BITMASK_VILLAGER)
+		{
+			auto currentVillager = villagers.at(a->getGroup());
+			player->increaseVillager(currentVillager->getPoint());
+			currentVillager->Die();
+		}
+		else if (b->getCollisionBitmask() == Model::BITMASK_VILLAGER)
+		{
+			auto currentVillager = villagers.at(b->getGroup());
+			player->increaseVillager(currentVillager->getPoint());
+			currentVillager->Die();
+		}
+	}
+	// player attack enemy1
+	if ((a->getCollisionBitmask() == Model::BITMASK_ENEMY && b->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK)
+		|| (a->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK && b->getCollisionBitmask() == Model::BITMASK_ENEMY))
+	{
+		HUD->addVilagerPoint();
+		if (a->getCollisionBitmask() == Model::BITMASK_ENEMY)
+		{
+			auto currentSkeleton = Skeletons.at(a->getGroup());
+			currentSkeleton->gotHit(player->getSlash()->getDamge());
+			if (b->getTag() == Model::KNOCKBACK)
+			{
+				currentSkeleton->Stun();
+			}
+		}
+		else if (b->getCollisionBitmask() == Model::BITMASK_ENEMY)
+		{
+			auto currentSkeleton = Skeletons.at(b->getGroup());
+			currentSkeleton->gotHit(player->getSlash()->getDamge());
+			if (a->getTag() == Model::KNOCKBACK)
+			{
+				currentSkeleton->Stun();
+			}
+		}
+	}
+	// Skeleton attack player
+	if ((a->getCollisionBitmask() == Model::BITMASK_ENEMY1_ATTACK && b->getCollisionBitmask() == Model::BITMASK_PLAYER)
+		|| (a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_ENEMY1_ATTACK))
+	{
+		HUD->addVilagerPoint();
+		if (a->getCollisionBitmask() == Model::BITMASK_ENEMY1_ATTACK)
+		{
+			auto currentSkeleton = Skeletons.at(a->getGroup());
+			player->gotHit(currentSkeleton->getSlash()->getDamge());
+		}
+		if (b->getCollisionBitmask() == Model::BITMASK_ENEMY1_ATTACK)
+		{
+			auto currentSkeleton = Skeletons.at(b->getGroup());
+			player->gotHit(currentSkeleton->getSlash()->getDamge());
+		}
+	}
+	// player attack enemy2
+	if ((a->getCollisionBitmask() == Model::BITMASK_ENEMY2 && b->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK)
+		|| (a->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK && b->getCollisionBitmask() == Model::BITMASK_ENEMY2))
+	{
+		HUD->addVilagerPoint();
+		if (a->getCollisionBitmask() == Model::BITMASK_ENEMY2)
+		{
+			auto currentEnemy2 = enemys2.at(a->getGroup());
+			currentEnemy2->gotHit(player->getSlash()->getDamge());
+			if (b->getTag() == Model::KNOCKBACK)
+			{
+				currentEnemy2->Stun();
+			}
+		}
+		else if (b->getCollisionBitmask() == Model::BITMASK_ENEMY2)
+		{
+			auto currentEnemy2 = enemys2.at(b->getGroup());
+			currentEnemy2->gotHit(player->getSlash()->getDamge());
+			if (a->getTag() == Model::KNOCKBACK)
+			{
+				currentEnemy2->Stun();
+			}
+		}
+	}
+	// enemy2 attack player
+	if ((a->getCollisionBitmask() == Model::BITMASK_ENEMY2_ATTACK && b->getCollisionBitmask() == Model::BITMASK_PLAYER)
+		|| (a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_ENEMY2_ATTACK))
+	{
+		HUD->addVilagerPoint();
+		if (a->getCollisionBitmask() == Model::BITMASK_ENEMY2_ATTACK)
+		{
+			auto currentEnemy2 = enemys2.at(a->getGroup());
+			player->gotHit(currentEnemy2->getSlash()->getDamge());
+		}
+		if (b->getCollisionBitmask() == Model::BITMASK_ENEMY2_ATTACK)
+		{
+			auto currentEnemy2 = enemys2.at(b->getGroup());
+			player->gotHit(currentEnemy2->getSlash()->getDamge());
+		}
+	}
+	// player attack enemy3
+	if ((a->getCollisionBitmask() == Model::BITMASK_ENEMY3 && b->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK)
+		|| (a->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK && b->getCollisionBitmask() == Model::BITMASK_ENEMY3))
+	{
+		HUD->addVilagerPoint();
+		if (a->getCollisionBitmask() == Model::BITMASK_ENEMY3)
+		{
+			auto currentEnemy3 = enemys3.at(a->getGroup());
+			currentEnemy3->gotHit(player->getSlash()->getDamge());
+			if (b->getTag() == Model::KNOCKBACK)
+			{
+				currentEnemy3->Stun();
+			}
+		}
+		else if (b->getCollisionBitmask() == Model::BITMASK_ENEMY3)
+		{
+			auto currentEnemy3 = enemys3.at(b->getGroup());
+			currentEnemy3->gotHit(player->getSlash()->getDamge());
+			if (a->getTag() == Model::KNOCKBACK)
+			{
+				currentEnemy3->Stun();
+			}
+		}
+	}
+	// enemy2 attack player
+	if ((a->getCollisionBitmask() == Model::BITMASK_ENEMY3_ATTACK && b->getCollisionBitmask() == Model::BITMASK_PLAYER)
+		|| (a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_ENEMY3_ATTACK))
+	{
+		HUD->addVilagerPoint();
+		if (a->getCollisionBitmask() == Model::BITMASK_ENEMY3_ATTACK)
+		{
+			auto currentEnemy2 = enemys2.at(a->getGroup());
+			player->gotHit(currentEnemy2->getSlash()->getDamge());
+		}
+		if (b->getCollisionBitmask() == Model::BITMASK_ENEMY3_ATTACK)
+		{
+			auto currentEnemy2 = enemys2.at(b->getGroup());
+			player->gotHit(currentEnemy2->getSlash()->getDamge());
+		}
+	}
+	portal->onContact(contact);
+	return false;
+}
+
+void CastleScene::addHud()
+{
+	HUD = new HudLayer(this, player, m_tileMap);
+	HUD->setMap(m_tileMap);
+}
+
+void CastleScene::update(float dt)
+{
+	setViewPointCenter(this->m_player->getPosition());
+	player->update(dt);
+}

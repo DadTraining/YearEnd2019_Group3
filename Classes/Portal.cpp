@@ -64,7 +64,7 @@ void Portal::onContact(cocos2d::PhysicsContact & contact)
 	if ((a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_PORTAL_FINALBOSS)
 		|| (a->getCollisionBitmask() == Model::BITMASK_PORTAL_FINALBOSS && b->getCollisionBitmask() == Model::BITMASK_PLAYER))
 	{
-		auto myScene = MainMenu::createScene();
+		auto myScene = CastleScene::createScene();
 		Director::getInstance()->replaceScene(TransitionFade::create(0.5f, myScene));
 	}
 	else if ((a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_PORTAL_BASE)
