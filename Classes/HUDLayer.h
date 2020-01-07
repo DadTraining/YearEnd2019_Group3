@@ -10,6 +10,7 @@
 #include "MiniMapLayer.h"
 
 
+#include "OptionsLayer.h"
 class HudLayer : public cocos2d::Layer
 {
 private:
@@ -45,5 +46,6 @@ public:
 	void createCameraHUD();
 	void addVilagerPoint();
 	void addMiniMap();
+	void addPauseButton();
 };
 #endif	
