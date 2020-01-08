@@ -122,19 +122,23 @@ void LoadMapScene::SpawnPlayer()
 		}
 		else if (type == Model::FINAL_BOSS_PORTAL_TYPE)
 		{
-			portal = new Portal();
+			auto portal = new Portal();
 			portal->InitSprite();
 			portal->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_PORTAL_FINALBOSS);
 			portal->getSprite()->setPosition(posX, posY);
 			addChild(portal->getSprite());
+			portal->setIndex(portals.size());
+			portals.push_back(portal);
 		}
 		else if (type == Model::BASE_PORTAL_TYPE)
 		{
-			portal = new Portal();
+			auto portal = new Portal();
 			portal->InitSprite();
 			portal->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_PORTAL_BASE);
 			portal->getSprite()->setPosition(posX, posY);
 			addChild(portal->getSprite());
+			portal->setIndex(portals.size());
+			portals.push_back(portal);
 		}
 	}
 }
@@ -338,15 +342,28 @@ bool LoadMapScene::onContactBegin(cocos2d::PhysicsContact & contact)
 	if ((a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_PORTAL_FINALBOSS)
 		|| (a->getCollisionBitmask() == Model::BITMASK_PORTAL_FINALBOSS && b->getCollisionBitmask() == Model::BITMASK_PLAYER))
 	{
-		auto myScene = CastleScene::createScene();
-		Director::getInstance()->replaceScene(TransitionFade::create(0.5f, myScene));
+		if (a->getCollisionBitmask() == Model::BITMASK_PORTAL_FINALBOSS)
+		{
+			portals.at(a->getGroup())->returntoCastleScene();
+		}
+		else
+		{
+			portals.at(b->getGroup())->returntoCastleScene();
+		}
 	}
 	else if ((a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_PORTAL_BASE)
 		|| (a->getCollisionBitmask() == Model::BITMASK_PORTAL_BASE && b->getCollisionBitmask() == Model::BITMASK_PLAYER))
 	{
-		auto myScene = ResultScene::createScene();
-		Director::getInstance()->replaceScene(TransitionFade::create(0.5f, myScene));
-	}	return false;
+		if (a->getCollisionBitmask() == Model::BITMASK_PORTAL_BASE)
+		{
+			portals.at(a->getGroup())->returntoMainMenu();
+		}
+		else
+		{
+			portals.at(b->getGroup())->returntoMainMenu();
+		}
+	}	
+	return false;
 }
 
 void LoadMapScene::addHud()

@@ -29,7 +29,6 @@ bool CastleScene::init()
 	createPhysics();
 	addListener();
 	scheduleUpdate();
-
 	return true;
 }
 
@@ -47,11 +46,6 @@ void CastleScene::addMap()
 
 void CastleScene::SpawnPlayer()
 {
-	//number of Villager
-	int numberOfVillager = 0;
-	int numberOfSkeleton = 0;
-	int numberOfEnemy2 = 0;
-	int numberOfEnemy3 = 0;
 	// ---
 	auto objects = m_objectGroup->getObjects();
 	for (int i = 0; i < objects.size(); i++)
@@ -127,19 +121,23 @@ void CastleScene::SpawnPlayer()
 		}
 		else if (type == Model::FINAL_BOSS_PORTAL_TYPE)
 		{
-			portal = new Portal();
+			auto portal = new Portal();
 			portal->InitSprite();
 			portal->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_PORTAL_FINALBOSS);
 			portal->getSprite()->setPosition(posX, posY);
 			addChild(portal->getSprite());
+			portal->setIndex(portals.size());
+			portals.push_back(portal);
 		}
 		else if (type == Model::BASE_PORTAL_TYPE)
 		{
-			portal = new Portal();
+			auto portal = new Portal();
 			portal->InitSprite();
 			portal->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_PORTAL_BASE);
 			portal->getSprite()->setPosition(posX, posY);
 			addChild(portal->getSprite());
+			portal->setIndex(portals.size());
+			portals.push_back(portal);
 		}
 	}
 }
@@ -308,22 +306,45 @@ bool CastleScene::onContactBegin(cocos2d::PhysicsContact & contact)
 			}
 		}
 	}
-	// enemy2 attack player
+	// enemy3 attack player
 	if ((a->getCollisionBitmask() == Model::BITMASK_ENEMY3_ATTACK && b->getCollisionBitmask() == Model::BITMASK_PLAYER)
 		|| (a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_ENEMY3_ATTACK))
 	{
 		if (a->getCollisionBitmask() == Model::BITMASK_ENEMY3_ATTACK)
 		{
-			auto currentEnemy2 = enemys2.at(a->getGroup());
-			player->gotHit(currentEnemy2->getSlash()->getDamge());
+			auto currentEnemy3 = enemys3.at(a->getGroup());
+			player->gotHit(currentEnemy3->getSlash()->getDamge());
 		}
 		if (b->getCollisionBitmask() == Model::BITMASK_ENEMY3_ATTACK)
 		{
-			auto currentEnemy2 = enemys2.at(b->getGroup());
-			player->gotHit(currentEnemy2->getSlash()->getDamge());
+			auto currentEnemy3 = enemys3.at(b->getGroup());
+			player->gotHit(currentEnemy3->getSlash()->getDamge());
 		}
 	}
-	portal->onContact(contact);
+	if ((a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_PORTAL_FINALBOSS)
+		|| (a->getCollisionBitmask() == Model::BITMASK_PORTAL_FINALBOSS && b->getCollisionBitmask() == Model::BITMASK_PLAYER))
+	{
+		if (a->getCollisionBitmask() == Model::BITMASK_PORTAL_FINALBOSS)
+		{
+			portals.at(a->getGroup())->returntoCastleScene();
+		}
+		else
+		{
+			portals.at(b->getGroup())->returntoCastleScene();
+		}
+	}
+	else if ((a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_PORTAL_BASE)
+		|| (a->getCollisionBitmask() == Model::BITMASK_PORTAL_BASE && b->getCollisionBitmask() == Model::BITMASK_PLAYER))
+	{
+		if (a->getCollisionBitmask() == Model::BITMASK_PORTAL_BASE)
+		{
+			portals.at(a->getGroup())->returntoMainMenu();
+		}
+		else
+		{
+			portals.at(b->getGroup())->returntoMainMenu();
+		}
+	}
 	return false;
 }
 

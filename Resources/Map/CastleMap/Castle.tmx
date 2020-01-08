@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="140" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="14" nextobjectid="11">
+<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="140" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="14" nextobjectid="48">
  <tileset firstgid="1" name="mainlevbuild" tilewidth="16" tileheight="16" tilecount="1702" columns="37">
   <image source="mainlevbuild.png" width="592" height="736"/>
   <terraintypes>
@@ -16,9 +16,38 @@
   <object id="1" name="SpawnPoint" type="1" x="73" y="244"/>
   <object id="6" name="Skeleton" type="2" x="510" y="212"/>
   <object id="7" name="BowMan" type="4" x="626" y="286.667"/>
-  <object id="8" name="ArmorSkeleton" type="3" x="507.333" y="324"/>
+  <object id="8" name="ArmorSkeleton" type="4" x="507.333" y="324"/>
   <object id="9" name="BowMan" type="5" x="658" y="404"/>
   <object id="10" name="BowMan" type="5" x="777" y="463"/>
+  <object id="11" name="Skeleton" type="2" x="509" y="519"/>
+  <object id="12" name="Skeleton" type="2" x="674" y="534"/>
+  <object id="13" name="Skeleton" type="2" x="944" y="538"/>
+  <object id="14" name="Skeleton" type="2" x="1087" y="538"/>
+  <object id="15" name="Skeleton" type="2" x="1187" y="535"/>
+  <object id="16" name="Skeleton" type="2" x="1174" y="434"/>
+  <object id="17" name="Skeleton" type="2" x="1077" y="202"/>
+  <object id="18" name="Skeleton" type="2" x="1082" y="107"/>
+  <object id="19" name="BowMan" type="5" x="1030" y="461"/>
+  <object id="20" name="BowMan" type="5" x="881" y="192"/>
+  <object id="21" name="BowMan" type="5" x="635" y="102"/>
+  <object id="22" name="BowMan" type="5" x="1279" y="152"/>
+  <object id="23" name="BowMan" type="5" x="1318" y="545"/>
+  <object id="24" name="BowMan" type="5" x="1485" y="142"/>
+  <object id="25" name="BowMan" type="5" x="1534" y="487"/>
+  <object id="34" name="ArmorSkeleton" type="3" x="1319" y="442"/>
+  <object id="35" name="BowMan" type="5" x="1959" y="326"/>
+  <object id="36" name="ArmorSkeleton" type="4" x="804" y="307"/>
+  <object id="37" name="ArmorSkeleton" type="4" x="882" y="353"/>
+  <object id="38" name="ArmorSkeleton" type="4" x="1073" y="293"/>
+  <object id="39" name="ArmorSkeleton" type="4" x="1186" y="352"/>
+  <object id="40" name="ArmorSkeleton" type="4" x="1280" y="331"/>
+  <object id="41" name="ArmorSkeleton" type="4" x="1409" y="287"/>
+  <object id="42" name="ArmorSkeleton" type="4" x="1448" y="342"/>
+  <object id="43" name="ArmorSkeleton" type="4" x="1246" y="270"/>
+  <object id="44" name="ArmorSkeleton" type="4" x="1535" y="298"/>
+  <object id="45" name="ArmorSkeleton" type="4" x="1046" y="372"/>
+  <object id="46" name="ArmorSkeleton" type="4" x="916" y="294"/>
+  <object id="47" name="ReturnBase" type="100" x="2228" y="347"/>
  </objectgroup>
  <layer id="4" name="Meta" width="140" height="40">
   <data encoding="csv">

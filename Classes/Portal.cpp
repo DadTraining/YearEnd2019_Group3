@@ -57,14 +57,22 @@ void Portal::addPhysics()
 	sprite->setPhysicsBody(physicsBody);
 }
 
-void Portal::onContact(cocos2d::PhysicsContact & contact)
+void Portal::returntoMainMenu()
 {
-	auto a = contact.getShapeA()->getBody();
-	auto b = contact.getShapeB()->getBody();
-
+	auto myScene = ResultScene::createScene();
+	Director::getInstance()->replaceScene(TransitionFade::create(0.5f, myScene));
 }
-	
 
+void Portal::returntoCastleScene()
+{
+	auto myScene = CastleScene::createScene();
+	Director::getInstance()->replaceScene(TransitionFade::create(0.5f, myScene));
+}
+
+void Portal::setIndex(int index)
+{
+	this->sprite->getPhysicsBody()->setTag(index);
+}
 
 
 Portal::~Portal()
