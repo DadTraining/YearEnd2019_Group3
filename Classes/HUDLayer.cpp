@@ -247,6 +247,10 @@ HudLayer::~HudLayer()
 
 void HudLayer::addMiniMap()
 {
+	if (this->targetScene->getTag() == Model::FINAL_BOSS_PORTAL_TYPE)
+	{
+		return;
+	}
 	miniMap = MiniMapLayer::createLayer();
 	this->addChild(miniMap);
 }
@@ -294,7 +298,8 @@ void HudLayer::update(float dt)
 	}
 	healthBar->update(dt);
 
-	miniMap->update(dt);
-
-
+	if (!this->miniMap)
+	{
+		miniMap->update(dt);
+	}
 }
