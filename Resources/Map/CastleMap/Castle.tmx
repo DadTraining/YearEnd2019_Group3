@@ -19,7 +19,7 @@
   <object id="8" name="ArmorSkeleton" type="3" x="507.333" y="324"/>
   <object id="9" name="BowMan" type="5" x="658" y="404"/>
   <object id="10" name="BowMan" type="5" x="777" y="463"/>
-  <object id="11" name="Boss" type="6" x="2152.83" y="293.551"/>
+  <object id="11" name="Boss" type="6" x="1962.83" y="337.551"/>
  </objectgroup>
  <layer id="4" name="Meta" width="140" height="40">
   <data encoding="csv">

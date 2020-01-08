@@ -36,7 +36,6 @@ void Boss::init()
 	auto animateAttack = Animate::create(animationAtack);
 	animateAttack->retain();
 	this->attackAnimate = animateAttack;
-	attackAnimate->retain();
 
 	//Create animate idle
 	auto spriteCacheIdle_Boss = SpriteFrameCache::getInstance();
@@ -53,7 +52,6 @@ void Boss::init()
 	auto animateIdle = Animate::create(animationIdle);
 	animateIdle->retain();
 	this->idleAnimate = animateIdle;
-	idleAnimate->retain();
 
 	//Create animate dead
 	auto spriteCacheDead_MB1 = SpriteFrameCache::getInstance();
@@ -70,7 +68,6 @@ void Boss::init()
 	auto animateDead = Animate::create(animationDead);
 	animateDead->retain();
 	this->deadAnimate = animateDead;
-	deadAnimate->retain();
 
 	
 	// Add physics
@@ -130,50 +127,40 @@ void Boss::setAIforEnemy()
 {
 	auto rpIdleAnimate = RepeatForever::create(this->getIdleAnimate());
 	rpIdleAnimate->setTag(TAG_ANIMATE_IDLE1);
-	auto rpAttackAnimate = this->getAttackAnimate();
+	auto rpAttackAnimate = RepeatForever::create(this->getAttackAnimate());
 	rpAttackAnimate->setTag(TAG_ANIMATE_ATTACK);
-	auto rpRunAnimate = RepeatForever::create(this->getRunAnimate());
-	rpRunAnimate->setTag(TAG_ANIMATE_RUN);
 
 	auto player = Update::GetInstance()->getPlayer();
-
 	auto range = std::sqrt(pow((this->getSprite()->getPosition().x - player->getSprite()->getPosition().x), 2) + pow((this->getSprite()->getPosition().y - player->getSprite()->getPosition().y), 2));
-	auto vectorMoveToSpawnPoint = Vec2(this->getPosSpawn().x - this->getSprite()->getPosition().x, this->getPosSpawn().y - this->getSprite()->getPosition().y);
-	auto vectorMoveToPlayer = Vec2(player->getSprite()->getPosition().x - this->getSprite()->getPosition().x, player->getSprite()->getPosition().y - this->getSprite()->getPosition().y);
-
-	if (range < VISION_OF_MB) {
+	if (range < 600) {
 		if (player->getHP() > 0) {
-			this->getSprite()->getPhysicsBody()->setVelocity(vectorMoveToPlayer*SPEED_MB01);
 			if (player->getSprite()->getPosition().x < this->getSprite()->getPosition().x) {
 				this->getSprite()->setFlipX(180);
 			}
 			if (player->getSprite()->getPosition().x > this->getSprite()->getPosition().x) {
 				this->getSprite()->setFlipX(0);
 			}
-			if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_IDLE1) > 0) {
-				this->getSprite()->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
-				this->getSprite()->runAction(rpRunAnimate);
-			}
-			if ((player->getSprite()->getPosition().y < (this->getSprite()->getPosition().y + 50)) &&
-				player->getSprite()->getPosition().y >(this->getSprite()->getPosition().y - 50) &&
-				std::sqrt(pow(player->getSprite()->getPosition().x - this->getSprite()->getPosition().x, 2)) < RANGE_OF_MB) {
-				if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_RUN) > 0) {
-					this->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
+			if (range < 500) {
+				if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_IDLE1) > 0) {
+					this->getSprite()->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
 					this->getSprite()->runAction(rpAttackAnimate);
 				}
 			}
-			// When player die
 			else {
 				if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) > 0) {
 					this->getSprite()->stopAllActionsByTag(TAG_ANIMATE_ATTACK);
-					this->getSprite()->runAction(rpRunAnimate);
+					this->getSprite()->runAction(rpIdleAnimate);
 				}
+			}
+		}
+		else {
+			if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) > 0) {
+				this->getSprite()->stopAllActionsByTag(TAG_ANIMATE_ATTACK);
+				this->getSprite()->runAction(rpIdleAnimate);
 			}
 		}
 	}
 	else {
-		auto vectorMove = Vec2(this->getPosSpawn().x - this->getSprite()->getPosition().x, this->getPosSpawn().y - this->getSprite()->getPosition().y);
-		this->getSprite()->getPhysicsBody()->setVelocity(vectorMove*SPEED_MB01);
 		if ((this->getSprite()->getPosition() < this->getPosSpawn() && this->getSprite()->getPosition() > this->getPosSpawn() - Vec2(5, 5)) ||
 			this->getSprite()->getPosition() > this->getPosSpawn() && this->getSprite()->getPosition() < this->getPosSpawn() + Vec2(5, 5)) {
 			this->getSprite()->setPosition(this->getPosSpawn());
@@ -186,7 +173,7 @@ void Boss::setAIforEnemy()
 		}
 		if (this->getPosSpawn().x == this->getSprite()->getPosition().x) {
 			if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_IDLE1) == 0) {
-				this->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
+				this->getSprite()->stopAllActionsByTag(TAG_ANIMATE_ATTACK);
 				this->getSprite()->runAction(rpIdleAnimate);
 			}
 		}
@@ -306,19 +293,21 @@ void Boss::update(float deltaTime)
 
 	if (this->getSprite()->getNumberOfRunningActions() == 0)
 	{
-		auto animationRun = RepeatForever::create(this->getRunAnimate());
-		animationRun->setTag(TAG_ANIMATE_RUN);
-		this->getSprite()->runAction(animationRun);
+		auto animationIdle = RepeatForever::create(this->getIdleAnimate());
+		animationIdle->setTag(TAG_ANIMATE_IDLE1);
+		this->getSprite()->runAction(animationIdle);
 	}
 }
 
 void Boss::addPhysic()
 {
-	auto physicsBody = PhysicsBody::createBox(this->getSprite()->getContentSize() - Size(80, 30), PhysicsMaterial(1.0f, 0.0f, 1.0f));
+	auto physicsBody = PhysicsBody::createBox(this->getSprite()->getContentSize(), PhysicsMaterial(1.0f, 0.0f, 1.0f));
 	physicsBody->setGravityEnable(false);
+	physicsBody->setPositionOffset(Vec2(100, 0));
+	this->getSprite()->setAnchorPoint(Vec2(0.5f, 0.5f));
 	physicsBody->setRotationEnable(false);
 	physicsBody->setContactTestBitmask(true);
-	physicsBody->setCollisionBitmask(Model::BITMASK_ENEMY);
+	physicsBody->setCollisionBitmask(Model::BITMASK_BOSS);
 	this->getSprite()->setPhysicsBody(physicsBody);
 }
 
@@ -336,11 +325,13 @@ void Boss::Die()
 	{
 		mySprite->removeFromParent();
 	});
+	auto fade = FadeOut::create(1.5f);
 	this->isAlive = false;
 	this->m_slash->getSprite()->setPosition(Vec2(-1, -1));
 	//this->m_slash->getSprite()->removeFromParent();
 	auto dieAnimation = this->getDeadAnimate();
-	auto sequence = Sequence::create(dieAnimation, callbackHide, nullptr);
+	auto spawn = Spawn::create(fade, dieAnimation, nullptr);
+	auto sequence = Sequence::create(spawn, callbackHide, nullptr);
 	sequence->setTag(TAG_ANIMATE_DIE);
 	mySprite->runAction(sequence);
 }
@@ -358,7 +349,7 @@ bool Boss::getAlive()
 void Boss::createSlash()
 {
 	m_slash = new Slash(100, 100);
-	m_slash->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_ENEMY1_ATTACK);
+	m_slash->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_BOSS_ATTACK);
 	targetScene->addChild(m_slash->getSprite());
 	m_slash->setDamge(this->damage);
 }

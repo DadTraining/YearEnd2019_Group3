@@ -31,7 +31,7 @@ void Update::Init()
 	this->damageOfEm3 = 10.0f;
 	this->hpOfEm3 = 100.0f;
 	this->damageOfBoss = 500.0f;
-	this->hpOfBoss = 3000.0f;
+	this->hpOfBoss = 200.0f;
 }
 
 float Update::getDamageOfPlayer()

@@ -24,6 +24,7 @@ private:
 	vector<Villager*> villagers;
 	vector<Enemy2*> enemys2;
 	vector<Enemy3*> enemys3;
+	vector<Boss*> bosss;
 	Portal* portal;
 	HudLayer* HUD;
 
