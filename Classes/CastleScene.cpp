@@ -51,6 +51,7 @@ void CastleScene::SpawnPlayer()
 	int numberOfSkeleton = 0;
 	int numberOfEnemy2 = 0;
 	int numberOfEnemy3 = 0;
+	int numberOfBoss = 0;
 	// ---
 	auto objects = m_objectGroup->getObjects();
 	for (int i = 0; i < objects.size(); i++)
@@ -138,6 +139,17 @@ void CastleScene::SpawnPlayer()
 			portal->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_PORTAL_BASE);
 			portal->getSprite()->setPosition(posX, posY);
 			addChild(portal->getSprite());
+		}
+		else if (type == Model::MAIN_BOSS_TYPE)
+		{
+			auto boss = new Boss(this);
+			boss->setPosSpawn(Vec2(posX, posY));
+			SpriteFrameCache::getInstance()->removeSpriteFrames();
+			boss->getSprite()->setPosition(Vec2(posX, posY));
+			auto animation = RepeatForever::create(boss->getIdleAnimate());
+			animation->setTag(TAG_ANIMATE_IDLE1);
+			boss->getSprite()->runAction(animation);
+			addChild(boss->getSprite());
 		}
 	}
 }
@@ -312,20 +324,20 @@ bool CastleScene::onContactBegin(cocos2d::PhysicsContact & contact)
 			}
 		}
 	}
-	// enemy2 attack player
+	// enemy3 attack player
 	if ((a->getCollisionBitmask() == Model::BITMASK_ENEMY3_ATTACK && b->getCollisionBitmask() == Model::BITMASK_PLAYER)
 		|| (a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_ENEMY3_ATTACK))
 	{
 		HUD->addVilagerPoint();
 		if (a->getCollisionBitmask() == Model::BITMASK_ENEMY3_ATTACK)
 		{
-			auto currentEnemy2 = enemys2.at(a->getGroup());
-			player->gotHit(currentEnemy2->getSlash()->getDamge());
+			auto currentEnemy3 = enemys3.at(a->getGroup());
+			player->gotHit(currentEnemy3->getSlash()->getDamge());
 		}
 		if (b->getCollisionBitmask() == Model::BITMASK_ENEMY3_ATTACK)
 		{
-			auto currentEnemy2 = enemys2.at(b->getGroup());
-			player->gotHit(currentEnemy2->getSlash()->getDamge());
+			auto currentEnemy3 = enemys3.at(b->getGroup());
+			player->gotHit(currentEnemy3->getSlash()->getDamge());
 		}
 	}
 	portal->onContact(contact);

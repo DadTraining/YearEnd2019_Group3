@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="140" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="14" nextobjectid="11">
+<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="140" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="14" nextobjectid="12">
  <tileset firstgid="1" name="mainlevbuild" tilewidth="16" tileheight="16" tilecount="1702" columns="37">
   <image source="mainlevbuild.png" width="592" height="736"/>
   <terraintypes>
@@ -19,6 +19,7 @@
   <object id="8" name="ArmorSkeleton" type="3" x="507.333" y="324"/>
   <object id="9" name="BowMan" type="5" x="658" y="404"/>
   <object id="10" name="BowMan" type="5" x="777" y="463"/>
+  <object id="11" name="Boss" type="6" x="2152.83" y="293.551"/>
  </objectgroup>
  <layer id="4" name="Meta" width="140" height="40">
   <data encoding="csv">

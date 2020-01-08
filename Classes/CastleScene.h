@@ -8,6 +8,7 @@
 #include "MiniBoss01.h"
 #include "Enemy2.h"
 #include "Enemy3.h"
+#include "Boss.h"
 #include "Villager.h"
 using namespace cocos2d;
 class CastleScene : public cocos2d::Scene

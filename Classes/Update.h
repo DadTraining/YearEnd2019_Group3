@@ -17,6 +17,8 @@ private:
 	float hpOfEm2;
 	float damageOfEm3;
 	float hpOfEm3;
+	float damageOfBoss;
+	float hpOfBoss;
 	Player* player;
 public:
 	Update();
@@ -31,6 +33,8 @@ public:
 	float getHPOfEm2();
 	float getDamageOfEm3();
 	float getHPOfEm3();
+	float getDamageOfBoss();
+	float getHPOfBoss();
 	Player * getPlayer();
 	void setPlayer(Player* player);
 };

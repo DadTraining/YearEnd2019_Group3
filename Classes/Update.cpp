@@ -30,6 +30,8 @@ void Update::Init()
 	this->hpOfEm2 = 1000.0f;
 	this->damageOfEm3 = 10.0f;
 	this->hpOfEm3 = 100.0f;
+	this->damageOfBoss = 500.0f;
+	this->hpOfBoss = 3000.0f;
 }
 
 float Update::getDamageOfPlayer()
@@ -70,6 +72,16 @@ float Update::getDamageOfEm3()
 float Update::getHPOfEm3()
 {
 	return this->hpOfEm3;
+}
+
+float Update::getDamageOfBoss()
+{
+	return this->damageOfBoss;
+}
+
+float Update::getHPOfBoss()
+{
+	return this->hpOfBoss;
 }
 
 Player* Update::getPlayer()

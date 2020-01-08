@@ -326,20 +326,20 @@ bool LoadMapScene::onContactBegin(cocos2d::PhysicsContact & contact)
 			}
 		}
 	}
-	// enemy2 attack player
+	// enemy3 attack player
 	if ((a->getCollisionBitmask() == Model::BITMASK_ENEMY3_ATTACK && b->getCollisionBitmask() == Model::BITMASK_PLAYER)
 		|| (a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_ENEMY3_ATTACK))
 	{
 		HUD->addVilagerPoint();
 		if (a->getCollisionBitmask() == Model::BITMASK_ENEMY3_ATTACK)
 		{
-			auto currentEnemy2 = enemys2.at(a->getGroup());
-			player->gotHit(currentEnemy2->getSlash()->getDamge());
+			auto currentEnemy3 = enemys3.at(a->getGroup());
+			player->gotHit(currentEnemy3->getSlash()->getDamge());
 		}
 		if (b->getCollisionBitmask() == Model::BITMASK_ENEMY3_ATTACK)
 		{
-			auto currentEnemy2 = enemys2.at(b->getGroup());
-			player->gotHit(currentEnemy2->getSlash()->getDamge());
+			auto currentEnemy3 = enemys3.at(b->getGroup());
+			player->gotHit(currentEnemy3->getSlash()->getDamge());
 		}
 	}
 	portal->onContact(contact);
