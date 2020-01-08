@@ -12,7 +12,6 @@ bool MiniMapLayer::init()
 		return false;
 	}
 	addMinimap();
-	setMiniPlayer();
 }
 
 
@@ -22,9 +21,10 @@ void MiniMapLayer::addMinimap()
 	this->addChild(miniMap);
 	miniMap->setScale(SCALE_MINIMAP);
 	miniMap->setAnchorPoint(Vec2(0, 0));
-	this->setVisibleObject();
 	// Set the Position for the map
 	this->setPositionMiniMap();
+	setMiniPlayer();
+	setVisibleObject();
 }
 
 void MiniMapLayer::setPositionMiniMap()

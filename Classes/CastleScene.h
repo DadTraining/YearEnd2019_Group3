@@ -9,6 +9,8 @@
 #include "Enemy2.h"
 #include "Enemy3.h"
 #include "Villager.h"
+#include "Portal.h"
+
 using namespace cocos2d;
 class CastleScene : public cocos2d::Scene
 {

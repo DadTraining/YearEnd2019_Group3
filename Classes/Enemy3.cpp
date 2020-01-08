@@ -340,7 +340,7 @@ void Enemy3::Die()
 	});
 	this->isAlive = false;
 	this->m_slash->getSprite()->setPosition(Vec2(-100, -100));
-	//this->m_slash->getSprite()->removeFromParent();
+	this->m_slash->getSprite()->removeFromParent();
 	auto dieAnimation = this->getDeadAnimate();
 	auto sequence = Sequence::create(dieAnimation, callbackHide, nullptr);
 	mySprite->runAction(sequence);

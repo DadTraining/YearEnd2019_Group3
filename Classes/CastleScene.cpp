@@ -68,6 +68,7 @@ void CastleScene::SpawnPlayer()
 			Update::GetInstance()->setPlayer(player);
 			SpriteFrameCache::getInstance()->removeSpriteFrames();
 			m_player = player->getSprite();
+			m_player->removeFromParent();
 			m_player->setPosition(Vec2(posX, posY));
 			m_player->setScale(m_SCALE_32x32 / 2);
 			addChild(m_player);
@@ -194,7 +195,6 @@ bool CastleScene::onContactBegin(cocos2d::PhysicsContact & contact)
 	if ((a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_VILLAGER)
 		|| (a->getCollisionBitmask() == Model::BITMASK_VILLAGER && b->getCollisionBitmask() == Model::BITMASK_PLAYER))
 	{
-		HUD->addVilagerPoint();
 		if (a->getCollisionBitmask() == Model::BITMASK_VILLAGER)
 		{
 			auto currentVillager = villagers.at(a->getGroup());
@@ -212,7 +212,6 @@ bool CastleScene::onContactBegin(cocos2d::PhysicsContact & contact)
 	if ((a->getCollisionBitmask() == Model::BITMASK_ENEMY && b->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK)
 		|| (a->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK && b->getCollisionBitmask() == Model::BITMASK_ENEMY))
 	{
-		HUD->addVilagerPoint();
 		if (a->getCollisionBitmask() == Model::BITMASK_ENEMY)
 		{
 			auto currentSkeleton = Skeletons.at(a->getGroup());
@@ -236,7 +235,6 @@ bool CastleScene::onContactBegin(cocos2d::PhysicsContact & contact)
 	if ((a->getCollisionBitmask() == Model::BITMASK_ENEMY1_ATTACK && b->getCollisionBitmask() == Model::BITMASK_PLAYER)
 		|| (a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_ENEMY1_ATTACK))
 	{
-		HUD->addVilagerPoint();
 		if (a->getCollisionBitmask() == Model::BITMASK_ENEMY1_ATTACK)
 		{
 			auto currentSkeleton = Skeletons.at(a->getGroup());
@@ -252,7 +250,6 @@ bool CastleScene::onContactBegin(cocos2d::PhysicsContact & contact)
 	if ((a->getCollisionBitmask() == Model::BITMASK_ENEMY2 && b->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK)
 		|| (a->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK && b->getCollisionBitmask() == Model::BITMASK_ENEMY2))
 	{
-		HUD->addVilagerPoint();
 		if (a->getCollisionBitmask() == Model::BITMASK_ENEMY2)
 		{
 			auto currentEnemy2 = enemys2.at(a->getGroup());
@@ -276,7 +273,6 @@ bool CastleScene::onContactBegin(cocos2d::PhysicsContact & contact)
 	if ((a->getCollisionBitmask() == Model::BITMASK_ENEMY2_ATTACK && b->getCollisionBitmask() == Model::BITMASK_PLAYER)
 		|| (a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_ENEMY2_ATTACK))
 	{
-		HUD->addVilagerPoint();
 		if (a->getCollisionBitmask() == Model::BITMASK_ENEMY2_ATTACK)
 		{
 			auto currentEnemy2 = enemys2.at(a->getGroup());
@@ -292,7 +288,6 @@ bool CastleScene::onContactBegin(cocos2d::PhysicsContact & contact)
 	if ((a->getCollisionBitmask() == Model::BITMASK_ENEMY3 && b->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK)
 		|| (a->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK && b->getCollisionBitmask() == Model::BITMASK_ENEMY3))
 	{
-		HUD->addVilagerPoint();
 		if (a->getCollisionBitmask() == Model::BITMASK_ENEMY3)
 		{
 			auto currentEnemy3 = enemys3.at(a->getGroup());
@@ -316,7 +311,6 @@ bool CastleScene::onContactBegin(cocos2d::PhysicsContact & contact)
 	if ((a->getCollisionBitmask() == Model::BITMASK_ENEMY3_ATTACK && b->getCollisionBitmask() == Model::BITMASK_PLAYER)
 		|| (a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_ENEMY3_ATTACK))
 	{
-		HUD->addVilagerPoint();
 		if (a->getCollisionBitmask() == Model::BITMASK_ENEMY3_ATTACK)
 		{
 			auto currentEnemy2 = enemys2.at(a->getGroup());
@@ -359,8 +353,7 @@ void CastleScene::enemyMoveToPlayer()
 
 void CastleScene::addHud()
 {
-	HUD = new HudLayer(this, player, m_tileMap);
-	HUD->setMap(m_tileMap);
+	HUD = new HudLayer(this, player);
 }
 
 void CastleScene::update(float dt)

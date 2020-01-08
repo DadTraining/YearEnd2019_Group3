@@ -22,6 +22,7 @@ public:
 	void updateMiniPlayerPosition();
 	void setMiniPlayer();
 	void setVisibleObject();
+
 	CREATE_FUNC(MiniMapLayer);
 
 };

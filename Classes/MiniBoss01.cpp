@@ -376,7 +376,7 @@ void MiniBoss01::Die()
 	});
 	this->isAlive = false;
 	this->m_slash->getSprite()->setPosition(Vec2(-1, -1));
-	//this->m_slash->getSprite()->removeFromParent();
+	this->m_slash->getSprite()->removeFromParent();
 	auto dieAnimation = this->getDeadAnimate();
 	auto sequence = Sequence::create(dieAnimation, callbackHide, nullptr);
 	sequence->setTag(TAG_ANIMATE_DIE);

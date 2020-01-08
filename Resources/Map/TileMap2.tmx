@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="60" height="60" tilewidth="32" tileheight="32" infinite="0" nextlayerid="31" nextobjectid="260">
+<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="60" height="60" tilewidth="32" tileheight="32" infinite="0" nextlayerid="31" nextobjectid="284">
  <tileset firstgid="1" name="meta_tiles" tilewidth="32" tileheight="32" spacing="1" margin="1" tilecount="2" columns="2">
   <image source="meta_tiles.png" width="67" height="34"/>
   <tile id="0">
@@ -987,31 +987,8 @@
  </layer>
  <objectgroup id="3" name="Objects">
   <object id="4" name="SpawnPoint" type="1" x="1413.66" y="181.667"/>
-  <object id="10" name="Villager" type="3" x="1675.67" y="564"/>
-  <object id="19" name="Villager" type="3" x="1668" y="534"/>
-  <object id="20" name="Villager" type="3" x="1714" y="525"/>
-  <object id="21" name="Enemy" type="2" x="1516.33" y="819"/>
-  <object id="22" name="Enemy" type="2" x="1615" y="498"/>
-  <object id="23" name="Enemy" type="2" x="1483.67" y="786.667"/>
-  <object id="24" name="Enemy" type="2" x="1512.33" y="852.667"/>
-  <object id="25" name="Enemy" type="2" x="1144.67" y="546.667"/>
-  <object id="26" name="Enemy" type="2" x="1196.67" y="646.667"/>
-  <object id="27" name="Enemy" type="2" x="1277.33" y="510.667"/>
-  <object id="28" name="Enemy" type="2" x="1680" y="596.667"/>
-  <object id="31" name="Villager" type="3" x="977" y="1439.33"/>
-  <object id="40" name="Villager" type="3" x="1028" y="1444"/>
-  <object id="41" name="Villager" type="3" x="1000.24" y="1456.36"/>
-  <object id="42" name="Villager" type="3" x="970.64" y="1418.97"/>
-  <object id="43" name="Villager" type="3" x="1025.76" y="1421.73"/>
-  <object id="52" name="Enemy" type="2" x="1002.67" y="1364.67"/>
-  <object id="53" name="Enemy" type="2" x="905.67" y="1427.67"/>
-  <object id="54" name="Enemy" type="2" x="972" y="1493"/>
-  <object id="57" name="Enemy" type="2" x="1054.67" y="1162"/>
   <object id="68" name="Enemy" type="2" x="466" y="497.667"/>
-  <object id="70" name="Enemy" type="2" x="175.667" y="211.333"/>
-  <object id="71" name="Enemy" type="2" x="180" y="502.333"/>
   <object id="72" name="Enemy" type="2" x="364" y="544"/>
-  <object id="73" name="Enemy" type="2" x="494.33" y="947"/>
   <object id="77" name="Villager" type="3" x="1540.33" y="234.667"/>
   <object id="78" name="Villager" type="3" x="1584" y="256"/>
   <object id="79" name="Villager" type="3" x="1456" y="238.667"/>
@@ -1025,119 +1002,34 @@
   <object id="87" name="Enemy" type="2" x="1352" y="241.333"/>
   <object id="88" name="Enemy" type="2" x="1740" y="234.667"/>
   <object id="89" name="Enemy" type="2" x="1668" y="305.333"/>
-  <object id="90" name="Villager" type="3" x="1296.33" y="1076"/>
-  <object id="91" name="Villager" type="3" x="1435.33" y="1102"/>
-  <object id="92" name="Villager" type="3" x="1203" y="1138.33"/>
-  <object id="93" name="Villager" type="3" x="1360.33" y="1138"/>
-  <object id="94" name="Villager" type="3" x="1226" y="1298.33"/>
-  <object id="95" name="Villager" type="3" x="1150.67" y="1260"/>
-  <object id="96" name="Villager" type="3" x="1332.33" y="1074"/>
-  <object id="97" name="Villager" type="3" x="1296" y="1318.67"/>
-  <object id="98" name="Enemy" type="2" x="1582.67" y="1192"/>
-  <object id="99" name="Enemy" type="2" x="1622.67" y="1289.33"/>
-  <object id="100" name="Enemy" type="2" x="1213.33" y="1029.33"/>
-  <object id="101" name="Enemy" type="2" x="1349.33" y="1028"/>
-  <object id="102" name="Villager" type="3" x="683.33" y="687.333"/>
-  <object id="103" name="Villager" type="3" x="718" y="699"/>
-  <object id="104" name="Villager" type="3" x="748.67" y="679.333"/>
-  <object id="105" name="Villager" type="3" x="763.33" y="711.333"/>
-  <object id="106" name="Villager" type="3" x="715.33" y="663.333"/>
-  <object id="107" name="Villager" type="3" x="691.67" y="720.667"/>
-  <object id="108" name="Villager" type="3" x="1713.67" y="561.333"/>
-  <object id="109" name="Enemy" type="2" x="753.33" y="627.667"/>
-  <object id="110" name="Enemy" type="2" x="751.67" y="759"/>
-  <object id="111" name="Enemy" type="2" x="657" y="886"/>
-  <object id="112" name="Enemy" type="2" x="1170.67" y="933.33"/>
-  <object id="113" name="Enemy" type="2" x="1277.33" y="913.33"/>
-  <object id="124" name="Enemy" type="2" x="1633.33" y="1441.33"/>
-  <object id="132" name="Enemy2" type="4" x="212" y="465.667"/>
-  <object id="137" name="Enemy2" type="4" x="207" y="532.333"/>
-  <object id="138" name="Enemy2" type="4" x="592.667" y="1013.33"/>
-  <object id="139" name="Enemy2" type="4" x="207.667" y="241"/>
-  <object id="140" name="Enemy2" type="4" x="624" y="1014.33"/>
-  <object id="141" name="Enemy2" type="4" x="207" y="178"/>
-  <object id="153" name="Enemy2" type="4" x="686.333" y="915.667"/>
   <object id="173" name="Enemy2" type="4" x="719.333" y="471.333"/>
   <object id="174" name="Enemy2" type="4" x="688" y="483.333"/>
-  <object id="175" name="Enemy3" type="5" x="288" y="360"/>
-  <object id="176" name="Enemy3" type="5" x="143" y="536"/>
-  <object id="177" name="Enemy3" type="5" x="144" y="498"/>
-  <object id="178" name="Enemy3" type="5" x="145" y="466"/>
-  <object id="179" name="Enemy3" type="5" x="148" y="243"/>
-  <object id="180" name="Enemy3" type="5" x="146" y="211"/>
-  <object id="181" name="Enemy3" type="5" x="145" y="180"/>
-  <object id="184" name="Enemy3" type="5" x="941" y="345"/>
-  <object id="187" name="Enemy3" type="5" x="686" y="654"/>
-  <object id="188" name="Enemy3" type="5" x="657" y="723"/>
   <object id="190" name="Enemy3" type="5" x="679" y="463"/>
-  <object id="191" name="Enemy3" type="5" x="627" y="908"/>
-  <object id="192" name="Enemy3" type="5" x="526" y="914"/>
-  <object id="193" name="Villager" type="3" x="577.079" y="934.981"/>
-  <object id="194" name="Villager" type="3" x="588.079" y="959.206"/>
-  <object id="195" name="Villager" type="3" x="625.378" y="967.49"/>
-  <object id="196" name="Villager" type="3" x="606.802" y="934.981"/>
-  <object id="197" name="Villager" type="3" x="600.944" y="980.996"/>
-  <object id="198" name="Villager" type="3" x="634.667" y="933.124"/>
-  <object id="199" name="Villager" type="3" x="555" y="946.775"/>
-  <object id="200" name="Enemy3" type="5" x="1751.37" y="534"/>
-  <object id="201" name="Enemy3" type="5" x="1744.63" y="502"/>
-  <object id="202" name="Enemy3" type="5" x="1740.92" y="567.292"/>
-  <object id="203" name="Villager" type="3" x="1675" y="509"/>
-  <object id="204" name="Villager" type="3" x="870.33" y="239.333"/>
-  <object id="205" name="Villager" type="3" x="905" y="251"/>
-  <object id="206" name="Villager" type="3" x="935.67" y="231.333"/>
-  <object id="207" name="Villager" type="3" x="950.33" y="263.333"/>
-  <object id="208" name="Villager" type="3" x="902.33" y="215.333"/>
-  <object id="209" name="Villager" type="3" x="907.67" y="281.667"/>
-  <object id="210" name="Enemy" type="2" x="940.33" y="179.667"/>
-  <object id="211" name="Enemy" type="2" x="879.67" y="349"/>
-  <object id="212" name="Enemy3" type="5" x="877" y="178"/>
-  <object id="213" name="Enemy3" type="5" x="944" y="305"/>
-  <object id="214" name="Villager" type="3" x="515.139" y="153.879" rotation="89.7271"/>
-  <object id="215" name="Villager" type="3" x="503.812" y="188.076" rotation="89.7271"/>
-  <object id="216" name="Villager" type="3" x="523.323" y="218.186" rotation="89.7271"/>
-  <object id="217" name="Villager" type="3" x="491.88" y="232.773" rotation="89.7271"/>
-  <object id="218" name="Villager" type="3" x="538.923" y="185.279" rotation="89.7271"/>
-  <object id="219" name="Villager" type="3" x="482.352" y="162.249" rotation="89.7271"/>
-  <object id="220" name="Enemy" type="2" x="574.224" y="222.533" rotation="89.7271"/>
-  <object id="221" name="Enemy" type="2" x="444.884" y="221.514" rotation="89.7271"/>
-  <object id="222" name="Enemy3" type="5" x="547.976" y="156.352" rotation="89.7271"/>
-  <object id="223" name="Enemy3" type="5" x="479.892" y="128.118" rotation="89.7271"/>
-  <object id="224" name="Villager" type="3" x="621.33" y="1225.33"/>
-  <object id="225" name="Villager" type="3" x="656" y="1237"/>
-  <object id="226" name="Villager" type="3" x="686.67" y="1217.33"/>
-  <object id="227" name="Villager" type="3" x="701.33" y="1249.33"/>
-  <object id="228" name="Villager" type="3" x="653.33" y="1201.33"/>
-  <object id="229" name="Villager" type="3" x="629.67" y="1258.67"/>
-  <object id="230" name="Enemy" type="2" x="691.33" y="1165.67"/>
-  <object id="231" name="Enemy" type="2" x="689.67" y="1297"/>
-  <object id="232" name="Enemy3" type="5" x="624" y="1192"/>
-  <object id="233" name="Enemy3" type="5" x="595" y="1261"/>
-  <object id="234" name="Enemy" type="2" x="362.05" y="1572.91" rotation="-209.419"/>
-  <object id="235" name="Enemy" type="2" x="215.821" y="1747.03" rotation="-209.419"/>
-  <object id="236" name="Enemy2" type="4" x="207.306" y="1560.52" rotation="-209.419"/>
-  <object id="237" name="Enemy2" type="4" x="170.944" y="1579.52" rotation="-209.419"/>
-  <object id="238" name="Enemy2" type="4" x="163.31" y="1732.06" rotation="-209.419"/>
-  <object id="239" name="Enemy3" type="5" x="235.877" y="1702.66" rotation="-209.419"/>
-  <object id="240" name="Enemy3" type="5" x="347.159" y="1630.89" rotation="-209.419"/>
-  <object id="241" name="Villager" type="3" x="275.442" y="1639.82" rotation="-209.419"/>
-  <object id="242" name="Villager" type="3" x="247.33" y="1619.27" rotation="-209.419"/>
-  <object id="243" name="Villager" type="3" x="199.484" y="1633.8" rotation="-209.419"/>
-  <object id="244" name="Villager" type="3" x="241.559" y="1658.92" rotation="-209.419"/>
-  <object id="245" name="Villager" type="3" x="218.657" y="1602.7" rotation="-209.419"/>
-  <object id="246" name="Villager" type="3" x="210.986" y="1678.95" rotation="-209.419"/>
-  <object id="247" name="Villager" type="3" x="293.03" y="1612.18" rotation="-209.419"/>
-  <object id="248" name="Villager" type="3" x="292.286" y="1274.32" rotation="-271.882"/>
-  <object id="249" name="Villager" type="3" x="281.76" y="1309.35" rotation="-271.882"/>
-  <object id="250" name="Villager" type="3" x="302.427" y="1339.36" rotation="-271.882"/>
-  <object id="251" name="Villager" type="3" x="270.925" y="1355.06" rotation="-271.882"/>
-  <object id="252" name="Villager" type="3" x="317.323" y="1305.51" rotation="-271.882"/>
-  <object id="253" name="Villager" type="3" x="259.237" y="1283.75" rotation="-271.882"/>
-  <object id="254" name="Enemy" type="2" x="354.212" y="1342.32" rotation="-271.882"/>
-  <object id="255" name="Enemy" type="2" x="222.898" y="1344.97" rotation="-271.882"/>
-  <object id="256" name="Enemy3" type="5" x="325.685" y="1275.89" rotation="-271.882"/>
-  <object id="257" name="Enemy3" type="5" x="255.77" y="1249.17" rotation="-271.882"/>
   <object id="258" name="Portal" type="99" x="1357.5" y="136"/>
   <object id="259" name="PortalBase" type="100" x="134" y="1498.67"/>
+  <object id="260" name="Enemy3" type="5" x="870.667" y="1184"/>
+  <object id="261" name="Enemy3" type="5" x="1246.67" y="1646.67"/>
+  <object id="262" name="Enemy3" type="5" x="1625.33" y="1269.33"/>
+  <object id="263" name="Enemy3" type="5" x="1189.33" y="829.333"/>
+  <object id="264" name="Enemy3" type="5" x="662.667" y="770.667"/>
+  <object id="265" name="Enemy2" type="4" x="942.667" y="1201.33"/>
+  <object id="266" name="Enemy2" type="4" x="1296" y="884"/>
+  <object id="267" name="Enemy2" type="4" x="684" y="841.333"/>
+  <object id="268" name="Enemy2" type="4" x="1614.67" y="1373.33"/>
+  <object id="269" name="Enemy2" type="4" x="1325.33" y="1697.33"/>
+  <object id="270" name="Enemy" type="2" x="610.667" y="929.333"/>
+  <object id="271" name="Enemy" type="2" x="1136" y="980"/>
+  <object id="272" name="Enemy" type="2" x="1049.33" y="1373.33"/>
+  <object id="273" name="Enemy" type="2" x="1357.33" y="1632"/>
+  <object id="274" name="Enemy" type="2" x="1642.67" y="1466.67"/>
+  <object id="275" name="Villager" type="3" x="1170.67" y="1265.33"/>
+  <object id="276" name="Villager" type="3" x="1288" y="970.667"/>
+  <object id="277" name="Villager" type="3" x="765.333" y="753.333"/>
+  <object id="278" name="Villager" type="3" x="1457.33" y="1712"/>
+  <object id="279" name="Villager" type="3" x="1584" y="1226.67"/>
+  <object id="280" name="Villager" type="3" x="376" y="1516"/>
+  <object id="281" name="Villager" type="3" x="277.333" y="1377.33"/>
+  <object id="282" name="Enemy2" type="4" x="654.667" y="1357.33"/>
+  <object id="283" name="Enemy3" type="5" x="296" y="1561.33"/>
  </objectgroup>
 </map>

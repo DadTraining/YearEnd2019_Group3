@@ -14,11 +14,8 @@
 class HudLayer : public cocos2d::Layer
 {
 private:
-	TMXTiledMap* m_tiledMap;
 	cocos2d::Scene* targetScene;
 	Player* targetPlayer;
-	Label* _hudScore;
-	int _numCollected;
 	ui::Button *attackBtn, *skillABtn, *skillBBtn;
 	// Joystick private variable
 	SneakyJoystick *leftJoystick;
@@ -30,7 +27,7 @@ private:
 	Layer* healthBar;
 	Layer* miniMap;
 public:
-	HudLayer(cocos2d::Scene* scene, Player* player, TMXTiledMap* map);
+	HudLayer(cocos2d::Scene* scene, Player* player);
 	bool init();
 	void createHud();
 	void CreateAttackNormal(Layer * layer);
@@ -40,11 +37,8 @@ public:
 	void CreateJoystick(Layer * layer);
 	void UpdateJoystick(float dt);
 	void update(float deltaTime);
-	void setMap(TMXTiledMap* map);
-	TMXTiledMap* getMap();
 	virtual ~HudLayer();
 	void createCameraHUD();
-	void addVilagerPoint();
 	void addMiniMap();
 	void addPauseButton();
 };

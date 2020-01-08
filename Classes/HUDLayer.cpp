@@ -1,14 +1,14 @@
 # include "Model.h"
 # include "HUDLayer.h"
 # include "Sound.h"
+# include "CastleScene.h"
 #define MARGIN_JOYSTICK 50
 using namespace cocos2d;
 
-HudLayer::HudLayer(Scene* scene, Player* player, TMXTiledMap* map)
+HudLayer::HudLayer(Scene* scene, Player* player)
 {
 	targetScene = scene;
 	targetPlayer = player;
-	m_tiledMap = map;
 	this->init();
 }
 
@@ -19,7 +19,6 @@ bool HudLayer::init()
 		return false;
 	}
 	createHud();
-	_numCollected = 0;
 	createCameraHUD();
 	scheduleUpdate();
 	return true;
@@ -28,20 +27,12 @@ bool HudLayer::init()
 void HudLayer::createHud()
 {
 	auto visibleSize = Director::getInstance()->getVisibleSize();
-	// Init the layer of hud
-	// create a label to increase the score
-	_hudScore = Label::create(std::to_string(this->_numCollected), "Resources/fonts/arial.ttf", 24);
-	int margin = 20;
-
-	_hudScore->setPosition(Vec2(visibleSize.width - (_hudScore->getContentSize().width / 2) - margin,
-		_hudScore->getContentSize().height / 2 + margin));
 
 	targetScene->addChild(this, 10);
 	healthBar = HealthBarLayer::createLayer();
 	this->addChild(healthBar);
 	//Adding the minimap to the hud
 	addMiniMap();
-	this->addChild(_hudScore, 0);
 	CreateJoystick(this);
 	CreateAttackNormal(this);
 	CreateSkillUltimate(this);
@@ -105,7 +96,6 @@ void HudLayer::UpdateJoystick(float dt)
 		}
 		targetPlayer->getSprite()->getPhysicsBody()->setVelocity(pos * SPEED_PLAYER);
 
-		//m_tiledMap->setPosition(m_tiledMap->getPosition() - pos / (SPEED * 2));
 	}
 	else
 	{
@@ -250,25 +240,10 @@ void HudLayer::CreateSkillSpear(Layer * layer)
 	});
 }
 
-
-void HudLayer::setMap(TMXTiledMap * map)
-{
-	m_tiledMap = map;
-}
-
-TMXTiledMap * HudLayer::getMap()
-{
-	return m_tiledMap;
-}
-
 HudLayer::~HudLayer()
 {
 }
 
-void HudLayer::addVilagerPoint()
-{
-	_numCollected++;
-}
 
 void HudLayer::addMiniMap()
 {
@@ -305,7 +280,6 @@ void HudLayer::createCameraHUD()
 
 void HudLayer::update(float dt)
 {
-	_hudScore->setString(std::to_string(this->_numCollected));
 	// if player still alive
 	if (targetPlayer->getAlive())
 	{
@@ -315,10 +289,12 @@ void HudLayer::update(float dt)
 		targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
 		targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
 	}
-	if (targetPlayer->getVillagersNum() >= 10) {
+	if (targetPlayer->getVillagersNum() >= 50) {
 		UpdateSkillUltimate(dt);
 	}
 	healthBar->update(dt);
+
 	miniMap->update(dt);
+
 
 }
