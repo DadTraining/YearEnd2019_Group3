@@ -342,8 +342,18 @@ bool LoadMapScene::onContactBegin(cocos2d::PhysicsContact & contact)
 			player->gotHit(currentEnemy2->getSlash()->getDamge());
 		}
 	}
-	portal->onContact(contact);
-	return false;
+	if ((a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_PORTAL_FINALBOSS)
+		|| (a->getCollisionBitmask() == Model::BITMASK_PORTAL_FINALBOSS && b->getCollisionBitmask() == Model::BITMASK_PLAYER))
+	{
+		auto myScene = CastleScene::createScene();
+		Director::getInstance()->replaceScene(TransitionFade::create(0.5f, myScene));
+	}
+	else if ((a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_PORTAL_BASE)
+		|| (a->getCollisionBitmask() == Model::BITMASK_PORTAL_BASE && b->getCollisionBitmask() == Model::BITMASK_PLAYER))
+	{
+		auto myScene = ResultScene::createScene();
+		Director::getInstance()->replaceScene(TransitionFade::create(0.5f, myScene));
+	}	return false;
 }
 
 void LoadMapScene::addHud()
