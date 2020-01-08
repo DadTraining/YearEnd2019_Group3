@@ -13,5 +13,5 @@ public:
 
 private:
 	bool isAlive;
-	int numVillager;
+	int numVillager = 0;
 };
