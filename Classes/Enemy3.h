@@ -52,6 +52,7 @@ public:
 	Slash* getSlash();
 	//---
 	void Stun();
+	void Shoot(Vec2 vec);
 private:
 	Sprite* sprite;
 	Animate *attackAnimate, *idleAnimate, *hitAnimate, *runAnimate, *deadAnimate;
@@ -60,4 +61,5 @@ private:
 	Scene* targetScene;
 	Point posSpawn;
 	bool isAlive;
+	vector<Slash*> slashs;
 };
