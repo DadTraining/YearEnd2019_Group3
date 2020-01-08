@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+		<key>frames</key>
+		<dict>
+			<key>nym1.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,111},{87,110}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{87,110}}</string>
+				<key>sourceSize</key>
+				<string>{87,110}</string>
+			</dict>
+
+			<key>nym2.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{262,0},{86,110}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{86,110}}</string>
+				<key>sourceSize</key>
+				<string>{86,110}</string>
+			</dict>
+
+			<key>nym3.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{175,111},{86,110}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{86,110}}</string>
+				<key>sourceSize</key>
+				<string>{86,110}</string>
+			</dict>
+
+			<key>nym4.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{262,111},{86,110}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{86,110}}</string>
+				<key>sourceSize</key>
+				<string>{86,110}</string>
+			</dict>
+
+			<key>nym5.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,0},{87,110}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{87,110}}</string>
+				<key>sourceSize</key>
+				<string>{87,110}</string>
+			</dict>
+
+			<key>nym6.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{88,111},{86,110}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{86,110}}</string>
+				<key>sourceSize</key>
+				<string>{86,110}</string>
+			</dict>
+
+			<key>nym7.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{88,0},{86,110}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{86,110}}</string>
+				<key>sourceSize</key>
+				<string>{86,110}</string>
+			</dict>
+
+			<key>nym8.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{175,0},{86,110}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{86,110}}</string>
+				<key>sourceSize</key>
+				<string>{86,110}</string>
+			</dict>
+
+		</dict>
+
+		<key>metadata</key>
+		<dict>
+			<key>format</key>
+			<integer>2</integer>
+			<key>size</key>
+			<string>{512,256}</string>
+			<key>textureFileName</key>
+			<string>sideCityzen.png</string>
+			</dict>
+		</dict>
+</plist>
