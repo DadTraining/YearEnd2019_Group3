@@ -356,8 +356,7 @@ bool Enemy3::getAlive()
 void Enemy3::createSlash()
 {
 	m_slash = new Slash(100, 100);
-	/*auto arrow = Sprite::create("Resources/sprites/rEnemy/Arrow/arrow.png");
-	m_slash->setSprite(arrow);*/
+	//m_slash->getSprite()->setTexture("Resources/sprites/rEnemy/Arrow/arrow.png");
 	m_slash->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_ENEMY3_ATTACK);
 	targetScene->addChild(m_slash->getSprite());
 	m_slash->setDamge(this->damage);

@@ -16,6 +16,12 @@
 #define VISION_OF_EM2 300
 #define RANGE_OF_MB 100
 #define VISION_OF_EM3 500
+#define TIME_ONE_ATTACK 0.1f
+#define TIME_ONE_HIT 0.1f
+#define TIME_ONE_IDLE 0.2f
+#define TIME_ONE_RUN 0.1f
+#define TIME_ONE_DEAD 0.26f
+#define TIME_ONE_WALK 0.1f
 #include<Player.h>
 class Model
 {

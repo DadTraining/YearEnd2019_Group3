@@ -1,12 +1,6 @@
 #pragma once
 #include "Objects.h"
 #include "Slash.h"
-#define TIME_ONE_ATTACK 0.1f
-#define TIME_ONE_HIT 0.1f
-#define TIME_ONE_IDLE 0.2f
-#define TIME_ONE_RUN 0.1f
-#define TIME_ONE_DEAD 0.26f
-#define TIME_ONE_WALK 0.1f
 #define INIT_HP 100
 #define INIT_DAMAGE 20 
 #define NORMAL_ATTACK_KEY 1

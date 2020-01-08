@@ -35,7 +35,7 @@ void Enemy2::init()
 		auto frame = spriteCacheAttack_Em2->getSpriteFrameByName(nameAnimateAttack);
 		animAttack.pushBack(frame);
 	}
-	Animation* animationAtack = Animation::createWithSpriteFrames(animAttack, TIME_ONE_ATTACK);
+	Animation* animationAtack = Animation::createWithSpriteFrames(animAttack, 0.1f);
 	auto animateAttack = Animate::create(animationAtack);
 	animateAttack->retain();
 	this->attackAnimate = animateAttack;
@@ -52,7 +52,7 @@ void Enemy2::init()
 		auto frame = spriteCacheIdle_Em2->getSpriteFrameByName(nameAnimateIdle);
 		animIdle.pushBack(frame);
 	}
-	Animation* animationIdle = Animation::createWithSpriteFrames(animIdle, TIME_ONE_IDLE);
+	Animation* animationIdle = Animation::createWithSpriteFrames(animIdle, 0.2f);
 	auto animateIdle = Animate::create(animationIdle);
 	animateIdle->retain();
 	this->idleAnimate = animateIdle;
@@ -69,7 +69,7 @@ void Enemy2::init()
 		auto frame = spriteCacheDead_MB1->getSpriteFrameByName(nameAnimateDead);
 		animDead.pushBack(frame);
 	}
-	Animation* animationDead = Animation::createWithSpriteFrames(animDead, TIME_ONE_DEAD);
+	Animation* animationDead = Animation::createWithSpriteFrames(animDead, 0.15f);
 	auto animateDead = Animate::create(animationDead);
 	animateDead->retain();
 	this->deadAnimate = animateDead;
@@ -86,7 +86,7 @@ void Enemy2::init()
 		auto frame = spriteCacheRun_MB1->getSpriteFrameByName(nameAnimateRun);
 		animRun.pushBack(frame);
 	}
-	Animation* animationRun = Animation::createWithSpriteFrames(animRun, TIME_ONE_RUN);
+	Animation* animationRun = Animation::createWithSpriteFrames(animRun, 0.1f);
 	auto animateWalk = Animate::create(animationRun);
 	animateWalk->retain();
 	this->runAnimate = animateWalk;
@@ -102,7 +102,7 @@ void Enemy2::init()
 		auto frame = spriteCacheHit_MB1->getSpriteFrameByName(nameAnimateHit);
 		animHit.pushBack(frame);
 	}
-	Animation* animationHit = Animation::createWithSpriteFrames(animHit, TIME_ONE_HIT);
+	Animation* animationHit = Animation::createWithSpriteFrames(animHit, 0.3f);
 	auto animateHit = Animate::create(animationHit);
 	animateHit->retain();
 	this->hitAnimate = animateHit;

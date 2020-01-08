@@ -76,6 +76,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     register_all_packages();
    // ResourceManager::GetInstance()->Init("");
 	Sound::GetInstance()->Init();
+	Update::GetInstance()->Init();
 	srand(time(NULL));
 
     // create a scene. it's an autorelease object

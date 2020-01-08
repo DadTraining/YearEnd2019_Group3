@@ -30,6 +30,7 @@ void Update::Init()
 	this->hpOfEm2 = 1000.0f;
 	this->damageOfEm3 = 10.0f;
 	this->hpOfEm3 = 100.0f;
+	this->num_Villager = 0;
 }
 
 float Update::getDamageOfPlayer()
@@ -76,6 +77,17 @@ Player* Update::getPlayer()
 {
 	return player;
 }
+
+int Update::getCurrentVillager()
+{
+	return this->num_Villager;
+}
+
+void Update::setCurrentVillager(int villager)
+{
+	this->num_Villager = villager;
+}
+
 void Update::setPlayer(Player* player) {
 	this->player = player;
 }

@@ -128,7 +128,7 @@ void HudLayer::CreateAttackNormal(Layer * layer)
 			// In case when the player press on the screen
 		case ui::Widget::TouchEventType::BEGAN:
 		{
-			// If the player still have the Idle animation or run animation then remove it
+			 //If the player still have the Idle animation or run animation then remove it
 			if (targetPlayer->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_IDLE1) > 0 || targetPlayer->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_RUN) > 0) {
 				targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
 				targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
@@ -136,7 +136,6 @@ void HudLayer::CreateAttackNormal(Layer * layer)
 				targetPlayer->normalAttack();
 				Sound::GetInstance()->soundPlayerAttack1();
 			}
-
 			break;
 		}
 		case ui::Widget::TouchEventType::ENDED:
@@ -298,7 +297,7 @@ void HudLayer::update(float dt)
 	}
 	healthBar->update(dt);
 
-	if (!this->miniMap)
+	if (this->targetScene->getTag() != Model::FINAL_BOSS_PORTAL_TYPE)
 	{
 		miniMap->update(dt);
 	}

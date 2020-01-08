@@ -3,7 +3,7 @@
 #include "Update.h"
 #include "Sound.h"
 #include "ResultScene.h"
-#define PLAYER_DAMAGE 100.0f
+#define PLAYER_DAMAGE 100.0f	
 USING_NS_CC;
 
 Player::Player(Scene* scene) {
@@ -24,7 +24,7 @@ void Player::init()
 
 	this->damage = Update::GetInstance()->getDamageOfPlayer();
 	this->hP = Update::GetInstance()->getHPOfPlayer();
-	this->villagersNum = 0;
+	this->villagersNum = Update::GetInstance()->getCurrentVillager();
 	//Create sprite
 	this->playerSprite = Sprite::create("Resources/sprites/Player/idle-with-weapon-1.png");
 	this->playerSprite->retain();
