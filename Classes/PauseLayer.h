@@ -3,6 +3,9 @@
 #pragma once
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
+#include "PauseLayer.h"
+#include "MainMenu.h"
+#include "Sound.h"
 
 class PauseLayer : public cocos2d::LayerColor
 {
@@ -12,10 +15,6 @@ private:
 public:
 	static cocos2d::Layer* createLayer();
 	virtual bool init();
-	void setSoundPercent(int percent);
-	int getSoundPercent();
-	void setSfxPercent(int percent);
-	int getSfxPercent();
 	CREATE_FUNC(PauseLayer);
 };
 

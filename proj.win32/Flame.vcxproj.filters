@@ -39,9 +39,6 @@
     <ClCompile Include="..\Classes\MiniMapLayer.cpp">
       <Filter>Layer</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\OptionsLayer.cpp">
-      <Filter>Layer</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\PauseLayer.cpp">
       <Filter>Layer</Filter>
     </ClCompile>
@@ -110,9 +107,6 @@
       <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\MiniMapLayer.h">
-      <Filter>Layer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\OptionsLayer.h">
       <Filter>Layer</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\PauseLayer.h">
