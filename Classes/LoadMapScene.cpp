@@ -23,13 +23,13 @@ bool LoadMapScene::init()
 	this->getPhysicsWorld()->setGravity(Vec2(0, 0));
 	this->getPhysicsWorld()->setSubsteps(2);
 	Sound::GetInstance()->soundBackGroundDesert();
-	addMap();
-	SpawnPlayer();
+	addMap(); // Done
+	SpawnPlayer(); // Done
 	addHud();
-	createPhysics();
-	addListener();
-	addSandParticle();
-	scheduleUpdate();
+	createPhysics(); // Done
+	addListener(); // Done
+	addSandParticle(); // Done
+	scheduleUpdate(); // Done
 	return true;
 }
 
@@ -171,8 +171,6 @@ void LoadMapScene::addMap()
 	statueTop->setGlobalZOrder(Model::TREE_ORDER);
 	tree->setGlobalZOrder(Model::TREE_ORDER);
 	addChild(m_tileMap, -1);
-	CCLOG("------- Done AddMap");
-
 }
 
 void LoadMapScene::createPhysics()
@@ -197,8 +195,6 @@ void LoadMapScene::createPhysics()
 			}
 		}
 	}
-	CCLOG("------- Done createPhysics");
-
 }
 
 void LoadMapScene::addListener()
@@ -368,15 +364,11 @@ bool LoadMapScene::onContactBegin(cocos2d::PhysicsContact & contact)
 		}
 	}	
 	return false;
-	CCLOG("------- Done onContact");
-
 }
 
 void LoadMapScene::addHud()
 {
 	HUD = new HudLayer(this, player);
-	CCLOG("------- Done addHud");
-
 }
 
 void LoadMapScene::addSandParticle()
@@ -387,8 +379,6 @@ void LoadMapScene::addSandParticle()
 	sandBackground->setContentSize(visibleSize);
 	this->addChild(sandBackground);
 	sandBackground->setGlobalZOrder(Model::TREE_ORDER + 1);
-	CCLOG("------- Done AddSandParticle");
-
 }
 
 void LoadMapScene::enemyMoveToPlayer()
@@ -414,8 +404,6 @@ void LoadMapScene::enemyMoveToPlayer()
 		}
 		enemys3[i]->setAIforEnemy();
 	}
-	CCLOG("------- Done AI");
-
 }
 
 void LoadMapScene::update(float dt)
@@ -441,8 +429,6 @@ void LoadMapScene::update(float dt)
 	}
 	sandBackground->setPosition(m_player->getPosition() 
 		+ Vec2(m_player->getContentSize().width, m_player->getContentSize().height));
-	CCLOG("------- Done Update");
-
 }
 
 

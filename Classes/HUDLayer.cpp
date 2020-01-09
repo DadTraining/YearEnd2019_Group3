@@ -31,6 +31,8 @@ void HudLayer::createHud()
 	targetScene->addChild(this, 10);
 	healthBar = HealthBarLayer::createLayer();
 	this->addChild(healthBar);
+	CCLOG("------- Done createhealthBar");
+
 	//Adding the minimap to the hud
 	addMiniMap();
 	CreateJoystick(this);
@@ -67,6 +69,8 @@ void HudLayer::CreateJoystick(Layer * layer)
 	leftJoystick = joystickBase->getJoystick();
 	activeRunRange = thumb->getBoundingBox().size.height / 2;
 	layer->addChild(joystickBase);
+	CCLOG("------- Done createJoystick");
+
 }
 
 void HudLayer::UpdateJoystick(float dt)
@@ -110,6 +114,8 @@ void HudLayer::UpdateJoystick(float dt)
 		targetPlayer->getSprite()->getPhysicsBody()->setVelocity(Vec2(0, 0));
 
 	}
+	CCLOG("------- Done UpdateJoystick");
+
 }
 
 void HudLayer::CreateAttackNormal(Layer * layer)
@@ -149,6 +155,7 @@ void HudLayer::CreateAttackNormal(Layer * layer)
 			break;
 		}
 	});
+	CCLOG("------- Done CreateSkillNormal");
 
 }
 
@@ -159,7 +166,7 @@ void HudLayer::CreateSkillUltimate(Layer * layer)
 	skillABtn->setScale(0.5f);
 	layer->addChild(skillABtn);
 	skillABtn->setPosition(Vec2(1450, 300));
-
+	CCLOG("------- Done CreateSkillUltimate");
 }
 
 void HudLayer::UpdateSkillUltimate(float dt)
@@ -197,6 +204,7 @@ void HudLayer::UpdateSkillUltimate(float dt)
 			break;
 		}
 	});
+	CCLOG("------- Done UpdateSkillUltimate");
 }
 
 void HudLayer::CreateSkillSpear(Layer * layer)
@@ -237,6 +245,8 @@ void HudLayer::CreateSkillSpear(Layer * layer)
 			break;
 		}
 	});
+	CCLOG("------- Done AddSkillSpear");
+
 }
 
 HudLayer::~HudLayer()
@@ -252,6 +262,8 @@ void HudLayer::addMiniMap()
 	}
 	miniMap = MiniMapLayer::createLayer();
 	this->addChild(miniMap);
+	CCLOG("------- Done AddMiniMap");
+
 }
 void HudLayer::addPauseButton()
 {
@@ -271,6 +283,8 @@ void HudLayer::addPauseButton()
 
 		}
 	});
+	CCLOG("------- Done AddPauseButton");
+
 }
 
 void HudLayer::createCameraHUD()
@@ -279,6 +293,8 @@ void HudLayer::createCameraHUD()
 	cameraHUD->setCameraFlag(CameraFlag::USER2);
 	this->setCameraMask((unsigned short)CameraFlag::USER2);
 	targetScene->addChild(cameraHUD);
+	CCLOG("------- Done CreatecCameraHud");
+
 }
 
 void HudLayer::update(float dt)
@@ -301,4 +317,6 @@ void HudLayer::update(float dt)
 	{
 		miniMap->update(dt);
 	}
+	CCLOG("------- Done Update");
+
 }
