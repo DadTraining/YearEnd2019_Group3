@@ -23,13 +23,13 @@ Update * Update::GetInstance()
 void Update::Init()
 {
 	this->damageOfPlayer = 100.0f;
-	this->hpOfPlayer = 10000.0f;
+	this->hpOfPlayer = 3000.0f;
 	this->damageOfMB1 = 100.0f;
 	this->hpOfMB1 = 500.0f;
-	this->damageOfEm2 = 10.0f;
-	this->hpOfEm2 = 1000.0f;
-	this->damageOfEm3 = 10.0f;
-	this->hpOfEm3 = 100.0f;
+	this->damageOfEm2 = damageOfMB1 / 2;
+	this->hpOfEm2 = hpOfMB1 * 2;
+	this->damageOfEm3 = damageOfMB1 * 2;
+	this->hpOfEm3 = hpOfMB1;
 	this->num_Villager = 0;
 	CCLOG("------- Done Update");
 

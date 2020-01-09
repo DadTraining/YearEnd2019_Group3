@@ -383,10 +383,10 @@ bool Player::getAlive()
 }
 void Player::update(float deltaTime)
 {
-	if (!this->isAlive)
-	{
-		return;
-	}
+	//if (!this->isAlive)
+	//{
+	//	return;
+	//}
 	if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) == 0)
 	{
 		this->m_slashNormal->getSprite()->setPosition(Vec2(-100, -100));

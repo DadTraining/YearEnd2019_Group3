@@ -69,7 +69,6 @@ void HudLayer::CreateJoystick(Layer * layer)
 	leftJoystick = joystickBase->getJoystick();
 	activeRunRange = thumb->getBoundingBox().size.height / 2;
 	layer->addChild(joystickBase);
-	CCLOG("------- Done createJoystick");
 
 }
 
@@ -100,6 +99,7 @@ void HudLayer::UpdateJoystick(float dt)
 		}
 		targetPlayer->getSprite()->getPhysicsBody()->setVelocity(pos * SPEED_PLAYER);
 
+
 	}
 	else
 	{
@@ -112,10 +112,7 @@ void HudLayer::UpdateJoystick(float dt)
 			}
 		}
 		targetPlayer->getSprite()->getPhysicsBody()->setVelocity(Vec2(0, 0));
-
 	}
-	CCLOG("------- Done UpdateJoystick");
-
 }
 
 void HudLayer::CreateAttackNormal(Layer * layer)
@@ -155,8 +152,6 @@ void HudLayer::CreateAttackNormal(Layer * layer)
 			break;
 		}
 	});
-	CCLOG("------- Done CreateSkillNormal");
-
 }
 
 void HudLayer::CreateSkillUltimate(Layer * layer)
@@ -166,7 +161,6 @@ void HudLayer::CreateSkillUltimate(Layer * layer)
 	skillABtn->setScale(0.5f);
 	layer->addChild(skillABtn);
 	skillABtn->setPosition(Vec2(1450, 300));
-	CCLOG("------- Done CreateSkillUltimate");
 }
 
 void HudLayer::UpdateSkillUltimate(float dt)
@@ -187,7 +181,7 @@ void HudLayer::UpdateSkillUltimate(float dt)
 				targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
 				targetPlayer->getSprite()->stopAllActions();
 				targetPlayer->getSprite()->runAction(rpAnimateSkillA);
-				targetPlayer->increaseVillager(-50);
+				targetPlayer->increaseVillager(-10);
 				targetPlayer->UltimateAttack();
 				Sound::GetInstance()->soundPlayerAttack1();
 			}
@@ -204,7 +198,6 @@ void HudLayer::UpdateSkillUltimate(float dt)
 			break;
 		}
 	});
-	CCLOG("------- Done UpdateSkillUltimate");
 }
 
 void HudLayer::CreateSkillSpear(Layer * layer)
@@ -245,7 +238,6 @@ void HudLayer::CreateSkillSpear(Layer * layer)
 			break;
 		}
 	});
-	CCLOG("------- Done AddSkillSpear");
 
 }
 
@@ -262,7 +254,6 @@ void HudLayer::addMiniMap()
 	}
 	miniMap = MiniMapLayer::createLayer();
 	this->addChild(miniMap);
-	CCLOG("------- Done AddMiniMap");
 
 }
 void HudLayer::addPauseButton()
@@ -283,7 +274,6 @@ void HudLayer::addPauseButton()
 
 		}
 	});
-	CCLOG("------- Done AddPauseButton");
 
 }
 
@@ -293,17 +283,15 @@ void HudLayer::createCameraHUD()
 	cameraHUD->setCameraFlag(CameraFlag::USER2);
 	this->setCameraMask((unsigned short)CameraFlag::USER2);
 	targetScene->addChild(cameraHUD);
-	CCLOG("------- Done CreatecCameraHud");
-
 }
 
 void HudLayer::update(float dt)
 {
 	// if player still alive
-	if (targetPlayer->getAlive())
-	{
+	//if (targetPlayer->getAlive())
+	//{
 		UpdateJoystick(dt);
-	}
+	//}
 	if (targetPlayer->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) > 0) {
 		targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
 		targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
@@ -317,6 +305,4 @@ void HudLayer::update(float dt)
 	{
 		miniMap->update(dt);
 	}
-	CCLOG("------- Done Update");
-
 }
