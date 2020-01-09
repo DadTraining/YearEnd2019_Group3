@@ -3,6 +3,7 @@
 # include "Sound.h"
 # include "CastleScene.h"
 #define MARGIN_JOYSTICK 50
+#define SCALE_BUTTON 0.75
 using namespace cocos2d;
 
 HudLayer::HudLayer(Scene* scene, Player* player)
@@ -119,7 +120,7 @@ void HudLayer::CreateAttackNormal(Layer * layer)
 {
 	// init attackButton
 	attackBtn = ui::Button::create("Resources/Buttons/SkillButtonNormal.png");
-	attackBtn->setScale(0.5f);
+	attackBtn->setScale(SCALE_BUTTON);
 	//add touch event to attackButton
 	layer->addChild(attackBtn);
 	attackBtn->setPosition(Vec2(1450, 150));
@@ -158,9 +159,9 @@ void HudLayer::CreateSkillUltimate(Layer * layer)
 {
 	// init attackButton
 	skillABtn = ui::Button::create("Resources/Buttons/SkillButton Ultimate.png");
-	skillABtn->setScale(0.5f);
+	skillABtn->setScale(SCALE_BUTTON);
 	layer->addChild(skillABtn);
-	skillABtn->setPosition(Vec2(1450, 300));
+	skillABtn->setPosition(Vec2(1450, 400));
 }
 
 void HudLayer::UpdateSkillUltimate(float dt)
@@ -204,9 +205,10 @@ void HudLayer::CreateSkillSpear(Layer * layer)
 {
 	// init attackButton
 	skillBBtn = ui::Button::create("Resources/Buttons/SkillButtonSpear.png");
-	skillBBtn->setScale(0.5f);
+	skillBBtn->setScale(SCALE_BUTTON);
+
 	layer->addChild(skillBBtn);
-	skillBBtn->setPosition(Vec2(1300, 150));
+	skillBBtn->setPosition(Vec2(1200, 150));
 	skillBBtn->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
 		auto rpAnimateSkillB = targetPlayer->getSkillBAnimate();
 		rpAnimateSkillB->setTag(TAG_ANIMATE_ATTACK);
