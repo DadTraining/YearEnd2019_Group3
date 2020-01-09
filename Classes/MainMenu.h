@@ -3,7 +3,6 @@
 #pragma once
 
 #include "cocos2d.h"
-#include "PauseLayer.h"
 #include "LoadMapScene.h"
 #include "ResultScene.h"
 #include "SimpleAudioEngine.h"

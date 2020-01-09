@@ -362,7 +362,7 @@ bool LoadMapScene::onContactBegin(cocos2d::PhysicsContact & contact)
 		{
 			portals.at(b->getGroup())->returntoMainMenu();
 		}
-	}	
+	}
 	return false;
 }
 
@@ -427,7 +427,7 @@ void LoadMapScene::update(float dt)
 	{
 		villagers[i]->update(dt);
 	}
-	sandBackground->setPosition(m_player->getPosition() 
+	sandBackground->setPosition(m_player->getPosition()
 		+ Vec2(m_player->getContentSize().width, m_player->getContentSize().height));
 }
 

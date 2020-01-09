@@ -24,7 +24,6 @@ LOCAL_SRC_FILES := $(LOCAL_PATH)/hellocpp/main.cpp \
            $(LOCAL_PATH)/../../../Classes/Model.cpp \
            $(LOCAL_PATH)/../../../Classes/Objects.cpp \
            $(LOCAL_PATH)/../../../Classes/OptionsLayer.cpp \
-           $(LOCAL_PATH)/../../../Classes/PauseLayer.cpp \
            $(LOCAL_PATH)/../../../Classes/Player.cpp \
 		   $(LOCAL_PATH)/../../../Classes/Portal.cpp \
 		   $(LOCAL_PATH)/../../../Classes/ResourceManager.cpp \
@@ -55,4 +54,3 @@ $(call import-module, cocos)
 
 # _COCOS_LIB_IMPORT_ANDROID_BEGIN
 # _COCOS_LIB_IMPORT_ANDROID_END
-

@@ -1,7 +1,10 @@
+#pragma once
 # include "Model.h"
 # include "HUDLayer.h"
 # include "Sound.h"
 # include "CastleScene.h"
+# include "MainMenu.h"
+
 #define MARGIN_JOYSTICK 50
 using namespace cocos2d;
 
@@ -33,11 +36,11 @@ void HudLayer::createHud()
 	this->addChild(healthBar);
 	//Adding the minimap to the hud
 	addMiniMap();
+	addPauseButton(this);
 	CreateJoystick(this);
 	CreateAttackNormal(this);
 	CreateSkillUltimate(this);
 	CreateSkillSpear(this);
-	addPauseButton();
 }
 
 void HudLayer::CreateJoystick(Layer * layer)
@@ -243,7 +246,6 @@ HudLayer::~HudLayer()
 {
 }
 
-
 void HudLayer::addMiniMap()
 {
 	if (this->targetScene->getTag() == Model::FINAL_BOSS_PORTAL_TYPE)
@@ -253,25 +255,6 @@ void HudLayer::addMiniMap()
 	miniMap = MiniMapLayer::createLayer();
 	this->addChild(miniMap);
 }
-void HudLayer::addPauseButton()
-{
-	auto pauseBtn = cocos2d::ui::Button::create("Resources/ui/button/ui_ocean_button_pause.png", "Resources/ui/button/ui_blue_button_pause.png");
-	
-	pauseBtn->setScale(0.2);
-	pauseBtn->setAnchorPoint(cocos2d::Vec2(0,1));
-	pauseBtn->setPosition(cocos2d::Vec2(0,this->getContentSize().height*0.85));
-	this->addChild(pauseBtn, 0);
-
-
-	pauseBtn->addTouchEventListener([&](Ref* Sender,cocos2d::ui::Widget::TouchEventType type) {
-		if(type == cocos2d::ui::Widget::TouchEventType::ENDED){
-			//auto pauseLayer = OptionsLayer::createLayer();
-			//this->addChild(pauseLayer, 2);
-			cocos2d::Director::getInstance()->pause();
-
-		}
-	});
-}
 
 void HudLayer::createCameraHUD()
 {
@@ -279,6 +262,120 @@ void HudLayer::createCameraHUD()
 	cameraHUD->setCameraFlag(CameraFlag::USER2);
 	this->setCameraMask((unsigned short)CameraFlag::USER2);
 	targetScene->addChild(cameraHUD);
+}
+
+void HudLayer::addPauseButton(Layer * layer)
+{
+	auto pauseButton = cocos2d::ui::Button::create("Resources/ui/button/ui_ocean_button_setting.png", "Resources/ui/button/ui_blue_button_setting.png");
+	pauseButton->addTouchEventListener([&](cocos2d::Ref* Sender, cocos2d::ui::Widget::TouchEventType type) {
+		if (type == cocos2d::ui::Widget::TouchEventType::ENDED)
+		{
+			pauseLayer = cocos2d::LayerColor::create(Color4B(0,0,0,150));
+			//---------------------------//
+			auto bg = cocos2d::Sprite::create("Resources/ui/popup/ui_ocean_popup_landscape.png");
+			auto title = cocos2d::Label::createWithTTF("PAUSE", "Resources/fonts/joystix monospace.ttf", 172);
+			auto titleBoard = cocos2d::Sprite::create("Resources/ui/button/ui_ocean_button.png");
+			auto play = cocos2d::ui::Button::create("Resources/ui/button/ui_ocean_button_play.png", "Resources/ui/button/ui_blue_button_play.png");
+			auto home = cocos2d::ui::Button::create("Resources/ui/button/ui_ocean_button_home.png", "Resources/ui/button/ui_blue_button_home.png");
+
+			auto winSize = cocos2d::Director::getInstance()->getWinSize();
+			this->setContentSize(winSize);
+
+			bg->setPosition(winSize / 2);
+			bg->setContentSize(cocos2d::Size(winSize.width*0.3f, 150));
+			auto bgSize = bg->getContentSize();
+
+			title->setAnchorPoint(cocos2d::Vec2(0.5, 0.5));
+			title->setPosition(titleBoard->getContentSize() / 2);
+
+			titleBoard->setScale(0.15);
+			titleBoard->setPosition(bg->getContentSize().width / 2, bg->getContentSize().height);
+			titleBoard->addChild(title);
+
+			play->setScale(0.35f);
+			play->setPosition(cocos2d::Vec2(bgSize.width / 2, 0));
+			play->addTouchEventListener([&](Ref* sender, cocos2d::ui::Widget::TouchEventType type) {
+				switch (type)
+				{
+				case cocos2d::ui::Widget::TouchEventType::BEGAN:
+					break;
+				case cocos2d::ui::Widget::TouchEventType::MOVED:
+					break;
+				case cocos2d::ui::Widget::TouchEventType::ENDED:
+					pauseLayer->removeFromParent();
+					this->setVisible(true);
+					Director::getInstance()->resume();
+					break;
+				case cocos2d::ui::Widget::TouchEventType::CANCELED:
+					break;
+				default:
+					break;
+				}
+			});
+
+			home->setScale(0.25f);
+			home->setPosition(cocos2d::Vec2(play->getPositionX() + 125, play->getPositionY()));
+			home->addTouchEventListener([&](Ref* sender, cocos2d::ui::Widget::TouchEventType type) {
+				switch (type)
+				{
+				case cocos2d::ui::Widget::TouchEventType::BEGAN:
+					break;
+				case cocos2d::ui::Widget::TouchEventType::MOVED:
+					break;
+				case cocos2d::ui::Widget::TouchEventType::ENDED:
+					this->setVisible(true);
+					pauseLayer->removeFromParent();
+					Director::getInstance()->resume();
+					Director::getInstance()->replaceScene(MainMenu::createScene());
+					break;
+				case cocos2d::ui::Widget::TouchEventType::CANCELED:
+					break;
+				default:
+					break;
+				}
+			});
+
+			// ------------------------Toggle Button--------------------------------- //
+			auto itemOn = cocos2d::MenuItemImage::create("Resources/ui/button/ui_ocean_button_soundon.png", "Resources/ui/button/ui_blue_button_soundon.png", [&](Ref* sender) {
+			});
+
+			auto itemOff = cocos2d::MenuItemImage::create("Resources/ui/button/ui_ocean_button_soundoff.png", "Resources/ui/button/ui_blue_button_soundoff.png", [&](Ref* sender) {
+			});
+
+			auto itemToggleMusic = cocos2d::MenuItemToggle::createWithCallback([&](Ref* pSender) {
+				cocos2d::MenuItemToggle *toggleItem = (cocos2d::MenuItemToggle *)pSender;
+				if (toggleItem->getSelectedItem() == itemOn) {
+					Sound::GetInstance()->setIsMute(false);
+				}
+				else if (toggleItem->getSelectedItem() == itemOff) {
+					Sound::GetInstance()->setIsMute(true);
+				}
+			}, itemOn, itemOff, NULL);
+
+			itemToggleMusic->setScale(0.25f);
+			cocos2d::Menu* pMenu = cocos2d::Menu::create(itemToggleMusic, NULL);
+			pMenu->setPosition(play->getPositionX() - 125, play->getPositionY());
+
+			Director::getInstance()->pause();
+
+			bg->addChild(pMenu, 1);
+			bg->addChild(titleBoard, 0);
+			bg->addChild(play, 0);
+			bg->addChild(home, 0);
+			pauseLayer->addChild(bg, 0);
+			//---------------------------//
+
+			auto visibleSize = Director::getInstance()->getVisibleSize();
+			pauseLayer->setPosition(Update::GetInstance()->getPlayer()->getSprite()->getPosition() - Vec2(visibleSize.width / 2, visibleSize.height / 2));
+			targetScene->addChild(pauseLayer, 1);
+			this->setVisible(false);
+		}
+	});
+	pauseButton->setScale(0.2);
+	pauseButton->setAnchorPoint(cocos2d::Vec2(0,1));
+	pauseButton->setPosition(cocos2d::Vec2(0, layer->getContentSize().height*0.85));
+	layer->addChild(pauseButton, 5);
+
 }
 
 void HudLayer::update(float dt)
