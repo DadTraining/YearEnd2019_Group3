@@ -8,9 +8,8 @@
 #include "Player.h"
 #include "HealthBarLayer.h"
 #include "MiniMapLayer.h"
+#include "PauseLayer.h"
 
-
-#include "OptionsLayer.h"
 class HudLayer : public cocos2d::Layer
 {
 private:
