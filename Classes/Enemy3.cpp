@@ -28,10 +28,12 @@ void Enemy3::init()
 		this->damage = Update::GetInstance()->getDamageOfEm3() * 2;
 		this->hP = Update::GetInstance()->getHPOfEm3() * 2;
 		this->sprite->setScale(this->sprite->getScale() * 1.5);
+		this->price = rand() % 21+20;
 	}
 	else {
 		this->damage = Update::GetInstance()->getDamageOfEm3();
 		this->hP = Update::GetInstance()->getHPOfEm3();
+		this->price = rand() % 11 + 10;
 	}
 
 	//Create animate attackA
@@ -348,6 +350,7 @@ void Enemy3::Die()
 	this->isAlive = false;
 	this->m_slash->getSprite()->setPosition(Vec2(-100, -100));
 	this->m_slash->getSprite()->removeFromParent();
+	Update::GetInstance()->getPlayer()->increaseVillager(this->price);
 	auto dieAnimation = this->getDeadAnimate();
 	auto sequence = Sequence::create(dieAnimation, callbackHide, nullptr);
 	mySprite->runAction(sequence);

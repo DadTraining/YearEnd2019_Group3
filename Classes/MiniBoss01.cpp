@@ -27,10 +27,12 @@ void MiniBoss01::init()
 		this->damage = Update::GetInstance()->getDamageOfMB1()*2;
 		this->hP = Update::GetInstance()->getHPOfMB1()*2;
 		this->sprite->setScale(this->sprite->getScale()*2);
+		this->price = rand() % 21 + 20;
 	}
 	else {
 		this->damage = Update::GetInstance()->getDamageOfMB1();
 		this->hP = Update::GetInstance()->getHPOfMB1();
+		this->price = rand() % 11 + 10;
 	}
 	
 	
@@ -387,6 +389,7 @@ void MiniBoss01::Die()
 	this->isAlive = false;
 	this->m_slash->getSprite()->setPosition(Vec2(-1, -1));
 	this->m_slash->getSprite()->removeFromParent();
+	Update::GetInstance()->getPlayer()->increaseVillager(this->price);
 	auto dieAnimation = this->getDeadAnimate();
 	auto sequence = Sequence::create(dieAnimation, callbackHide, nullptr);
 	sequence->setTag(TAG_ANIMATE_DIE);
