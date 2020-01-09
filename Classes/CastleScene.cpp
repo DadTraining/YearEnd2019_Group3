@@ -18,7 +18,7 @@ bool CastleScene::init()
 	{
 		return false;
 	}
-	//this->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	this->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 	this->getPhysicsWorld()->setGravity(Vec2(0, 0));
 	this->getPhysicsWorld()->setSubsteps(2);
 	this->setTag(Model::FINAL_BOSS_PORTAL_TYPE);
@@ -388,6 +388,21 @@ bool CastleScene::onContactBegin(cocos2d::PhysicsContact & contact)
 		else
 		{
 			portals.at(b->getGroup())->returntoMainMenu();
+		}
+	}
+	// enemy3 attack player
+	if ((a->getCollisionBitmask() == Model::BITMASK_BOSS_ATTACK && b->getCollisionBitmask() == Model::BITMASK_PLAYER)
+		|| (a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_BOSS_ATTACK))
+	{
+		if (a->getCollisionBitmask() == Model::BITMASK_BOSS_ATTACK)
+		{
+			auto currentEnemy3 = bosss.at(a->getGroup());
+			player->gotHit(currentEnemy3->getSlash()->getDamge());
+		}
+		if (b->getCollisionBitmask() == Model::BITMASK_BOSS_ATTACK)
+		{
+			auto currentEnemy3 = bosss.at(b->getGroup());
+			player->gotHit(currentEnemy3->getSlash()->getDamge());
 		}
 	}
 	return false;
