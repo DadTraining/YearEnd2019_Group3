@@ -12,7 +12,6 @@
 #include "Enemy3.h"
 #include "Villager.h"
 #include "Portal.h"
-
 using namespace cocos2d;
 class LoadMapScene : public cocos2d::Scene
 {

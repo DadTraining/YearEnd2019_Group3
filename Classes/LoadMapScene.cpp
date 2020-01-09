@@ -19,17 +19,17 @@ bool LoadMapScene::init()
 	{
 		return false;
 	}
-	this->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	//this->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 	this->getPhysicsWorld()->setGravity(Vec2(0, 0));
 	this->getPhysicsWorld()->setSubsteps(2);
 	Sound::GetInstance()->soundBackGroundDesert();
-	addMap();
-	SpawnPlayer();
+	addMap(); // Done
+	SpawnPlayer(); // Done
 	addHud();
-	createPhysics();
-	addListener();
-	addSandParticle();
-	scheduleUpdate();
+	createPhysics(); // Done
+	addListener(); // Done
+	addSandParticle(); // Done
+	scheduleUpdate(); // Done
 	return true;
 }
 
@@ -141,6 +141,7 @@ void LoadMapScene::SpawnPlayer()
 			portals.push_back(portal);
 		}
 	}
+	CCLOG("------- Done Spawn");
 }
 
 void LoadMapScene::setViewPointCenter(Vec2 position)
@@ -170,7 +171,6 @@ void LoadMapScene::addMap()
 	statueTop->setGlobalZOrder(Model::TREE_ORDER);
 	tree->setGlobalZOrder(Model::TREE_ORDER);
 	addChild(m_tileMap, -1);
-
 }
 
 void LoadMapScene::createPhysics()
@@ -324,19 +324,19 @@ bool LoadMapScene::onContactBegin(cocos2d::PhysicsContact & contact)
 			}
 		}
 	}
-	// enemy2 attack player
+	// enemy3 attack player
 	if ((a->getCollisionBitmask() == Model::BITMASK_ENEMY3_ATTACK && b->getCollisionBitmask() == Model::BITMASK_PLAYER)
 		|| (a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_ENEMY3_ATTACK))
 	{
 		if (a->getCollisionBitmask() == Model::BITMASK_ENEMY3_ATTACK)
 		{
-			auto currentEnemy2 = enemys2.at(a->getGroup());
-			player->gotHit(currentEnemy2->getSlash()->getDamge());
+			auto currentEnemy3 = enemys3.at(a->getGroup());
+			player->gotHit(currentEnemy3->getSlash()->getDamge());
 		}
 		if (b->getCollisionBitmask() == Model::BITMASK_ENEMY3_ATTACK)
 		{
-			auto currentEnemy2 = enemys2.at(b->getGroup());
-			player->gotHit(currentEnemy2->getSlash()->getDamge());
+			auto currentEnemy3 = enemys3.at(b->getGroup());
+			player->gotHit(currentEnemy3->getSlash()->getDamge());
 		}
 	}
 	if ((a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_PORTAL_FINALBOSS)

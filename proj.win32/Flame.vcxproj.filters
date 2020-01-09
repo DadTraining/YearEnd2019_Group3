@@ -66,6 +66,9 @@
     <ClCompile Include="..\Classes\CastleScene.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Boss.cpp">
+      <Filter>Class</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
@@ -132,6 +135,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\CastleScene.h">
       <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Boss.h">
+      <Filter>Class</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

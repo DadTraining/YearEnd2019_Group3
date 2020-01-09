@@ -12,10 +12,10 @@
 #define SPEED_PLAYER 5.0f
 #define SPEED_MB01 0.6f
 #define TIME_MOVE_TO_PLAYER 10
-#define VISION_OF_MB 400
-#define VISION_OF_EM2 300
+#define VISION_OF_MB 600
+#define VISION_OF_EM2 600
 #define RANGE_OF_MB 100
-#define VISION_OF_EM3 500
+#define VISION_OF_EM3 700
 #define TIME_ONE_ATTACK 0.1f
 #define TIME_ONE_HIT 0.1f
 #define TIME_ONE_IDLE 0.2f
@@ -33,10 +33,12 @@ public:
 	static const int BITMASK_VILLAGER = BITMASK_ENEMY + 1;
 	static const int BITMASK_ENEMY2 = BITMASK_VILLAGER + 1;
 	static const int BITMASK_ENEMY3 = BITMASK_ENEMY2 + 1;
+	static const int BITMASK_BOSS = BITMASK_ENEMY3 + 1;
 	static const int BITMASK_NORMAL_ATTACK = 50;
 	static const int BITMASK_ENEMY1_ATTACK = BITMASK_NORMAL_ATTACK + 1;
 	static const int BITMASK_ENEMY2_ATTACK = BITMASK_ENEMY1_ATTACK + 1;
 	static const int BITMASK_ENEMY3_ATTACK = BITMASK_ENEMY2_ATTACK + 1;
+	static const int BITMASK_BOSS_ATTACK = BITMASK_ENEMY3_ATTACK + 1;
 
 	static const int BITMASK_PORTAL_FINALBOSS = BITMASK_PLAYER + 99;
 	static const int BITMASK_PORTAL_BASE = BITMASK_PORTAL_FINALBOSS + 1;
@@ -45,6 +47,7 @@ public:
 	static const int MAIN_VILLAGER_TYPE = 3;
 	static const int MAIN_ENEMY2_TYPE = 4;
 	static const int MAIN_ENEMY3_TYPE = 5;	
+	static const int MAIN_BOSS_TYPE = 6;
 	static const int FINAL_BOSS_PORTAL_TYPE = 99;
 	static const int BASE_PORTAL_TYPE = FINAL_BOSS_PORTAL_TYPE + 1;
 	static const int KNOCKBACK = 2;

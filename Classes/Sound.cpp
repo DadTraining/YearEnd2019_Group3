@@ -126,6 +126,19 @@ void Sound::soundMainMenu()
 	audio->playBackgroundMusic("Resources/sounds/Background/MainMenuTheme.mp3", true);
 }
 
+void Sound::stopSoundBackGround()
+{
+	auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
+	if (this->isMute)
+	{
+		audio->pauseBackgroundMusic();
+	}
+	else
+	{
+		audio->resumeBackgroundMusic();
+	}
+}
+
 void Sound::preLoadSound()
 {
 	if (this->isMute)
@@ -144,6 +157,8 @@ void Sound::preLoadSound()
 	audio->preloadBackgroundMusic("Resources/sounds/Background/176_Barren_Wastes.mp3");
 	audio->preloadBackgroundMusic("Resources/sounds/Background/Background_castle.mp3");
 	audio->preloadBackgroundMusic("Resources/sounds/Background/MainMenuTheme.mp3");
+	CCLOG("------- Done Sound");
+
 }
 
 

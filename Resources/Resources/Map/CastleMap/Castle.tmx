@@ -35,7 +35,7 @@
   <object id="24" name="BowMan" type="5" x="1485" y="142"/>
   <object id="25" name="BowMan" type="5" x="1534" y="487"/>
   <object id="34" name="ArmorSkeleton" type="3" x="1319" y="442"/>
-  <object id="35" name="BowMan" type="5" x="1959" y="326"/>
+  <object id="35" name="Boss" type="6" x="1959" y="326"/>
   <object id="36" name="ArmorSkeleton" type="4" x="804" y="307"/>
   <object id="37" name="ArmorSkeleton" type="4" x="882" y="353"/>
   <object id="38" name="ArmorSkeleton" type="4" x="1073" y="293"/>

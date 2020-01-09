@@ -17,7 +17,8 @@ private:
 	float hpOfEm2;
 	float damageOfEm3;
 	float hpOfEm3;
-	float num_Villager;
+	float damageOfBoss;
+	float hpOfBoss;
 	Player* player;
 public:
 	Update();
@@ -32,9 +33,8 @@ public:
 	float getHPOfEm2();
 	float getDamageOfEm3();
 	float getHPOfEm3();
+	float getDamageOfBoss();
+	float getHPOfBoss();
 	Player * getPlayer();
-
-	int getCurrentVillager();
-	void setCurrentVillager(int villager);
 	void setPlayer(Player* player);
 };

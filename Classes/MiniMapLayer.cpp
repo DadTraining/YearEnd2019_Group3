@@ -12,10 +12,11 @@ bool MiniMapLayer::init()
 		return false;
 	}
 	addMinimap();
+	return true;
 }
 
 
-void MiniMapLayer::addMinimap()
+void MiniMapLayer::addMinimap() // Done
 {
 	this->miniMap = TMXTiledMap::create("Resources/Map/TileMap2.tmx");
 	this->addChild(miniMap);
@@ -25,9 +26,10 @@ void MiniMapLayer::addMinimap()
 	this->setPositionMiniMap();
 	setMiniPlayer();
 	setVisibleObject();
+
 }
 
-void MiniMapLayer::setPositionMiniMap()
+void MiniMapLayer::setPositionMiniMap() // Done
 {
 	auto minimapSize = this->miniMap->getContentSize() * SCALE_MINIMAP;
 	auto visibleSize = Director::getInstance()->getVisibleSize();
@@ -43,7 +45,7 @@ void MiniMapLayer::updateMiniPlayerPosition()
 	this->miniPlayer->setPosition(miniMapPos + playerCurrentPosition);
 }
 
-void MiniMapLayer::setMiniPlayer()
+void MiniMapLayer::setMiniPlayer() // done
 {
 	this->currentPlayer = Update::GetInstance()->getPlayer();
 	this->miniPlayer = Sprite::create("Resources/Map/HeroIcon.png");
@@ -54,7 +56,7 @@ void MiniMapLayer::setMiniPlayer()
 	this->addChild(miniPlayer);
 }
 
-void MiniMapLayer::setVisibleObject()
+void MiniMapLayer::setVisibleObject() // Done
 {
 	miniMap->getLayer("TreeTop")->setVisible(false);
 	miniMap->getLayer("TreeBottom")->setVisible(false);

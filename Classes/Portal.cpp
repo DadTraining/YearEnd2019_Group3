@@ -61,14 +61,12 @@ void Portal::returntoMainMenu()
 {
 	auto myScene = ResultScene::createScene();
 	Director::getInstance()->replaceScene(TransitionFade::create(0.5f, myScene));
-	Update::GetInstance()->setCurrentVillager(Update::GetInstance()->getPlayer()->getVillagersNum());
 }
 
 void Portal::returntoCastleScene()
 {
 	auto myScene = CastleScene::createScene();
 	Director::getInstance()->replaceScene(TransitionFade::create(0.5f, myScene));
-	Update::GetInstance()->setCurrentVillager(Update::GetInstance()->getPlayer()->getVillagersNum());
 }
 
 void Portal::setIndex(int index)

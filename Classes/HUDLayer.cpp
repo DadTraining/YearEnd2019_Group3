@@ -6,6 +6,7 @@
 # include "MainMenu.h"
 
 #define MARGIN_JOYSTICK 50
+#define SCALE_BUTTON 0.75
 using namespace cocos2d;
 
 HudLayer::HudLayer(Scene* scene, Player* player)
@@ -34,6 +35,8 @@ void HudLayer::createHud()
 	targetScene->addChild(this, 10);
 	healthBar = HealthBarLayer::createLayer();
 	this->addChild(healthBar);
+	CCLOG("------- Done createhealthBar");
+
 	//Adding the minimap to the hud
 	addMiniMap();
 	addPauseButton(this);
@@ -70,6 +73,7 @@ void HudLayer::CreateJoystick(Layer * layer)
 	leftJoystick = joystickBase->getJoystick();
 	activeRunRange = thumb->getBoundingBox().size.height / 2;
 	layer->addChild(joystickBase);
+
 }
 
 void HudLayer::UpdateJoystick(float dt)
@@ -99,6 +103,7 @@ void HudLayer::UpdateJoystick(float dt)
 		}
 		targetPlayer->getSprite()->getPhysicsBody()->setVelocity(pos * SPEED_PLAYER);
 
+
 	}
 	else
 	{
@@ -111,7 +116,6 @@ void HudLayer::UpdateJoystick(float dt)
 			}
 		}
 		targetPlayer->getSprite()->getPhysicsBody()->setVelocity(Vec2(0, 0));
-
 	}
 }
 
@@ -119,7 +123,7 @@ void HudLayer::CreateAttackNormal(Layer * layer)
 {
 	// init attackButton
 	attackBtn = ui::Button::create("Resources/Buttons/SkillButtonNormal.png");
-	attackBtn->setScale(0.5f);
+	attackBtn->setScale(SCALE_BUTTON);
 	//add touch event to attackButton
 	layer->addChild(attackBtn);
 	attackBtn->setPosition(Vec2(1450, 150));
@@ -152,17 +156,15 @@ void HudLayer::CreateAttackNormal(Layer * layer)
 			break;
 		}
 	});
-
 }
 
 void HudLayer::CreateSkillUltimate(Layer * layer)
 {
 	// init attackButton
 	skillABtn = ui::Button::create("Resources/Buttons/SkillButton Ultimate.png");
-	skillABtn->setScale(0.5f);
+	skillABtn->setScale(SCALE_BUTTON);
 	layer->addChild(skillABtn);
-	skillABtn->setPosition(Vec2(1450, 300));
-
+	skillABtn->setPosition(Vec2(1450, 400));
 }
 
 void HudLayer::UpdateSkillUltimate(float dt)
@@ -183,7 +185,7 @@ void HudLayer::UpdateSkillUltimate(float dt)
 				targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
 				targetPlayer->getSprite()->stopAllActions();
 				targetPlayer->getSprite()->runAction(rpAnimateSkillA);
-				targetPlayer->increaseVillager(-50);
+				targetPlayer->increaseVillager(-10);
 				targetPlayer->UltimateAttack();
 				Sound::GetInstance()->soundPlayerAttack1();
 			}
@@ -206,9 +208,10 @@ void HudLayer::CreateSkillSpear(Layer * layer)
 {
 	// init attackButton
 	skillBBtn = ui::Button::create("Resources/Buttons/SkillButtonSpear.png");
-	skillBBtn->setScale(0.5f);
+	skillBBtn->setScale(SCALE_BUTTON);
+
 	layer->addChild(skillBBtn);
-	skillBBtn->setPosition(Vec2(1300, 150));
+	skillBBtn->setPosition(Vec2(1200, 150));
 	skillBBtn->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
 		auto rpAnimateSkillB = targetPlayer->getSkillBAnimate();
 		rpAnimateSkillB->setTag(TAG_ANIMATE_ATTACK);
@@ -240,6 +243,7 @@ void HudLayer::CreateSkillSpear(Layer * layer)
 			break;
 		}
 	});
+
 }
 
 HudLayer::~HudLayer()
@@ -254,6 +258,7 @@ void HudLayer::addMiniMap()
 	}
 	miniMap = MiniMapLayer::createLayer();
 	this->addChild(miniMap);
+
 }
 
 void HudLayer::createCameraHUD()
@@ -380,7 +385,6 @@ void HudLayer::addPauseButton(Layer * layer)
 
 void HudLayer::update(float dt)
 {
-	// if player still alive
 	if (targetPlayer->getAlive())
 	{
 		UpdateJoystick(dt);

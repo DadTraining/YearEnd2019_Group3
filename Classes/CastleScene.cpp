@@ -18,7 +18,7 @@ bool CastleScene::init()
 	{
 		return false;
 	}
-	this->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	//this->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 	this->getPhysicsWorld()->setGravity(Vec2(0, 0));
 	this->getPhysicsWorld()->setSubsteps(2);
 	this->setTag(Model::FINAL_BOSS_PORTAL_TYPE);
@@ -46,6 +46,12 @@ void CastleScene::addMap()
 
 void CastleScene::SpawnPlayer()
 {
+	//number of Villager
+	int numberOfVillager = 0;
+	int numberOfSkeleton = 0;
+	int numberOfEnemy2 = 0;
+	int numberOfEnemy3 = 0;
+	int numberOfBoss = 0;
 	// ---
 	auto objects = m_objectGroup->getObjects();
 	for (int i = 0; i < objects.size(); i++)
@@ -60,6 +66,9 @@ void CastleScene::SpawnPlayer()
 		if (type == Model::MAIN_CHARACTER_TYPE)
 		{
 			player = new Player(this);
+			player->setHP(Update::GetInstance()->getPlayer()->getHP());
+			player->setDamage(Update::GetInstance()->getPlayer()->getDamage());
+			player->increaseVillager(Update::GetInstance()->getPlayer()->getVillagersNum());
 			Update::GetInstance()->setPlayer(player);
 			SpriteFrameCache::getInstance()->removeSpriteFrames();
 			m_player = player->getSprite();
@@ -138,6 +147,19 @@ void CastleScene::SpawnPlayer()
 			addChild(portal->getSprite());
 			portal->setIndex(portals.size());
 			portals.push_back(portal);
+		}
+		else if (type == Model::MAIN_BOSS_TYPE)
+		{
+			auto boss = new Boss(this);
+			boss->setPosSpawn(Vec2(posX, posY));
+			boss->setIndex(bosss.size());
+			bosss.push_back(boss);
+			SpriteFrameCache::getInstance()->removeSpriteFrames();
+			boss->getSprite()->setPosition(Vec2(posX, posY));
+			auto animation = RepeatForever::create(boss->getIdleAnimate());
+			animation->setTag(TAG_ANIMATE_IDLE1);
+			boss->getSprite()->runAction(animation);
+			addChild(boss->getSprite());
 		}
 	}
 }
@@ -321,6 +343,29 @@ bool CastleScene::onContactBegin(cocos2d::PhysicsContact & contact)
 			player->gotHit(currentEnemy3->getSlash()->getDamge());
 		}
 	}
+	//Player attack boss
+	if ((a->getCollisionBitmask() == Model::BITMASK_BOSS && b->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK)
+		|| (a->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK && b->getCollisionBitmask() == Model::BITMASK_BOSS))
+	{
+		if (a->getCollisionBitmask() == Model::BITMASK_BOSS)
+		{
+			auto boss = bosss.at(a->getGroup());
+			boss->gotHit(player->getSlash()->getDamge());
+			if (b->getTag() == Model::KNOCKBACK)
+			{
+				boss->Stun();
+			}
+		}
+		else if (b->getCollisionBitmask() == Model::BITMASK_BOSS)
+		{
+			auto boss = bosss.at(b->getGroup());
+			boss->gotHit(player->getSlash()->getDamge());
+			if (a->getTag() == Model::KNOCKBACK)
+			{
+				boss->Stun();
+			}
+		}
+	}
 	if ((a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_PORTAL_FINALBOSS)
 		|| (a->getCollisionBitmask() == Model::BITMASK_PORTAL_FINALBOSS && b->getCollisionBitmask() == Model::BITMASK_PLAYER))
 	{
@@ -371,6 +416,13 @@ void CastleScene::enemyMoveToPlayer()
 		}
 		enemys3[i]->setAIforEnemy();
 	}
+	for (int i = 0; i < bosss.size(); i++) {
+		if (!bosss[i]->getAlive())
+		{
+			continue;
+		}
+		bosss[i]->setAIforEnemy();
+	}
 }
 
 void CastleScene::addHud()
@@ -398,5 +450,9 @@ void CastleScene::update(float dt)
 	for (int i = 0; i < villagers.size(); i++)
 	{
 		villagers[i]->update(dt);
+	}
+	for (int i = 0; i < bosss.size(); i++)
+	{
+		bosss[i]->update(dt);
 	}
 }

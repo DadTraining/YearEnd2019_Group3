@@ -46,6 +46,7 @@ bool MainMenu::init()
 			break;
 		case cocos2d::ui::Widget::TouchEventType::ENDED:
 			cocos2d::Director::getInstance()->replaceScene(LoadMapScene::createScene());
+			Sound::GetInstance()->stopSoundBackGround();
 			break;
 		case cocos2d::ui::Widget::TouchEventType::CANCELED:
 			break;
