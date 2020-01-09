@@ -129,7 +129,14 @@ void Sound::soundMainMenu()
 void Sound::stopSoundBackGround()
 {
 	auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
-	audio->stopBackgroundMusic();
+	if (this->isMute)
+	{
+		audio->pauseBackgroundMusic();
+	}
+	else
+	{
+		audio->resumeBackgroundMusic();
+	}
 }
 
 void Sound::preLoadSound()
