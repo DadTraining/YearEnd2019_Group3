@@ -1,12 +1,6 @@
 #pragma once
 #include "Objects.h"
 #include "Slash.h"
-#define TIME_ONE_ATTACK 0.3f
-#define TIME_ONE_HIT 0.1f
-#define TIME_ONE_IDLE 0.2f
-#define TIME_ONE_RUN 0.1f
-#define TIME_ONE_DEAD 0.15f
-#define TIME_ONE_WALK 0.1f
 #define TIME_DELAY_BOW 1.0f
 class Enemy3 : public Objects
 {

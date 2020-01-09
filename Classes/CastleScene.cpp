@@ -18,9 +18,10 @@ bool CastleScene::init()
 	{
 		return false;
 	}
-	this->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	//this->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 	this->getPhysicsWorld()->setGravity(Vec2(0, 0));
 	this->getPhysicsWorld()->setSubsteps(2);
+	this->setTag(Model::FINAL_BOSS_PORTAL_TYPE);
 	Sound::GetInstance()->soundBackGroundCastle();
 	addMap();
 	SpawnPlayer();
@@ -28,7 +29,6 @@ bool CastleScene::init()
 	createPhysics();
 	addListener();
 	scheduleUpdate();
-
 	return true;
 }
 
@@ -72,6 +72,7 @@ void CastleScene::SpawnPlayer()
 			Update::GetInstance()->setPlayer(player);
 			SpriteFrameCache::getInstance()->removeSpriteFrames();
 			m_player = player->getSprite();
+			m_player->removeFromParent();
 			m_player->setPosition(Vec2(posX, posY));
 			m_player->setScale(m_SCALE_32x32 / 2);
 			addChild(m_player);
@@ -129,19 +130,23 @@ void CastleScene::SpawnPlayer()
 		}
 		else if (type == Model::FINAL_BOSS_PORTAL_TYPE)
 		{
-			portal = new Portal();
+			auto portal = new Portal();
 			portal->InitSprite();
 			portal->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_PORTAL_FINALBOSS);
 			portal->getSprite()->setPosition(posX, posY);
 			addChild(portal->getSprite());
+			portal->setIndex(portals.size());
+			portals.push_back(portal);
 		}
 		else if (type == Model::BASE_PORTAL_TYPE)
 		{
-			portal = new Portal();
+			auto portal = new Portal();
 			portal->InitSprite();
 			portal->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_PORTAL_BASE);
 			portal->getSprite()->setPosition(posX, posY);
 			addChild(portal->getSprite());
+			portal->setIndex(portals.size());
+			portals.push_back(portal);
 		}
 		else if (type == Model::MAIN_BOSS_TYPE)
 		{
@@ -211,7 +216,6 @@ bool CastleScene::onContactBegin(cocos2d::PhysicsContact & contact)
 	if ((a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_VILLAGER)
 		|| (a->getCollisionBitmask() == Model::BITMASK_VILLAGER && b->getCollisionBitmask() == Model::BITMASK_PLAYER))
 	{
-		HUD->addVilagerPoint();
 		if (a->getCollisionBitmask() == Model::BITMASK_VILLAGER)
 		{
 			auto currentVillager = villagers.at(a->getGroup());
@@ -229,7 +233,6 @@ bool CastleScene::onContactBegin(cocos2d::PhysicsContact & contact)
 	if ((a->getCollisionBitmask() == Model::BITMASK_ENEMY && b->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK)
 		|| (a->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK && b->getCollisionBitmask() == Model::BITMASK_ENEMY))
 	{
-		HUD->addVilagerPoint();
 		if (a->getCollisionBitmask() == Model::BITMASK_ENEMY)
 		{
 			auto currentSkeleton = Skeletons.at(a->getGroup());
@@ -253,7 +256,6 @@ bool CastleScene::onContactBegin(cocos2d::PhysicsContact & contact)
 	if ((a->getCollisionBitmask() == Model::BITMASK_ENEMY1_ATTACK && b->getCollisionBitmask() == Model::BITMASK_PLAYER)
 		|| (a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_ENEMY1_ATTACK))
 	{
-		HUD->addVilagerPoint();
 		if (a->getCollisionBitmask() == Model::BITMASK_ENEMY1_ATTACK)
 		{
 			auto currentSkeleton = Skeletons.at(a->getGroup());
@@ -269,7 +271,6 @@ bool CastleScene::onContactBegin(cocos2d::PhysicsContact & contact)
 	if ((a->getCollisionBitmask() == Model::BITMASK_ENEMY2 && b->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK)
 		|| (a->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK && b->getCollisionBitmask() == Model::BITMASK_ENEMY2))
 	{
-		HUD->addVilagerPoint();
 		if (a->getCollisionBitmask() == Model::BITMASK_ENEMY2)
 		{
 			auto currentEnemy2 = enemys2.at(a->getGroup());
@@ -293,7 +294,6 @@ bool CastleScene::onContactBegin(cocos2d::PhysicsContact & contact)
 	if ((a->getCollisionBitmask() == Model::BITMASK_ENEMY2_ATTACK && b->getCollisionBitmask() == Model::BITMASK_PLAYER)
 		|| (a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_ENEMY2_ATTACK))
 	{
-		HUD->addVilagerPoint();
 		if (a->getCollisionBitmask() == Model::BITMASK_ENEMY2_ATTACK)
 		{
 			auto currentEnemy2 = enemys2.at(a->getGroup());
@@ -309,7 +309,6 @@ bool CastleScene::onContactBegin(cocos2d::PhysicsContact & contact)
 	if ((a->getCollisionBitmask() == Model::BITMASK_ENEMY3 && b->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK)
 		|| (a->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK && b->getCollisionBitmask() == Model::BITMASK_ENEMY3))
 	{
-		HUD->addVilagerPoint();
 		if (a->getCollisionBitmask() == Model::BITMASK_ENEMY3)
 		{
 			auto currentEnemy3 = enemys3.at(a->getGroup());
@@ -333,7 +332,6 @@ bool CastleScene::onContactBegin(cocos2d::PhysicsContact & contact)
 	if ((a->getCollisionBitmask() == Model::BITMASK_ENEMY3_ATTACK && b->getCollisionBitmask() == Model::BITMASK_PLAYER)
 		|| (a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_ENEMY3_ATTACK))
 	{
-		HUD->addVilagerPoint();
 		if (a->getCollisionBitmask() == Model::BITMASK_ENEMY3_ATTACK)
 		{
 			auto currentEnemy3 = enemys3.at(a->getGroup());
@@ -349,7 +347,6 @@ bool CastleScene::onContactBegin(cocos2d::PhysicsContact & contact)
 	if ((a->getCollisionBitmask() == Model::BITMASK_BOSS && b->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK)
 		|| (a->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK && b->getCollisionBitmask() == Model::BITMASK_BOSS))
 	{
-		HUD->addVilagerPoint();
 		if (a->getCollisionBitmask() == Model::BITMASK_BOSS)
 		{
 			auto boss = bosss.at(a->getGroup());
@@ -369,7 +366,30 @@ bool CastleScene::onContactBegin(cocos2d::PhysicsContact & contact)
 			}
 		}
 	}
-	portal->onContact(contact);
+	if ((a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_PORTAL_FINALBOSS)
+		|| (a->getCollisionBitmask() == Model::BITMASK_PORTAL_FINALBOSS && b->getCollisionBitmask() == Model::BITMASK_PLAYER))
+	{
+		if (a->getCollisionBitmask() == Model::BITMASK_PORTAL_FINALBOSS)
+		{
+			portals.at(a->getGroup())->returntoCastleScene();
+		}
+		else
+		{
+			portals.at(b->getGroup())->returntoCastleScene();
+		}
+	}
+	else if ((a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_PORTAL_BASE)
+		|| (a->getCollisionBitmask() == Model::BITMASK_PORTAL_BASE && b->getCollisionBitmask() == Model::BITMASK_PLAYER))
+	{
+		if (a->getCollisionBitmask() == Model::BITMASK_PORTAL_BASE)
+		{
+			portals.at(a->getGroup())->returntoMainMenu();
+		}
+		else
+		{
+			portals.at(b->getGroup())->returntoMainMenu();
+		}
+	}
 	return false;
 }
 
@@ -407,8 +427,7 @@ void CastleScene::enemyMoveToPlayer()
 
 void CastleScene::addHud()
 {
-	HUD = new HudLayer(this, player, m_tileMap);
-	HUD->setMap(m_tileMap);
+	HUD = new HudLayer(this, player);
 }
 
 void CastleScene::update(float dt)

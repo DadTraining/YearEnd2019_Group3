@@ -19,17 +19,17 @@ bool LoadMapScene::init()
 	{
 		return false;
 	}
-	this->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	//this->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 	this->getPhysicsWorld()->setGravity(Vec2(0, 0));
 	this->getPhysicsWorld()->setSubsteps(2);
 	Sound::GetInstance()->soundBackGroundDesert();
-	addMap();
-	SpawnPlayer();
+	addMap(); // Done
+	SpawnPlayer(); // Done
 	addHud();
-	createPhysics();
-	addListener();
-	addSandParticle();
-	scheduleUpdate();
+	createPhysics(); // Done
+	addListener(); // Done
+	addSandParticle(); // Done
+	scheduleUpdate(); // Done
 	return true;
 }
 
@@ -122,21 +122,26 @@ void LoadMapScene::SpawnPlayer()
 		}
 		else if (type == Model::FINAL_BOSS_PORTAL_TYPE)
 		{
-			portal = new Portal();
+			auto portal = new Portal();
 			portal->InitSprite();
 			portal->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_PORTAL_FINALBOSS);
 			portal->getSprite()->setPosition(posX, posY);
 			addChild(portal->getSprite());
+			portal->setIndex(portals.size());
+			portals.push_back(portal);
 		}
 		else if (type == Model::BASE_PORTAL_TYPE)
 		{
-			portal = new Portal();
+			auto portal = new Portal();
 			portal->InitSprite();
 			portal->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_PORTAL_BASE);
 			portal->getSprite()->setPosition(posX, posY);
 			addChild(portal->getSprite());
+			portal->setIndex(portals.size());
+			portals.push_back(portal);
 		}
 	}
+	CCLOG("------- Done Spawn");
 }
 
 void LoadMapScene::setViewPointCenter(Vec2 position)
@@ -166,7 +171,6 @@ void LoadMapScene::addMap()
 	statueTop->setGlobalZOrder(Model::TREE_ORDER);
 	tree->setGlobalZOrder(Model::TREE_ORDER);
 	addChild(m_tileMap, -1);
-
 }
 
 void LoadMapScene::createPhysics()
@@ -208,7 +212,6 @@ bool LoadMapScene::onContactBegin(cocos2d::PhysicsContact & contact)
 	if ((a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_VILLAGER)
 		|| (a->getCollisionBitmask() == Model::BITMASK_VILLAGER && b->getCollisionBitmask() == Model::BITMASK_PLAYER))
 	{
-		HUD->addVilagerPoint();
 		if (a->getCollisionBitmask() == Model::BITMASK_VILLAGER)
 		{
 			auto currentVillager = villagers.at(a->getGroup());
@@ -226,7 +229,6 @@ bool LoadMapScene::onContactBegin(cocos2d::PhysicsContact & contact)
 	if ((a->getCollisionBitmask() == Model::BITMASK_ENEMY && b->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK)
 		|| (a->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK && b->getCollisionBitmask() == Model::BITMASK_ENEMY))
 	{
-		HUD->addVilagerPoint();
 		if (a->getCollisionBitmask() == Model::BITMASK_ENEMY)
 		{
 			auto currentSkeleton = Skeletons.at(a->getGroup());
@@ -250,7 +252,6 @@ bool LoadMapScene::onContactBegin(cocos2d::PhysicsContact & contact)
 	if ((a->getCollisionBitmask() == Model::BITMASK_ENEMY1_ATTACK && b->getCollisionBitmask() == Model::BITMASK_PLAYER)
 		|| (a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_ENEMY1_ATTACK))
 	{
-		HUD->addVilagerPoint();
 		if (a->getCollisionBitmask() == Model::BITMASK_ENEMY1_ATTACK)
 		{
 			auto currentSkeleton = Skeletons.at(a->getGroup());
@@ -266,7 +267,6 @@ bool LoadMapScene::onContactBegin(cocos2d::PhysicsContact & contact)
 	if ((a->getCollisionBitmask() == Model::BITMASK_ENEMY2 && b->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK)
 		|| (a->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK && b->getCollisionBitmask() == Model::BITMASK_ENEMY2))
 	{
-		HUD->addVilagerPoint();
 		if (a->getCollisionBitmask() == Model::BITMASK_ENEMY2)
 		{
 			auto currentEnemy2 = enemys2.at(a->getGroup());
@@ -290,7 +290,6 @@ bool LoadMapScene::onContactBegin(cocos2d::PhysicsContact & contact)
 	if ((a->getCollisionBitmask() == Model::BITMASK_ENEMY2_ATTACK && b->getCollisionBitmask() == Model::BITMASK_PLAYER)
 		|| (a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_ENEMY2_ATTACK))
 	{
-		HUD->addVilagerPoint();
 		if (a->getCollisionBitmask() == Model::BITMASK_ENEMY2_ATTACK)
 		{
 			auto currentEnemy2 = enemys2.at(a->getGroup());
@@ -306,7 +305,6 @@ bool LoadMapScene::onContactBegin(cocos2d::PhysicsContact & contact)
 	if ((a->getCollisionBitmask() == Model::BITMASK_ENEMY3 && b->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK)
 		|| (a->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK && b->getCollisionBitmask() == Model::BITMASK_ENEMY3))
 	{
-		HUD->addVilagerPoint();
 		if (a->getCollisionBitmask() == Model::BITMASK_ENEMY3)
 		{
 			auto currentEnemy3 = enemys3.at(a->getGroup());
@@ -330,7 +328,6 @@ bool LoadMapScene::onContactBegin(cocos2d::PhysicsContact & contact)
 	if ((a->getCollisionBitmask() == Model::BITMASK_ENEMY3_ATTACK && b->getCollisionBitmask() == Model::BITMASK_PLAYER)
 		|| (a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_ENEMY3_ATTACK))
 	{
-		HUD->addVilagerPoint();
 		if (a->getCollisionBitmask() == Model::BITMASK_ENEMY3_ATTACK)
 		{
 			auto currentEnemy3 = enemys3.at(a->getGroup());
@@ -342,14 +339,36 @@ bool LoadMapScene::onContactBegin(cocos2d::PhysicsContact & contact)
 			player->gotHit(currentEnemy3->getSlash()->getDamge());
 		}
 	}
-	portal->onContact(contact);
+	if ((a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_PORTAL_FINALBOSS)
+		|| (a->getCollisionBitmask() == Model::BITMASK_PORTAL_FINALBOSS && b->getCollisionBitmask() == Model::BITMASK_PLAYER))
+	{
+		if (a->getCollisionBitmask() == Model::BITMASK_PORTAL_FINALBOSS)
+		{
+			portals.at(a->getGroup())->returntoCastleScene();
+		}
+		else
+		{
+			portals.at(b->getGroup())->returntoCastleScene();
+		}
+	}
+	else if ((a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_PORTAL_BASE)
+		|| (a->getCollisionBitmask() == Model::BITMASK_PORTAL_BASE && b->getCollisionBitmask() == Model::BITMASK_PLAYER))
+	{
+		if (a->getCollisionBitmask() == Model::BITMASK_PORTAL_BASE)
+		{
+			portals.at(a->getGroup())->returntoMainMenu();
+		}
+		else
+		{
+			portals.at(b->getGroup())->returntoMainMenu();
+		}
+	}	
 	return false;
 }
 
 void LoadMapScene::addHud()
 {
-	HUD = new HudLayer(this, player, m_tileMap);
-	HUD->setMap(m_tileMap);
+	HUD = new HudLayer(this, player);
 }
 
 void LoadMapScene::addSandParticle()

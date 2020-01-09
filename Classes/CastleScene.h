@@ -10,6 +10,8 @@
 #include "Enemy3.h"
 #include "Boss.h"
 #include "Villager.h"
+#include "Portal.h"
+
 using namespace cocos2d;
 class CastleScene : public cocos2d::Scene
 {
@@ -26,6 +28,7 @@ private:
 	vector<Enemy3*> enemys3;
 	vector<Boss*> bosss;
 	Portal* portal;
+	vector<Portal*> portals;
 	HudLayer* HUD;
 
 

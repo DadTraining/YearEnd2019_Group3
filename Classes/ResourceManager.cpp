@@ -126,7 +126,8 @@ void ResourceManager::Load(string fileName)
 							{
 								pngAnimation = "walk-with-weapon-" + std::to_string(i) + ".png";
 							}
-							auto frame = spriteCache->getSpriteFrameByName(pngAnimation);//
+							auto frame = spriteCache->getSpriteFrameByName(pngAnimation);
+
 							anims.pushBack(frame);
 						}
 						auto animate = Animate::create(Animation::createWithSpriteFrames(anims, 0.1f));

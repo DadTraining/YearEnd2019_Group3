@@ -3,7 +3,7 @@
 #include "Update.h"
 #include "Sound.h"
 #include "ResultScene.h"
-#define PLAYER_DAMAGE 100.0f
+#define PLAYER_DAMAGE 100.0f	
 USING_NS_CC;
 
 Player::Player(Scene* scene) {
@@ -25,8 +25,10 @@ void Player::init()
 	this->damage = Update::GetInstance()->getDamageOfPlayer();
 	this->hP = Update::GetInstance()->getHPOfPlayer();
 	this->villagersNum = 0;
+	this->isAlive = true;
 	//Create sprite
 	this->playerSprite = Sprite::create("Resources/sprites/Player/idle-with-weapon-1.png");
+	this->playerSprite->retain();
 	this->playerSprite->setAnchorPoint(Vec2(0.5f, 0.5f));
 	//Create animate attack
 	auto spriteCacheAttack = SpriteFrameCache::getInstance();
@@ -382,10 +384,10 @@ bool Player::getAlive()
 }
 void Player::update(float deltaTime)
 {
-	if (!this->isAlive)
-	{
-		return;
-	}
+	//if (!this->isAlive)
+	//{
+	//	return;
+	//}
 	if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) == 0)
 	{
 		this->m_slashNormal->getSprite()->setPosition(Vec2(-100, -100));

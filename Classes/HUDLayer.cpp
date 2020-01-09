@@ -1,14 +1,18 @@
 # include "Model.h"
 # include "HUDLayer.h"
 # include "Sound.h"
+# include "CastleScene.h"
+# include "MiniMapLayer.h"
+#include "PauseLayer.h"
+
 #define MARGIN_JOYSTICK 50
+#define SCALE_BUTTON 0.75
 using namespace cocos2d;
 
-HudLayer::HudLayer(Scene* scene, Player* player, TMXTiledMap* map)
+HudLayer::HudLayer(Scene* scene, Player* player)
 {
 	targetScene = scene;
 	targetPlayer = player;
-	m_tiledMap = map;
 	this->init();
 }
 
@@ -19,7 +23,6 @@ bool HudLayer::init()
 		return false;
 	}
 	createHud();
-	_numCollected = 0;
 	createCameraHUD();
 	scheduleUpdate();
 	return true;
@@ -28,20 +31,14 @@ bool HudLayer::init()
 void HudLayer::createHud()
 {
 	auto visibleSize = Director::getInstance()->getVisibleSize();
-	// Init the layer of hud
-	// create a label to increase the score
-	_hudScore = Label::create(std::to_string(this->_numCollected), "fonts/arial.ttf", 24);
-	int margin = 20;
-
-	_hudScore->setPosition(Vec2(visibleSize.width - (_hudScore->getContentSize().width / 2) - margin,
-		_hudScore->getContentSize().height / 2 + margin));
 
 	targetScene->addChild(this, 10);
 	healthBar = HealthBarLayer::createLayer();
 	this->addChild(healthBar);
+	CCLOG("------- Done createhealthBar");
+
 	//Adding the minimap to the hud
 	addMiniMap();
-	this->addChild(_hudScore, 0);
 	CreateJoystick(this);
 	CreateAttackNormal(this);
 	CreateSkillUltimate(this);
@@ -76,6 +73,7 @@ void HudLayer::CreateJoystick(Layer * layer)
 	leftJoystick = joystickBase->getJoystick();
 	activeRunRange = thumb->getBoundingBox().size.height / 2;
 	layer->addChild(joystickBase);
+
 }
 
 void HudLayer::UpdateJoystick(float dt)
@@ -105,7 +103,7 @@ void HudLayer::UpdateJoystick(float dt)
 		}
 		targetPlayer->getSprite()->getPhysicsBody()->setVelocity(pos * SPEED_PLAYER);
 
-		//m_tiledMap->setPosition(m_tiledMap->getPosition() - pos / (SPEED * 2));
+
 	}
 	else
 	{
@@ -118,7 +116,6 @@ void HudLayer::UpdateJoystick(float dt)
 			}
 		}
 		targetPlayer->getSprite()->getPhysicsBody()->setVelocity(Vec2(0, 0));
-
 	}
 }
 
@@ -126,7 +123,7 @@ void HudLayer::CreateAttackNormal(Layer * layer)
 {
 	// init attackButton
 	attackBtn = ui::Button::create("Resources/Buttons/SkillButtonNormal.png");
-	attackBtn->setScale(0.5f);
+	attackBtn->setScale(SCALE_BUTTON);
 	//add touch event to attackButton
 	layer->addChild(attackBtn);
 	attackBtn->setPosition(Vec2(1450, 150));
@@ -138,7 +135,7 @@ void HudLayer::CreateAttackNormal(Layer * layer)
 			// In case when the player press on the screen
 		case ui::Widget::TouchEventType::BEGAN:
 		{
-			// If the player still have the Idle animation or run animation then remove it
+			 //If the player still have the Idle animation or run animation then remove it
 			if (targetPlayer->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_IDLE1) > 0 || targetPlayer->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_RUN) > 0) {
 				targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
 				targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
@@ -146,7 +143,6 @@ void HudLayer::CreateAttackNormal(Layer * layer)
 				targetPlayer->normalAttack();
 				Sound::GetInstance()->soundPlayerAttack1();
 			}
-
 			break;
 		}
 		case ui::Widget::TouchEventType::ENDED:
@@ -160,17 +156,15 @@ void HudLayer::CreateAttackNormal(Layer * layer)
 			break;
 		}
 	});
-
 }
 
 void HudLayer::CreateSkillUltimate(Layer * layer)
 {
 	// init attackButton
 	skillABtn = ui::Button::create("Resources/Buttons/SkillButton Ultimate.png");
-	skillABtn->setScale(0.5f);
+	skillABtn->setScale(SCALE_BUTTON);
 	layer->addChild(skillABtn);
-	skillABtn->setPosition(Vec2(1450, 300));
-
+	skillABtn->setPosition(Vec2(1450, 400));
 }
 
 void HudLayer::UpdateSkillUltimate(float dt)
@@ -191,7 +185,7 @@ void HudLayer::UpdateSkillUltimate(float dt)
 				targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
 				targetPlayer->getSprite()->stopAllActions();
 				targetPlayer->getSprite()->runAction(rpAnimateSkillA);
-				targetPlayer->increaseVillager(-50);
+				targetPlayer->increaseVillager(-10);
 				targetPlayer->UltimateAttack();
 				Sound::GetInstance()->soundPlayerAttack1();
 			}
@@ -214,9 +208,10 @@ void HudLayer::CreateSkillSpear(Layer * layer)
 {
 	// init attackButton
 	skillBBtn = ui::Button::create("Resources/Buttons/SkillButtonSpear.png");
-	skillBBtn->setScale(0.5f);
+	skillBBtn->setScale(SCALE_BUTTON);
+
 	layer->addChild(skillBBtn);
-	skillBBtn->setPosition(Vec2(1300, 150));
+	skillBBtn->setPosition(Vec2(1200, 150));
 	skillBBtn->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
 		auto rpAnimateSkillB = targetPlayer->getSkillBAnimate();
 		rpAnimateSkillB->setTag(TAG_ANIMATE_ATTACK);
@@ -248,36 +243,27 @@ void HudLayer::CreateSkillSpear(Layer * layer)
 			break;
 		}
 	});
-}
 
-
-void HudLayer::setMap(TMXTiledMap * map)
-{
-	m_tiledMap = map;
-}
-
-TMXTiledMap * HudLayer::getMap()
-{
-	return m_tiledMap;
 }
 
 HudLayer::~HudLayer()
 {
 }
 
-void HudLayer::addVilagerPoint()
-{
-	_numCollected++;
-}
 
 void HudLayer::addMiniMap()
 {
+	if (this->targetScene->getTag() == Model::FINAL_BOSS_PORTAL_TYPE)
+	{
+		return;
+	}
 	miniMap = MiniMapLayer::createLayer();
 	this->addChild(miniMap);
+
 }
 void HudLayer::addPauseButton()
 {
-	auto pauseBtn = cocos2d::ui::Button::create("ui/button/ui_ocean_button_pause.png", "ui/button/ui_blue_button_pause.png");
+	auto pauseBtn = cocos2d::ui::Button::create("Resources/ui/button/ui_ocean_button_pause.png", "Resources/ui/button/ui_blue_button_pause.png");
 	
 	pauseBtn->setScale(0.2);
 	pauseBtn->setAnchorPoint(cocos2d::Vec2(0,1));
@@ -287,12 +273,11 @@ void HudLayer::addPauseButton()
 
 	pauseBtn->addTouchEventListener([&](Ref* Sender,cocos2d::ui::Widget::TouchEventType type) {
 		if(type == cocos2d::ui::Widget::TouchEventType::ENDED){
-			//auto pauseLayer = OptionsLayer::createLayer();
-			//this->addChild(pauseLayer, 2);
 			cocos2d::Director::getInstance()->pause();
 
 		}
 	});
+
 }
 
 void HudLayer::createCameraHUD()
@@ -305,8 +290,6 @@ void HudLayer::createCameraHUD()
 
 void HudLayer::update(float dt)
 {
-	_hudScore->setString(std::to_string(this->_numCollected));
-	// if player still alive
 	if (targetPlayer->getAlive())
 	{
 		UpdateJoystick(dt);
@@ -315,10 +298,13 @@ void HudLayer::update(float dt)
 		targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
 		targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
 	}
-	if (targetPlayer->getVillagersNum() >= 10) {
+	if (targetPlayer->getVillagersNum() >= 50) {
 		UpdateSkillUltimate(dt);
 	}
 	healthBar->update(dt);
-	miniMap->update(dt);
 
+	if (this->targetScene->getTag() != Model::FINAL_BOSS_PORTAL_TYPE)
+	{
+		miniMap->update(dt);
+	}
 }

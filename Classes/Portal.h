@@ -16,6 +16,9 @@ public:
 	Sprite* getSprite();
 	void InitSprite();
 	void addPhysics();
-	void onContact(cocos2d::PhysicsContact & contact);
+	void returntoMainMenu();
+	void returntoCastleScene();
+
+	void setIndex(int index);
 	~Portal();
 };

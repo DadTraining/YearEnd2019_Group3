@@ -12,7 +12,6 @@
 #include "Enemy3.h"
 #include "Villager.h"
 #include "Portal.h"
-
 using namespace cocos2d;
 class LoadMapScene : public cocos2d::Scene
 {
@@ -28,7 +27,7 @@ private:
 	vector<Villager*> villagers;
 	vector<Enemy2*> enemys2;
 	vector<Enemy3*> enemys3;
-	Portal* portal;
+	vector<Portal*> portals;
 	TMXObjectGroup* m_objectGroup;
 	// private variable for joystick adding
 	HudLayer* HUD;

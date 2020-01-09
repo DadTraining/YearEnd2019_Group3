@@ -57,25 +57,22 @@ void Portal::addPhysics()
 	sprite->setPhysicsBody(physicsBody);
 }
 
-void Portal::onContact(cocos2d::PhysicsContact & contact)
+void Portal::returntoMainMenu()
 {
-	auto a = contact.getShapeA()->getBody();
-	auto b = contact.getShapeB()->getBody();
-	if ((a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_PORTAL_FINALBOSS)
-		|| (a->getCollisionBitmask() == Model::BITMASK_PORTAL_FINALBOSS && b->getCollisionBitmask() == Model::BITMASK_PLAYER))
-	{
-		auto myScene = CastleScene::createScene();
-		Director::getInstance()->replaceScene(TransitionFade::create(0.5f, myScene));
-	}
-	else if ((a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_PORTAL_BASE)
-		|| (a->getCollisionBitmask() == Model::BITMASK_PORTAL_BASE && b->getCollisionBitmask() == Model::BITMASK_PLAYER))
-	{
-		auto myScene = ResultScene::createScene();
-		Director::getInstance()->replaceScene(TransitionFade::create(0.5f, myScene));
-	}
+	auto myScene = ResultScene::createScene();
+	Director::getInstance()->replaceScene(TransitionFade::create(0.5f, myScene));
 }
-	
 
+void Portal::returntoCastleScene()
+{
+	auto myScene = CastleScene::createScene();
+	Director::getInstance()->replaceScene(TransitionFade::create(0.5f, myScene));
+}
+
+void Portal::setIndex(int index)
+{
+	this->sprite->getPhysicsBody()->setTag(index);
+}
 
 
 Portal::~Portal()
