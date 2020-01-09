@@ -2,6 +2,9 @@
 # include "HUDLayer.h"
 # include "Sound.h"
 # include "CastleScene.h"
+# include "MiniMapLayer.h"
+#include "PauseLayer.h"
+
 #define MARGIN_JOYSTICK 50
 #define SCALE_BUTTON 0.75
 using namespace cocos2d;
