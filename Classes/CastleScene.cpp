@@ -18,7 +18,7 @@ bool CastleScene::init()
 	{
 		return false;
 	}
-	this->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	//this->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 	this->getPhysicsWorld()->setGravity(Vec2(0, 0));
 	this->getPhysicsWorld()->setSubsteps(2);
 	this->setTag(Model::FINAL_BOSS_PORTAL_TYPE);

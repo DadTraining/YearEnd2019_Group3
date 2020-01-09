@@ -3,6 +3,7 @@
 #include "SimpleAudioEngine.h"
 #include "Model.h"
 #include "Sound.h"
+# define TAG_BOSS_ATTACK 999
 USING_NS_CC;
 
 Boss::Boss(Scene* scene) {
@@ -356,7 +357,12 @@ void Boss::attack()
 	});
 	auto delay = DelayTime::create(5.0f);
 	auto sequence = Sequence::create(callbackHide, delay, nullptr);
-	this->getSprite()->runAction(RepeatForever::create(sequence));
+	sequence->setTag(TAG_BOSS_ATTACK);
+	this->getSprite()->stopAllActionsByTag(TAG_BOSS_ATTACK);
+	if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_BOSS_ATTACK) == 0)
+	{
+		this->getSprite()->runAction(RepeatForever::create(sequence));
+	}
 }
 
 void Boss::AttackFire()
