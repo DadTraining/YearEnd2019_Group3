@@ -66,6 +66,9 @@ void CastleScene::SpawnPlayer()
 		if (type == Model::MAIN_CHARACTER_TYPE)
 		{
 			player = new Player(this);
+			player->setHP(Update::GetInstance()->getPlayer()->getHP());
+			player->setDamage(Update::GetInstance()->getPlayer()->getDamage());
+			player->increaseVillager(Update::GetInstance()->getPlayer()->getVillagersNum());
 			Update::GetInstance()->setPlayer(player);
 			SpriteFrameCache::getInstance()->removeSpriteFrames();
 			m_player = player->getSprite();

@@ -12,7 +12,7 @@ bool HealthBarLayer::init()
 	if (!LayerColor::initWithColor(cocos2d::Color4B(0, 0, 0, 0))) {
 		return false;
 	}
-	maxHP = Update::GetInstance()->getPlayer()->getHP();
+	maxHP = Update::GetInstance()->getHPOfPlayer();
 	auto visibleSize = cocos2d::Director::getInstance()->getVisibleSize();
 	
 	auto bg = cocos2d::Sprite::create("Resources/ui/popup/ui_ocean_popup_landscape.png");
