@@ -25,6 +25,7 @@ void Player::init()
 	this->damage = Update::GetInstance()->getDamageOfPlayer();
 	this->hP = Update::GetInstance()->getHPOfPlayer();
 	this->villagersNum = Update::GetInstance()->getCurrentVillager();
+	this->isAlive = true;
 	//Create sprite
 	this->playerSprite = Sprite::create("Resources/sprites/Player/idle-with-weapon-1.png");
 	this->playerSprite->retain();

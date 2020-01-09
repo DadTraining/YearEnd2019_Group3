@@ -268,8 +268,6 @@ void HudLayer::addPauseButton()
 
 	pauseBtn->addTouchEventListener([&](Ref* Sender,cocos2d::ui::Widget::TouchEventType type) {
 		if(type == cocos2d::ui::Widget::TouchEventType::ENDED){
-			//auto pauseLayer = OptionsLayer::createLayer();
-			//this->addChild(pauseLayer, 2);
 			cocos2d::Director::getInstance()->pause();
 
 		}
@@ -287,11 +285,10 @@ void HudLayer::createCameraHUD()
 
 void HudLayer::update(float dt)
 {
-	// if player still alive
-	//if (targetPlayer->getAlive())
-	//{
+	if (targetPlayer->getAlive())
+	{
 		UpdateJoystick(dt);
-	//}
+	}
 	if (targetPlayer->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) > 0) {
 		targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
 		targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);

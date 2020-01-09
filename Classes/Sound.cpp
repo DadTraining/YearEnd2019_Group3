@@ -126,6 +126,12 @@ void Sound::soundMainMenu()
 	audio->playBackgroundMusic("Resources/sounds/Background/MainMenuTheme.mp3", true);
 }
 
+void Sound::stopSoundBackGround()
+{
+	auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
+	audio->stopBackgroundMusic();
+}
+
 void Sound::preLoadSound()
 {
 	if (this->isMute)
