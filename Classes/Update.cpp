@@ -31,6 +31,8 @@ void Update::Init()
 	this->damageOfEm3 = 10.0f;
 	this->hpOfEm3 = 100.0f;
 	this->num_Villager = 0;
+	CCLOG("------- Done Update");
+
 }
 
 float Update::getDamageOfPlayer()

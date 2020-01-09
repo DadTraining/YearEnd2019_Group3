@@ -144,6 +144,8 @@ void Sound::preLoadSound()
 	audio->preloadBackgroundMusic("Resources/sounds/Background/176_Barren_Wastes.mp3");
 	audio->preloadBackgroundMusic("Resources/sounds/Background/Background_castle.mp3");
 	audio->preloadBackgroundMusic("Resources/sounds/Background/MainMenuTheme.mp3");
+	CCLOG("------- Done Sound");
+
 }
 
 
