@@ -19,11 +19,20 @@ Enemy2::~Enemy2()
 
 void Enemy2::init()
 {
-	this->damage = Update::GetInstance()->getDamageOfEm2();
-	this->hP = Update::GetInstance()->getHPOfEm2();
 	//Create sprite
 	this->sprite = Sprite::create("Resources/sprites/mEnemy/Idle/idle-1.png");
 	this->sprite->setScale(m_SCALE_32x32 / 2);
+
+	auto randMiniBoss = rand() % 10;
+	if (randMiniBoss == 0) {
+		this->damage = Update::GetInstance()->getDamageOfEm2() * 2;
+		this->hP = Update::GetInstance()->getHPOfEm2() * 2;
+		this->sprite->setScale(this->sprite->getScale() * 2);
+	}
+	else {
+		this->damage = Update::GetInstance()->getDamageOfEm2();
+		this->hP = Update::GetInstance()->getHPOfEm2();
+	}
 	//Create animate attackA
 	auto spriteCacheAttack_Em2 = SpriteFrameCache::getInstance();
 	spriteCacheAttack_Em2->addSpriteFramesWithFile("Resources/sprites/mEnemy/Attack/attackB.plist", "Resources/sprites/mEnemy/Attack/attackB.png");

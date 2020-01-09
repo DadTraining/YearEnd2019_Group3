@@ -19,11 +19,21 @@ Enemy3::~Enemy3()
 
 void Enemy3::init()
 {
-	this->damage = Update::GetInstance()->getDamageOfEm3();
-	this->hP = Update::GetInstance()->getHPOfEm3();
 	//Create sprite
 	this->sprite = Sprite::create("Resources/sprites/rEnemy/Idle/idle-1.png");
 	this->sprite->setScale(m_SCALE_32x32 / 2);
+
+	auto randMiniBoss = rand() % 10;
+	if (randMiniBoss == 0) {
+		this->damage = Update::GetInstance()->getDamageOfEm3() * 2;
+		this->hP = Update::GetInstance()->getHPOfEm3() * 2;
+		this->sprite->setScale(this->sprite->getScale() * 1.5);
+	}
+	else {
+		this->damage = Update::GetInstance()->getDamageOfEm3();
+		this->hP = Update::GetInstance()->getHPOfEm3();
+	}
+
 	//Create animate attackA
 	auto spriteCacheAttack_MB1 = SpriteFrameCache::getInstance();
 	spriteCacheAttack_MB1->addSpriteFramesWithFile("Resources/sprites/rEnemy/Attack/attackA.plist", "Resources/sprites/rEnemy/Attack/attackA.png");
