@@ -1,5 +1,4 @@
 #pragma once
-
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
 #include "Player.h"
@@ -22,11 +21,19 @@ private:
 	float damageOfBoss;
 	float hpOfBoss;
 	Player* player;
+	string path;
+	vector<float> allData;
+	int sumVillages;
+	float stunTime;
+	int conditionUlti;
+
+
 public:
 	Update();
 	~Update();
 	static Update* GetInstance();
 	void Init();
+	void readFile(string path);
 	float getDamageOfPlayer();
 	float getHPOfPlayer();
 	float getDamageOfMB1();
@@ -41,4 +48,9 @@ public:
 	float getHPOfBoss();
 	Player * getPlayer();
 	void setPlayer(Player* player);
+	string getPath();
+	int getSumVillages();
+	float getStunTime();
+	int getConditionUlti();
+
 };

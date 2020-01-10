@@ -47,7 +47,7 @@ void MiniBoss01::init()
 		auto frame = spriteCacheAttack_MB1->getSpriteFrameByName(nameAnimateAttack);
 		animAttack.pushBack(frame);
 	}
-	Animation* animationAtack = Animation::createWithSpriteFrames(animAttack, 0.3f);
+	Animation* animationAtack = Animation::createWithSpriteFrames(animAttack, 0.1f);
 	auto animateAttack = Animate::create(animationAtack);
 	animateAttack->retain();
 	this->attackAnimate = animateAttack;
