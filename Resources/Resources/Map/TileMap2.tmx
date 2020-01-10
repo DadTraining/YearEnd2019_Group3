@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="60" height="60" tilewidth="32" tileheight="32" infinite="0" nextlayerid="31" nextobjectid="355">
+<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="60" height="60" tilewidth="32" tileheight="32" infinite="0" nextlayerid="31" nextobjectid="356">
  <tileset firstgid="1" name="meta_tiles" tilewidth="32" tileheight="32" spacing="1" margin="1" tilecount="2" columns="2">
   <image source="meta_tiles.png" width="67" height="34"/>
   <tile id="0">
@@ -1102,5 +1102,6 @@
   <object id="352" name="Enemy2" type="4" x="1262.67" y="550.667"/>
   <object id="353" name="Enemy2" type="4" x="797.333" y="185.333"/>
   <object id="354" name="Enemy2" type="4" x="496" y="174.667"/>
+  <object id="355" name="enemy" type="7" x="1470" y="172"/>
  </objectgroup>
 </map>
