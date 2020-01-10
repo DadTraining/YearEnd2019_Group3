@@ -3,6 +3,7 @@
 #include "SimpleAudioEngine.h"
 #include "Model.h"
 #include "Sound.h"
+# define TAG_BOSS_ATTACK 999
 USING_NS_CC;
 
 Boss::Boss(Scene* scene) {
@@ -144,6 +145,7 @@ void Boss::setAIforEnemy()
 				if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_IDLE1) > 0) {
 					this->getSprite()->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
 					this->getSprite()->runAction(rpAttackAnimate);
+					this->attack();
 				}
 			}
 			else {
@@ -247,10 +249,10 @@ void Boss::normalAttack()
 	auto distance = this->getSprite()->getContentSize().width / 2;
 	if (isLeft)
 	{
-		m_slash->getSprite()->setPosition(this->getSprite()->getPosition() - Vec2(distance, 0));
+		//m_slash->getSprite()->setPosition(this->getSprite()->getPosition() - Vec2(distance, 0));
 	}
 	else {
-		m_slash->getSprite()->setPosition(this->getSprite()->getPosition() + Vec2(distance, 0));
+		//m_slash->getSprite()->setPosition(this->getSprite()->getPosition() + Vec2(distance, 0));
 	}
 
 }
@@ -285,7 +287,7 @@ void Boss::update(float deltaTime)
 	}
 	if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) == 0)
 	{
-		this->m_slash->getSprite()->setPosition(Vec2(-1, -1));
+		this->fireSlash->getSprite()->setPosition(Vec2(-200, -200));
 	}
 	else {
 		this->normalAttack();
@@ -327,8 +329,8 @@ void Boss::Die()
 	});
 	auto fade = FadeOut::create(1.5f);
 	this->isAlive = false;
-	this->m_slash->getSprite()->setPosition(Vec2(-1, -1));
-	//this->m_slash->getSprite()->removeFromParent();
+	this->fireSlash->getSprite()->setPosition(Vec2(-200, -200));
+	//this->fireSlash->getSprite()->removeFromParent();
 	auto dieAnimation = this->getDeadAnimate();
 	auto spawn = Spawn::create(fade, dieAnimation, nullptr);
 	auto sequence = Sequence::create(spawn, callbackHide, nullptr);
@@ -346,15 +348,83 @@ bool Boss::getAlive()
 	return this->isAlive;
 }
 
+void Boss::attack()
+{
+	this->AttackFire();
+	auto callbackHide = CallFunc::create([this]()
+	{
+		auto random = rand() % 2;
+		switch (random)
+		{
+		case 0:
+			this->AttackFire();
+			break;
+		case 1:
+			this->AttackHeal();
+			break;
+		}
+	});
+	auto delay = DelayTime::create(5.0f);
+	auto sequence = Sequence::create(callbackHide, delay, nullptr);
+	auto rpSequence = RepeatForever::create(sequence);
+	rpSequence->setTag(TAG_BOSS_ATTACK);
+	this->getSprite()->stopAllActionsByTag(TAG_BOSS_ATTACK);
+	if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_BOSS_ATTACK) == 0)
+	{
+		this->getSprite()->runAction(rpSequence);
+	}
+}
+
+void Boss::AttackFire()
+{
+	Sound::GetInstance()->soundBossSkillFire();
+	auto FireEffect = CCParticleSystemQuad::create("Resources/Effect/SkillBossB/skillFire3.plist");
+	FireEffect->setPosition(this->getSprite()->getPosition());
+	FireEffect->setScale(1.5f);
+	FireEffect->setAnchorPoint(Vec2(0.5f, 0.5f));
+	targetScene->addChild(FireEffect);
+	// create PhysicBody for the attack
+	auto scaleTo = ScaleTo::create(1.4f, 6);
+	auto fireSprite = fireSlash->getSprite();
+	auto callbackHide = CallFunc::create([fireSprite]()
+	{
+		fireSprite->setPosition(-200, -200);
+		fireSprite->setScale(1.0f);
+	});
+	auto sequence = Sequence::create(scaleTo, callbackHide, nullptr);
+	fireSlash->getSprite()->setPosition(this->getSprite()->getPosition());
+	fireSlash->getSprite()->runAction(sequence);
+
+}
+
+void Boss::AttackHeal()
+{
+	Sound::GetInstance()->soundBossSkillHeal();
+	auto healEffect = CCParticleSystemQuad::create("Resources/Effect/SkillBossB/skillHeal.plist");
+	healEffect->setPosition(this->getSprite()->getPosition());
+	healEffect->setScale(1.5f);
+	healEffect->setAnchorPoint(Vec2(0.5f, 0.5f));
+	healEffect->setSpeed(0.5f);
+	targetScene->addChild(healEffect);
+
+	// define heal number
+	auto healNumber = Update::GetInstance()->getHPOfBoss() - this->getHP();
+	this->setHP(this->getHP() + healNumber * 0.3);
+}
+
 void Boss::createSlash()
 {
-	m_slash = new Slash(100, 100);
-	m_slash->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_BOSS_ATTACK);
-	targetScene->addChild(m_slash->getSprite());
-	m_slash->setDamge(this->damage);
+	fireSlash = new Slash(100, 100);
+	auto physicBody = PhysicsBody::createCircle(100.0f);
+	physicBody->setContactTestBitmask(true);
+	fireSlash->getSprite()->setPhysicsBody(physicBody);
+	fireSlash->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_BOSS_ATTACK);
+	targetScene->addChild(fireSlash->getSprite());
+	fireSlash->setDamge(this->damage);
+	// create fireSprite
 }
 
 Slash * Boss::getSlash()
 {
-	return this->m_slash;
+	return this->fireSlash;
 }
