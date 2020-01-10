@@ -151,6 +151,7 @@ void Boss::setAIforEnemy()
 			else {
 				if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) > 0) {
 					this->getSprite()->stopAllActionsByTag(TAG_ANIMATE_ATTACK);
+					this->getSprite()->stopAllActionsByTag(TAG_BOSS_ATTACK);
 					this->getSprite()->runAction(rpIdleAnimate);
 				}
 			}
@@ -158,6 +159,7 @@ void Boss::setAIforEnemy()
 		else {
 			if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) > 0) {
 				this->getSprite()->stopAllActionsByTag(TAG_ANIMATE_ATTACK);
+				this->getSprite()->stopAllActionsByTag(TAG_BOSS_ATTACK);
 				this->getSprite()->runAction(rpIdleAnimate);
 			}
 		}
@@ -176,6 +178,7 @@ void Boss::setAIforEnemy()
 		if (this->getPosSpawn().x == this->getSprite()->getPosition().x) {
 			if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_IDLE1) == 0) {
 				this->getSprite()->stopAllActionsByTag(TAG_ANIMATE_ATTACK);
+				this->getSprite()->stopAllActionsByTag(TAG_BOSS_ATTACK);
 				this->getSprite()->runAction(rpIdleAnimate);
 			}
 		}
@@ -249,10 +252,8 @@ void Boss::normalAttack()
 	auto distance = this->getSprite()->getContentSize().width / 2;
 	if (isLeft)
 	{
-		//m_slash->getSprite()->setPosition(this->getSprite()->getPosition() - Vec2(distance, 0));
 	}
 	else {
-		//m_slash->getSprite()->setPosition(this->getSprite()->getPosition() + Vec2(distance, 0));
 	}
 
 }
@@ -288,6 +289,7 @@ void Boss::update(float deltaTime)
 	if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) == 0)
 	{
 		this->fireSlash->getSprite()->setPosition(Vec2(-200, -200));
+		this->fireSlash->getSprite()->setScale(1.0f);
 	}
 	else {
 		this->normalAttack();
@@ -364,7 +366,7 @@ void Boss::attack()
 			break;
 		}
 	});
-	auto delay = DelayTime::create(5.0f);
+	auto delay = DelayTime::create(4.0f);
 	auto sequence = Sequence::create(callbackHide, delay, nullptr);
 	auto rpSequence = RepeatForever::create(sequence);
 	rpSequence->setTag(TAG_BOSS_ATTACK);
@@ -383,6 +385,7 @@ void Boss::AttackFire()
 	FireEffect->setScale(1.5f);
 	FireEffect->setAnchorPoint(Vec2(0.5f, 0.5f));
 	targetScene->addChild(FireEffect);
+	FireEffect->setAutoRemoveOnFinish(false);
 	// create PhysicBody for the attack
 	auto scaleTo = ScaleTo::create(1.4f, 6);
 	auto fireSprite = fireSlash->getSprite();
