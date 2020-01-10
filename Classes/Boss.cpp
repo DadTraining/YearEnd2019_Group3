@@ -353,15 +353,25 @@ void Boss::attack()
 	this->AttackFire();
 	auto callbackHide = CallFunc::create([this]()
 	{
-		this->AttackFire();
+		auto random = rand() % 2;
+		switch (random)
+		{
+		case 0:
+			this->AttackFire();
+			break;
+		case 1:
+			this->AttackHeal();
+			break;
+		}
 	});
 	auto delay = DelayTime::create(5.0f);
 	auto sequence = Sequence::create(callbackHide, delay, nullptr);
-	sequence->setTag(TAG_BOSS_ATTACK);
+	auto rpSequence = RepeatForever::create(sequence);
+	rpSequence->setTag(TAG_BOSS_ATTACK);
 	this->getSprite()->stopAllActionsByTag(TAG_BOSS_ATTACK);
 	if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_BOSS_ATTACK) == 0)
 	{
-		this->getSprite()->runAction(RepeatForever::create(sequence));
+		this->getSprite()->runAction(rpSequence);
 	}
 }
 
@@ -369,7 +379,6 @@ void Boss::AttackFire()
 {
 	auto FireEffect = CCParticleSystemQuad::create("Resources/Effect/SkillBossB/skillFire3.plist");
 	FireEffect->setPosition(this->getSprite()->getPosition());
-	FireEffect->setSpeed(1.0f);
 	FireEffect->setScale(1.5f);
 	FireEffect->setAnchorPoint(Vec2(0.5f, 0.5f));
 	targetScene->addChild(FireEffect);
@@ -385,6 +394,20 @@ void Boss::AttackFire()
 	fireSlash->getSprite()->setPosition(this->getSprite()->getPosition());
 	fireSlash->getSprite()->runAction(sequence);
 
+}
+
+void Boss::AttackHeal()
+{
+	auto healEffect = CCParticleSystemQuad::create("Resources/Effect/SkillBossB/skillHeal.plist");
+	healEffect->setPosition(this->getSprite()->getPosition());
+	healEffect->setScale(1.5f);
+	healEffect->setAnchorPoint(Vec2(0.5f, 0.5f));
+	healEffect->setSpeed(0.5f);
+	targetScene->addChild(healEffect);
+
+	// define heal number
+	auto healNumber = Update::GetInstance()->getHPOfBoss() - this->getHP();
+	this->setHP(this->getHP() + healNumber * 0.3);
 }
 
 void Boss::createSlash()

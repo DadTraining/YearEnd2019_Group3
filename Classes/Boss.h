@@ -52,6 +52,7 @@ public:
 	// Boss attack
 	void attack();
 	void AttackFire();
+	void AttackHeal();
 	void createSlash();
 	Slash* getSlash();
 	//---

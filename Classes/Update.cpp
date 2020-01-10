@@ -30,8 +30,8 @@ void Update::Init()
 	this->hpOfEm2 = hpOfMB1 * 2;
 	this->damageOfEm3 = damageOfMB1 * 2;
 	this->hpOfEm3 = hpOfMB1;
-	this->damageOfBoss = 1000.0f;
-	this->hpOfBoss = 3000.0f;
+	this->damageOfBoss = 100.0f;
+	this->hpOfBoss = 1000.0f;
 	CCLOG("------- Done Update");
 
 }
