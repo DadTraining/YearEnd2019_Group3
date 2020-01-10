@@ -12,8 +12,9 @@
 #define SPEED_PLAYER 5.0f
 #define SPEED_MB01 0.6f
 #define TIME_MOVE_TO_PLAYER 10
-#define VISION_OF_MB 600
-#define VISION_OF_EM2 600
+#define VISION_OF_MB 400
+#define VISION_OF_EM2 300
+#define VISION_OF_EM3 600
 #define RANGE_OF_MB 100
 #define VISION_OF_EM3 700
 #define VISION_OF_EM4 300

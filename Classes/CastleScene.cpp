@@ -390,6 +390,21 @@ bool CastleScene::onContactBegin(cocos2d::PhysicsContact & contact)
 			portals.at(b->getGroup())->returntoMainMenu();
 		}
 	}
+	// enemy3 attack player
+	if ((a->getCollisionBitmask() == Model::BITMASK_BOSS_ATTACK && b->getCollisionBitmask() == Model::BITMASK_PLAYER)
+		|| (a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_BOSS_ATTACK))
+	{
+		if (a->getCollisionBitmask() == Model::BITMASK_BOSS_ATTACK)
+		{
+			auto currentEnemy3 = bosss.at(a->getGroup());
+			player->gotHit(currentEnemy3->getSlash()->getDamge());
+		}
+		if (b->getCollisionBitmask() == Model::BITMASK_BOSS_ATTACK)
+		{
+			auto currentEnemy3 = bosss.at(b->getGroup());
+			player->gotHit(currentEnemy3->getSlash()->getDamge());
+		}
+	}
 	return false;
 }
 

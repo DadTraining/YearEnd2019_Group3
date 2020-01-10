@@ -49,16 +49,21 @@ public:
 	void Die();
 	void setAlive(bool isAlive);
 	bool getAlive();
-
+	// Boss attack
+	void attack();
+	void AttackFire();
+	void AttackHeal();
 	void createSlash();
 	Slash* getSlash();
 	//---
 	
+
 private:
 	Sprite* sprite;
 	Animate *attackAnimate, *idleAnimate, *hitAnimate, *runAnimate, *deadAnimate;
 	float hP, damage;
 	Slash* m_slash;
+	Slash* fireSlash;
 	Scene* targetScene;
 	Point posSpawn;
 	bool isAlive;
