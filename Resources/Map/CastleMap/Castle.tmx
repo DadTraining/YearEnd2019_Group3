@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="140" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="14" nextobjectid="71">
+<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="140" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="14" nextobjectid="73">
  <tileset firstgid="1" name="mainlevbuild" tilewidth="16" tileheight="16" tilecount="1702" columns="37">
   <image source="mainlevbuild.png" width="592" height="736"/>
   <terraintypes>
@@ -35,12 +35,8 @@
   <object id="61" name="ArmorSkeleton" type="4" x="723.333" y="217.333"/>
   <object id="63" name="ArmorSkeleton" type="4" x="822" y="561.333"/>
   <object id="64" name="ArmorSkeleton" type="4" x="1556" y="562.667"/>
-  <object id="65" name="Mage" type="7" x="1558" y="234"/>
-  <object id="66" name="Mage" type="7" x="1535" y="413" width="9"/>
-  <object id="67" name="Mage" type="7" x="624" y="166"/>
-  <object id="68" name="Mage" type="7" x="547" y="444"/>
-  <object id="69" name="Mage" type="7" x="1048" y="587"/>
-  <object id="70" name="Mage" type="7" x="1010" y="98"/>
+  <object id="71" name="ArmorSkeleton" type="4" x="1421.33" y="491.333"/>
+  <object id="72" name="ArmorSkeleton" type="4" x="1408.67" y="180.667"/>
  </objectgroup>
  <layer id="4" name="Meta" width="140" height="40">
   <data encoding="csv">

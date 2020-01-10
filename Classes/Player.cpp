@@ -269,6 +269,10 @@ void Player::increaseVillager(int num)
 
 void Player::gotHit(int damage)
 {
+	if (!this->isAlive)
+	{
+		return;
+	}
 	playerSprite->stopActionByTag(TAG_ANIMATE_RUN);
 	playerSprite->stopActionByTag(TAG_ANIMATE_IDLE1);
 	playerSprite->stopActionByTag(TAG_ANIMATE_HIT);
@@ -289,7 +293,6 @@ void Player::gotHit(int damage)
 	if (this->getHP() <= 0)
 	{
 		this->Die();
-		this->setAlive(false);
 	}
 }
 
