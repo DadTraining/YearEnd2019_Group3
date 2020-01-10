@@ -115,7 +115,7 @@ void CastleScene::SpawnPlayer()
 			enemy->getSprite()->runAction(animation);
 			addChild(enemy->getSprite());
 		}
-		else if (type == Model::MAIN_ENEMY3_TYPE)
+		else if (type == Model::MAIN_ENEMY3_TYPE+100)
 		{
 			auto enemy = new Enemy3(this);
 			enemy->setPosSpawn(Vec2(posX, posY));
