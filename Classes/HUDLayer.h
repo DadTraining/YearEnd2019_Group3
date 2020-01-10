@@ -4,7 +4,7 @@
 
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
-# include "SneakyJoystickSkinnedBase.h"
+#include "SneakyJoystickSkinnedBase.h"
 #include "Player.h"
 #include "HealthBarLayer.h"
 #include "MiniMapLayer.h"
@@ -25,6 +25,7 @@ private:
 	Layer* healthBar;
 	Layer* miniMap;
 public:
+	cocos2d::LayerColor * pauseLayer;
 	HudLayer(cocos2d::Scene* scene, Player* player);
 	bool init();
 	void createHud();
@@ -38,6 +39,6 @@ public:
 	virtual ~HudLayer();
 	void createCameraHUD();
 	void addMiniMap();
-	void addPauseButton();
+	void addPauseButton(Layer * layer);
 };
 #endif	

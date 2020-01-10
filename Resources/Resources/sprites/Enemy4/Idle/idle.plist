@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+		<key>frames</key>
+		<dict>
+			<key>idle_0.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{61,0},{60,79}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{60,79}}</string>
+				<key>sourceSize</key>
+				<string>{60,79}</string>
+			</dict>
+
+			<key>idle_1.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{122,0},{60,81}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{60,81}}</string>
+				<key>sourceSize</key>
+				<string>{60,81}</string>
+			</dict>
+
+			<key>idle_2.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{183,0},{58,77}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{58,77}}</string>
+				<key>sourceSize</key>
+				<string>{58,77}</string>
+			</dict>
+
+			<key>idle_3.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,0},{60,77}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{60,77}}</string>
+				<key>sourceSize</key>
+				<string>{60,77}</string>
+			</dict>
+
+		</dict>
+
+		<key>metadata</key>
+		<dict>
+			<key>format</key>
+			<integer>2</integer>
+			<key>size</key>
+			<string>{256,128}</string>
+			<key>textureFileName</key>
+			<string>sideCityzen.png</string>
+			</dict>
+		</dict>
+</plist>

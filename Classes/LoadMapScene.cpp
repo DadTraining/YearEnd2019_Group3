@@ -120,6 +120,19 @@ void LoadMapScene::SpawnPlayer()
 			enemy->getSprite()->runAction(animation);
 			addChild(enemy->getSprite());
 		}
+		else if (type == Model::MAIN_ENEMY4_TYPE)
+		{
+			auto enemy = new Enemy4(this);
+			enemy->setPosSpawn(Vec2(posX, posY));
+			enemy->setIndex(enemys4.size());
+			enemys4.push_back(enemy);
+			SpriteFrameCache::getInstance()->removeSpriteFrames();
+			enemy->getSprite()->setPosition(Vec2(posX, posY));
+			auto animation = RepeatForever::create(enemy->getIdleAnimate());
+			animation->setTag(TAG_ANIMATE_IDLE1);
+			enemy->getSprite()->runAction(animation);
+			addChild(enemy->getSprite());
+		}
 		else if (type == Model::FINAL_BOSS_PORTAL_TYPE)
 		{
 			auto portal = new Portal();
@@ -339,6 +352,47 @@ bool LoadMapScene::onContactBegin(cocos2d::PhysicsContact & contact)
 			player->gotHit(currentEnemy3->getSlash()->getDamge());
 		}
 	}
+
+	// player attack enemy4
+	if ((a->getCollisionBitmask() == Model::BITMASK_ENEMY4 && b->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK)
+		|| (a->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK && b->getCollisionBitmask() == Model::BITMASK_ENEMY4))
+	{
+		if (a->getCollisionBitmask() == Model::BITMASK_ENEMY4)
+		{
+			auto currentEnemy4 = enemys4.at(a->getGroup());
+			currentEnemy4->gotHit(player->getSlash()->getDamge());
+			if (b->getTag() == Model::KNOCKBACK)
+			{
+				currentEnemy4->Stun();
+			}
+		}
+		else if (b->getCollisionBitmask() == Model::BITMASK_ENEMY4)
+		{
+			auto currentEnemy4 = enemys4.at(b->getGroup());
+			currentEnemy4->gotHit(player->getSlash()->getDamge());
+			if (a->getTag() == Model::KNOCKBACK)
+			{
+				currentEnemy4->Stun();
+			}
+		}
+	}
+	// enemy4 attack player
+	if ((a->getCollisionBitmask() == Model::BITMASK_ENEMY4_ATTACK && b->getCollisionBitmask() == Model::BITMASK_PLAYER)
+		|| (a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_ENEMY4_ATTACK))
+	{
+		if (a->getCollisionBitmask() == Model::BITMASK_ENEMY4_ATTACK)
+		{
+			auto currentEnemy4 = enemys4.at(a->getGroup());
+			player->gotHit(currentEnemy4->getSlash()->getDamge());
+		}
+		if (b->getCollisionBitmask() == Model::BITMASK_ENEMY4_ATTACK)
+		{
+			auto currentEnemy4 = enemys4.at(b->getGroup());
+			player->gotHit(currentEnemy4->getSlash()->getDamge());
+		}
+	}
+
+
 	if ((a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_PORTAL_FINALBOSS)
 		|| (a->getCollisionBitmask() == Model::BITMASK_PORTAL_FINALBOSS && b->getCollisionBitmask() == Model::BITMASK_PLAYER))
 	{
@@ -362,7 +416,7 @@ bool LoadMapScene::onContactBegin(cocos2d::PhysicsContact & contact)
 		{
 			portals.at(b->getGroup())->returntoMainMenu();
 		}
-	}	
+	}
 	return false;
 }
 
@@ -404,6 +458,13 @@ void LoadMapScene::enemyMoveToPlayer()
 		}
 		enemys3[i]->setAIforEnemy();
 	}
+	for (int i = 0; i < enemys4.size(); i++) {
+		if (!enemys4[i]->getAlive())
+		{
+			continue;
+		}
+		enemys4[i]->setAIforEnemy();
+	}
 }
 
 void LoadMapScene::update(float dt)
@@ -422,12 +483,16 @@ void LoadMapScene::update(float dt)
 	{
 		enemys3[i]->update(dt);
 	}
+	for (int i = 0; i < enemys4.size(); i++)
+	{
+		enemys4[i]->update(dt);
+	}
 	enemyMoveToPlayer();
 	for (int i = 0; i < villagers.size(); i++)
 	{
 		villagers[i]->update(dt);
 	}
-	sandBackground->setPosition(m_player->getPosition() 
+	sandBackground->setPosition(m_player->getPosition()
 		+ Vec2(m_player->getContentSize().width, m_player->getContentSize().height));
 }
 

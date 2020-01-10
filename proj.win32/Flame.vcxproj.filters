@@ -39,9 +39,6 @@
     <ClCompile Include="..\Classes\MiniMapLayer.cpp">
       <Filter>Layer</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\PauseLayer.cpp">
-      <Filter>Layer</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\SneakyJoystick.cpp">
       <Filter>Layer</Filter>
     </ClCompile>
@@ -70,6 +67,9 @@
       <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Boss.cpp">
+      <Filter>Class</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Enemy4.cpp">
       <Filter>Class</Filter>
     </ClCompile>
   </ItemGroup>
@@ -112,9 +112,6 @@
     <ClInclude Include="..\Classes\MiniMapLayer.h">
       <Filter>Layer</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\PauseLayer.h">
-      <Filter>Layer</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\SneakyJoystick.h">
       <Filter>Layer</Filter>
     </ClInclude>
@@ -143,6 +140,9 @@
       <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Boss.h">
+      <Filter>Class</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Enemy4.h">
       <Filter>Class</Filter>
     </ClInclude>
   </ItemGroup>
