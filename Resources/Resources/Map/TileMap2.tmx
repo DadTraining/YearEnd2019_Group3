@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="60" height="60" tilewidth="32" tileheight="32" infinite="0" nextlayerid="31" nextobjectid="393">
+<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="60" height="60" tilewidth="32" tileheight="32" infinite="0" nextlayerid="31" nextobjectid="404">
  <tileset firstgid="1" name="meta_tiles" tilewidth="32" tileheight="32" spacing="1" margin="1" tilecount="2" columns="2">
   <image source="meta_tiles.png" width="67" height="34"/>
   <tile id="0">
@@ -1109,6 +1109,17 @@
   <object id="389" name="Villager" type="3" x="1689.33" y="1378.67"/>
   <object id="390" name="Villager" type="3" x="1096" y="1236"/>
   <object id="391" name="Villager" type="3" x="1241.33" y="1604"/>
-  <object id="392" name="Enemy4" type="7" x="1488" y="184"/>
+  <object id="392" name="Enemy4" type="7" x="1564.67" y="220.333"/>
+  <object id="393" name="Enemy4" type="7" x="1378" y="966"/>
+  <object id="394" name="Enemy4" type="7" x="1300" y="1232"/>
+  <object id="395" name="Enemy4" type="7" x="1506" y="1746"/>
+  <object id="396" name="Enemy4" type="7" x="492" y="818"/>
+  <object id="397" name="Enemy4" type="7" x="352" y="1664"/>
+  <object id="398" name="Enemy4" type="7" x="830" y="1216"/>
+  <object id="399" name="Enemy4" type="7" x="952" y="928"/>
+  <object id="400" name="Enemy4" type="7" x="1268" y="1058"/>
+  <object id="401" name="Villager" type="3" x="1138.67" y="501.333"/>
+  <object id="402" name="Villager" type="3" x="780" y="653.333"/>
+  <object id="403" name="Villager" type="3" x="866.667" y="1385.33"/>
  </objectgroup>
 </map>
