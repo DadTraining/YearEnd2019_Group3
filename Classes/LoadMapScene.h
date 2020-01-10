@@ -57,7 +57,6 @@ public:
 	// --------------------------------
 	void addSandParticle();
 	//---------------------------------
-
 	//Check the conditions to move
 	void enemyMoveToPlayer();
 	void update(float dt);
