@@ -377,6 +377,7 @@ void Boss::attack()
 
 void Boss::AttackFire()
 {
+	Sound::GetInstance()->soundBossSkillFire();
 	auto FireEffect = CCParticleSystemQuad::create("Resources/Effect/SkillBossB/skillFire3.plist");
 	FireEffect->setPosition(this->getSprite()->getPosition());
 	FireEffect->setScale(1.5f);
@@ -398,6 +399,7 @@ void Boss::AttackFire()
 
 void Boss::AttackHeal()
 {
+	Sound::GetInstance()->soundBossSkillHeal();
 	auto healEffect = CCParticleSystemQuad::create("Resources/Effect/SkillBossB/skillHeal.plist");
 	healEffect->setPosition(this->getSprite()->getPosition());
 	healEffect->setScale(1.5f);

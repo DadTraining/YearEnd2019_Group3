@@ -23,6 +23,8 @@ public:
 	void soundBackGroundDesert();
 	void soundBackGroundCastle();
 	void soundMainMenu();
+	void soundBossSkillFire();
+	void soundBossSkillHeal();
 	void stopSoundBackGround();
 	void Init();
 	// SkeletonSound
