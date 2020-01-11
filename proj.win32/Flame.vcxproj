@@ -153,6 +153,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClCompile Include="..\Classes\CastleScene.cpp" />
     <ClCompile Include="..\Classes\Enemy2.cpp" />
     <ClCompile Include="..\Classes\Enemy3.cpp" />
+    <ClCompile Include="..\Classes\Enemy4.cpp" />
     <ClCompile Include="..\Classes\HealthBarLayer.cpp" />
     <ClCompile Include="..\Classes\HUDLayer.cpp" />
     <ClCompile Include="..\Classes\LoadMapScene.cpp" />
@@ -179,6 +180,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClInclude Include="..\Classes\CastleScene.h" />
     <ClInclude Include="..\Classes\Enemy2.h" />
     <ClInclude Include="..\Classes\Enemy3.h" />
+    <ClInclude Include="..\Classes\Enemy4.h" />
     <ClInclude Include="..\Classes\HealthBarLayer.h" />
     <ClInclude Include="..\Classes\HUDLayer.h" />
     <ClInclude Include="..\Classes\LoadMapScene.h" />

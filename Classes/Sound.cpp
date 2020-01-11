@@ -66,6 +66,26 @@ void Sound::soundPlayerAttack1()
 	audio->playEffect("Resources/sounds/Player/Sword_Swipe.mp3", false, 1.0f, 1.0f, 1.0f);
 }
 
+void Sound::soundBossSkillFire()
+{
+	if (this->isMute)
+	{
+		return;
+	}
+	auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
+	audio->playEffect("Resources/sounds/Boss/fireSkill.wav", false, 1.0f, 1.0f, 1.0f);
+}
+
+void Sound::soundBossSkillHeal()
+{
+	if (this->isMute)
+		{
+			return;
+		}
+	auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
+	audio->playEffect("Resources/sounds/Boss/healSkill.wav", false, 1.0f, 1.0f, 1.0f);
+}
+
 void Sound::soundPlayerDie()
 {
 	if (this->isMute)
@@ -126,6 +146,7 @@ void Sound::soundMainMenu()
 	audio->playBackgroundMusic("Resources/sounds/Background/MainMenuTheme.mp3", true);
 }
 
+
 void Sound::stopSoundBackGround()
 {
 	auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
@@ -153,6 +174,8 @@ void Sound::preLoadSound()
 	// Preload Skeleton sound
 	audio->preloadEffect("Resources/sounds/Skeleton/attacked.wav");
 	audio->preloadEffect("Resources/sounds/Skeleton/die.wav");
+	audio->preloadEffect("Resources/sounds/Boss/fireSkill.wav");
+	audio->preloadEffect("Resources/sounds/Boss/healSkill.wav");
 
 	audio->preloadBackgroundMusic("Resources/sounds/Background/176_Barren_Wastes.mp3");
 	audio->preloadBackgroundMusic("Resources/sounds/Background/Background_castle.mp3");

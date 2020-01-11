@@ -52,5 +52,6 @@ private:
 	Slash* m_slash;
 	Scene* targetScene;
 	Point posSpawn;
+	int price;
 	bool isAlive;
 };

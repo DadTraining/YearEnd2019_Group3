@@ -19,11 +19,23 @@ Enemy3::~Enemy3()
 
 void Enemy3::init()
 {
-	this->damage = Update::GetInstance()->getDamageOfEm3();
-	this->hP = Update::GetInstance()->getHPOfEm3();
 	//Create sprite
 	this->sprite = Sprite::create("Resources/sprites/rEnemy/Idle/idle-1.png");
 	this->sprite->setScale(m_SCALE_32x32 / 2);
+
+	auto randMiniBoss = rand() % 10;
+	if (randMiniBoss == 0) {
+		this->damage = Update::GetInstance()->getDamageOfEm3() * 2;
+		this->hP = Update::GetInstance()->getHPOfEm3() * 2;
+		this->sprite->setScale(this->sprite->getScale() * 1.5);
+		this->price = rand() % 21 + 20;
+	}
+	else {
+		this->damage = Update::GetInstance()->getDamageOfEm3();
+		this->hP = Update::GetInstance()->getHPOfEm3();
+		this->price = rand() % 11 + 10;
+	}
+
 	//Create animate attackA
 	auto spriteCacheAttack_MB1 = SpriteFrameCache::getInstance();
 	spriteCacheAttack_MB1->addSpriteFramesWithFile("Resources/sprites/rEnemy/Attack/attackA.plist", "Resources/sprites/rEnemy/Attack/attackA.png");
@@ -110,11 +122,7 @@ void Enemy3::init()
 	// Add physics
 	addPhysic();
 	// init slash
-	for (int i = 0; i < 1; i++) {
-		this->createSlash();
-		slashs.push_back(m_slash);
-
-	}
+	
 	// init isAlive
 	this->isAlive = true;
 }
@@ -168,42 +176,83 @@ void Enemy3::setAIforEnemy()
 {
 	auto rpIdleAnimate = RepeatForever::create(this->getIdleAnimate());
 	rpIdleAnimate->setTag(TAG_ANIMATE_IDLE1);
-	auto sequence = Sequence::create(this->getAttackAnimate(), idleAnimate, nullptr);
-	auto rp = RepeatForever::create(sequence);
-	rp->setTag(TAG_ANIMATE_ATTACK);
+	auto rpAttackAnimate = this->getAttackAnimate();
+	rpAttackAnimate->setTag(TAG_ANIMATE_ATTACK);
+	auto rpRunAnimate = RepeatForever::create(this->getRunAnimate());
+	rpRunAnimate->setTag(TAG_ANIMATE_RUN);
+
 	auto player = Update::GetInstance()->getPlayer();
-	auto playerPos = player->getSprite()->getPosition();
-	auto vec = Vec2(playerPos.x - this->getSprite()->getPosition().x, playerPos.y - this->getSprite()->getPosition().y);
+
 	auto range = std::sqrt(pow((this->getSprite()->getPosition().x - player->getSprite()->getPosition().x), 2) + pow((this->getSprite()->getPosition().y - player->getSprite()->getPosition().y), 2));
-	if (range < VISION_OF_EM3) {
+	auto vectorMoveToSpawnPoint = Vec2(this->getPosSpawn().x - this->getSprite()->getPosition().x, this->getPosSpawn().y - this->getSprite()->getPosition().y);
+	auto vectorMoveToPlayer = Vec2(player->getSprite()->getPosition().x - this->getSprite()->getPosition().x, player->getSprite()->getPosition().y - this->getSprite()->getPosition().y);
+
+	if (range < VISION_OF_MB) {
 		if (player->getHP() > 0) {
-			this->Shoot(vec);
-			if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_IDLE1) > 0) {
-				this->getSprite()->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
-				this->getSprite()->runAction(rp);
-				
-			}
+			this->getSprite()->getPhysicsBody()->setVelocity(vectorMoveToPlayer*SPEED_MB01);
 			if (player->getSprite()->getPosition().x < this->getSprite()->getPosition().x) {
 				this->getSprite()->setFlipX(180);
 			}
 			if (player->getSprite()->getPosition().x > this->getSprite()->getPosition().x) {
 				this->getSprite()->setFlipX(0);
 			}
-		}
-		// When player die
-		else {
-			if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) > 0) {
-				this->getSprite()->stopAllActionsByTag(TAG_ANIMATE_ATTACK);
-				this->getSprite()->runAction(rpIdleAnimate);
+			if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_IDLE1) > 0) {
+				this->getSprite()->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
+				this->getSprite()->runAction(rpRunAnimate);
+			}
+			if ((player->getSprite()->getPosition().y < (this->getSprite()->getPosition().y + 50)) &&
+				player->getSprite()->getPosition().y >(this->getSprite()->getPosition().y - 50) &&
+				std::sqrt(pow(player->getSprite()->getPosition().x - this->getSprite()->getPosition().x, 2)) < RANGE_OF_MB) {
+				if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_RUN) > 0) {
+					this->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
+					this->getSprite()->runAction(rpAttackAnimate);
+				}
+			}
+			// When player die
+			else {
+				if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) > 0) {
+					this->getSprite()->stopAllActionsByTag(TAG_ANIMATE_ATTACK);
+					this->getSprite()->runAction(rpRunAnimate);
+				}
 			}
 		}
 	}
 	else {
-		if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_IDLE1) == 0) {
-			this->getSprite()->stopAllActionsByTag(TAG_ANIMATE_ATTACK);
-			this->getSprite()->runAction(rpIdleAnimate);
+		auto vectorMove = Vec2(this->getPosSpawn().x - this->getSprite()->getPosition().x, this->getPosSpawn().y - this->getSprite()->getPosition().y);
+		this->getSprite()->getPhysicsBody()->setVelocity(vectorMove*SPEED_MB01);
+		if ((this->getSprite()->getPosition() < this->getPosSpawn() && this->getSprite()->getPosition() > this->getPosSpawn() - Vec2(5, 5)) ||
+			this->getSprite()->getPosition() > this->getPosSpawn() && this->getSprite()->getPosition() < this->getPosSpawn() + Vec2(5, 5)) {
+			this->getSprite()->setPosition(this->getPosSpawn());
+		}
+		if (this->getPosSpawn().x > this->getSprite()->getPosition().x) {
+			this->getSprite()->setFlipX(0);
+		}
+		if (this->getPosSpawn().x < this->getSprite()->getPosition().x) {
+			this->getSprite()->setFlipX(180);
+		}
+		if (this->getPosSpawn().x == this->getSprite()->getPosition().x) {
+			if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_IDLE1) == 0) {
+				this->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
+				this->getSprite()->runAction(rpIdleAnimate);
+			}
 		}
 	}
+}
+
+void Enemy3::Stun()
+{
+	auto delay = DelayTime::create(1.5f);
+	if (sprite->getNumberOfRunningActionsByTag(TAG_ANIMATE_DIE) == 0)
+	{
+		sprite->stopAllActions();
+	}
+	sprite->getPhysicsBody()->setVelocity(Vec2(0, 0));
+	sprite->runAction(delay);
+	auto emitter = CCParticleSystemQuad::create("Resources/Effect/Monster/freezer.plist");
+	emitter->setPosition(this->getSprite()->getPosition());
+	//emitter->setScale(m_SCALE / 8);
+	targetScene->addChild(emitter);
+	emitter->setAutoRemoveOnFinish(true);
 }
 
 Sprite * Enemy3::getSprite()
@@ -253,6 +302,15 @@ Point Enemy3::getPosSpawn()
 
 void Enemy3::normalAttack()
 {
+	auto isLeft = this->getSprite()->isFlippedX();
+	auto distance = this->getSprite()->getContentSize().width / 2;
+	if (isLeft)
+	{
+		m_slash->getSprite()->setPosition(this->getSprite()->getPosition() - Vec2(distance, 0));
+	}
+	else {
+		m_slash->getSprite()->setPosition(this->getSprite()->getPosition() + Vec2(distance, 0));
+	}
 
 }
 
@@ -280,7 +338,6 @@ void Enemy3::gotHit(int damage)
 		this->setAlive(false);
 		this->Die();
 	}
-
 }
 
 void Enemy3::update(float deltaTime)
@@ -291,23 +348,17 @@ void Enemy3::update(float deltaTime)
 	}
 	if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) == 0)
 	{
-		this->m_slash->getSprite()->setPosition(this->getSprite()->getPosition());
+		this->m_slash->getSprite()->setPosition(Vec2(-1, -1));
 	}
-	for (int i = 0; i < slashs.size(); i++)
+	else {
+		this->normalAttack();
+	}
+
+	if (this->getSprite()->getNumberOfRunningActions() == 0)
 	{
-		if (slashs[i]->getSprite()->isVisible())
-		{
-			auto shootingRange = std::sqrt(pow((this->getSprite()->getPosition().x - slashs[i]->getSprite()->getPosition().x), 2) + pow((this->getSprite()->getPosition().y - slashs[i]->getSprite()->getPosition().y), 2));
-			if (shootingRange >= 600) {
-				slashs[i]->getSprite()->getPhysicsBody()->setVelocity(Vec2(0, 0));
-				slashs[i]->getSprite()->setPosition(this->getSprite()->getPosition());
-				slashs[i]->getSprite()->setVisible(false);
-			}
-			if (this->getHP() <= 0) {
-				slashs[i]->getSprite()->getPhysicsBody()->setVelocity(Vec2(0, 0));
-				slashs[i]->getSprite()->setVisible(false);
-			}
-		}
+		auto animationRun = RepeatForever::create(this->getRunAnimate());
+		animationRun->setTag(TAG_ANIMATE_RUN);
+		this->getSprite()->runAction(animationRun);
 	}
 }
 
@@ -336,10 +387,12 @@ void Enemy3::Die()
 		mySprite->removeFromParent();
 	});
 	this->isAlive = false;
-	this->m_slash->getSprite()->setPosition(Vec2(-100, -100));
+	this->m_slash->getSprite()->setPosition(Vec2(-1, -1));
 	this->m_slash->getSprite()->removeFromParent();
+	Update::GetInstance()->getPlayer()->increaseVillager(this->price);
 	auto dieAnimation = this->getDeadAnimate();
 	auto sequence = Sequence::create(dieAnimation, callbackHide, nullptr);
+	sequence->setTag(TAG_ANIMATE_DIE);
 	mySprite->runAction(sequence);
 }
 
@@ -356,40 +409,12 @@ bool Enemy3::getAlive()
 void Enemy3::createSlash()
 {
 	m_slash = new Slash(100, 100);
-	//m_slash->getSprite()->setTexture("Resources/sprites/rEnemy/Arrow/arrow.png");
 	m_slash->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_ENEMY3_ATTACK);
 	targetScene->addChild(m_slash->getSprite());
 	m_slash->setDamge(this->damage);
-	m_slash->getSprite()->setVisible(false);
 }
 
 Slash * Enemy3::getSlash()
 {
 	return this->m_slash;
-}
-
-void Enemy3::Stun()
-{
-	auto delay = DelayTime::create(1.5f);
-	sprite->stopAllActions();
-	sprite->getPhysicsBody()->setVelocity(Vec2(0, 0));
-	sprite->runAction(delay);
-	auto emitter = CCParticleSystemQuad::create("Resources/Effect/Monster/freezer.plist");
-	emitter->setPosition(this->getSprite()->getPosition());
-	targetScene->addChild(emitter);
-	emitter->setAutoRemoveOnFinish(true);
-}
-
-void Enemy3::Shoot(Vec2 vec)
-{
-	for (int i = 0; i < slashs.size(); i++)
-	{
-		if (!slashs[i]->getSprite()->isVisible())
-		{
-			slashs[i]->getSprite()->setVisible(true);
-			this->slashs[i]->getSprite()->getPhysicsBody()->setVelocity(vec*1.5);
-			continue;
-		}
-	}
-	
 }

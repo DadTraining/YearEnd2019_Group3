@@ -30,6 +30,10 @@ void Update::Init()
 	this->hpOfEm2 = hpOfMB1 * 2;
 	this->damageOfEm3 = damageOfMB1 * 2;
 	this->hpOfEm3 = hpOfMB1;
+	this->damageOfEm4 = damageOfEm3;
+	this->hpOfEm4 = hpOfEm3;
+	this->damageOfBoss = 1000.0f;
+	this->hpOfBoss = 3000.0f;
 	CCLOG("------- Done Update");
 
 }
@@ -72,6 +76,16 @@ float Update::getDamageOfEm3()
 float Update::getHPOfEm3()
 {
 	return this->hpOfEm3;
+}
+
+float Update::getDamageOfEm4()
+{
+	return this->damageOfEm4;
+}
+
+float Update::getHPOfEm4()
+{
+	return this->hpOfEm4;
 }
 
 float Update::getDamageOfBoss()

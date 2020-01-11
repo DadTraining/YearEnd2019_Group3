@@ -1,7 +1,6 @@
 #pragma once
 #include "Objects.h"
 #include "Slash.h"
-#define TIME_DELAY_BOW 1.0f
 class Enemy3 : public Objects
 {
 public:
@@ -20,7 +19,9 @@ public:
 	void setDamage(float damage);
 	void setPosSpawn(Point point);
 	void setAIforEnemy();
-	
+
+	// Got stun
+	void Stun();
 
 	Sprite* getSprite();
 	Animate* getAttackAnimate();
@@ -45,8 +46,7 @@ public:
 	void createSlash();
 	Slash* getSlash();
 	//---
-	void Stun();
-	void Shoot(Vec2 vec);
+
 private:
 	Sprite* sprite;
 	Animate *attackAnimate, *idleAnimate, *hitAnimate, *runAnimate, *deadAnimate;
@@ -54,6 +54,6 @@ private:
 	Slash* m_slash;
 	Scene* targetScene;
 	Point posSpawn;
+	int price;
 	bool isAlive;
-	vector<Slash*> slashs;
 };

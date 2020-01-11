@@ -165,43 +165,51 @@ void HudLayer::CreateSkillUltimate(Layer * layer)
 	skillABtn->setScale(SCALE_BUTTON);
 	layer->addChild(skillABtn);
 	skillABtn->setPosition(Vec2(1450, 400));
+	skillABtn->setBright(false);
+	
 }
 
 void HudLayer::UpdateSkillUltimate(float dt)
 {
-	skillABtn->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
-		auto rpAnimateSkillA = targetPlayer->getSkillAAnimate();
-		rpAnimateSkillA->setTag(TAG_ANIMATE_ATTACK);
-		switch (type)
-		{
-			// In case when the player press on the screen
-		case ui::Widget::TouchEventType::BEGAN:
-		{
-			// If the player still have the Idle animation or run animation then remove it
-			if (targetPlayer->getVillagersNum() >= 10 
-				&&(targetPlayer->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_IDLE1) > 0 
-				|| targetPlayer->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_RUN) > 0)) {
-				targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
-				targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
-				targetPlayer->getSprite()->stopAllActions();
-				targetPlayer->getSprite()->runAction(rpAnimateSkillA);
-				targetPlayer->increaseVillager(-10);
-				targetPlayer->UltimateAttack();
-				Sound::GetInstance()->soundPlayerAttack1();
-			}
-			break;
-		}
-		case ui::Widget::TouchEventType::ENDED:
-		{
-			if (rpAnimateSkillA->isDone()) {
-				targetPlayer->getSprite()->stopAllActions();
+	if (targetPlayer->getVillagersNum() >= 10) {
+		skillABtn->setEnabled(true);
+		skillABtn->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+			auto rpAnimateSkillA = targetPlayer->getSkillAAnimate();
+			rpAnimateSkillA->setTag(TAG_ANIMATE_ATTACK);
+			switch (type)
+			{
+				// In case when the player press on the screen
+			case ui::Widget::TouchEventType::BEGAN:
+			{
+				// If the player still have the Idle animation or run animation then remove it
+				if (targetPlayer->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_IDLE1) > 0
+						|| targetPlayer->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_RUN) > 0) {
+					targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
+					targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
+					targetPlayer->getSprite()->stopAllActions();
+					targetPlayer->getSprite()->runAction(rpAnimateSkillA);
+					targetPlayer->increaseVillager(-10);
+					targetPlayer->UltimateAttack();
+					Sound::GetInstance()->soundPlayerAttack1();
+				}
 				break;
 			}
-		}
-		default:
-			break;
-		}
-	});
+			case ui::Widget::TouchEventType::ENDED:
+			{
+				if (rpAnimateSkillA->isDone()) {
+					targetPlayer->getSprite()->stopAllActions();
+					break;
+				}
+			}
+			default:
+				break;
+			}
+		});
+	}
+	else {
+		skillABtn->setEnabled(false);
+	}
+	
 }
 
 void HudLayer::CreateSkillSpear(Layer * layer)
@@ -310,6 +318,7 @@ void HudLayer::addPauseButton(Layer * layer)
 					pauseLayer->removeFromParent();
 					this->setVisible(true);
 					Director::getInstance()->resume();
+					Sound::GetInstance()->stopSoundBackGround();
 					break;
 				case cocos2d::ui::Widget::TouchEventType::CANCELED:
 					break;
@@ -331,6 +340,7 @@ void HudLayer::addPauseButton(Layer * layer)
 					this->setVisible(true);
 					pauseLayer->removeFromParent();
 					Director::getInstance()->resume();
+					Sound::GetInstance()->stopSoundBackGround();
 					Director::getInstance()->replaceScene(MainMenu::createScene());
 					break;
 				case cocos2d::ui::Widget::TouchEventType::CANCELED:
@@ -341,10 +351,10 @@ void HudLayer::addPauseButton(Layer * layer)
 			});
 
 			// ------------------------Toggle Button--------------------------------- //
-			auto itemOn = cocos2d::MenuItemImage::create("Resources/ui/button/ui_ocean_button_soundon.png", "Resources/ui/button/ui_blue_button_soundon.png", [&](Ref* sender) {
+			itemOn = cocos2d::MenuItemImage::create("Resources/ui/button/ui_ocean_button_soundon.png", "Resources/ui/button/ui_blue_button_soundon.png", [&](Ref* sender) {
 			});
 
-			auto itemOff = cocos2d::MenuItemImage::create("Resources/ui/button/ui_ocean_button_soundoff.png", "Resources/ui/button/ui_blue_button_soundoff.png", [&](Ref* sender) {
+			itemOff = cocos2d::MenuItemImage::create("Resources/ui/button/ui_ocean_button_soundoff.png", "Resources/ui/button/ui_blue_button_soundoff.png", [&](Ref* sender) {
 			});
 
 			auto itemToggleMusic = cocos2d::MenuItemToggle::createWithCallback([&](Ref* pSender) {
@@ -393,9 +403,8 @@ void HudLayer::update(float dt)
 		targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
 		targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
 	}
-	if (targetPlayer->getVillagersNum() >= 50) {
-		UpdateSkillUltimate(dt);
-	}
+	UpdateSkillUltimate(dt);
+	
 	healthBar->update(dt);
 
 	if (this->targetScene->getTag() != Model::FINAL_BOSS_PORTAL_TYPE)
