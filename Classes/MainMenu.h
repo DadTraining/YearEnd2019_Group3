@@ -14,6 +14,15 @@ private:
 	cocos2d::MenuItemImage* itemOff;
 
 public:
+	ui::Button* play;
+	Menu* pMenu;
+	ui::Button* flameBtn;
+	LayerColor* updateLayer;
+	int curHP = 100;
+	int curSlowAtk = 2;
+	int curNorAtk = 100;
+	int curUltilAtk = 200;
+	int totalVillager = 1000;
     static cocos2d::Scene* createScene();
     virtual bool init();
 	void Play();
