@@ -4,7 +4,7 @@
 #include "Model.h"
 #include "Sound.h"
 # define TAG_BOSS_ATTACK 999
-USING_NS_CC;
+USING_NS_CC;	
 
 Boss::Boss(Scene* scene) {
 	targetScene = scene;
@@ -152,6 +152,7 @@ void Boss::setAIforEnemy()
 				if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) > 0) {
 					this->getSprite()->stopAllActionsByTag(TAG_ANIMATE_ATTACK);
 					this->getSprite()->stopAllActionsByTag(TAG_BOSS_ATTACK);
+					fireSlash->getSprite()->setScale(1.0f);
 					this->getSprite()->runAction(rpIdleAnimate);
 				}
 			}
@@ -160,6 +161,7 @@ void Boss::setAIforEnemy()
 			if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) > 0) {
 				this->getSprite()->stopAllActionsByTag(TAG_ANIMATE_ATTACK);
 				this->getSprite()->stopAllActionsByTag(TAG_BOSS_ATTACK);
+				fireSlash->getSprite()->setScale(1.0f);
 				this->getSprite()->runAction(rpIdleAnimate);
 			}
 		}
@@ -178,6 +180,7 @@ void Boss::setAIforEnemy()
 		if (this->getPosSpawn().x == this->getSprite()->getPosition().x) {
 			if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_IDLE1) == 0) {
 				this->getSprite()->stopAllActionsByTag(TAG_ANIMATE_ATTACK);
+				fireSlash->getSprite()->setScale(1.0f);
 				this->getSprite()->stopAllActionsByTag(TAG_BOSS_ATTACK);
 				this->getSprite()->runAction(rpIdleAnimate);
 			}
@@ -352,7 +355,6 @@ bool Boss::getAlive()
 
 void Boss::attack()
 {
-	this->AttackFire();
 	auto callbackHide = CallFunc::create([this]()
 	{
 		auto random = rand() % 2;
@@ -366,8 +368,8 @@ void Boss::attack()
 			break;
 		}
 	});
-	auto delay = DelayTime::create(4.0f);
-	auto sequence = Sequence::create(callbackHide, delay, nullptr);
+	auto delay = DelayTime::create(2.0f);
+	auto sequence = Sequence::create(delay, callbackHide, nullptr);
 	auto rpSequence = RepeatForever::create(sequence);
 	rpSequence->setTag(TAG_BOSS_ATTACK);
 	this->getSprite()->stopAllActionsByTag(TAG_BOSS_ATTACK);

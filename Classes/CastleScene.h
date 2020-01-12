@@ -11,6 +11,7 @@
 #include "Boss.h"
 #include "Villager.h"
 #include "Portal.h"
+#include "Enemy4.h"
 
 using namespace cocos2d;
 class CastleScene : public cocos2d::Scene
@@ -26,6 +27,7 @@ private:
 	vector<Villager*> villagers;
 	vector<Enemy2*> enemys2;
 	vector<Enemy3*> enemys3;
+	vector<Enemy4*> enemys4;
 	vector<Boss*> bosss;
 	Portal* portal;
 	vector<Portal*> portals;
