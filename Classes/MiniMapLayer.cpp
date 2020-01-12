@@ -51,7 +51,7 @@ void MiniMapLayer::setMiniPlayer() // done
 	this->miniPlayer = Sprite::create("Resources/Map/HeroIcon.png");
 	this->miniPlayer->setScale(SCALE_MINIMAP / 2);
 	this->miniPlayer->setAnchorPoint(Vec2(0, 0));
-	this->miniPlayer->setAnchorPoint(Vec2(0.5, 0.5));
+	this->miniPlayer->setAnchorPoint(Vec2(0.5, 0));
 	this->miniPlayer->setPosition(this->miniMap->getPosition());
 	this->addChild(miniPlayer);
 }
