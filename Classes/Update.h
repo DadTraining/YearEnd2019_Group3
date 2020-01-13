@@ -52,5 +52,9 @@ public:
 	int getSumVillages();
 	float getStunTime();
 	int getConditionUlti();
-
+	void setSumVillages(int sumVillages);
+	void setHpOfPlayer(float hp);
+	void setDamageOfPlayer(float damage);
+	void setTimeStun(float time);
+	void setUltiDame(float i);
 };

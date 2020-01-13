@@ -25,7 +25,8 @@ bool ResultScene::init()
 	if (isAlive) {
 		auto hp = to_string(Update::GetInstance()->getHPOfPlayer());
 		auto damage = to_string(Update::GetInstance()->getDamageOfPlayer());
-		auto sumVillages = to_string(Update::GetInstance()->getSumVillages()+this->numVillager);
+		Update::GetInstance()->setSumVillages(Update::GetInstance()->getSumVillages() + this->numVillager);
+		auto sumVillages = to_string(Update::GetInstance()->getSumVillages());
 		auto conditionUlti = to_string(Update::GetInstance()->getConditionUlti());
 		auto stunTime = to_string(Update::GetInstance()->getStunTime());
 		FileUtils::getInstance()->writeStringToFile(hp + "\r\n" + damage + "\r\n" + sumVillages + "\r\n" + conditionUlti + "\r\n" +stunTime, Update::GetInstance()->getPath());

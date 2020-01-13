@@ -16,6 +16,7 @@ LOCAL_SRC_FILES := $(LOCAL_PATH)/hellocpp/main.cpp \
 		   $(LOCAL_PATH)/../../../Classes/CastleScene.cpp \
 		   $(LOCAL_PATH)/../../../Classes/Enemy2.cpp \
 		   $(LOCAL_PATH)/../../../Classes/Enemy3.cpp \
+		   $(LOCAL_PATH)/../../../Classes/Enemy4.cpp \
 		   $(LOCAL_PATH)/../../../Classes/Boss.cpp \
            $(LOCAL_PATH)/../../../Classes/HealthBarLayer.cpp \
            $(LOCAL_PATH)/../../../Classes/HUDLayer.cpp \

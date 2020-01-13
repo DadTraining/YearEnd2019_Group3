@@ -41,6 +41,7 @@ public:
 	void setAlive(bool isAlive);
 	bool getAlive();
 
+	void addDust();
 	void createSlash();
 	Slash* getSlash();
 	//---

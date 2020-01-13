@@ -37,7 +37,7 @@ bool HealthBarLayer::init()
 	textVillager = cocos2d::Label::createWithTTF(std::to_string(numVillager), "Resources/fonts/joystix monospace.ttf", 38);
 
 	heart->setPosition(bg->getContentSize().width*0.1, bg->getContentSize().height / 2 + 30);
-	heart->setScale(2.5);
+	heart->setScale(0.1);
 
 	bgHealthbar->setAnchorPoint(cocos2d::Vec2(0, 0.5));
 	bgHealthbar->setPosition(heart->getPosition().x + 40, heart->getPosition().y);

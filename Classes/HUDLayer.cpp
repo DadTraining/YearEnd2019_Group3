@@ -318,6 +318,7 @@ void HudLayer::addPauseButton(Layer * layer)
 					pauseLayer->removeFromParent();
 					this->setVisible(true);
 					Director::getInstance()->resume();
+					Sound::GetInstance()->stopSoundBackGround();
 					break;
 				case cocos2d::ui::Widget::TouchEventType::CANCELED:
 					break;
@@ -339,6 +340,7 @@ void HudLayer::addPauseButton(Layer * layer)
 					this->setVisible(true);
 					pauseLayer->removeFromParent();
 					Director::getInstance()->resume();
+					Sound::GetInstance()->stopSoundBackGround();
 					Director::getInstance()->replaceScene(MainMenu::createScene());
 					break;
 				case cocos2d::ui::Widget::TouchEventType::CANCELED:
@@ -349,10 +351,10 @@ void HudLayer::addPauseButton(Layer * layer)
 			});
 
 			// ------------------------Toggle Button--------------------------------- //
-			auto itemOn = cocos2d::MenuItemImage::create("Resources/ui/button/ui_ocean_button_soundon.png", "Resources/ui/button/ui_blue_button_soundon.png", [&](Ref* sender) {
+			itemOn = cocos2d::MenuItemImage::create("Resources/ui/button/ui_ocean_button_soundon.png", "Resources/ui/button/ui_blue_button_soundon.png", [&](Ref* sender) {
 			});
 
-			auto itemOff = cocos2d::MenuItemImage::create("Resources/ui/button/ui_ocean_button_soundoff.png", "Resources/ui/button/ui_blue_button_soundoff.png", [&](Ref* sender) {
+			itemOff = cocos2d::MenuItemImage::create("Resources/ui/button/ui_ocean_button_soundoff.png", "Resources/ui/button/ui_blue_button_soundoff.png", [&](Ref* sender) {
 			});
 
 			auto itemToggleMusic = cocos2d::MenuItemToggle::createWithCallback([&](Ref* pSender) {

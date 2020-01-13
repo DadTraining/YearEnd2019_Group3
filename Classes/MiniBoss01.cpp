@@ -47,7 +47,7 @@ void MiniBoss01::init()
 		auto frame = spriteCacheAttack_MB1->getSpriteFrameByName(nameAnimateAttack);
 		animAttack.pushBack(frame);
 	}
-	Animation* animationAtack = Animation::createWithSpriteFrames(animAttack, 0.1f);
+	Animation* animationAtack = Animation::createWithSpriteFrames(animAttack, 0.2f);
 	auto animateAttack = Animate::create(animationAtack);
 	animateAttack->retain();
 	this->attackAnimate = animateAttack;
@@ -304,14 +304,23 @@ void MiniBoss01::normalAttack()
 {
 	auto isLeft = this->getSprite()->isFlippedX();
 	auto distance = this->getSprite()->getContentSize().width / 2;
+	auto attackPos = this->getSprite()->getPosition();
 	if (isLeft)
 	{
-		m_slash->getSprite()->setPosition(this->getSprite()->getPosition() - Vec2(distance, 0));
+		attackPos -= Vec2(distance, 0);
 	}
 	else {
-		m_slash->getSprite()->setPosition(this->getSprite()->getPosition() + Vec2(distance, 0));
+		attackPos += Vec2(distance, 0);
 	}
-
+	auto mySlash = this->m_slash;
+	auto attack = CallFunc::create([mySlash, attackPos]()
+	{
+		mySlash->getSprite()->setPosition(attackPos);
+	});
+	auto delay = DelayTime::create(0.15f);
+	auto sequence = Sequence::create(delay, attack, nullptr);
+	//sequence->setTag(TAG_ANIMATE_ATTACK);
+	this->getSprite()->runAction(sequence);
 }
 
 void MiniBoss01::gotHit(int damage)
@@ -348,7 +357,7 @@ void MiniBoss01::update(float deltaTime)
 	}
 	if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) == 0)
 	{
-		this->m_slash->getSprite()->setPosition(Vec2(-1, -1));
+		this->m_slash->getSprite()->setPosition(Vec2(-1000, -1000));
 	}
 	else {
 		this->normalAttack();
@@ -387,7 +396,7 @@ void MiniBoss01::Die()
 		mySprite->removeFromParent();
 	});
 	this->isAlive = false;
-	this->m_slash->getSprite()->setPosition(Vec2(-1, -1));
+	this->m_slash->getSprite()->setPosition(Vec2(-1000, -1000));
 	this->m_slash->getSprite()->removeFromParent();
 	Update::GetInstance()->getPlayer()->increaseVillager(this->price);
 	auto dieAnimation = this->getDeadAnimate();

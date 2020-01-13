@@ -24,6 +24,9 @@ private:
 	// Init minimap and healthBar
 	Layer* healthBar;
 	Layer* miniMap;
+	// Sound
+	cocos2d::MenuItemImage* itemOff;
+	cocos2d::MenuItemImage* itemOn;
 public:
 	cocos2d::LayerColor * pauseLayer;
 	HudLayer(cocos2d::Scene* scene, Player* player);

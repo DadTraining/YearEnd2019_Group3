@@ -179,6 +179,8 @@ void Enemy4::setAIforEnemy()
 			if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_IDLE1) > 0) {
 				this->getSprite()->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
 				this->getSprite()->runAction(rpAttackAnimate);
+				this->normalAttack();
+				this->addDust();
 			}
 		}
 		// When player die
@@ -246,16 +248,13 @@ Point Enemy4::getPosSpawn()
 
 void Enemy4::normalAttack()
 {
-	auto isLeft = this->getSprite()->isFlippedX();
-	auto distance = this->getSprite()->getContentSize().width / 2;
-	if (isLeft)
-	{
-		m_slash->getSprite()->setPosition(this->getSprite()->getPosition() - Vec2(distance, 0));
-	}
-	else {
-		m_slash->getSprite()->setPosition(this->getSprite()->getPosition() + Vec2(distance, 0));
-	}
-
+	auto playerPosition = Update::GetInstance()->getPlayer()->getSprite()->getPosition();
+	auto emitter = CCParticleSystemQuad::create("Resources/Effect/SkillEm4/attackEnemy4.plist");
+	emitter->setPosition(playerPosition);
+	emitter->setScale(m_SCALE_32x32 / 8);
+	targetScene->addChild(emitter);
+	emitter->setAutoRemoveOnFinish(true);
+	m_slash->getSprite()->setPosition(playerPosition);
 }
 
 void Enemy4::gotHit(int damage)
@@ -291,13 +290,7 @@ void Enemy4::update(float deltaTime)
 	{
 		return;
 	}
-	if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) == 0)
-	{
-		this->m_slash->getSprite()->setPosition(Vec2(-100, -100));
-	}
-	else {
-		this->normalAttack();
-	}
+	this->m_slash->getSprite()->setPosition(Vec2(-100, -100));
 
 	if (this->getSprite()->getNumberOfRunningActions() == 0)
 	{
@@ -350,9 +343,20 @@ bool Enemy4::getAlive()
 	return this->isAlive;
 }
 
+void Enemy4::addDust()
+{
+	auto emitter = CCParticleSystemQuad::create("Resources/Effect/SkillEm4/smokeEffect.plist");
+	auto emitterPosition = Vec2(this->getSprite()->getPosition().x, this->getSprite()->getPosition().y
+		- this->getSprite()->getContentSize().height);
+	emitter->setPosition(emitterPosition);
+	emitter->setScale(0.25f);
+	targetScene->addChild(emitter);
+	emitter->setAutoRemoveOnFinish(true);
+}
+
 void Enemy4::createSlash()
 {
-	m_slash = new Slash(150, 50);
+	m_slash = new Slash(10, 10);
 	m_slash->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_ENEMY4_ATTACK);
 	targetScene->addChild(m_slash->getSprite());
 	m_slash->setDamge(this->damage);
@@ -365,6 +369,10 @@ Slash * Enemy4::getSlash()
 
 void Enemy4::Stun()
 {
+	if (this->isAlive == false)
+	{
+		return;
+	}
 	auto delay = DelayTime::create(1.5f);
 	sprite->stopAllActions();
 	sprite->getPhysicsBody()->setVelocity(Vec2(0, 0));

@@ -39,8 +39,8 @@ void Update::Init()
 	this->hpOfEm3 = hpOfMB1;
 	this->damageOfEm4 = damageOfEm3;
 	this->hpOfEm4 = hpOfEm3;
-	this->damageOfBoss = 100.0f;
-	this->hpOfBoss = 1000.0f;
+	this->damageOfBoss = 1000.0f;
+	this->hpOfBoss = 3000.0f;
 	CCLOG("------- Done Update");
 
 }
@@ -153,4 +153,29 @@ float Update::getStunTime()
 int Update::getConditionUlti()
 {
 	return this->conditionUlti;
+}
+
+void Update::setSumVillages(int sumVillages)
+{
+	this->sumVillages = sumVillages;
+}
+
+void Update::setHpOfPlayer(float hp)
+{
+	this->hpOfPlayer = hp;
+}
+
+void Update::setDamageOfPlayer(float damage)
+{
+	this->damageOfPlayer = damage;
+}
+
+void Update::setTimeStun(float time)
+{
+	this->stunTime = time;
+}
+
+void Update::setUltiDame(float i)
+{
+	this->conditionUlti = i;
 }
