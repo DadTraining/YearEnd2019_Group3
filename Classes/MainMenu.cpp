@@ -98,7 +98,7 @@ bool MainMenu::init()
 	flameBtn->setOpacity(0);
 	flameBtn->addTouchEventListener([&](Ref* Sender, ui::Widget::TouchEventType type) {
 		if (type == ui::Widget::TouchEventType::BEGAN) {
-			this->curHP =Update::GetInstance()->getHPOfPlayer();
+			this->curHP = Update::GetInstance()->getHPOfPlayer();
 			this->curNorAtk = Update::GetInstance()->getDamageOfPlayer();
 			this->curSlowAtk = Update::GetInstance()->getStunTime();
 			this->curUltilAtk = Update::GetInstance()->getConditionUlti();
@@ -133,10 +133,10 @@ bool MainMenu::init()
 			ultiAtk->setContentSize(Size(200, 200));
 			ultiAtk->setPosition(bgSize.width*0.6, bgSize.height*0.6);
 
-			
-			hpInfo = Label::create(to_string(curHP),"Resources/fonts/VCR_OSD_MONO.ttf", 96);
 
-			hpInfo->setAnchorPoint(Vec2(0,0));
+			hpInfo = Label::create(to_string(curHP), "Resources/fonts/VCR_OSD_MONO.ttf", 96);
+
+			hpInfo->setAnchorPoint(Vec2(0, 0));
 			hpInfo->setPosition(250, 50);
 
 
@@ -155,50 +155,118 @@ bool MainMenu::init()
 			ultilAtkInfo->setAnchorPoint(Vec2(0, 0));
 			ultilAtkInfo->setPosition(250, 50);
 
-			auto hpUpdate = ui::Button::create("Resources/ui/button/ui_ocean_button_update.png", "Resources/ui/button/ui_blue_button_update.png");
-
+			hpUpdate = ui::Button::create("Resources/ui/button/ui_ocean_button_update.png", "Resources/ui/button/ui_blue_button_update.png");
 			hpUpdate->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
-					switch (type)
-					{
-					case ui::Widget::TouchEventType::BEGAN:
-					{
-						if (this->totalVillager >= 100) {
-							curHP += 50;
-							totalVillager -= 100;
-							updateHPToFile(curHP);
-							updateSumVillagesToFile(totalVillager);
-							this->totalVillagerLabel->setString(to_string(totalVillager));
-							this->hpInfo->setString(to_string(curHP));
-						}
-						
-						break;
+				switch (type)
+				{
+				case ui::Widget::TouchEventType::BEGAN:
+				{
+					if (this->totalVillager >= 100) {
+						curHP += 50;
+						totalVillager -= 100;
+						updateHPToFile(curHP);
+						updateSumVillagesToFile(totalVillager);
+						this->totalVillagerLabel->setString(to_string(totalVillager));
+						this->hpInfo->setString(to_string(curHP));
 					}
-					case ui::Widget::TouchEventType::MOVED:
-						break;
-					case ui::Widget::TouchEventType::ENDED:
-						break;
-					default:
-						break;
-					}
+
+					break;
+				}
+				case ui::Widget::TouchEventType::MOVED:
+					break;
+				case ui::Widget::TouchEventType::ENDED:
+					break;
+				default:
+					break;
+				}
 			});
-			hpUpdate->setAnchorPoint(Vec2(0,0.25));
+			hpUpdate->setAnchorPoint(Vec2(0, 0.25));
 			hpUpdate->setPosition(Vec2(400, 0));
 			hpUpdate->setScale(0.5);
 
-			auto norAtkUpdate = ui::Button::create("Resources/ui/button/ui_ocean_button_update.png", "Resources/ui/button/ui_blue_button_update.png");
+			norAtkUpdate = ui::Button::create("Resources/ui/button/ui_ocean_button_update.png", "Resources/ui/button/ui_blue_button_update.png");
+			norAtkUpdate->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+				switch (type)
+				{
+				case ui::Widget::TouchEventType::BEGAN:
+				{
+					if (this->totalVillager >= 200) {
+						curNorAtk += 20;
+						totalVillager -= 200;
+						updateDamageToFile(curNorAtk);
+						updateSumVillagesToFile(totalVillager);
+						this->totalVillagerLabel->setString(to_string(totalVillager));
+						this->norAtkInfo->setString(to_string(curNorAtk));
+					}
 
+					break;
+				}
+				case ui::Widget::TouchEventType::MOVED:
+					break;
+				case ui::Widget::TouchEventType::ENDED:
+					break;
+				default:
+					break;
+				}
+			});
 			norAtkUpdate->setAnchorPoint(Vec2(0, 0.25));
 			norAtkUpdate->setPosition(Vec2(400, 0));
 			norAtkUpdate->setScale(0.5);
 
-			auto slowAtkUpdate = ui::Button::create("Resources/ui/button/ui_ocean_button_update.png", "Resources/ui/button/ui_blue_button_update.png");
+			slowAtkUpdate = ui::Button::create("Resources/ui/button/ui_ocean_button_update.png", "Resources/ui/button/ui_blue_button_update.png");
+			slowAtkUpdate->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+				switch (type)
+				{
+				case ui::Widget::TouchEventType::BEGAN:
+				{
+					if (this->totalVillager >= 100) {
+						curSlowAtk += 0.1;
+						totalVillager -= 100;
+						updateTimeStunToFile(curSlowAtk);
+						updateSumVillagesToFile(totalVillager);
+						this->totalVillagerLabel->setString(to_string(totalVillager));
+						this->slowAtkInfo->setString(to_string(curSlowAtk));
+					}
 
+					break;
+				}
+				case ui::Widget::TouchEventType::MOVED:
+					break;
+				case ui::Widget::TouchEventType::ENDED:
+					break;
+				default:
+					break;
+				}
+			});
 			slowAtkUpdate->setAnchorPoint(Vec2(0, 0.25));
 			slowAtkUpdate->setPosition(Vec2(400, 0));
 			slowAtkUpdate->setScale(0.5);
 
-			auto ultilAtkUpdate = ui::Button::create("Resources/ui/button/ui_ocean_button_update.png", "Resources/ui/button/ui_blue_button_update.png");
+			ultilAtkUpdate = ui::Button::create("Resources/ui/button/ui_ocean_button_update.png", "Resources/ui/button/ui_blue_button_update.png");
+			ultilAtkUpdate->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+				switch (type)
+				{
+				case ui::Widget::TouchEventType::BEGAN:
+				{
+					if (this->totalVillager >= 500) {
+						curUltilAtk += 0.125;
+						totalVillager -= 100;
+						updateUltiToFile(curUltilAtk);
+						updateSumVillagesToFile(totalVillager);
+						this->totalVillagerLabel->setString(to_string(totalVillager));
+						this->ultilAtkInfo->setString(to_string(curUltilAtk));
+					}
 
+					break;
+				}
+				case ui::Widget::TouchEventType::MOVED:
+					break;
+				case ui::Widget::TouchEventType::ENDED:
+					break;
+				default:
+					break;
+				}
+			});
 			ultilAtkUpdate->setAnchorPoint(Vec2(0, 0.25));
 			ultilAtkUpdate->setPosition(Vec2(400, 0));
 			ultilAtkUpdate->setScale(0.5);
@@ -213,11 +281,11 @@ bool MainMenu::init()
 			slowAtk->addChild(slowAtkInfo);
 			ultiAtk->addChild(ultilAtkInfo);
 
-			totalVillagerLabel  = Label::create(to_string(totalVillager), "Resources/fonts/VCR_OSD_MONO.ttf", 196);
+			totalVillagerLabel = Label::create(to_string(totalVillager), "Resources/fonts/VCR_OSD_MONO.ttf", 196);
 			auto totalVillagerBg = Sprite::create("Resources/ui/button/ui_ocean_button.png");
 			totalVillagerBg->setScale(0.5);
-			totalVillagerLabel->setPosition(totalVillagerBg->getContentSize()/2);
-			totalVillagerBg->setPosition(bgSize.width/2, bgSize.height*0.3);
+			totalVillagerLabel->setPosition(totalVillagerBg->getContentSize() / 2);
+			totalVillagerBg->setPosition(bgSize.width / 2, bgSize.height*0.3);
 			totalVillagerBg->addChild(totalVillagerLabel);
 
 			bg->setAnchorPoint(Vec2(0.5, 0.5));
@@ -301,7 +369,7 @@ void MainMenu::updateTimeStunToFile(float timeStun)
 
 void MainMenu::updateUltiToFile(float ulti)
 {
-	Update::GetInstance()->setUltiDame( ulti);
+	Update::GetInstance()->setUltiDame(ulti);
 	auto hpOfPlayer = to_string(Update::GetInstance()->getHPOfPlayer());
 	auto damageOfPlayer = to_string(Update::GetInstance()->getDamageOfPlayer());
 	auto sumVillages = to_string(Update::GetInstance()->getSumVillages());
@@ -324,7 +392,7 @@ void MainMenu::updateSumVillagesToFile(int villages)
 
 void MainMenu::handlerBtnHpUpdate()
 {
-	
+
 }
 
 void MainMenu::handlerBtnNorAtkUpdate()
