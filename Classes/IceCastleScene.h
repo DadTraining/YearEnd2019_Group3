@@ -22,6 +22,8 @@ private:
 	TMXObjectGroup* m_objectGroup;
 	Sprite* m_player;
 	Player* player;
+	cocos2d::ParticleSystemQuad* snowBackground;
+
 	//enemy
 	vector<MiniBoss01*> Skeletons;
 	vector<Villager*> villagers;
@@ -46,6 +48,7 @@ public:
 	bool onContactBegin(cocos2d::PhysicsContact& contact);
 	void enemyMoveToPlayer();
 	void addHud();
+	void addSnowParticle();
 	void update(float dt);
 
 

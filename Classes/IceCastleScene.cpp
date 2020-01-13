@@ -29,6 +29,7 @@ bool IceCastleScene::init()
 	addHud();
 	createPhysics();
 	addListener();
+	addSnowParticle();
 	scheduleUpdate();
 	return true;
 }
@@ -503,6 +504,16 @@ void IceCastleScene::addHud()
 	HUD = new HudLayer(this, player);
 }
 
+void IceCastleScene::addSnowParticle()
+{
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+	snowBackground = CCParticleSystemQuad::create("Resources/Effect/backgroundSnow.plist");
+	snowBackground->setAnchorPoint(Vec2(0.5, 0.5));
+	//snowBackground->setScale();
+	this->addChild(snowBackground);
+	snowBackground->setGlobalZOrder(Model::TREE_ORDER + 1);
+}
+
 void IceCastleScene::update(float dt)
 {
 	setViewPointCenter(this->m_player->getPosition());
@@ -532,4 +543,6 @@ void IceCastleScene::update(float dt)
 	{
 		bosss[i]->update(dt);
 	}
+	snowBackground->setPosition(m_player->getPosition()
+		+ Vec2(m_player->getContentSize().width, m_player->getContentSize().height));
 }

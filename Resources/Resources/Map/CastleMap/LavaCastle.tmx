@@ -59,7 +59,7 @@
  <objectgroup id="5" name="Objects">
   <object id="1" name="SpawnPoint" type="1" x="73" y="244"/>
   <object id="47" name="ReturnBase" type="100" x="2228" y="347"/>
-  <object id="73" name="ReturnBase" type="99" x="2228" y="347"/>
+  <object id="73" name="FinalBossPortal" type="99" x="2228" y="347"/>
  </objectgroup>
  <layer id="2" name="Background" width="140" height="40">
   <data encoding="csv">
