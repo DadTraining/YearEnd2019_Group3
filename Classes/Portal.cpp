@@ -4,6 +4,7 @@
 #include "CastleScene.h"
 #include "ResultScene.h"
 #include "IceCastleScene.h"
+#include "LavaCastleScene.h"
 Animate * Portal::getIdleAnimate()
 {
 	return this->animationIdle;
@@ -73,6 +74,12 @@ void Portal::returntoCastleScene()
 void Portal::returntoIceCastleScene()
 {
 	auto myScene = IceCastleScene::createScene();
+	Director::getInstance()->replaceScene(TransitionFade::create(0.5f, myScene));
+}
+
+void Portal::returntoLavaCastleScene()
+{
+	auto myScene = LavaCastleScene::createScene();
 	Director::getInstance()->replaceScene(TransitionFade::create(0.5f, myScene));
 }
 

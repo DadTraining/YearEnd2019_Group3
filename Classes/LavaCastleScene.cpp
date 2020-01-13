@@ -6,14 +6,15 @@
 #include "CastleScene.h"
 #include "MainMenu.h"
 #include "IceCastleScene.h"
+#include "LavaCastleScene.h"
 USING_NS_CC;
 
-cocos2d::Scene * IceCastleScene::createScene()
+cocos2d::Scene * LavaCastleScene::createScene()
 {
-	return IceCastleScene::create();
+	return LavaCastleScene::create();
 }
 
-bool IceCastleScene::init()
+bool LavaCastleScene::init()
 {
 	if (!Scene::initWithPhysics())
 	{
@@ -33,9 +34,9 @@ bool IceCastleScene::init()
 	return true;
 }
 
-void IceCastleScene::addMap()
+void LavaCastleScene::addMap()
 {
-	m_tileMap = TMXTiledMap::create("Resources/Map/CastleMap/IceCastle.tmx");
+	m_tileMap = TMXTiledMap::create("Resources/Map/CastleMap/LavaCastle.tmx");
 	m_tileMap->setScale(2);
 	m_meta = m_tileMap->layerNamed("Meta");
 	m_objectGroup = m_tileMap->getObjectGroup("Objects");
@@ -45,7 +46,7 @@ void IceCastleScene::addMap()
 	addChild(m_tileMap, -1);
 }
 
-void IceCastleScene::SpawnPlayer()
+void LavaCastleScene::SpawnPlayer()
 {
 	//number of Villager
 	int numberOfVillager = 0;
@@ -142,11 +143,11 @@ void IceCastleScene::SpawnPlayer()
 			enemy->getSprite()->runAction(animation);
 			addChild(enemy->getSprite());
 		}
-		else if (type == Model::LAVA_BOSS_PORTAL_TYPE)
+		else if (type == Model::FINAL_BOSS_PORTAL_TYPE)
 		{
 			auto portal = new Portal();
 			portal->InitSprite();
-			portal->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_PORTAL_LAVABOSS);
+			portal->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_PORTAL_FINALBOSS);
 			portal->getSprite()->setPosition(posX, posY);
 			addChild(portal->getSprite());
 			portal->setIndex(portals.size());
@@ -178,12 +179,12 @@ void IceCastleScene::SpawnPlayer()
 	}
 }
 
-void IceCastleScene::setViewPointCenter(Vec2 position)
+void LavaCastleScene::setViewPointCenter(Vec2 position)
 {
 	this->getDefaultCamera()->setPosition(position);
 }
 
-Vec2 IceCastleScene::tileCoordForPosition(Vec2 position)
+Vec2 LavaCastleScene::tileCoordForPosition(Vec2 position)
 {
 	int x = position.x / (m_tileMap->getTileSize().width * m_SCALE_32x32);
 	int y = ((m_tileMap->getMapSize().height * m_tileMap->getTileSize().height * m_SCALE_32x32) - position.y)
@@ -191,7 +192,7 @@ Vec2 IceCastleScene::tileCoordForPosition(Vec2 position)
 	return Vec2(x, y);
 }
 
-void IceCastleScene::createPhysics()
+void LavaCastleScene::createPhysics()
 {
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	// Meta
@@ -215,14 +216,14 @@ void IceCastleScene::createPhysics()
 	}
 }
 
-void IceCastleScene::addListener()
+void LavaCastleScene::addListener()
 {
 	auto contactListener = EventListenerPhysicsContact::create();
-	contactListener->onContactBegin = CC_CALLBACK_1(IceCastleScene::onContactBegin, this);
+	contactListener->onContactBegin = CC_CALLBACK_1(LavaCastleScene::onContactBegin, this);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
 }
 
-bool IceCastleScene::onContactBegin(cocos2d::PhysicsContact & contact)
+bool LavaCastleScene::onContactBegin(cocos2d::PhysicsContact & contact)
 {
 	auto a = contact.getShapeA()->getBody();
 	auto b = contact.getShapeB()->getBody();
@@ -380,16 +381,16 @@ bool IceCastleScene::onContactBegin(cocos2d::PhysicsContact & contact)
 			}
 		}
 	}
-	if ((a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_PORTAL_LAVABOSS)
-		|| (a->getCollisionBitmask() == Model::BITMASK_PORTAL_LAVABOSS && b->getCollisionBitmask() == Model::BITMASK_PLAYER))
+	if ((a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_PORTAL_FINALBOSS)
+		|| (a->getCollisionBitmask() == Model::BITMASK_PORTAL_FINALBOSS && b->getCollisionBitmask() == Model::BITMASK_PLAYER))
 	{
-		if (a->getCollisionBitmask() == Model::BITMASK_PORTAL_LAVABOSS)
+		if (a->getCollisionBitmask() == Model::BITMASK_PORTAL_FINALBOSS)
 		{
-			portals.at(a->getGroup())->returntoLavaCastleScene();
+			portals.at(a->getGroup())->returntoCastleScene();
 		}
 		else
 		{
-			portals.at(b->getGroup())->returntoLavaCastleScene();
+			portals.at(b->getGroup())->returntoCastleScene();
 		}
 	}
 	else if ((a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_PORTAL_BASE)
@@ -461,7 +462,7 @@ bool IceCastleScene::onContactBegin(cocos2d::PhysicsContact & contact)
 }
 
 
-void IceCastleScene::enemyMoveToPlayer()
+void LavaCastleScene::enemyMoveToPlayer()
 {
 	for (int i = 0; i < Skeletons.size(); i++) {
 		if (!Skeletons[i]->getAlive())
@@ -500,12 +501,12 @@ void IceCastleScene::enemyMoveToPlayer()
 	}
 }
 
-void IceCastleScene::addHud()
+void LavaCastleScene::addHud()
 {
 	HUD = new HudLayer(this, player);
 }
 
-void IceCastleScene::update(float dt)
+void LavaCastleScene::update(float dt)
 {
 	setViewPointCenter(this->m_player->getPosition());
 	player->update(dt);
