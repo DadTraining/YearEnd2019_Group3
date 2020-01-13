@@ -133,6 +133,19 @@ void LoadMapScene::SpawnPlayer()
 			enemy->getSprite()->runAction(animation);
 			addChild(enemy->getSprite());
 		}
+		else if (type == Model::MAIN_ENEMY4_TYPE)
+		{
+			auto enemy = new Enemy4(this);
+			enemy->setPosSpawn(Vec2(posX, posY));
+			enemy->setIndex(enemys4.size());
+			enemys4.push_back(enemy);
+			SpriteFrameCache::getInstance()->removeSpriteFrames();
+			enemy->getSprite()->setPosition(Vec2(posX, posY));
+			auto animation = RepeatForever::create(enemy->getIdleAnimate());
+			animation->setTag(TAG_ANIMATE_IDLE1);
+			enemy->getSprite()->runAction(animation);
+			addChild(enemy->getSprite());
+		}
 		else if (type == Model::FINAL_BOSS_PORTAL_TYPE)
 		{
 			auto portal = new Portal();

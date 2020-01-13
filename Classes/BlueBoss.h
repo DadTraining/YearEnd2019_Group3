@@ -1,18 +1,11 @@
 #pragma once
 #include "Objects.h"
 #include "Slash.h"
-#define TIME_ONE_ATTACK 0.1f
-#define TIME_ONE_HIT 0.1f
-#define TIME_ONE_IDLE 0.2f
-#define TIME_ONE_RUN 0.1f
-#define TIME_ONE_DEAD 0.15f
-#define TIME_ONE_WALK 0.1f
-#define SKELETON_DAMGE 100.0f
-class Boss : public Objects
+class BlueBoss : public Objects
 {
 public:
-	Boss(Scene* scene);
-	~Boss();
+	BlueBoss(Scene* scene);
+	~BlueBoss();
 	void init();
 	void update(float deltaTime);
 
@@ -22,14 +15,12 @@ public:
 	void setHitAnimate(Animate* hitAnimate);
 	void setRunAnimate(Animate* runAnimate);
 	void setDeadAnimate(Animate* deadAnimate);
-	
+	void setDefenceAnimate(Animate* defenceAnimate);
 	void setHP(float hP);
 	void setDamage(float damage);
 	void setPosSpawn(Point point);
 	void setAIforEnemy();
 	
-	// Got stun
-	void Stun();
 
 	Sprite* getSprite();
 	Animate* getAttackAnimate();
@@ -37,7 +28,7 @@ public:
 	Animate* getHitAnimate();
 	Animate* getRunAnimate();
 	Animate* getDeadAnimate();
-	
+	Animate* getDefenceAnimate();
 	float getHP();
 	float getDamage();
 	Point getPosSpawn();
@@ -51,22 +42,18 @@ public:
 	void Die();
 	void setAlive(bool isAlive);
 	bool getAlive();
-	// Boss attack
-	void attack();
-	void AttackFire();
-	void AttackHeal();
+
 	void createSlash();
 	Slash* getSlash();
 	//---
-	
-
+	void Stun();
 private:
 	Sprite* sprite;
-	Animate *attackAnimate, *idleAnimate, *hitAnimate, *runAnimate, *deadAnimate;
+	Animate *attackAnimate, *idleAnimate, *hitAnimate, *runAnimate, *deadAnimate, *defenceAnimate;
 	float hP, damage;
 	Slash* m_slash;
-	Slash* fireSlash;
 	Scene* targetScene;
 	Point posSpawn;
+	int price;
 	bool isAlive;
 };
