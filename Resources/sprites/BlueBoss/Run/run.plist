@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+		<key>frames</key>
+		<dict>
+			<key>run1.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,72},{30,34}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{30,34}}</string>
+				<key>sourceSize</key>
+				<string>{30,34}</string>
+			</dict>
+
+			<key>run2.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,36},{30,35}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{30,35}}</string>
+				<key>sourceSize</key>
+				<string>{30,35}</string>
+			</dict>
+
+			<key>run3.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,0},{30,35}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{30,35}}</string>
+				<key>sourceSize</key>
+				<string>{30,35}</string>
+			</dict>
+
+		</dict>
+
+		<key>metadata</key>
+		<dict>
+			<key>format</key>
+			<integer>2</integer>
+			<key>size</key>
+			<string>{32,128}</string>
+			<key>textureFileName</key>
+			<string>sideCityzen.png</string>
+			</dict>
+		</dict>
+</plist>

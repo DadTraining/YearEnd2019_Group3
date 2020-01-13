@@ -38,6 +38,7 @@ public:
 	static const int BITMASK_ENEMY3 = BITMASK_ENEMY2 + 1;
 	static const int BITMASK_BOSS = BITMASK_ENEMY3 + 1;
 	static const int BITMASK_ENEMY4 = BITMASK_BOSS + 1;
+	static const int BITMASK_BLUEBOSS = BITMASK_ENEMY4 + 1;
 
 	static const int BITMASK_NORMAL_ATTACK = 50;
 	static const int BITMASK_ENEMY1_ATTACK = BITMASK_NORMAL_ATTACK + 1;
@@ -45,6 +46,7 @@ public:
 	static const int BITMASK_ENEMY3_ATTACK = BITMASK_ENEMY2_ATTACK + 1;
 	static const int BITMASK_BOSS_ATTACK = BITMASK_ENEMY3_ATTACK + 1;
 	static const int BITMASK_ENEMY4_ATTACK = BITMASK_BOSS_ATTACK + 1;
+	static const int BITMASK_BLUEBOSS_ATTACK = BITMASK_ENEMY4_ATTACK + 1;
 
 	static const int BITMASK_PORTAL_FINALBOSS = BITMASK_PLAYER + 99;
 	static const int BITMASK_PORTAL_ICEBOSS = BITMASK_PORTAL_FINALBOSS + 1;
@@ -58,6 +60,7 @@ public:
 	static const int MAIN_ENEMY3_TYPE = 5;	
 	static const int MAIN_BOSS_TYPE = 6;
 	static const int MAIN_ENEMY4_TYPE = 7;
+	static const int MAIN_BLUEBOSS_TYPE = 8;
 	static const int FINAL_BOSS_PORTAL_TYPE = 99;
 	static const int ICE_BOSS_PORTAL_TYPE = FINAL_BOSS_PORTAL_TYPE + 1;
 	static const int LAVA_BOSS_PORTAL_TYPE = ICE_BOSS_PORTAL_TYPE + 1;
