@@ -136,6 +136,26 @@ void Sound::soundBackGroundCastle()
 	audio->playBackgroundMusic("Resources/sounds/Background/Background_castle.mp3", true);
 }
 
+void Sound::soundBackGroundIceCastle()
+{
+	if (this->isMute)
+	{
+		return;
+	}
+	auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
+	audio->playBackgroundMusic("Resources/sounds/Background/IceCastleScene.mp3", true);
+}
+
+void Sound::soundBackGroundLavaCastle()
+{
+	if (this->isMute)
+	{
+		return;
+	}
+	auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
+	audio->playBackgroundMusic("Resources/sounds/Background/LavaCastleScene.mp3", true);
+}
+
 void Sound::soundMainMenu()
 {
 	if (this->isMute)
@@ -180,6 +200,9 @@ void Sound::preLoadSound()
 	audio->preloadBackgroundMusic("Resources/sounds/Background/176_Barren_Wastes.mp3");
 	audio->preloadBackgroundMusic("Resources/sounds/Background/Background_castle.mp3");
 	audio->preloadBackgroundMusic("Resources/sounds/Background/MainMenuTheme.mp3");
+	audio->preloadBackgroundMusic("Resources/sounds/Background/IceCastleScene.mp3");
+	audio->preloadBackgroundMusic("Resources/sounds/Background/LavaCastleScene.mp3");
+
 	CCLOG("------- Done Sound");
 
 }

@@ -23,7 +23,7 @@ bool IceCastleScene::init()
 	this->getPhysicsWorld()->setGravity(Vec2(0, 0));
 	this->getPhysicsWorld()->setSubsteps(2);
 	this->setTag(Model::FINAL_BOSS_PORTAL_TYPE);
-	Sound::GetInstance()->soundBackGroundCastle();
+	Sound::GetInstance()->soundBackGroundIceCastle();
 	addMap();
 	SpawnPlayer();
 	addHud();
@@ -40,8 +40,6 @@ void IceCastleScene::addMap()
 	m_meta = m_tileMap->layerNamed("Meta");
 	m_objectGroup = m_tileMap->getObjectGroup("Objects");
 	m_meta->setVisible(false);
-	auto bossDoorTop = m_tileMap->layerNamed("BossDoorTop");
-	bossDoorTop->setGlobalZOrder(Model::TREE_ORDER);
 	addChild(m_tileMap, -1);
 }
 
