@@ -159,7 +159,7 @@ void Enemy4::setAIforEnemy()
 {
 	auto rpIdleAnimate = RepeatForever::create(this->getIdleAnimate());
 	rpIdleAnimate->setTag(TAG_ANIMATE_IDLE1);
-	auto rpAttackAnimate = this->getAttackAnimate();
+	auto rpAttackAnimate = RepeatForever::create(this->getAttackAnimate());
 	rpAttackAnimate->setTag(TAG_ANIMATE_ATTACK);
 
 	auto player = Update::GetInstance()->getPlayer();
@@ -373,7 +373,7 @@ void Enemy4::Stun()
 	{
 		return;
 	}
-	auto delay = DelayTime::create(1.5f);
+	auto delay = DelayTime::create(Update::GetInstance()->getStunTime());
 	sprite->stopAllActions();
 	sprite->getPhysicsBody()->setVelocity(Vec2(0, 0));
 	sprite->runAction(delay);

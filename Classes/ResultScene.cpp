@@ -22,6 +22,15 @@ bool ResultScene::init()
 	rsLayer->setPosition(cocos2d::Vec2(0, visibleSize.height*0.2));
 	rsLayer->setContentSize(cocos2d::Size(visibleSize.width, visibleSize.height*0.6));
 	std::string noti = (!isAlive)?"DEAD!!!":"VICTORY!!!";
+	if (isAlive) {
+		auto hp = to_string(Update::GetInstance()->getHPOfPlayer());
+		auto damage = to_string(Update::GetInstance()->getDamageOfPlayer());
+		Update::GetInstance()->setSumVillages(Update::GetInstance()->getSumVillages() + this->numVillager);
+		auto sumVillages = to_string(Update::GetInstance()->getSumVillages());
+		auto conditionUlti = to_string(Update::GetInstance()->getConditionUlti());
+		auto stunTime = to_string(Update::GetInstance()->getStunTime());
+		FileUtils::getInstance()->writeStringToFile(hp + "\r\n" + damage + "\r\n" + sumVillages + "\r\n" + conditionUlti + "\r\n" +stunTime, Update::GetInstance()->getPath());
+	}
 
 	auto rsText = cocos2d::Label::create("+" + std::to_string(this->numVillager), "Resources/fonts/joystix monospace.ttf", 36);
 	rsText->setPosition(rsLayer->getContentSize() / 2);

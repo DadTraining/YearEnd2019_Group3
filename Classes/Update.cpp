@@ -22,8 +22,15 @@ Update * Update::GetInstance()
 
 void Update::Init()
 {
-	this->damageOfPlayer = 100.0f;
-	this->hpOfPlayer = 3000.0f;
+	this->path = "Resources/InformationOfPlayer.txt";
+	readFile(path);
+
+		this->hpOfPlayer = allData[0];
+		this->damageOfPlayer = allData[1];
+		this->sumVillages = allData[2];
+		this->conditionUlti = allData[3];
+		this->stunTime = allData[4];
+
 	this->damageOfMB1 = 100.0f;
 	this->hpOfMB1 = 500.0f;
 	this->damageOfEm2 = damageOfMB1 / 2;
@@ -36,6 +43,26 @@ void Update::Init()
 	this->hpOfBoss = 3000.0f;
 	CCLOG("------- Done Update");
 
+}
+
+void Update::readFile(string path)
+{
+
+	bool isExist = FileUtils::getInstance()->isFileExist(path);
+	string data = FileUtils::getInstance()->getStringFromFile(path);
+	log("%s", data.c_str());
+	char* cstr = const_cast<char*>(data.c_str());
+	string text;
+	string numOfImage;
+	char* pch = strtok(cstr, "\r\n");
+	
+	while (pch != NULL)
+	{
+		std::string::size_type sz;
+		float dt = std::stof(pch, &sz);
+		allData.push_back(dt);
+		pch = strtok(NULL, "\r\n");
+	}
 }
 
 float Update::getDamageOfPlayer()
@@ -106,4 +133,49 @@ Player* Update::getPlayer()
 
 void Update::setPlayer(Player* player) {
 	this->player = player;
+}
+
+string Update::getPath()
+{
+	return this->path;
+}
+
+int Update::getSumVillages()
+{
+	return this->sumVillages;
+}
+
+float Update::getStunTime()
+{
+	return this->stunTime;
+}
+
+int Update::getConditionUlti()
+{
+	return this->conditionUlti;
+}
+
+void Update::setSumVillages(int sumVillages)
+{
+	this->sumVillages = sumVillages;
+}
+
+void Update::setHpOfPlayer(float hp)
+{
+	this->hpOfPlayer = hp;
+}
+
+void Update::setDamageOfPlayer(float damage)
+{
+	this->damageOfPlayer = damage;
+}
+
+void Update::setTimeStun(float time)
+{
+	this->stunTime = time;
+}
+
+void Update::setUltiDame(float i)
+{
+	this->conditionUlti = i;
 }

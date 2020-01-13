@@ -24,6 +24,8 @@ void Player::init()
 
 	this->damage = Update::GetInstance()->getDamageOfPlayer();
 	this->hP = Update::GetInstance()->getHPOfPlayer();
+	this->timeStun = Update::GetInstance()->getStunTime();
+	this->ratioUlti = Update::GetInstance()->getConditionUlti();
 	this->villagersNum = 0;
 	this->isAlive = true;
 	//Create sprite
@@ -236,7 +238,7 @@ void Player::createSlash()
 	m_slashUltimate = new Slash(100, 150);
 	m_slashUltimate->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_NORMAL_ATTACK);
 	targetScene->addChild(m_slashUltimate->getSprite());
-	m_slashUltimate->setDamge(damage * 4);
+	m_slashUltimate->setDamge(damage * this->ratioUlti);
 }
 
 void Player::normalAttack()
@@ -357,6 +359,16 @@ float  Player::getHP()
 float  Player::getDamage()
 {
 	return this->damage;
+}
+
+float Player::getTimeStun()
+{
+	return this->timeStun;
+}
+
+float Player::getRatioUlti()
+{
+	return this->ratioUlti;
 }
 
 void Player::Die()

@@ -1,5 +1,6 @@
 #include "MainMenu.h"
 #include "Sound.h"
+#include "Update.h"
 Scene* MainMenu::createScene()
 {
 	return MainMenu::create();
@@ -97,11 +98,16 @@ bool MainMenu::init()
 	flameBtn->setOpacity(0);
 	flameBtn->addTouchEventListener([&](Ref* Sender, ui::Widget::TouchEventType type) {
 		if (type == ui::Widget::TouchEventType::BEGAN) {
+			this->curHP = Update::GetInstance()->getHPOfPlayer();
+			this->curNorAtk = Update::GetInstance()->getDamageOfPlayer();
+			this->curSlowAtk = Update::GetInstance()->getStunTime();
+			this->curUltilAtk = Update::GetInstance()->getConditionUlti();
+			this->totalVillager = Update::GetInstance()->getSumVillages();
 			updateLayer = LayerColor::create(Color4B(0, 0, 0, 100));
 			updateLayer->setTag(01);
 			//---------------------------//
 			auto bg = Sprite::create("Resources/ui/popup/ui_ocean_popup_landscape.png");
-			auto title = Label::createWithTTF("Update", "Resources/fonts/joystix monospace.ttf", 172);
+			auto title = Label::createWithTTF("Upgrade", "Resources/fonts/joystix monospace.ttf", 172);
 			auto titleBoard = Sprite::create("Resources/ui/button/ui_ocean_button.png");
 			auto exit = ui::Button::create("Resources/ui/button/ui_ocean_button_exit.png", "Resources/ui/button/ui_blue_button_exit.png");
 
@@ -127,48 +133,140 @@ bool MainMenu::init()
 			ultiAtk->setContentSize(Size(200, 200));
 			ultiAtk->setPosition(bgSize.width*0.6, bgSize.height*0.6);
 
-			
-			auto hpInfo = Label::create(to_string(curHP),"Resources/fonts/VCR_OSD_MONO.ttf", 96);
 
-			hpInfo->setAnchorPoint(Vec2(0,0));
+			hpInfo = Label::create(to_string(curHP), "Resources/fonts/VCR_OSD_MONO.ttf", 96);
+
+			hpInfo->setAnchorPoint(Vec2(0, 0));
 			hpInfo->setPosition(250, 50);
 
 
-			auto norAtkInfo = Label::create(to_string(curNorAtk), "Resources/fonts/VCR_OSD_MONO.ttf", 96);
+			norAtkInfo = Label::create(to_string(curNorAtk), "Resources/fonts/VCR_OSD_MONO.ttf", 96);
 
 			norAtkInfo->setAnchorPoint(Vec2(0, 0));
 			norAtkInfo->setPosition(250, 50);
 
-			auto slowAtkInfo = Label::create(to_string(curSlowAtk) + "s", "Resources/fonts/VCR_OSD_MONO.ttf", 96);
+			slowAtkInfo = Label::create(to_string(curSlowAtk) + "s", "Resources/fonts/VCR_OSD_MONO.ttf", 96);
 
 			slowAtkInfo->setAnchorPoint(Vec2(0, 0));
 			slowAtkInfo->setPosition(260, 50);
 
-			auto ultilAtkInfo = Label::create(to_string(curUltilAtk), "Resources/fonts/VCR_OSD_MONO.ttf", 96);
+			ultilAtkInfo = Label::create(to_string(curUltilAtk), "Resources/fonts/VCR_OSD_MONO.ttf", 96);
 
 			ultilAtkInfo->setAnchorPoint(Vec2(0, 0));
 			ultilAtkInfo->setPosition(250, 50);
 
-			auto hpUpdate = ui::Button::create("Resources/ui/button/ui_ocean_button_update.png", "Resources/ui/button/ui_blue_button_update.png");
+			hpUpdate = ui::Button::create("Resources/ui/button/ui_ocean_button_update.png", "Resources/ui/button/ui_blue_button_update.png");
+			hpUpdate->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+				switch (type)
+				{
+				case ui::Widget::TouchEventType::BEGAN:
+				{
+					if (this->totalVillager >= 100) {
+						curHP += 50;
+						totalVillager -= 100;
+						updateHPToFile(curHP);
+						updateSumVillagesToFile(totalVillager);
+						this->totalVillagerLabel->setString(to_string(totalVillager));
+						this->hpInfo->setString(to_string(curHP));
+					}
 
-			hpUpdate->setAnchorPoint(Vec2(0,0.25));
+					break;
+				}
+				case ui::Widget::TouchEventType::MOVED:
+					break;
+				case ui::Widget::TouchEventType::ENDED:
+					break;
+				default:
+					break;
+				}
+			});
+			hpUpdate->setAnchorPoint(Vec2(0, 0.25));
 			hpUpdate->setPosition(Vec2(400, 0));
 			hpUpdate->setScale(0.5);
 
-			auto norAtkUpdate = ui::Button::create("Resources/ui/button/ui_ocean_button_update.png", "Resources/ui/button/ui_blue_button_update.png");
+			norAtkUpdate = ui::Button::create("Resources/ui/button/ui_ocean_button_update.png", "Resources/ui/button/ui_blue_button_update.png");
+			norAtkUpdate->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+				switch (type)
+				{
+				case ui::Widget::TouchEventType::BEGAN:
+				{
+					if (this->totalVillager >= 200) {
+						curNorAtk += 20;
+						totalVillager -= 200;
+						updateDamageToFile(curNorAtk);
+						updateSumVillagesToFile(totalVillager);
+						this->totalVillagerLabel->setString(to_string(totalVillager));
+						this->norAtkInfo->setString(to_string(curNorAtk));
+					}
 
+					break;
+				}
+				case ui::Widget::TouchEventType::MOVED:
+					break;
+				case ui::Widget::TouchEventType::ENDED:
+					break;
+				default:
+					break;
+				}
+			});
 			norAtkUpdate->setAnchorPoint(Vec2(0, 0.25));
 			norAtkUpdate->setPosition(Vec2(400, 0));
 			norAtkUpdate->setScale(0.5);
 
-			auto slowAtkUpdate = ui::Button::create("Resources/ui/button/ui_ocean_button_update.png", "Resources/ui/button/ui_blue_button_update.png");
+			slowAtkUpdate = ui::Button::create("Resources/ui/button/ui_ocean_button_update.png", "Resources/ui/button/ui_blue_button_update.png");
+			slowAtkUpdate->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+				switch (type)
+				{
+				case ui::Widget::TouchEventType::BEGAN:
+				{
+					if (this->totalVillager >= 100) {
+						curSlowAtk += 0.1;
+						totalVillager -= 100;
+						updateTimeStunToFile(curSlowAtk);
+						updateSumVillagesToFile(totalVillager);
+						this->totalVillagerLabel->setString(to_string(totalVillager));
+						this->slowAtkInfo->setString(to_string(curSlowAtk));
+					}
 
+					break;
+				}
+				case ui::Widget::TouchEventType::MOVED:
+					break;
+				case ui::Widget::TouchEventType::ENDED:
+					break;
+				default:
+					break;
+				}
+			});
 			slowAtkUpdate->setAnchorPoint(Vec2(0, 0.25));
 			slowAtkUpdate->setPosition(Vec2(400, 0));
 			slowAtkUpdate->setScale(0.5);
 
-			auto ultilAtkUpdate = ui::Button::create("Resources/ui/button/ui_ocean_button_update.png", "Resources/ui/button/ui_blue_button_update.png");
+			ultilAtkUpdate = ui::Button::create("Resources/ui/button/ui_ocean_button_update.png", "Resources/ui/button/ui_blue_button_update.png");
+			ultilAtkUpdate->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+				switch (type)
+				{
+				case ui::Widget::TouchEventType::BEGAN:
+				{
+					if (this->totalVillager >= 500) {
+						curUltilAtk += 0.125;
+						totalVillager -= 100;
+						updateUltiToFile(curUltilAtk);
+						updateSumVillagesToFile(totalVillager);
+						this->totalVillagerLabel->setString(to_string(totalVillager));
+						this->ultilAtkInfo->setString(to_string(curUltilAtk));
+					}
 
+					break;
+				}
+				case ui::Widget::TouchEventType::MOVED:
+					break;
+				case ui::Widget::TouchEventType::ENDED:
+					break;
+				default:
+					break;
+				}
+			});
 			ultilAtkUpdate->setAnchorPoint(Vec2(0, 0.25));
 			ultilAtkUpdate->setPosition(Vec2(400, 0));
 			ultilAtkUpdate->setScale(0.5);
@@ -183,16 +281,11 @@ bool MainMenu::init()
 			slowAtk->addChild(slowAtkInfo);
 			ultiAtk->addChild(ultilAtkInfo);
 
-			auto totalVillagerLabel  = Label::create(to_string(totalVillager), "Resources/fonts/VCR_OSD_MONO.ttf", 196);
-
-
+			totalVillagerLabel = Label::create(to_string(totalVillager), "Resources/fonts/VCR_OSD_MONO.ttf", 196);
 			auto totalVillagerBg = Sprite::create("Resources/ui/button/ui_ocean_button.png");
-
 			totalVillagerBg->setScale(0.5);
-
-			totalVillagerLabel->setPosition(totalVillagerBg->getContentSize()/2);
-
-			totalVillagerBg->setPosition(bgSize.width/2, bgSize.height*0.3);
+			totalVillagerLabel->setPosition(totalVillagerBg->getContentSize() / 2);
+			totalVillagerBg->setPosition(bgSize.width / 2, bgSize.height*0.3);
 			totalVillagerBg->addChild(totalVillagerLabel);
 
 			bg->setAnchorPoint(Vec2(0.5, 0.5));
@@ -237,5 +330,83 @@ bool MainMenu::init()
 		};
 	});
 	this->addChild(flameBtn);
+	scheduleUpdate();
 	return true;
+}
+
+void MainMenu::updateHPToFile(float hp)
+{
+	Update::GetInstance()->setHpOfPlayer(hp);
+	auto hpOfPlayer = to_string(Update::GetInstance()->getHPOfPlayer());
+	auto damage = to_string(Update::GetInstance()->getDamageOfPlayer());
+	auto sumVillages = to_string(Update::GetInstance()->getSumVillages());
+	auto conditionUlti = to_string(Update::GetInstance()->getConditionUlti());
+	auto stunTime = to_string(Update::GetInstance()->getStunTime());
+	FileUtils::getInstance()->writeStringToFile(hpOfPlayer + "\r\n" + damage + "\r\n" + sumVillages + "\r\n" + conditionUlti + "\r\n" + stunTime, Update::GetInstance()->getPath());
+}
+
+void MainMenu::updateDamageToFile(float damage)
+{
+	Update::GetInstance()->setDamageOfPlayer(damage);
+	auto hpOfPlayer = to_string(Update::GetInstance()->getHPOfPlayer());
+	auto damageOfPlayer = to_string(Update::GetInstance()->getDamageOfPlayer());
+	auto sumVillages = to_string(Update::GetInstance()->getSumVillages());
+	auto conditionUlti = to_string(Update::GetInstance()->getConditionUlti());
+	auto stunTime = to_string(Update::GetInstance()->getStunTime());
+	FileUtils::getInstance()->writeStringToFile(hpOfPlayer + "\r\n" + damageOfPlayer + "\r\n" + sumVillages + "\r\n" + conditionUlti + "\r\n" + stunTime, Update::GetInstance()->getPath());
+}
+
+void MainMenu::updateTimeStunToFile(float timeStun)
+{
+	Update::GetInstance()->setTimeStun(timeStun);
+	auto hpOfPlayer = to_string(Update::GetInstance()->getHPOfPlayer());
+	auto damageOfPlayer = to_string(Update::GetInstance()->getDamageOfPlayer());
+	auto sumVillages = to_string(Update::GetInstance()->getSumVillages());
+	auto conditionUlti = to_string(Update::GetInstance()->getConditionUlti());
+	auto stunTime = to_string(Update::GetInstance()->getStunTime());
+	FileUtils::getInstance()->writeStringToFile(hpOfPlayer + "\r\n" + damageOfPlayer + "\r\n" + sumVillages + "\r\n" + conditionUlti + "\r\n" + stunTime, Update::GetInstance()->getPath());
+}
+
+void MainMenu::updateUltiToFile(float ulti)
+{
+	Update::GetInstance()->setUltiDame(ulti);
+	auto hpOfPlayer = to_string(Update::GetInstance()->getHPOfPlayer());
+	auto damageOfPlayer = to_string(Update::GetInstance()->getDamageOfPlayer());
+	auto sumVillages = to_string(Update::GetInstance()->getSumVillages());
+	auto conditionUlti = to_string(Update::GetInstance()->getConditionUlti());
+	auto stunTime = to_string(Update::GetInstance()->getStunTime());
+	FileUtils::getInstance()->writeStringToFile(hpOfPlayer + "\r\n" + damageOfPlayer + "\r\n" + sumVillages + "\r\n" + conditionUlti + "\r\n" + stunTime, Update::GetInstance()->getPath());
+}
+
+void MainMenu::updateSumVillagesToFile(int villages)
+{
+	Update::GetInstance()->setSumVillages(villages);
+	auto hpOfPlayer = to_string(Update::GetInstance()->getHPOfPlayer());
+	auto damageOfPlayer = to_string(Update::GetInstance()->getDamageOfPlayer());
+	auto sumVillages = to_string(Update::GetInstance()->getSumVillages());
+	auto conditionUlti = to_string(Update::GetInstance()->getConditionUlti());
+	auto stunTime = to_string(Update::GetInstance()->getStunTime());
+	FileUtils::getInstance()->writeStringToFile(hpOfPlayer + "\r\n" + damageOfPlayer + "\r\n" + sumVillages + "\r\n" + conditionUlti + "\r\n" + stunTime, Update::GetInstance()->getPath());
+
+}
+
+void MainMenu::handlerBtnHpUpdate()
+{
+
+}
+
+void MainMenu::handlerBtnNorAtkUpdate()
+{
+}
+
+void MainMenu::handlerBtnSlowAtkUpdate()
+{
+}
+
+void MainMenu::handlerBtnUltilAtkUpdate()
+{
+}
+
+void MainMenu::update(float dt)
+{
 }

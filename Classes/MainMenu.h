@@ -12,21 +12,32 @@ class MainMenu : public cocos2d::Scene
 private:
 	cocos2d::MenuItemImage* itemOn;
 	cocos2d::MenuItemImage* itemOff;
-
-public:
 	ui::Button* play;
 	Menu* pMenu;
 	ui::Button* flameBtn;
 	LayerColor* updateLayer;
-	int curHP = 100;
-	int curSlowAtk = 2;
-	int curNorAtk = 100;
-	int curUltilAtk = 200;
-	int totalVillager = 1000;
-    static cocos2d::Scene* createScene();
+	int curHP;
+	float curSlowAtk;
+	int curNorAtk;
+	float curUltilAtk;
+	int totalVillager;
+	ui::Button*hpUpdate,*norAtkUpdate,*slowAtkUpdate,*ultilAtkUpdate;
+	Label *totalVillagerLabel, *hpInfo, *norAtkInfo, *slowAtkInfo, *ultilAtkInfo;
+
+public:    static cocos2d::Scene* createScene();
     virtual bool init();
 	void Play();
     CREATE_FUNC(MainMenu);
+	void updateHPToFile(float hp);
+	void updateDamageToFile(float damage);
+	void updateTimeStunToFile(float timeStun);
+	void updateUltiToFile(float ulti);
+	void updateSumVillagesToFile(int villages);
+	void handlerBtnHpUpdate();
+	void handlerBtnNorAtkUpdate();
+	void handlerBtnSlowAtkUpdate();
+	void handlerBtnUltilAtkUpdate();
+	void update(float dt);
 };
 
 #endif // __MAIN_MENU_H__

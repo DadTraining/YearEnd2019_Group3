@@ -241,7 +241,7 @@ void MiniBoss01::setAIforEnemy()
 
 void MiniBoss01::Stun()
 {
-	auto delay = DelayTime::create(1.5f);
+	auto delay = DelayTime::create(Update::GetInstance()->getStunTime());
 	if (sprite->getNumberOfRunningActionsByTag(TAG_ANIMATE_DIE) == 0)
 	{
 		sprite->stopAllActions();

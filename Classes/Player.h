@@ -49,6 +49,8 @@ public:
 	
 	float getHP();
 	float getDamage();
+	float getTimeStun();
+	float getRatioUlti();
 	void Die();
 	int getVillagersNum();
 
@@ -66,4 +68,6 @@ private:
 	Scene* targetScene;
 	int villagersNum;
 	bool isAlive;
+	float ratioUlti;
+	float timeStun;
 };
