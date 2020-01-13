@@ -3,6 +3,7 @@
 #include "MainMenu.h"
 #include "CastleScene.h"
 #include "ResultScene.h"
+#include "IceCastleScene.h"
 Animate * Portal::getIdleAnimate()
 {
 	return this->animationIdle;
@@ -68,6 +69,14 @@ void Portal::returntoCastleScene()
 	auto myScene = CastleScene::createScene();
 	Director::getInstance()->replaceScene(TransitionFade::create(0.5f, myScene));
 }
+
+void Portal::returntoIceCastleScene()
+{
+	auto myScene = IceCastleScene::createScene();
+	Director::getInstance()->replaceScene(TransitionFade::create(0.5f, myScene));
+}
+
+
 
 void Portal::setIndex(int index)
 {

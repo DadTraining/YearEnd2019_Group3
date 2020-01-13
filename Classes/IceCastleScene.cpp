@@ -8,13 +8,12 @@
 #include "IceCastleScene.h"
 USING_NS_CC;
 
-
-Scene* LoadMapScene::createScene()
+cocos2d::Scene * IceCastleScene::createScene()
 {
-	return LoadMapScene::create();
+	return IceCastleScene::create();
 }
 
-bool LoadMapScene::init()
+bool IceCastleScene::init()
 {
 	if (!Scene::initWithPhysics())
 	{
@@ -23,32 +22,37 @@ bool LoadMapScene::init()
 	this->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 	this->getPhysicsWorld()->setGravity(Vec2(0, 0));
 	this->getPhysicsWorld()->setSubsteps(2);
-	Sound::GetInstance()->soundBackGroundDesert();
-	addMap(); // Done
-	SpawnPlayer(); // Done
+	this->setTag(Model::FINAL_BOSS_PORTAL_TYPE);
+	Sound::GetInstance()->soundBackGroundCastle();
+	addMap();
+	SpawnPlayer();
 	addHud();
-	createPhysics(); // Done
-	addListener(); // Done
-	addSandParticle(); // Done
-	scheduleUpdate(); // Done
+	createPhysics();
+	addListener();
+	scheduleUpdate();
 	return true;
 }
 
-void LoadMapScene::menuCloseCallback(Ref* pSender)
+void IceCastleScene::addMap()
 {
-	Director::getInstance()->end();
+	m_tileMap = TMXTiledMap::create("Resources/Map/CastleMap/IceCastle.tmx");
+	m_tileMap->setScale(2);
+	m_meta = m_tileMap->layerNamed("Meta");
+	m_objectGroup = m_tileMap->getObjectGroup("Objects");
+	m_meta->setVisible(false);
+	auto bossDoorTop = m_tileMap->layerNamed("BossDoorTop");
+	bossDoorTop->setGlobalZOrder(Model::TREE_ORDER);
+	addChild(m_tileMap, -1);
 }
 
-// This method spawn the character at the coordinator of the player in
-// the Map
-void LoadMapScene::SpawnPlayer()
+void IceCastleScene::SpawnPlayer()
 {
-	// ---
 	//number of Villager
 	int numberOfVillager = 0;
 	int numberOfSkeleton = 0;
 	int numberOfEnemy2 = 0;
 	int numberOfEnemy3 = 0;
+	int numberOfBoss = 0;
 	// ---
 	auto objects = m_objectGroup->getObjects();
 	for (int i = 0; i < objects.size(); i++)
@@ -56,16 +60,20 @@ void LoadMapScene::SpawnPlayer()
 		auto object = objects.at(i);
 
 		auto properties = object.asValueMap();
-		int posX = properties.at("x").asFloat() * m_SCALE_32x32;
-		int posY = properties.at("y").asFloat() * m_SCALE_32x32;
+		int posX = properties.at("x").asFloat() * m_SCALE_16x16;
+		int posY = properties.at("y").asFloat() * m_SCALE_16x16;
 		int type = object.asValueMap().at("type").asInt();
 		// Case the player is the main character
 		if (type == Model::MAIN_CHARACTER_TYPE)
 		{
 			player = new Player(this);
+			player->setHP(Update::GetInstance()->getPlayer()->getHP());
+			player->setDamage(Update::GetInstance()->getPlayer()->getDamage());
+			player->increaseVillager(Update::GetInstance()->getPlayer()->getVillagersNum());
 			Update::GetInstance()->setPlayer(player);
 			SpriteFrameCache::getInstance()->removeSpriteFrames();
 			m_player = player->getSprite();
+			m_player->removeFromParent();
 			m_player->setPosition(Vec2(posX, posY));
 			m_player->setScale(m_SCALE_32x32 / 2);
 			addChild(m_player);
@@ -108,7 +116,7 @@ void LoadMapScene::SpawnPlayer()
 			enemy->getSprite()->runAction(animation);
 			addChild(enemy->getSprite());
 		}
-		else if (type == Model::MAIN_ENEMY3_TYPE+100)
+		else if (type == Model::MAIN_ENEMY3_TYPE + 100)
 		{
 			auto enemy = new Enemy3(this);
 			enemy->setPosSpawn(Vec2(posX, posY));
@@ -134,11 +142,11 @@ void LoadMapScene::SpawnPlayer()
 			enemy->getSprite()->runAction(animation);
 			addChild(enemy->getSprite());
 		}
-		else if (type == Model::ICE_BOSS_PORTAL_TYPE)
+		else if (type == Model::FINAL_BOSS_PORTAL_TYPE)
 		{
 			auto portal = new Portal();
 			portal->InitSprite();
-			portal->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_PORTAL_ICEBOSS);
+			portal->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_PORTAL_FINALBOSS);
 			portal->getSprite()->setPosition(posX, posY);
 			addChild(portal->getSprite());
 			portal->setIndex(portals.size());
@@ -154,16 +162,28 @@ void LoadMapScene::SpawnPlayer()
 			portal->setIndex(portals.size());
 			portals.push_back(portal);
 		}
+		else if (type == Model::MAIN_BOSS_TYPE)
+		{
+			auto boss = new Boss(this);
+			boss->setPosSpawn(Vec2(posX, posY));
+			boss->setIndex(bosss.size());
+			bosss.push_back(boss);
+			SpriteFrameCache::getInstance()->removeSpriteFrames();
+			boss->getSprite()->setPosition(Vec2(posX, posY));
+			auto animation = RepeatForever::create(boss->getIdleAnimate());
+			animation->setTag(TAG_ANIMATE_IDLE1);
+			boss->getSprite()->runAction(animation);
+			addChild(boss->getSprite());
+		}
 	}
-	CCLOG("------- Done Spawn");
 }
 
-void LoadMapScene::setViewPointCenter(Vec2 position)
+void IceCastleScene::setViewPointCenter(Vec2 position)
 {
 	this->getDefaultCamera()->setPosition(position);
 }
 
-Vec2 LoadMapScene::tileCoordForPosition(Vec2 position)
+Vec2 IceCastleScene::tileCoordForPosition(Vec2 position)
 {
 	int x = position.x / (m_tileMap->getTileSize().width * m_SCALE_32x32);
 	int y = ((m_tileMap->getMapSize().height * m_tileMap->getTileSize().height * m_SCALE_32x32) - position.y)
@@ -171,23 +191,7 @@ Vec2 LoadMapScene::tileCoordForPosition(Vec2 position)
 	return Vec2(x, y);
 }
 
-// indicate collsion between player and object
-
-void LoadMapScene::addMap()
-{
-	m_tileMap = TMXTiledMap::create("Resources/Map/TileMap2.tmx");
-	m_tileMap->setScale(m_SCALE_32x32);
-	m_meta = m_tileMap->layerNamed("Meta");
-	m_objectGroup = m_tileMap->getObjectGroup("Objects");
-	m_meta->setVisible(false);
-	auto tree = m_tileMap->layerNamed("TreeTop");
-	auto statueTop = m_tileMap->layerNamed("StatueTop");
-	statueTop->setGlobalZOrder(Model::TREE_ORDER);
-	tree->setGlobalZOrder(Model::TREE_ORDER);
-	addChild(m_tileMap, -1);
-}
-
-void LoadMapScene::createPhysics()
+void IceCastleScene::createPhysics()
 {
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	// Meta
@@ -211,14 +215,14 @@ void LoadMapScene::createPhysics()
 	}
 }
 
-void LoadMapScene::addListener()
+void IceCastleScene::addListener()
 {
 	auto contactListener = EventListenerPhysicsContact::create();
-	contactListener->onContactBegin = CC_CALLBACK_1(LoadMapScene::onContactBegin, this);
+	contactListener->onContactBegin = CC_CALLBACK_1(IceCastleScene::onContactBegin, this);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
 }
 
-bool LoadMapScene::onContactBegin(cocos2d::PhysicsContact & contact)
+bool IceCastleScene::onContactBegin(cocos2d::PhysicsContact & contact)
 {
 	auto a = contact.getShapeA()->getBody();
 	auto b = contact.getShapeB()->getBody();
@@ -353,7 +357,68 @@ bool LoadMapScene::onContactBegin(cocos2d::PhysicsContact & contact)
 			player->gotHit(currentEnemy3->getSlash()->getDamge());
 		}
 	}
-
+	//Player attack boss
+	if ((a->getCollisionBitmask() == Model::BITMASK_BOSS && b->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK)
+		|| (a->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK && b->getCollisionBitmask() == Model::BITMASK_BOSS))
+	{
+		if (a->getCollisionBitmask() == Model::BITMASK_BOSS)
+		{
+			auto boss = bosss.at(a->getGroup());
+			boss->gotHit(player->getSlash()->getDamge());
+			if (b->getTag() == Model::KNOCKBACK)
+			{
+				boss->Stun();
+			}
+		}
+		else if (b->getCollisionBitmask() == Model::BITMASK_BOSS)
+		{
+			auto boss = bosss.at(b->getGroup());
+			boss->gotHit(player->getSlash()->getDamge());
+			if (a->getTag() == Model::KNOCKBACK)
+			{
+				boss->Stun();
+			}
+		}
+	}
+	if ((a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_PORTAL_FINALBOSS)
+		|| (a->getCollisionBitmask() == Model::BITMASK_PORTAL_FINALBOSS && b->getCollisionBitmask() == Model::BITMASK_PLAYER))
+	{
+		if (a->getCollisionBitmask() == Model::BITMASK_PORTAL_FINALBOSS)
+		{
+			portals.at(a->getGroup())->returntoCastleScene();
+		}
+		else
+		{
+			portals.at(b->getGroup())->returntoCastleScene();
+		}
+	}
+	else if ((a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_PORTAL_BASE)
+		|| (a->getCollisionBitmask() == Model::BITMASK_PORTAL_BASE && b->getCollisionBitmask() == Model::BITMASK_PLAYER))
+	{
+		if (a->getCollisionBitmask() == Model::BITMASK_PORTAL_BASE)
+		{
+			portals.at(a->getGroup())->returntoMainMenu();
+		}
+		else
+		{
+			portals.at(b->getGroup())->returntoMainMenu();
+		}
+	}
+	// enemy3 attack player
+	if ((a->getCollisionBitmask() == Model::BITMASK_BOSS_ATTACK && b->getCollisionBitmask() == Model::BITMASK_PLAYER)
+		|| (a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_BOSS_ATTACK))
+	{
+		if (a->getCollisionBitmask() == Model::BITMASK_BOSS_ATTACK)
+		{
+			auto currentEnemy3 = bosss.at(a->getGroup());
+			player->gotHit(currentEnemy3->getSlash()->getDamge());
+		}
+		if (b->getCollisionBitmask() == Model::BITMASK_BOSS_ATTACK)
+		{
+			auto currentEnemy3 = bosss.at(b->getGroup());
+			player->gotHit(currentEnemy3->getSlash()->getDamge());
+		}
+	}
 	// player attack enemy4
 	if ((a->getCollisionBitmask() == Model::BITMASK_ENEMY4 && b->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK)
 		|| (a->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK && b->getCollisionBitmask() == Model::BITMASK_ENEMY4))
@@ -392,51 +457,11 @@ bool LoadMapScene::onContactBegin(cocos2d::PhysicsContact & contact)
 			player->gotHit(currentEnemy4->getSlash()->getDamge());
 		}
 	}
-
-
-	if ((a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_PORTAL_ICEBOSS)
-		|| (a->getCollisionBitmask() == Model::BITMASK_PORTAL_ICEBOSS && b->getCollisionBitmask() == Model::BITMASK_PLAYER))
-	{
-		if (a->getCollisionBitmask() == Model::BITMASK_PORTAL_ICEBOSS)
-		{
-			portals.at(a->getGroup())->returntoIceCastleScene();
-		}
-		else
-		{
-			portals.at(b->getGroup())->returntoIceCastleScene();
-		}
-	}
-	else if ((a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_PORTAL_BASE)
-		|| (a->getCollisionBitmask() == Model::BITMASK_PORTAL_BASE && b->getCollisionBitmask() == Model::BITMASK_PLAYER))
-	{
-		if (a->getCollisionBitmask() == Model::BITMASK_PORTAL_BASE)
-		{
-			portals.at(a->getGroup())->returntoMainMenu();
-		}
-		else
-		{
-			portals.at(b->getGroup())->returntoMainMenu();
-		}
-	}
 	return false;
 }
 
-void LoadMapScene::addHud()
-{
-	HUD = new HudLayer(this, player);
-}
 
-void LoadMapScene::addSandParticle()
-{
-	auto visibleSize = Director::getInstance()->getVisibleSize();
-	sandBackground = CCParticleSystemQuad::create("Resources/Effect/backgroundSand.plist");
-	sandBackground->setAnchorPoint(Vec2(0, 0));
-	sandBackground->setContentSize(visibleSize);
-	this->addChild(sandBackground);
-	sandBackground->setGlobalZOrder(Model::TREE_ORDER + 1);
-}
-
-void LoadMapScene::enemyMoveToPlayer()
+void IceCastleScene::enemyMoveToPlayer()
 {
 	for (int i = 0; i < Skeletons.size(); i++) {
 		if (!Skeletons[i]->getAlive())
@@ -459,6 +484,13 @@ void LoadMapScene::enemyMoveToPlayer()
 		}
 		enemys3[i]->setAIforEnemy();
 	}
+	for (int i = 0; i < bosss.size(); i++) {
+		if (!bosss[i]->getAlive())
+		{
+			continue;
+		}
+		bosss[i]->setAIforEnemy();
+	}
 	for (int i = 0; i < enemys4.size(); i++) {
 		if (!enemys4[i]->getAlive())
 		{
@@ -468,10 +500,16 @@ void LoadMapScene::enemyMoveToPlayer()
 	}
 }
 
-void LoadMapScene::update(float dt)
+void IceCastleScene::addHud()
+{
+	HUD = new HudLayer(this, player);
+}
+
+void IceCastleScene::update(float dt)
 {
 	setViewPointCenter(this->m_player->getPosition());
 	player->update(dt);
+	enemyMoveToPlayer();
 	for (int i = 0; i < Skeletons.size(); i++)
 	{
 		Skeletons[i]->update(dt);
@@ -488,13 +526,12 @@ void LoadMapScene::update(float dt)
 	{
 		enemys4[i]->update(dt);
 	}
-	enemyMoveToPlayer();
 	for (int i = 0; i < villagers.size(); i++)
 	{
 		villagers[i]->update(dt);
 	}
-	sandBackground->setPosition(m_player->getPosition()
-		+ Vec2(m_player->getContentSize().width, m_player->getContentSize().height));
+	for (int i = 0; i < bosss.size(); i++)
+	{
+		bosss[i]->update(dt);
+	}
 }
-
-
