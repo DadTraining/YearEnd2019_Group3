@@ -41,8 +41,6 @@ void LavaCastleScene::addMap()
 	m_meta = m_tileMap->layerNamed("Meta");
 	m_objectGroup = m_tileMap->getObjectGroup("Objects");
 	m_meta->setVisible(false);
-	auto bossDoorTop = m_tileMap->layerNamed("BossDoorTop");
-	bossDoorTop->setGlobalZOrder(Model::TREE_ORDER);
 	addChild(m_tileMap, -1);
 }
 
