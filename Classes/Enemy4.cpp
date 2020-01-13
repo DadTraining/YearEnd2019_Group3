@@ -187,6 +187,7 @@ void Enemy4::setAIforEnemy()
 		else {
 			if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) > 0) {
 				this->getSprite()->stopAllActionsByTag(TAG_ANIMATE_ATTACK);
+				this->getSprite()->stopAllActionsByTag(TAG_ATTACK);
 				this->getSprite()->runAction(rpIdleAnimate);
 			}
 		}
@@ -195,6 +196,7 @@ void Enemy4::setAIforEnemy()
 		if (this->getPosSpawn().x == this->getSprite()->getPosition().x) {
 			if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_IDLE1) == 0) {
 				this->getSprite()->stopAllActionsByTag(TAG_ANIMATE_ATTACK);
+				this->getSprite()->stopAllActionsByTag(TAG_ATTACK);
 				this->getSprite()->runAction(rpIdleAnimate);
 			}
 		}
@@ -248,13 +250,32 @@ Point Enemy4::getPosSpawn()
 
 void Enemy4::normalAttack()
 {
-	auto playerPosition = Update::GetInstance()->getPlayer()->getSprite()->getPosition();
-	auto emitter = CCParticleSystemQuad::create("Resources/Effect/SkillEm4/attackEnemy4.plist");
-	emitter->setPosition(playerPosition);
-	emitter->setScale(m_SCALE_32x32 / 8);
-	targetScene->addChild(emitter);
-	emitter->setAutoRemoveOnFinish(true);
-	m_slash->getSprite()->setPosition(playerPosition);
+	auto scene = this->targetScene;
+	auto slash = this->m_slash;
+	auto delay = DelayTime::create(0.5f);
+	auto delayRefesh = DelayTime::create(0.25f);
+	auto attack = CallFunc::create([scene, slash]()
+	{
+		auto playerPosition = Update::GetInstance()->getPlayer()->getSprite()->getPosition();
+		auto emitter = CCParticleSystemQuad::create("Resources/Effect/SkillEm4/attackEnemy4.plist");
+		emitter->setPosition(playerPosition);
+		emitter->setScale(m_SCALE_32x32 / 8);
+		scene->addChild(emitter);
+		emitter->setAutoRemoveOnFinish(true);
+		slash->getSprite()->setPosition(playerPosition);
+	});
+
+	auto refreshAttack = CallFunc::create([slash]()
+	{
+		slash->getSprite()->setPosition(Vec2(-100, -100));
+	});
+	auto sequence = Sequence::create(delay, attack, delayRefesh, refreshAttack, nullptr);
+	auto rpSequence = RepeatForever::create(sequence);
+	rpSequence->setTag(TAG_ATTACK);
+	if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ATTACK) == 0)
+	{
+		this->getSprite()->runAction(rpSequence);
+	}
 }
 
 void Enemy4::gotHit(int damage)
@@ -290,7 +311,7 @@ void Enemy4::update(float deltaTime)
 	{
 		return;
 	}
-	this->m_slash->getSprite()->setPosition(Vec2(-100, -100));
+	//this->m_slash->getSprite()->setPosition(Vec2(-100, -100));
 
 	if (this->getSprite()->getNumberOfRunningActions() == 0)
 	{

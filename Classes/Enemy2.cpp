@@ -211,6 +211,7 @@ void Enemy2::setAIforEnemy()
 			else {
 				if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) > 0) {
 					this->getSprite()->stopAllActionsByTag(TAG_ANIMATE_ATTACK);
+					this->getSprite()->stopAllActionsByTag(TAG_ATTACK);
 					this->getSprite()->runAction(rpRunAnimate);
 				}
 			}
@@ -287,12 +288,25 @@ void Enemy2::normalAttack()
 {
 	auto isLeft = this->getSprite()->isFlippedX();
 	auto distance = this->getSprite()->getContentSize().width / 2;
+	auto slash = this->m_slash;
+	auto attackPos = this->getSprite()->getPosition();
+	auto delay = DelayTime::create(0.3f);
 	if (isLeft)
 	{
-		m_slash->getSprite()->setPosition(this->getSprite()->getPosition() - Vec2(distance, 0));
+		attackPos -= Vec2(distance, 0);
 	}
 	else {
-		m_slash->getSprite()->setPosition(this->getSprite()->getPosition() + Vec2(distance, 0));
+		attackPos += Vec2(distance, 0);
+	}
+	auto attack = CallFunc::create([slash, attackPos]()
+	{
+		slash->getSprite()->setPosition(attackPos);
+	});
+	auto rpSequence = Sequence::create(delay, attack, nullptr);
+	rpSequence->setTag(TAG_ATTACK);
+	if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ATTACK) == 0)
+	{
+		this->getSprite()->runAction(rpSequence);
 	}
 
 }
