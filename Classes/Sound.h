@@ -22,6 +22,8 @@ public:
 	void soundCollect();
 	void soundBackGroundDesert();
 	void soundBackGroundCastle();
+	void soundBackGroundIceCastle();
+	void soundBackGroundLavaCastle();
 	void soundMainMenu();
 	void soundBossSkillFire();
 	void soundBossSkillHeal();

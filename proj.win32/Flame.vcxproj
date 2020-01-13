@@ -156,6 +156,8 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Enemy4.cpp" />
     <ClCompile Include="..\Classes\HealthBarLayer.cpp" />
     <ClCompile Include="..\Classes\HUDLayer.cpp" />
+    <ClCompile Include="..\Classes\IceCastleScene.cpp" />
+    <ClCompile Include="..\Classes\LavaCastleScene.cpp" />
     <ClCompile Include="..\Classes\LoadMapScene.cpp" />
     <ClCompile Include="..\Classes\MainMenu.cpp" />
     <ClCompile Include="..\Classes\MiniBoss01.cpp" />
@@ -183,6 +185,8 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Enemy4.h" />
     <ClInclude Include="..\Classes\HealthBarLayer.h" />
     <ClInclude Include="..\Classes\HUDLayer.h" />
+    <ClInclude Include="..\Classes\IceCastleScene.h" />
+    <ClInclude Include="..\Classes\LavaCastleScene.h" />
     <ClInclude Include="..\Classes\LoadMapScene.h" />
     <ClInclude Include="..\Classes\MainMenu.h" />
     <ClInclude Include="..\Classes\MiniBoss01.h" />

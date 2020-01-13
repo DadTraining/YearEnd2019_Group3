@@ -48,7 +48,10 @@ public:
 	static const int BITMASK_BLUEBOSS_ATTACK = BITMASK_ENEMY4_ATTACK + 1;
 
 	static const int BITMASK_PORTAL_FINALBOSS = BITMASK_PLAYER + 99;
-	static const int BITMASK_PORTAL_BASE = BITMASK_PORTAL_FINALBOSS + 1;
+	static const int BITMASK_PORTAL_ICEBOSS = BITMASK_PORTAL_FINALBOSS + 1;
+	static const int BITMASK_PORTAL_LAVABOSS = BITMASK_PORTAL_ICEBOSS + 1;
+	static const int BITMASK_PORTAL_BASE = BITMASK_PORTAL_LAVABOSS + 1;
+
 	static const int MAIN_CHARACTER_TYPE = 1;
 	static const int MAIN_MONSTER_TYPE = 2;
 	static const int MAIN_VILLAGER_TYPE = 3;
@@ -58,7 +61,10 @@ public:
 	static const int MAIN_ENEMY4_TYPE = 7;
 	static const int MAIN_BLUEBOSS_TYPE = 8;
 	static const int FINAL_BOSS_PORTAL_TYPE = 99;
-	static const int BASE_PORTAL_TYPE = FINAL_BOSS_PORTAL_TYPE + 1;
+	static const int ICE_BOSS_PORTAL_TYPE = FINAL_BOSS_PORTAL_TYPE + 1;
+	static const int LAVA_BOSS_PORTAL_TYPE = ICE_BOSS_PORTAL_TYPE + 1;
+	static const int BASE_PORTAL_TYPE = LAVA_BOSS_PORTAL_TYPE + 1;
+
 	static const int KNOCKBACK = 2;
 	// Order of the map
 	static const int TREE_ORDER = 3;

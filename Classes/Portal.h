@@ -18,7 +18,8 @@ public:
 	void addPhysics();
 	void returntoMainMenu();
 	void returntoCastleScene();
-
+	void returntoIceCastleScene();
+	void returntoLavaCastleScene();
 	void setIndex(int index);
 	~Portal();
 };

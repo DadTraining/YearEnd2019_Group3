@@ -999,7 +999,7 @@
   <object id="173" name="Enemy2" type="4" x="719.333" y="471.333"/>
   <object id="174" name="Enemy2" type="4" x="689.333" y="524.666"/>
   <object id="190" name="Enemy3" type="5" x="529.667" y="369.667"/>
-  <object id="258" name="Portal" type="99" x="1357.5" y="136"/>
+  <object id="258" name="IceBossPortal" type="100" x="1357.5" y="136"/>
   <object id="259" name="PortalBase" type="100" x="134" y="1498.67"/>
   <object id="261" name="Enemy3" type="5" x="1246.67" y="1646.67"/>
   <object id="263" name="Enemy3" type="5" x="1189.33" y="829.333"/>

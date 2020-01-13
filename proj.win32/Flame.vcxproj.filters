@@ -72,6 +72,12 @@
     <ClCompile Include="..\Classes\Enemy4.cpp">
       <Filter>Class</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\IceCastleScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\LavaCastleScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
@@ -144,6 +150,12 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Enemy4.h">
       <Filter>Class</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\IceCastleScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\LavaCastleScene.h">
+      <Filter>Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
