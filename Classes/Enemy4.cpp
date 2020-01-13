@@ -373,7 +373,7 @@ void Enemy4::Stun()
 	{
 		return;
 	}
-	auto delay = DelayTime::create(1.5f);
+	auto delay = DelayTime::create(Update::GetInstance()->getStunTime());
 	sprite->stopAllActions();
 	sprite->getPhysicsBody()->setVelocity(Vec2(0, 0));
 	sprite->runAction(delay);
