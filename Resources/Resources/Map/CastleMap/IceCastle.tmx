@@ -102,7 +102,7 @@
   <object id="64" name="ArmorSkeleton" type="4" x="1556" y="562.667"/>
   <object id="71" name="ArmorSkeleton" type="4" x="1421.33" y="491.333"/>
   <object id="72" name="ArmorSkeleton" type="4" x="1408.67" y="180.667"/>
-  <object id="73" name="BlueBoss" type="8" x="1939" y="331"/>
+  <object id="73" name="BlueBoss" type="8" x="198" y="370"/>
  </objectgroup>
  <layer id="2" name="Background" width="140" height="40">
   <data encoding="csv">

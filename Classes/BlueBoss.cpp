@@ -19,21 +19,21 @@ BlueBoss::~BlueBoss()
 
 void BlueBoss::init()
 {
-	//Create sprite
-	this->sprite = Sprite::create("Resources/sprites/BlueBoss/Run/run1.png");
-	this->sprite->setScale(m_SCALE_32x32);
-	this->damage = Update::GetInstance()->getDamageOfBoss();
-	this->hP = Update::GetInstance()->getHPOfBoss();
-	
+	this->sprite = Sprite::create("Resources/sprites/Blackhand/Idle/idle-1.png");
+	this->sprite->setScale(m_SCALE_32x32 / 2);
+	this->price = 500;
+	this->damage = Update::GetInstance()->getDamageOfMB1();
+	this->hP = Update::GetInstance()->getHPOfMB1();
+
 	//Create animate attackA
-	auto spriteCacheAttack_BB = SpriteFrameCache::getInstance();
-	spriteCacheAttack_BB->addSpriteFramesWithFile("Resources/sprites/BlueBoss/Attacks/attack.plist", "Resources/sprites/BlueBoss/Attacks/attack.png");
+	auto spriteCacheAttack_BHB = SpriteFrameCache::getInstance();
+	spriteCacheAttack_BHB->addSpriteFramesWithFile("Resources/sprites/Blackhand/Attack/attack.plist", "Resources/sprites/Blackhand/Attack/attack.png");
 	char nameAnimateAttack[50] = { 0 };
 	Vector<SpriteFrame*> animAttack;
-	for (int i = 1; i < 15; i++)
+	for (int i = 0; i < 12; i++)
 	{
-		sprintf(nameAnimateAttack, "attack%d.png", i);
-		auto frame = spriteCacheAttack_BB->getSpriteFrameByName(nameAnimateAttack);
+		sprintf(nameAnimateAttack, "attack-%d.png", i);
+		auto frame = spriteCacheAttack_BHB->getSpriteFrameByName(nameAnimateAttack);
 		animAttack.pushBack(frame);
 	}
 	Animation* animationAtack = Animation::createWithSpriteFrames(animAttack, 0.1f);
@@ -42,37 +42,73 @@ void BlueBoss::init()
 	this->attackAnimate = animateAttack;
 	attackAnimate->retain();
 
+	//Create animate idle
+	auto spriteCacheIdle_BHB = SpriteFrameCache::getInstance();
+	spriteCacheIdle_BHB->addSpriteFramesWithFile("Resources/sprites/Blackhand/Idle/idle.plist", "Resources/sprites/Blackhand/Idle/idle.png");
+	char nameAnimateIdle[50] = { 0 };
+	Vector<SpriteFrame*> animIdle;
+	for (int i = 0; i < 5; i++)
+	{
+		sprintf(nameAnimateIdle, "idle-%d.png", i);
+		auto frame = spriteCacheIdle_BHB->getSpriteFrameByName(nameAnimateIdle);
+		animIdle.pushBack(frame);
+	}
+	Animation* animationIdle = Animation::createWithSpriteFrames(animIdle, 0.1f);
+	auto animateIdle = Animate::create(animationIdle);
+	animateIdle->retain();
+	this->idleAnimate = animateIdle;
+	idleAnimate->retain();
+
+	//Create animate dead
+	auto spriteCacheDead_BHB = SpriteFrameCache::getInstance();
+	spriteCacheDead_BHB->addSpriteFramesWithFile("Resources/sprites/Blackhand/Dead/dead.plist", "Resources/sprites/Blackhand/Dead/dead.png");
+	char nameAnimateDead[50] = { 0 };
+	Vector<SpriteFrame*> animDead;
+	for (int i = 0; i < 14; i++)
+	{
+		sprintf(nameAnimateDead, "dead-%d.png", i);
+		auto frame = spriteCacheDead_BHB->getSpriteFrameByName(nameAnimateDead);
+		animDead.pushBack(frame);
+	}
+	Animation* animationDead = Animation::createWithSpriteFrames(animDead, 0.15f);
+	auto animateDead = Animate::create(animationDead);
+	animateDead->retain();
+	this->deadAnimate = animateDead;
+	deadAnimate->retain();
+
 	//Create animate run
-	auto spriteCacheRun_BB = SpriteFrameCache::getInstance();
-	spriteCacheRun_BB->addSpriteFramesWithFile("Resources/sprites/BlueBoss/Run/run.plist", "Resources/sprites/BlueBoss/Run/run.png");
+	auto spriteCacheRun_BHB = SpriteFrameCache::getInstance();
+	spriteCacheRun_BHB->addSpriteFramesWithFile("Resources/sprites/Blackhand/Run/run.plist", "Resources/sprites/Blackhand/Run/run.png");
 	char nameAnimateRun[50] = { 0 };
 	Vector<SpriteFrame*> animRun;
-	for (int i = 1; i < 4; i++)
+	for (int i = 0; i < 5; i++)
 	{
-		sprintf(nameAnimateRun, "run%d.png", i);
-		auto frame = spriteCacheRun_BB->getSpriteFrameByName(nameAnimateRun);
+		sprintf(nameAnimateRun, "run-%d.png", i);
+		auto frame = spriteCacheRun_BHB->getSpriteFrameByName(nameAnimateRun);
 		animRun.pushBack(frame);
 	}
 	Animation* animationRun = Animation::createWithSpriteFrames(animRun, 0.1f);
 	auto animateWalk = Animate::create(animationRun);
 	animateWalk->retain();
 	this->runAnimate = animateWalk;
+	runAnimate->retain();
 
-	//Create animate defence 
-	auto spriteCacheDefence_BB = SpriteFrameCache::getInstance();
-	spriteCacheDefence_BB->addSpriteFramesWithFile("Resources/sprites/BlueBoss/Defence/defence.plist", "Resources/sprites/BlueBoss/Defence/defence.png");
-	char nameAnimateDefence[50] = { 0 };
-	Vector<SpriteFrame*> animDefence;
-	for (int i = 1; i < 16; i++)
+	//Create animate Hit
+	auto spriteCacheHit_BHB = SpriteFrameCache::getInstance();
+	spriteCacheHit_BHB->addSpriteFramesWithFile("Resources/sprites/Blackhand/Hit/hit.plist", "Resources/sprites/Blackhand/Hit/hit.png");
+	char nameAnimateHit[50] = { 0 };
+	Vector<SpriteFrame*> animHit;
+	for (int i = 0; i < 3; i++)
 	{
-		sprintf(nameAnimateDefence, "defence%d.png", i);
-		auto frame = spriteCacheDefence_BB->getSpriteFrameByName(nameAnimateDefence);
-		animDefence.pushBack(frame);
+		sprintf(nameAnimateHit, "hit-%d.png", i);
+		auto frame = spriteCacheHit_BHB->getSpriteFrameByName(nameAnimateHit);
+		animHit.pushBack(frame);
 	}
-	Animation* animationDefence = Animation::createWithSpriteFrames(animDefence, 0.1f);
-	auto animateDefence = Animate::create(animationDefence);
-	animateDefence->retain();
-	this->defenceAnimate = animateDefence;
+	Animation* animationHit = Animation::createWithSpriteFrames(animHit, 0.1f);
+	auto animateHit = Animate::create(animationHit);
+	animateHit->retain();
+	this->hitAnimate = animateHit;
+	hitAnimate->retain();
 
 	// Add physics
 	addPhysic();
@@ -112,10 +148,6 @@ void BlueBoss::setDeadAnimate(Animate * deadAnimate)
 	this->deadAnimate = deadAnimate;
 }
 
-void BlueBoss::setDefenceAnimate(Animate * defenceAnimate)
-{
-	this->defenceAnimate = defenceAnimate;
-}
 void BlueBoss::setHP(float hP)
 {
 	this->hP = hP;
@@ -133,9 +165,11 @@ void BlueBoss::setPosSpawn(Point point)
 
 void BlueBoss::setAIforEnemy()
 {
+	auto rpIdleAnimate = RepeatForever::create(this->getIdleAnimate());
+	rpIdleAnimate->setTag(TAG_ANIMATE_IDLE1);
 	auto rpAttackAnimate = this->getAttackAnimate();
 	rpAttackAnimate->setTag(TAG_ANIMATE_ATTACK);
-	auto rpRunAnimate = RepeatForever::create(this->getDefenceAnimate());
+	auto rpRunAnimate = RepeatForever::create(this->getRunAnimate());
 	rpRunAnimate->setTag(TAG_ANIMATE_RUN);
 
 	auto player = Update::GetInstance()->getPlayer();
@@ -153,22 +187,38 @@ void BlueBoss::setAIforEnemy()
 			if (player->getSprite()->getPosition().x > this->getSprite()->getPosition().x) {
 				this->getSprite()->setFlipX(0);
 			}
+			if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_IDLE1) > 0) {
+				this->getSprite()->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
+				this->getSprite()->runAction(rpRunAnimate);
+			}
 			if ((player->getSprite()->getPosition().y < (this->getSprite()->getPosition().y + 50)) &&
-				player->getSprite()->getPosition().y > (this->getSprite()->getPosition().y - 50) &&
-				std::sqrt(pow(player->getSprite()->getPosition().x - this->getSprite()->getPosition().x, 2)) < RANGE_OF_MB) {
+				player->getSprite()->getPosition().y >(this->getSprite()->getPosition().y - 50) &&
+				std::sqrt(pow(player->getSprite()->getPosition().x - this->getSprite()->getPosition().x, 2)) < 250) {
 				if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_RUN) > 0) {
 					this->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
 					this->getSprite()->runAction(rpAttackAnimate);
 				}
 			}
 		}
-			// When player die
-			else {
-				if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) > 0) {
-					this->getSprite()->stopAllActionsByTag(TAG_ANIMATE_ATTACK);
-					this->getSprite()->runAction(rpRunAnimate);
-				}
+	}
+	else {
+		this->getSprite()->getPhysicsBody()->setVelocity(vectorMoveToSpawnPoint*SPEED_MB01);
+		if ((this->getSprite()->getPosition() < this->getPosSpawn() && this->getSprite()->getPosition() > this->getPosSpawn() - Vec2(5, 5)) ||
+			this->getSprite()->getPosition() > this->getPosSpawn() && this->getSprite()->getPosition() < this->getPosSpawn() + Vec2(5, 5)) {
+			this->getSprite()->setPosition(this->getPosSpawn());
+		}
+		if (this->getPosSpawn().x > this->getSprite()->getPosition().x) {
+			this->getSprite()->setFlipX(0);
+		}
+		if (this->getPosSpawn().x < this->getSprite()->getPosition().x) {
+			this->getSprite()->setFlipX(180);
+		}
+		if (this->getPosSpawn().x == this->getSprite()->getPosition().x) {
+			if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_IDLE1) == 0) {
+				this->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
+				this->getSprite()->runAction(rpIdleAnimate);
 			}
+		}
 	}
 }
 
@@ -201,12 +251,6 @@ Animate * BlueBoss::getDeadAnimate()
 {
 	return this->deadAnimate;
 }
-
-Animate * BlueBoss::getDefenceAnimate()
-{
-	return this->defenceAnimate;
-}
-
 
 float  BlueBoss::getHP()
 {
@@ -328,7 +372,7 @@ bool BlueBoss::getAlive()
 
 void BlueBoss::createSlash()
 {
-	m_slash = new Slash(150, 50);
+	m_slash = new Slash(250, 150);
 	m_slash->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_BLUEBOSS_ATTACK);
 	m_slash->getSprite()->getPhysicsBody()->setContactTestBitmask(true);
 	targetScene->addChild(m_slash->getSprite());
