@@ -1,5 +1,4 @@
 #pragma once
-#include "LoadMapScene.h"
 #include "Model.h"
 #include "Update.h"
 #include "Sound.h"
@@ -19,9 +18,9 @@ bool IceCastleScene::init()
 	{
 		return false;
 	}
-	//this->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	this->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 	this->getPhysicsWorld()->setGravity(Vec2(0, 0));
-	this->getPhysicsWorld()->setSubsteps(2);
+	this->getPhysicsWorld()->setSubsteps(3);
 	this->setTag(Model::FINAL_BOSS_PORTAL_TYPE);
 	Sound::GetInstance()->soundBackGroundIceCastle();
 	addMap();
@@ -161,17 +160,14 @@ void IceCastleScene::SpawnPlayer()
 			portal->setIndex(portals.size());
 			portals.push_back(portal);
 		}
-		else if (type == Model::MAIN_BOSS_TYPE)
+		else if (type == Model::MAIN_BLUEBOSS_TYPE)
 		{
-			auto boss = new Boss(this);
+			auto boss = new BlueBoss(this);
 			boss->setPosSpawn(Vec2(posX, posY));
 			boss->setIndex(bosss.size());
 			bosss.push_back(boss);
 			SpriteFrameCache::getInstance()->removeSpriteFrames();
 			boss->getSprite()->setPosition(Vec2(posX, posY));
-			auto animation = RepeatForever::create(boss->getIdleAnimate());
-			animation->setTag(TAG_ANIMATE_IDLE1);
-			boss->getSprite()->runAction(animation);
 			addChild(boss->getSprite());
 		}
 	}
@@ -357,10 +353,10 @@ bool IceCastleScene::onContactBegin(cocos2d::PhysicsContact & contact)
 		}
 	}
 	//Player attack boss
-	if ((a->getCollisionBitmask() == Model::BITMASK_BOSS && b->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK)
-		|| (a->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK && b->getCollisionBitmask() == Model::BITMASK_BOSS))
+	if ((a->getCollisionBitmask() == Model::BITMASK_BLUEBOSS && b->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK)
+		|| (a->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK && b->getCollisionBitmask() == Model::BITMASK_BLUEBOSS))
 	{
-		if (a->getCollisionBitmask() == Model::BITMASK_BOSS)
+		if (a->getCollisionBitmask() == Model::BITMASK_BLUEBOSS)
 		{
 			auto boss = bosss.at(a->getGroup());
 			boss->gotHit(player->getSlash()->getDamge());
@@ -369,7 +365,7 @@ bool IceCastleScene::onContactBegin(cocos2d::PhysicsContact & contact)
 				boss->Stun();
 			}
 		}
-		else if (b->getCollisionBitmask() == Model::BITMASK_BOSS)
+		else if (b->getCollisionBitmask() == Model::BITMASK_BLUEBOSS)
 		{
 			auto boss = bosss.at(b->getGroup());
 			boss->gotHit(player->getSlash()->getDamge());

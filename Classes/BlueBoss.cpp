@@ -63,9 +63,9 @@ void BlueBoss::init()
 	spriteCacheDefence_BB->addSpriteFramesWithFile("Resources/sprites/BlueBoss/Defence/defence.plist", "Resources/sprites/BlueBoss/Defence/defence.png");
 	char nameAnimateDefence[50] = { 0 };
 	Vector<SpriteFrame*> animDefence;
-	for (int i = 1; i < 4; i++)
+	for (int i = 1; i < 16; i++)
 	{
-		sprintf(nameAnimateDefence, "run%d.png", i);
+		sprintf(nameAnimateDefence, "defence%d.png", i);
 		auto frame = spriteCacheDefence_BB->getSpriteFrameByName(nameAnimateDefence);
 		animDefence.pushBack(frame);
 	}
@@ -135,7 +135,7 @@ void BlueBoss::setAIforEnemy()
 {
 	auto rpAttackAnimate = this->getAttackAnimate();
 	rpAttackAnimate->setTag(TAG_ANIMATE_ATTACK);
-	auto rpRunAnimate = RepeatForever::create(this->getRunAnimate());
+	auto rpRunAnimate = RepeatForever::create(this->getDefenceAnimate());
 	rpRunAnimate->setTag(TAG_ANIMATE_RUN);
 
 	auto player = Update::GetInstance()->getPlayer();
@@ -154,13 +154,14 @@ void BlueBoss::setAIforEnemy()
 				this->getSprite()->setFlipX(0);
 			}
 			if ((player->getSprite()->getPosition().y < (this->getSprite()->getPosition().y + 50)) &&
-				player->getSprite()->getPosition().y >(this->getSprite()->getPosition().y - 50) &&
+				player->getSprite()->getPosition().y > (this->getSprite()->getPosition().y - 50) &&
 				std::sqrt(pow(player->getSprite()->getPosition().x - this->getSprite()->getPosition().x, 2)) < RANGE_OF_MB) {
 				if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_RUN) > 0) {
 					this->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
 					this->getSprite()->runAction(rpAttackAnimate);
 				}
 			}
+		}
 			// When player die
 			else {
 				if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) > 0) {
@@ -168,7 +169,6 @@ void BlueBoss::setAIforEnemy()
 					this->getSprite()->runAction(rpRunAnimate);
 				}
 			}
-		}
 	}
 }
 
@@ -225,7 +225,7 @@ Point BlueBoss::getPosSpawn()
 
 void BlueBoss::normalAttack()
 {
-	auto isLeft = this->getSprite()->isFlippedX();
+	/*auto isLeft = this->getSprite()->isFlippedX();
 	auto distance = this->getSprite()->getContentSize().width / 2;
 	if (isLeft)
 	{
@@ -233,8 +233,7 @@ void BlueBoss::normalAttack()
 	}
 	else {
 		m_slash->getSprite()->setPosition(this->getSprite()->getPosition() + Vec2(distance, 0));
-	}
-
+	}*/
 }
 
 void BlueBoss::gotHit(int damage)
@@ -285,7 +284,7 @@ void BlueBoss::update(float deltaTime)
 
 void BlueBoss::addPhysic()
 {
-	auto physicsBody = PhysicsBody::createBox(this->getSprite()->getContentSize() - Size(80, 30), PhysicsMaterial(1.0f, 0.0f, 1.0f));
+	auto physicsBody = PhysicsBody::createBox(this->getSprite()->getContentSize(), PhysicsMaterial(1.0f, 0.0f, 1.0f));
 	physicsBody->setGravityEnable(false);
 	physicsBody->setRotationEnable(false);
 	physicsBody->setContactTestBitmask(true);
@@ -331,6 +330,7 @@ void BlueBoss::createSlash()
 {
 	m_slash = new Slash(150, 50);
 	m_slash->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_BLUEBOSS_ATTACK);
+	m_slash->getSprite()->getPhysicsBody()->setContactTestBitmask(true);
 	targetScene->addChild(m_slash->getSprite());
 	m_slash->setDamge(this->damage);
 }
