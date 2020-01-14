@@ -1,11 +1,12 @@
 #pragma once
 #include "Objects.h"
 #include "Slash.h"
-class BlueBoss : public Objects
+#define SKELETON_DAMGE 100.0f
+class BlackHandBoss : public Objects
 {
 public:
-	BlueBoss(Scene* scene);
-	~BlueBoss();
+	BlackHandBoss(Scene* scene);
+	~BlackHandBoss();
 	void init();
 	void update(float deltaTime);
 
@@ -15,12 +16,13 @@ public:
 	void setHitAnimate(Animate* hitAnimate);
 	void setRunAnimate(Animate* runAnimate);
 	void setDeadAnimate(Animate* deadAnimate);
-	void setDefenceAnimate(Animate* defenceAnimate);
 	void setHP(float hP);
 	void setDamage(float damage);
 	void setPosSpawn(Point point);
 	void setAIforEnemy();
 	
+	// Got stun
+	void Stun();
 
 	Sprite* getSprite();
 	Animate* getAttackAnimate();
@@ -28,7 +30,6 @@ public:
 	Animate* getHitAnimate();
 	Animate* getRunAnimate();
 	Animate* getDeadAnimate();
-	Animate* getDefenceAnimate();
 	float getHP();
 	float getDamage();
 	Point getPosSpawn();
@@ -46,10 +47,10 @@ public:
 	void createSlash();
 	Slash* getSlash();
 	//---
-	void Stun();
+	
 private:
 	Sprite* sprite;
-	Animate *attackAnimate, *idleAnimate, *hitAnimate, *runAnimate, *deadAnimate, *defenceAnimate;
+	Animate *attackAnimate, *idleAnimate, *hitAnimate, *runAnimate, *deadAnimate;
 	float hP, damage;
 	Slash* m_slash;
 	Scene* targetScene;

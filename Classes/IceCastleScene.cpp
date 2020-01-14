@@ -115,19 +115,6 @@ void IceCastleScene::SpawnPlayer()
 			enemy->getSprite()->runAction(animation);
 			addChild(enemy->getSprite());
 		}
-		else if (type == Model::MAIN_ENEMY3_TYPE + 100)
-		{
-			auto enemy = new Enemy3(this);
-			enemy->setPosSpawn(Vec2(posX, posY));
-			enemy->setIndex(enemys3.size());
-			enemys3.push_back(enemy);
-			SpriteFrameCache::getInstance()->removeSpriteFrames();
-			enemy->getSprite()->setPosition(Vec2(posX, posY));
-			auto animation = RepeatForever::create(enemy->getIdleAnimate());
-			animation->setTag(TAG_ANIMATE_IDLE1);
-			enemy->getSprite()->runAction(animation);
-			addChild(enemy->getSprite());
-		}
 		else if (type == Model::MAIN_ENEMY4_TYPE)
 		{
 			auto enemy = new Enemy4(this);
@@ -140,6 +127,17 @@ void IceCastleScene::SpawnPlayer()
 			animation->setTag(TAG_ANIMATE_IDLE1);
 			enemy->getSprite()->runAction(animation);
 			addChild(enemy->getSprite());
+		}
+		else if (type == Model::MAIN_BHB_TYPE)
+		{
+			bhb = new BlackHandBoss(this);
+			bhb->setPosSpawn(Vec2(posX, posY));
+			SpriteFrameCache::getInstance()->removeSpriteFrames();
+			bhb->getSprite()->setPosition(Vec2(posX, posY));
+			auto animation = RepeatForever::create(bhb->getIdleAnimate());
+			animation->setTag(TAG_ANIMATE_IDLE1);
+			bhb->getSprite()->runAction(animation);
+			addChild(bhb->getSprite());
 		}
 		else if (type == Model::LAVA_BOSS_PORTAL_TYPE)
 		{
@@ -160,19 +158,6 @@ void IceCastleScene::SpawnPlayer()
 			addChild(portal->getSprite());
 			portal->setIndex(portals.size());
 			portals.push_back(portal);
-		}
-		else if (type == Model::MAIN_BOSS_TYPE)
-		{
-			auto boss = new Boss(this);
-			boss->setPosSpawn(Vec2(posX, posY));
-			boss->setIndex(bosss.size());
-			bosss.push_back(boss);
-			SpriteFrameCache::getInstance()->removeSpriteFrames();
-			boss->getSprite()->setPosition(Vec2(posX, posY));
-			auto animation = RepeatForever::create(boss->getIdleAnimate());
-			animation->setTag(TAG_ANIMATE_IDLE1);
-			boss->getSprite()->runAction(animation);
-			addChild(boss->getSprite());
 		}
 	}
 }
@@ -318,67 +303,7 @@ bool IceCastleScene::onContactBegin(cocos2d::PhysicsContact & contact)
 			player->gotHit(currentEnemy2->getSlash()->getDamge());
 		}
 	}
-	// player attack enemy3
-	if ((a->getCollisionBitmask() == Model::BITMASK_ENEMY3 && b->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK)
-		|| (a->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK && b->getCollisionBitmask() == Model::BITMASK_ENEMY3))
-	{
-		if (a->getCollisionBitmask() == Model::BITMASK_ENEMY3)
-		{
-			auto currentEnemy3 = enemys3.at(a->getGroup());
-			currentEnemy3->gotHit(player->getSlash()->getDamge());
-			if (b->getTag() == Model::KNOCKBACK)
-			{
-				currentEnemy3->Stun();
-			}
-		}
-		else if (b->getCollisionBitmask() == Model::BITMASK_ENEMY3)
-		{
-			auto currentEnemy3 = enemys3.at(b->getGroup());
-			currentEnemy3->gotHit(player->getSlash()->getDamge());
-			if (a->getTag() == Model::KNOCKBACK)
-			{
-				currentEnemy3->Stun();
-			}
-		}
-	}
-	// enemy3 attack player
-	if ((a->getCollisionBitmask() == Model::BITMASK_ENEMY3_ATTACK && b->getCollisionBitmask() == Model::BITMASK_PLAYER)
-		|| (a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_ENEMY3_ATTACK))
-	{
-		if (a->getCollisionBitmask() == Model::BITMASK_ENEMY3_ATTACK)
-		{
-			auto currentEnemy3 = enemys3.at(a->getGroup());
-			player->gotHit(currentEnemy3->getSlash()->getDamge());
-		}
-		if (b->getCollisionBitmask() == Model::BITMASK_ENEMY3_ATTACK)
-		{
-			auto currentEnemy3 = enemys3.at(b->getGroup());
-			player->gotHit(currentEnemy3->getSlash()->getDamge());
-		}
-	}
-	//Player attack boss
-	if ((a->getCollisionBitmask() == Model::BITMASK_BOSS && b->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK)
-		|| (a->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK && b->getCollisionBitmask() == Model::BITMASK_BOSS))
-	{
-		if (a->getCollisionBitmask() == Model::BITMASK_BOSS)
-		{
-			auto boss = bosss.at(a->getGroup());
-			boss->gotHit(player->getSlash()->getDamge());
-			if (b->getTag() == Model::KNOCKBACK)
-			{
-				boss->Stun();
-			}
-		}
-		else if (b->getCollisionBitmask() == Model::BITMASK_BOSS)
-		{
-			auto boss = bosss.at(b->getGroup());
-			boss->gotHit(player->getSlash()->getDamge());
-			if (a->getTag() == Model::KNOCKBACK)
-			{
-				boss->Stun();
-			}
-		}
-	}
+	
 	if ((a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_PORTAL_LAVABOSS)
 		|| (a->getCollisionBitmask() == Model::BITMASK_PORTAL_LAVABOSS && b->getCollisionBitmask() == Model::BITMASK_PLAYER))
 	{
@@ -401,21 +326,6 @@ bool IceCastleScene::onContactBegin(cocos2d::PhysicsContact & contact)
 		else
 		{
 			portals.at(b->getGroup())->returntoMainMenu();
-		}
-	}
-	// enemy3 attack player
-	if ((a->getCollisionBitmask() == Model::BITMASK_BOSS_ATTACK && b->getCollisionBitmask() == Model::BITMASK_PLAYER)
-		|| (a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_BOSS_ATTACK))
-	{
-		if (a->getCollisionBitmask() == Model::BITMASK_BOSS_ATTACK)
-		{
-			auto currentEnemy3 = bosss.at(a->getGroup());
-			player->gotHit(currentEnemy3->getSlash()->getDamge());
-		}
-		if (b->getCollisionBitmask() == Model::BITMASK_BOSS_ATTACK)
-		{
-			auto currentEnemy3 = bosss.at(b->getGroup());
-			player->gotHit(currentEnemy3->getSlash()->getDamge());
 		}
 	}
 	// player attack enemy4
@@ -456,6 +366,42 @@ bool IceCastleScene::onContactBegin(cocos2d::PhysicsContact & contact)
 			player->gotHit(currentEnemy4->getSlash()->getDamge());
 		}
 	}
+	// player attack BHB
+	if ((a->getCollisionBitmask() == Model::BITMASK_BHB && b->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK)
+		|| (a->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK && b->getCollisionBitmask() == Model::BITMASK_BHB))
+	{
+		if (a->getCollisionBitmask() == Model::BITMASK_BHB)
+		{
+			bhb->gotHit(player->getSlash()->getDamge());
+			if (b->getTag() == Model::KNOCKBACK)
+			{
+				bhb->Stun();
+			}
+		}
+		else if (b->getCollisionBitmask() == Model::BITMASK_BHB)
+		{
+			bhb->gotHit(player->getSlash()->getDamge());
+			if (a->getTag() == Model::KNOCKBACK)
+			{
+				bhb->Stun();
+			}
+		}
+	}
+	// BHB attack player
+	if ((a->getCollisionBitmask() == Model::BITMASK_BHB_ATTACK && b->getCollisionBitmask() == Model::BITMASK_PLAYER)
+		|| (a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_BHB_ATTACK))
+	{
+		if (a->getCollisionBitmask() == Model::BITMASK_BHB_ATTACK)
+		{
+			//auto currentBHB = bhbs.at(a->getGroup());
+			player->gotHit(bhb->getSlash()->getDamge());
+		}
+		if (b->getCollisionBitmask() == Model::BITMASK_BHB_ATTACK)
+		{
+			//auto currentBHB = bhbs.at(b->getGroup());
+			player->gotHit(bhb->getSlash()->getDamge());
+		}
+	}
 	return false;
 }
 
@@ -476,20 +422,6 @@ void IceCastleScene::enemyMoveToPlayer()
 		}
 		enemys2[i]->setAIforEnemy();
 	}
-	for (int i = 0; i < enemys3.size(); i++) {
-		if (!enemys3[i]->getAlive())
-		{
-			continue;
-		}
-		enemys3[i]->setAIforEnemy();
-	}
-	for (int i = 0; i < bosss.size(); i++) {
-		if (!bosss[i]->getAlive())
-		{
-			continue;
-		}
-		bosss[i]->setAIforEnemy();
-	}
 	for (int i = 0; i < enemys4.size(); i++) {
 		if (!enemys4[i]->getAlive())
 		{
@@ -497,6 +429,7 @@ void IceCastleScene::enemyMoveToPlayer()
 		}
 		enemys4[i]->setAIforEnemy();
 	}
+	bhb->setAIforEnemy();
 }
 
 void IceCastleScene::addHud()
@@ -527,10 +460,6 @@ void IceCastleScene::update(float dt)
 	{
 		enemys2[i]->update(dt);
 	}
-	for (int i = 0; i < enemys3.size(); i++)
-	{
-		enemys3[i]->update(dt);
-	}
 	for (int i = 0; i < enemys4.size(); i++)
 	{
 		enemys4[i]->update(dt);
@@ -539,10 +468,7 @@ void IceCastleScene::update(float dt)
 	{
 		villagers[i]->update(dt);
 	}
-	for (int i = 0; i < bosss.size(); i++)
-	{
-		bosss[i]->update(dt);
-	}
+	bhb->update(dt);
 	snowBackground->setPosition(m_player->getPosition()
 		+ Vec2(m_player->getContentSize().width, m_player->getContentSize().height));
 }

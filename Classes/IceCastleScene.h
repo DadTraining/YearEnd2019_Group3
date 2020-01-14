@@ -7,11 +7,10 @@
 #include "HUDLayer.h"
 #include "MiniBoss01.h"
 #include "Enemy2.h"
-#include "Enemy3.h"
-#include "Boss.h"
 #include "Villager.h"
 #include "Portal.h"
 #include "Enemy4.h"
+#include "BlackHandBoss.h"
 
 using namespace cocos2d;
 class IceCastleScene : public cocos2d::Scene
@@ -28,9 +27,9 @@ private:
 	vector<MiniBoss01*> Skeletons;
 	vector<Villager*> villagers;
 	vector<Enemy2*> enemys2;
-	vector<Enemy3*> enemys3;
 	vector<Enemy4*> enemys4;
-	vector<Boss*> bosss;
+	vector<BlackHandBoss*> bhbs;
+	BlackHandBoss* bhb;
 	Portal* portal;
 	vector<Portal*> portals;
 	HudLayer* HUD;
