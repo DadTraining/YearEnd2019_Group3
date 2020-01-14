@@ -25,7 +25,7 @@ void KnightBoss::init()
 	this->damage = Update::GetInstance()->getDamageOfMB1();
 	this->hP = Update::GetInstance()->getHPOfMB1();
 	this->price = rand() % 11 + 10;
-	
+	this->isEvoled = false;
 	//Create animate attackA
 	auto spriteCacheAttack_MB1 = SpriteFrameCache::getInstance();
 	spriteCacheAttack_MB1->addSpriteFramesWithFile("Resources/sprites/KnightBoss/Attacks/attack4.plist", "Resources/sprites/KnightBoss/Attacks/attack4.png");
@@ -230,6 +230,14 @@ void KnightBoss::setAIforEnemy()
 	}
 }
 
+void KnightBoss::evolve()
+{
+	isEvoled = true;
+	this->setDamage(this->getDamage() * 2);
+	this->setHP(this->getHP() * 2);
+	this->getSprite()->setScale(this->getSprite()->getScale() * 2);
+}
+
 void KnightBoss::Stun()
 {
 	auto delay = DelayTime::create(Update::GetInstance()->getStunTime());
@@ -407,6 +415,11 @@ void KnightBoss::setAlive(bool isAlive)
 bool KnightBoss::getAlive()
 {
 	return this->isAlive;
+}
+
+bool KnightBoss::getIsEvolved()
+{
+	return this->isEvoled;
 }
 
 void KnightBoss::createSlash()

@@ -20,7 +20,7 @@ public:
 	void setDamage(float damage);
 	void setPosSpawn(Point point);
 	void setAIforEnemy();
-	
+	void evolve();
 	// Got stun
 	void Stun();
 
@@ -43,7 +43,7 @@ public:
 	void Die();
 	void setAlive(bool isAlive);
 	bool getAlive();
-
+	bool getIsEvolved();
 	void createSlash();
 	Slash* getSlash();
 	//---
@@ -56,5 +56,5 @@ private:
 	Scene* targetScene;
 	Point posSpawn;
 	int price;
-	bool isAlive;
+	bool isAlive, isEvoled;
 };

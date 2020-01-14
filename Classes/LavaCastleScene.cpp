@@ -577,4 +577,15 @@ void LavaCastleScene::update(float dt)
 	{
 		bosss[i]->update(dt);
 	}
+	if (!bosss[0]->getAlive() || !bosss[1]->getAlive())
+	{
+		if (!bosss[0]->getAlive() && !bosss[1]->getIsEvolved() && bosss[1]->getAlive())
+		{
+			bosss[1]->evolve();
+		}
+		else if (!bosss[1]->getAlive() && !bosss[0]->getIsEvolved() && bosss[0]->getAlive())
+		{
+			bosss[0]->evolve();
+		}
+	}
 }
