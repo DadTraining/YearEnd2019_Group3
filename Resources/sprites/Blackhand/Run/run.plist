@@ -4,7 +4,7 @@
 	<dict>
 		<key>frames</key>
 		<dict>
-			<key>idle-0.png</key>
+			<key>run-0.png</key>
 			<dict>
 				<key>frame</key>
 				<string>{{0,0},{126,151}}</string>
@@ -18,7 +18,7 @@
 				<string>{126,151}</string>
 			</dict>
 
-			<key>idle-1.png</key>
+			<key>run-1.png</key>
 			<dict>
 				<key>frame</key>
 				<string>{{0,299},{125,159}}</string>
@@ -32,7 +32,7 @@
 				<string>{125,159}</string>
 			</dict>
 
-			<key>idle-2.png</key>
+			<key>run-2.png</key>
 			<dict>
 				<key>frame</key>
 				<string>{{126,152},{106,149}}</string>
@@ -46,7 +46,7 @@
 				<string>{106,149}</string>
 			</dict>
 
-			<key>idle-3.png</key>
+			<key>run-3.png</key>
 			<dict>
 				<key>frame</key>
 				<string>{{126,302},{95,157}}</string>
@@ -60,7 +60,7 @@
 				<string>{95,157}</string>
 			</dict>
 
-			<key>idle-4.png</key>
+			<key>run-4.png</key>
 			<dict>
 				<key>frame</key>
 				<string>{{0,152},{125,146}}</string>

@@ -161,12 +161,17 @@ void LavaCastleScene::SpawnPlayer()
 			portal->setIndex(portals.size());
 			portals.push_back(portal);
 		}
-		else if (type == Model::MAIN_BOSS_TYPE)
+		else if (type == Model::MAIN_KNIGHTBOSS_TYPE)
 		{
-			auto boss = new Boss(this);
+			auto boss = new KnightBoss(this);
 			boss->setPosSpawn(Vec2(posX, posY));
 			boss->setIndex(bosss.size());
 			bosss.push_back(boss);
+			if (bosss.size() == 2)
+			{
+				bosss[1]->setHP(bosss[1]->getHP() * 1.5);
+				bosss[1]->getSprite()->setScale(bosss[1]->getSprite()->getScale() * 1.5);
+			}
 			SpriteFrameCache::getInstance()->removeSpriteFrames();
 			boss->getSprite()->setPosition(Vec2(posX, posY));
 			auto animation = RepeatForever::create(boss->getIdleAnimate());
@@ -456,6 +461,45 @@ bool LavaCastleScene::onContactBegin(cocos2d::PhysicsContact & contact)
 			player->gotHit(currentEnemy4->getSlash()->getDamge());
 		}
 	}
+
+	// player attack knightBoss
+	if ((a->getCollisionBitmask() == Model::BITMASK_KNIGHTBOSS && b->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK)
+		|| (a->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK && b->getCollisionBitmask() == Model::BITMASK_KNIGHTBOSS))
+	{
+		if (a->getCollisionBitmask() == Model::BITMASK_KNIGHTBOSS)
+		{
+			auto currentBoss = bosss.at(a->getGroup());
+			currentBoss->gotHit(player->getSlash()->getDamge());
+			if (b->getTag() == Model::KNOCKBACK)
+			{
+				currentBoss->Stun();
+			}
+		}
+		else if (b->getCollisionBitmask() == Model::BITMASK_ENEMY)
+		{
+			auto currentBoss = bosss.at(b->getGroup());
+			currentBoss->gotHit(player->getSlash()->getDamge());
+			if (a->getTag() == Model::KNOCKBACK)
+			{
+				currentBoss->Stun();
+			}
+		}
+	}
+	// knightBoss attack player
+	if ((a->getCollisionBitmask() == Model::BITMASK_KNIGHT_ATTACK && b->getCollisionBitmask() == Model::BITMASK_PLAYER)
+		|| (a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_KNIGHT_ATTACK))
+	{
+		if (a->getCollisionBitmask() == Model::BITMASK_KNIGHT_ATTACK)
+		{
+			auto currentBoss = bosss.at(a->getGroup());
+			player->gotHit(currentBoss->getSlash()->getDamge());
+		}
+		if (b->getCollisionBitmask() == Model::BITMASK_KNIGHT_ATTACK)
+		{
+			auto currentBoss = bosss.at(b->getGroup());
+			player->gotHit(currentBoss->getSlash()->getDamge());
+		}
+	}
 	return false;
 }
 
@@ -483,19 +527,19 @@ void LavaCastleScene::enemyMoveToPlayer()
 		}
 		enemys3[i]->setAIforEnemy();
 	}
-	for (int i = 0; i < bosss.size(); i++) {
-		if (!bosss[i]->getAlive())
-		{
-			continue;
-		}
-		bosss[i]->setAIforEnemy();
-	}
 	for (int i = 0; i < enemys4.size(); i++) {
 		if (!enemys4[i]->getAlive())
 		{
 			continue;
 		}
 		enemys4[i]->setAIforEnemy();
+	}
+	for (int i = 0; i < bosss.size(); i++) {
+		if (!bosss[i]->getAlive())
+		{
+			continue;
+		}
+		bosss[i]->setAIforEnemy();
 	}
 }
 
@@ -532,5 +576,16 @@ void LavaCastleScene::update(float dt)
 	for (int i = 0; i < bosss.size(); i++)
 	{
 		bosss[i]->update(dt);
+	}
+	if (!bosss[0]->getAlive() || !bosss[1]->getAlive())
+	{
+		if (!bosss[0]->getAlive() && !bosss[1]->getIsEvolved() && bosss[1]->getAlive())
+		{
+			bosss[1]->evolve();
+		}
+		else if (!bosss[1]->getAlive() && !bosss[0]->getIsEvolved() && bosss[0]->getAlive())
+		{
+			bosss[0]->evolve();
+		}
 	}
 }

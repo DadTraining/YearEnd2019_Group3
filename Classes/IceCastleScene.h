@@ -10,7 +10,7 @@
 #include "Villager.h"
 #include "Portal.h"
 #include "Enemy4.h"
-#include "BlackHandBoss.h"
+#include "BlueBoss.h"
 
 using namespace cocos2d;
 class IceCastleScene : public cocos2d::Scene
@@ -28,8 +28,7 @@ private:
 	vector<Villager*> villagers;
 	vector<Enemy2*> enemys2;
 	vector<Enemy4*> enemys4;
-	vector<BlackHandBoss*> bhbs;
-	BlackHandBoss* bhb;
+	BlueBoss* blueBoss;
 	Portal* portal;
 	vector<Portal*> portals;
 	HudLayer* HUD;

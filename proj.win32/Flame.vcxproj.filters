@@ -78,7 +78,10 @@
     <ClCompile Include="..\Classes\LavaCastleScene.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\BlackHandBoss.cpp">
+    <ClCompile Include="..\Classes\BlueBoss.cpp">
+      <Filter>Class</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\KnightBoss.cpp">
       <Filter>Class</Filter>
     </ClCompile>
   </ItemGroup>
@@ -160,7 +163,10 @@
     <ClInclude Include="..\Classes\IceCastleScene.h">
       <Filter>Scene</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\BlackHandBoss.h">
+    <ClInclude Include="..\Classes\KnightBoss.h">
+      <Filter>Class</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BlueBoss.h">
       <Filter>Class</Filter>
     </ClInclude>
   </ItemGroup>

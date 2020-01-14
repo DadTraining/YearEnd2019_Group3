@@ -1,5 +1,4 @@
 #pragma once
-#include "LoadMapScene.h"
 #include "Model.h"
 #include "Update.h"
 #include "Sound.h"
@@ -21,7 +20,7 @@ bool IceCastleScene::init()
 	}
 	this->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 	this->getPhysicsWorld()->setGravity(Vec2(0, 0));
-	this->getPhysicsWorld()->setSubsteps(2);
+	this->getPhysicsWorld()->setSubsteps(3);
 	this->setTag(Model::FINAL_BOSS_PORTAL_TYPE);
 	Sound::GetInstance()->soundBackGroundIceCastle();
 	addMap();
@@ -128,17 +127,6 @@ void IceCastleScene::SpawnPlayer()
 			enemy->getSprite()->runAction(animation);
 			addChild(enemy->getSprite());
 		}
-		else if (type == Model::MAIN_BHB_TYPE)
-		{
-			bhb = new BlackHandBoss(this);
-			bhb->setPosSpawn(Vec2(posX, posY));
-			SpriteFrameCache::getInstance()->removeSpriteFrames();
-			bhb->getSprite()->setPosition(Vec2(posX, posY));
-			auto animation = RepeatForever::create(bhb->getIdleAnimate());
-			animation->setTag(TAG_ANIMATE_IDLE1);
-			bhb->getSprite()->runAction(animation);
-			addChild(bhb->getSprite());
-		}
 		else if (type == Model::LAVA_BOSS_PORTAL_TYPE)
 		{
 			auto portal = new Portal();
@@ -158,6 +146,16 @@ void IceCastleScene::SpawnPlayer()
 			addChild(portal->getSprite());
 			portal->setIndex(portals.size());
 			portals.push_back(portal);
+		}
+		else if (type == Model::MAIN_BLUEBOSS_TYPE)
+		{
+			blueBoss = new BlueBoss(this);
+			blueBoss->setPosSpawn(Vec2(posX, posY));
+			SpriteFrameCache::getInstance()->removeSpriteFrames();
+			blueBoss->getSprite()->setPosition(Vec2(posX, posY));
+			auto animation = RepeatForever::create(blueBoss->getIdleAnimate());
+			animation->setTag(TAG_ANIMATE_IDLE1);
+			addChild(blueBoss->getSprite());
 		}
 	}
 }
@@ -304,6 +302,27 @@ bool IceCastleScene::onContactBegin(cocos2d::PhysicsContact & contact)
 		}
 	}
 	
+	//Player attack boss
+	if ((a->getCollisionBitmask() == Model::BITMASK_BLUEBOSS && b->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK)
+		|| (a->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK && b->getCollisionBitmask() == Model::BITMASK_BLUEBOSS))
+	{
+		if (a->getCollisionBitmask() == Model::BITMASK_BLUEBOSS)
+		{
+			blueBoss->gotHit(player->getSlash()->getDamge());
+			if (b->getTag() == Model::KNOCKBACK)
+			{
+				blueBoss->Stun();
+			}
+		}
+		else if (b->getCollisionBitmask() == Model::BITMASK_BLUEBOSS)
+		{
+			blueBoss->gotHit(player->getSlash()->getDamge());
+			if (a->getTag() == Model::KNOCKBACK)
+			{
+				blueBoss->Stun();
+			}
+		}
+	}
 	if ((a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_PORTAL_LAVABOSS)
 		|| (a->getCollisionBitmask() == Model::BITMASK_PORTAL_LAVABOSS && b->getCollisionBitmask() == Model::BITMASK_PLAYER))
 	{
@@ -326,6 +345,19 @@ bool IceCastleScene::onContactBegin(cocos2d::PhysicsContact & contact)
 		else
 		{
 			portals.at(b->getGroup())->returntoMainMenu();
+		}
+	}
+	// enemy3 attack player
+	if ((a->getCollisionBitmask() == Model::BITMASK_BLUEBOSS_ATTACK && b->getCollisionBitmask() == Model::BITMASK_PLAYER)
+		|| (a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_BLUEBOSS_ATTACK))
+	{
+		if (a->getCollisionBitmask() == Model::BITMASK_BLUEBOSS_ATTACK)
+		{
+			player->gotHit(blueBoss->getSlash()->getDamge());
+		}
+		if (b->getCollisionBitmask() == Model::BITMASK_BLUEBOSS_ATTACK)
+		{
+			player->gotHit(blueBoss->getSlash()->getDamge());
 		}
 	}
 	// player attack enemy4
@@ -366,42 +398,7 @@ bool IceCastleScene::onContactBegin(cocos2d::PhysicsContact & contact)
 			player->gotHit(currentEnemy4->getSlash()->getDamge());
 		}
 	}
-	// player attack BHB
-	if ((a->getCollisionBitmask() == Model::BITMASK_BHB && b->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK)
-		|| (a->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK && b->getCollisionBitmask() == Model::BITMASK_BHB))
-	{
-		if (a->getCollisionBitmask() == Model::BITMASK_BHB)
-		{
-			bhb->gotHit(player->getSlash()->getDamge());
-			if (b->getTag() == Model::KNOCKBACK)
-			{
-				bhb->Stun();
-			}
-		}
-		else if (b->getCollisionBitmask() == Model::BITMASK_BHB)
-		{
-			bhb->gotHit(player->getSlash()->getDamge());
-			if (a->getTag() == Model::KNOCKBACK)
-			{
-				bhb->Stun();
-			}
-		}
-	}
-	// BHB attack player
-	if ((a->getCollisionBitmask() == Model::BITMASK_BHB_ATTACK && b->getCollisionBitmask() == Model::BITMASK_PLAYER)
-		|| (a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_BHB_ATTACK))
-	{
-		if (a->getCollisionBitmask() == Model::BITMASK_BHB_ATTACK)
-		{
-			//auto currentBHB = bhbs.at(a->getGroup());
-			player->gotHit(bhb->getSlash()->getDamge());
-		}
-		if (b->getCollisionBitmask() == Model::BITMASK_BHB_ATTACK)
-		{
-			//auto currentBHB = bhbs.at(b->getGroup());
-			player->gotHit(bhb->getSlash()->getDamge());
-		}
-	}
+
 	return false;
 }
 
@@ -422,6 +419,7 @@ void IceCastleScene::enemyMoveToPlayer()
 		}
 		enemys2[i]->setAIforEnemy();
 	}
+
 	for (int i = 0; i < enemys4.size(); i++) {
 		if (!enemys4[i]->getAlive())
 		{
@@ -429,7 +427,7 @@ void IceCastleScene::enemyMoveToPlayer()
 		}
 		enemys4[i]->setAIforEnemy();
 	}
-	bhb->setAIforEnemy();
+	blueBoss->setAIforEnemy();
 }
 
 void IceCastleScene::addHud()
@@ -468,7 +466,7 @@ void IceCastleScene::update(float dt)
 	{
 		villagers[i]->update(dt);
 	}
-	bhb->update(dt);
+	blueBoss->update(dt);
 	snowBackground->setPosition(m_player->getPosition()
 		+ Vec2(m_player->getContentSize().width, m_player->getContentSize().height));
 }
