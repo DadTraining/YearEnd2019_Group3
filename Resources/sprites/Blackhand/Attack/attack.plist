@@ -181,7 +181,7 @@
 			<key>size</key>
 			<string>{512,1024}</string>
 			<key>textureFileName</key>
-			<string>sideCityzen.png</string>
+			<string>sprites.png</string>
 			</dict>
 		</dict>
 </plist>
