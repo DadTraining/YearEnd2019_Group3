@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="140" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="21" nextobjectid="76">
+<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="140" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="21" nextobjectid="77">
  <tileset firstgid="1" name="mainlevbuild" tilewidth="16" tileheight="16" tilecount="1702" columns="37">
   <image source="mainlevbuild.png" width="592" height="736"/>
   <terraintypes>
@@ -109,6 +109,7 @@
   <object id="73" name="FinalBossPortal" type="99" x="2228" y="347"/>
   <object id="74" name="KnightBoss" type="09" x="1885.33" y="217.333"/>
   <object id="75" name="KnightBoss" type="09" x="1873.33" y="376"/>
+  <object id="76" name="BasePortal" type="102" x="46.6667" y="318.667"/>
  </objectgroup>
  <layer id="18" name="Brick" width="140" height="40">
   <data encoding="csv">

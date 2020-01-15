@@ -22,8 +22,8 @@ void KnightBoss::init()
 	//Create sprite
 	this->sprite = Sprite::create("Resources/sprites/KnightBoss/Idle/ready_1.png");
 	this->sprite->setScale(m_SCALE_32x32);
-	this->damage = Update::GetInstance()->getDamageOfMB1();
-	this->hP = Update::GetInstance()->getHPOfMB1();
+	this->damage = Update::GetInstance()->getDamageOfKnightBoss();
+	this->hP = Update::GetInstance()->getHPOfKnightBoss();
 	this->price = rand() % 11 + 10;
 	this->isEvoled = false;
 	//Create animate attackA
@@ -166,7 +166,7 @@ void KnightBoss::setAIforEnemy()
 {
 	auto rpIdleAnimate = RepeatForever::create(this->getIdleAnimate());
 	rpIdleAnimate->setTag(TAG_ANIMATE_IDLE1);
-	auto rpAttackAnimate = this->getAttackAnimate();
+	auto rpAttackAnimate = this->getDeadAnimate();
 	rpAttackAnimate->setTag(TAG_ANIMATE_ATTACK);
 	auto rpRunAnimate = RepeatForever::create(this->getRunAnimate());
 	rpRunAnimate->setTag(TAG_ANIMATE_RUN);
@@ -234,8 +234,15 @@ void KnightBoss::evolve()
 {
 	isEvoled = true;
 	this->setDamage(this->getDamage() * 2);
-	this->setHP(this->getHP() * 2);
-	this->getSprite()->setScale(this->getSprite()->getScale() * 2);
+	this->setHP(Update::GetInstance()->getHPOfKnightBoss() * 2);
+	auto scaleCurr = this->getSprite()->getScale() * 2;
+	auto scaleTo = ScaleTo::create(0.5f, scaleCurr);
+	this->getSprite()->runAction(scaleTo);
+	auto emitter = CCParticleSystemQuad::create("Resources/Effect/KnightBoss/evolve.plist");
+	emitter->setPosition(this->getSprite()->getPosition());
+	emitter->setScale(m_SCALE_32x32 / 32);
+	targetScene->addChild(emitter);
+	emitter->setAutoRemoveOnFinish(true);
 }
 
 void KnightBoss::Stun()
@@ -405,6 +412,11 @@ void KnightBoss::Die()
 	auto sequence = Sequence::create(dieAnimation, callbackHide, nullptr);
 	sequence->setTag(TAG_ANIMATE_DIE);
 	mySprite->runAction(sequence);
+	auto emitter = CCParticleSystemQuad::create("Resources/Effect/KnightBoss/explode.plist");
+	emitter->setPosition(this->getSprite()->getPosition());
+	emitter->setScale(m_SCALE_32x32 / 8);
+	targetScene->addChild(emitter);
+	emitter->setAutoRemoveOnFinish(true);
 }
 
 void KnightBoss::setAlive(bool isAlive)

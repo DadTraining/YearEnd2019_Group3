@@ -156,7 +156,7 @@ void IceCastleScene::SpawnPlayer()
 			portal->InitSprite();
 			portal->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_PORTAL_BASE);
 			portal->getSprite()->setPosition(posX, posY);
-			addChild(portal->getSprite());
+			addChild(portal->getSprite(), -1);
 			portal->setIndex(portals.size());
 			portals.push_back(portal);
 		}
@@ -168,7 +168,7 @@ void IceCastleScene::SpawnPlayer()
 			bosss.push_back(boss);
 			SpriteFrameCache::getInstance()->removeSpriteFrames();
 			boss->getSprite()->setPosition(Vec2(posX, posY));
-			addChild(boss->getSprite());
+			addChild(boss->getSprite(), -1);
 		}
 	}
 }

@@ -140,7 +140,7 @@ void LoadMapScene::SpawnPlayer()
 			portal->InitSprite();
 			portal->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_PORTAL_ICEBOSS);
 			portal->getSprite()->setPosition(posX, posY);
-			addChild(portal->getSprite());
+			addChild(portal->getSprite(), -1);
 			portal->setIndex(portals.size());
 			portals.push_back(portal);
 		}
@@ -150,7 +150,7 @@ void LoadMapScene::SpawnPlayer()
 			portal->InitSprite();
 			portal->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_PORTAL_BASE);
 			portal->getSprite()->setPosition(posX, posY);
-			addChild(portal->getSprite());
+			addChild(portal->getSprite(), -1);
 			portal->setIndex(portals.size());
 			portals.push_back(portal);
 		}

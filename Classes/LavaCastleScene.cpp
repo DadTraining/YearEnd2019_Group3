@@ -147,9 +147,11 @@ void LavaCastleScene::SpawnPlayer()
 			portal->InitSprite();
 			portal->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_PORTAL_FINALBOSS);
 			portal->getSprite()->setPosition(posX, posY);
-			addChild(portal->getSprite());
+			addChild(portal->getSprite(), -1);
 			portal->setIndex(portals.size());
 			portals.push_back(portal);
+			portal->getSprite()->setVisible(false);
+			portal->getSprite()->getPhysicsBody()->setEnabled(false);
 		}
 		else if (type == Model::BASE_PORTAL_TYPE)
 		{
@@ -157,8 +159,10 @@ void LavaCastleScene::SpawnPlayer()
 			portal->InitSprite();
 			portal->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_PORTAL_BASE);
 			portal->getSprite()->setPosition(posX, posY);
-			addChild(portal->getSprite());
+			addChild(portal->getSprite(), -1);
 			portal->setIndex(portals.size());
+			portal->getSprite()->getPhysicsBody()->setEnabled(false);
+			portal->getSprite()->setVisible(false);
 			portals.push_back(portal);
 		}
 		else if (type == Model::MAIN_KNIGHTBOSS_TYPE)
@@ -171,6 +175,9 @@ void LavaCastleScene::SpawnPlayer()
 			{
 				bosss[1]->setHP(bosss[1]->getHP() * 1.5);
 				bosss[1]->getSprite()->setScale(bosss[1]->getSprite()->getScale() * 1.5);
+			}
+			else {
+				bosss[0]->setDamage(bosss[0]->getDamage() * 1.5);
 			}
 			SpriteFrameCache::getInstance()->removeSpriteFrames();
 			boss->getSprite()->setPosition(Vec2(posX, posY));
@@ -475,7 +482,7 @@ bool LavaCastleScene::onContactBegin(cocos2d::PhysicsContact & contact)
 				currentBoss->Stun();
 			}
 		}
-		else if (b->getCollisionBitmask() == Model::BITMASK_ENEMY)
+		else if (b->getCollisionBitmask() == Model::BITMASK_KNIGHTBOSS)
 		{
 			auto currentBoss = bosss.at(b->getGroup());
 			currentBoss->gotHit(player->getSlash()->getDamge());
@@ -586,6 +593,14 @@ void LavaCastleScene::update(float dt)
 		else if (!bosss[1]->getAlive() && !bosss[0]->getIsEvolved() && bosss[0]->getAlive())
 		{
 			bosss[0]->evolve();
+		}
+	}
+	if (!bosss[0]->getAlive() && !bosss[1]->getAlive())
+	{
+		for (int i = 0; i < this->portals.size(); i++)
+		{
+			portals.at(i)->getSprite()->setVisible(true);
+			portals.at(i)->getSprite()->getPhysicsBody()->setEnabled(true);
 		}
 	}
 }

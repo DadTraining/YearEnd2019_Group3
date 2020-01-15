@@ -147,9 +147,11 @@ void CastleScene::SpawnPlayer()
 			portal->InitSprite();
 			portal->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_PORTAL_FINALBOSS);
 			portal->getSprite()->setPosition(posX, posY);
-			addChild(portal->getSprite());
+			addChild(portal->getSprite(), -1);
 			portal->setIndex(portals.size());
 			portals.push_back(portal);
+			portal->getSprite()->setVisible(false);
+			portal->getSprite()->getPhysicsBody()->setEnabled(false);
 		}
 		else if (type == Model::BASE_PORTAL_TYPE)
 		{
@@ -157,9 +159,11 @@ void CastleScene::SpawnPlayer()
 			portal->InitSprite();
 			portal->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_PORTAL_BASE);
 			portal->getSprite()->setPosition(posX, posY);
-			addChild(portal->getSprite());
+			addChild(portal->getSprite(), -1);
 			portal->setIndex(portals.size());
 			portals.push_back(portal);
+			portal->getSprite()->setVisible(false);
+			portal->getSprite()->getPhysicsBody()->setEnabled(false);
 		}
 		else if (type == Model::MAIN_BOSS_TYPE)
 		{
@@ -531,5 +535,13 @@ void CastleScene::update(float dt)
 	for (int i = 0; i < bosss.size(); i++)
 	{
 		bosss[i]->update(dt);
+	}
+	if (!bosss[0]->getAlive())
+	{
+		for (int i = 0; i < this->portals.size(); i++)
+		{
+			portals.at(i)->getSprite()->setVisible(true);
+			portals.at(i)->getSprite()->getPhysicsBody()->setEnabled(true);
+		}
 	}
 }
