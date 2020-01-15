@@ -58,6 +58,7 @@ public:
 	void setAlive(bool isAlive);
 	bool getAlive();
 
+
 private:
 	Sprite* playerSprite;
 	Animate *attackAnimate, *idleAnimate, *hitAnimate, *runAnimate, *deadAnimate, *skillAAnimate, *skillBAnimate;
@@ -70,4 +71,5 @@ private:
 	bool isAlive;
 	float ratioUlti;
 	float timeStun;
+
 };

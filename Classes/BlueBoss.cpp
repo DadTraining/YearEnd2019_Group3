@@ -176,8 +176,7 @@ void BlueBoss::setAIforEnemy()
 
 	auto range = std::sqrt(pow((this->getSprite()->getPosition().x - player->getSprite()->getPosition().x), 2) + pow((this->getSprite()->getPosition().y - player->getSprite()->getPosition().y), 2));
 	auto vectorMoveToSpawnPoint = Vec2(this->getPosSpawn().x - this->getSprite()->getPosition().x, this->getPosSpawn().y - this->getSprite()->getPosition().y);
-	auto vectorMoveToPlayer = Vec2(player->getSprite()->getPosition().x - this->getSprite()->getPosition().x, player->getSprite()->getPosition().y - this->getSprite()->getPosition().y);
-
+	auto vectorMoveToPlayer = Vec2(player->getSprite()->getPosition() - this->getSprite()->getPosition()) - Vec2(50, 0);
 	if (range < VISION_OF_MB) {
 		if (player->getHP() > 0) {
 			this->getSprite()->getPhysicsBody()->setVelocity(vectorMoveToPlayer*SPEED_MB01);

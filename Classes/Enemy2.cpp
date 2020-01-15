@@ -184,7 +184,7 @@ void Enemy2::setAIforEnemy()
 
 	auto range = std::sqrt(pow((this->getSprite()->getPosition().x - player->getSprite()->getPosition().x), 2) + pow((this->getSprite()->getPosition().y - player->getSprite()->getPosition().y), 2));
 	auto vectorMoveToSpawnPoint = Vec2(this->getPosSpawn().x - this->getSprite()->getPosition().x, this->getPosSpawn().y - this->getSprite()->getPosition().y);
-	auto vectorMoveToPlayer = Vec2(player->getSprite()->getPosition().x - this->getSprite()->getPosition().x, player->getSprite()->getPosition().y - this->getSprite()->getPosition().y);
+	auto vectorMoveToPlayer = Vec2(player->getSprite()->getPosition()- this->getSprite()->getPosition())- Vec2(50, 0);
 
 	if (range < VISION_OF_EM2) {
 		if (player->getHP() > 0) {
@@ -218,8 +218,7 @@ void Enemy2::setAIforEnemy()
 		}
 	}
 	else {
-		auto vectorMove = Vec2(this->getPosSpawn().x - this->getSprite()->getPosition().x, this->getPosSpawn().y - this->getSprite()->getPosition().y);
-		this->getSprite()->getPhysicsBody()->setVelocity(vectorMove*SPEED_MB01);
+		this->getSprite()->getPhysicsBody()->setVelocity(vectorMoveToSpawnPoint*SPEED_MB01);
 		if ((this->getSprite()->getPosition() < this->getPosSpawn() && this->getSprite()->getPosition() > this->getPosSpawn() - Vec2(5, 5)) ||
 			this->getSprite()->getPosition() > this->getPosSpawn() && this->getSprite()->getPosition() < this->getPosSpawn() + Vec2(5, 5)) {
 			this->getSprite()->setPosition(this->getPosSpawn());
