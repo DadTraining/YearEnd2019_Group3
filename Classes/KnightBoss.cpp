@@ -19,56 +19,145 @@ KnightBoss::~KnightBoss()
 
 void KnightBoss::init()
 {
-	//Create sprite
-	this->sprite = Sprite::create("Resources/sprites/KnightBoss/Idle/ready_1.png");
+	////Create sprite
+	//this->sprite = Sprite::create("Resources/sprites/KnightBoss/Idle/ready_1.png");
+	//this->sprite->setScale(m_SCALE_32x32);
+	//this->damage = Update::GetInstance()->getDamageOfMB1();
+	//this->hP = Update::GetInstance()->getHPOfMB1();
+	//this->price = rand() % 11 + 10;
+	//this->isEvoled = false;
+	////Create animate attackA
+	//auto spriteCacheAttack_MB1 = SpriteFrameCache::getInstance();
+	//spriteCacheAttack_MB1->addSpriteFramesWithFile("Resources/sprites/KnightBoss/Attacks/attack4.plist", "Resources/sprites/KnightBoss/Attacks/attack4.png");
+	//char nameAnimateAttack[50] = { 0 };
+	//Vector<SpriteFrame*> animAttack;
+	//for (int i = 1; i < 7; i++)
+	//{
+	//	sprintf(nameAnimateAttack, "attack4_%d.png", i);
+	//	auto frame = spriteCacheAttack_MB1->getSpriteFrameByName(nameAnimateAttack);
+	//	animAttack.pushBack(frame);
+	//}
+	//Animation* animationAtack = Animation::createWithSpriteFrames(animAttack, 0.2f);
+	//auto animateAttack = Animate::create(animationAtack);
+	//animateAttack->retain();
+	//this->attackAnimate = animateAttack;
+	//attackAnimate->retain();
+	//
+	////Create animate idle
+	//auto spriteCacheIdle_MB1 = SpriteFrameCache::getInstance();
+	//spriteCacheIdle_MB1->addSpriteFramesWithFile("Resources/sprites/KnightBoss/Idle/ready.plist", "Resources/sprites/KnightBoss/Idle/ready.png");
+	//char nameAnimateIdle[50] = { 0 };
+	//Vector<SpriteFrame*> animIdle;
+	//for (int i = 1; i < 4; i++)
+	//{
+	//	sprintf(nameAnimateIdle, "ready_%d.png", i);
+	//	auto frame = spriteCacheIdle_MB1->getSpriteFrameByName(nameAnimateIdle);
+	//	animIdle.pushBack(frame);
+	//}
+	//Animation* animationIdle = Animation::createWithSpriteFrames(animIdle, 0.2f);
+	//auto animateIdle = Animate::create(animationIdle);
+	//animateIdle->retain();
+	//this->idleAnimate = animateIdle;
+	//idleAnimate->retain();
+
+	////Create animate dead
+	//auto spriteCacheDead_MB1 = SpriteFrameCache::getInstance();
+	//spriteCacheDead_MB1->addSpriteFramesWithFile("Resources/sprites/KnightBoss/Die/fall_back.plist", "Resources/sprites/KnightBoss/Die/fall_back.png");
+	//char nameAnimateDead[50] = { 0 };
+	//Vector<SpriteFrame*> animDead;
+	//for (int i = 1; i < 6; i++)
+	//{
+	//	sprintf(nameAnimateDead, "fall_back_%d.png", i);
+	//	auto frame = spriteCacheDead_MB1->getSpriteFrameByName(nameAnimateDead);
+	//	animDead.pushBack(frame);
+	//}
+	//Animation* animationDead = Animation::createWithSpriteFrames(animDead, 0.15f);
+	//auto animateDead = Animate::create(animationDead);
+	//animateDead->retain();
+	//this->deadAnimate = animateDead;
+	//deadAnimate->retain();
+
+	////Create animate run
+	//auto spriteCacheRun_MB1 = SpriteFrameCache::getInstance();
+	//spriteCacheRun_MB1->addSpriteFramesWithFile("Resources/sprites/KnightBoss/Run/run.plist", "Resources/sprites/KnightBoss/Run/run.png");
+	//char nameAnimateRun[50] = { 0 };
+	//Vector<SpriteFrame*> animRun;
+	//for (int i = 1; i < 7; i++)
+	//{
+	//	sprintf(nameAnimateRun, "run_%d.png", i);
+	//	auto frame = spriteCacheRun_MB1->getSpriteFrameByName(nameAnimateRun);
+	//	animRun.pushBack(frame);
+	//}
+	//Animation* animationRun = Animation::createWithSpriteFrames(animRun, 0.1f);
+	//auto animateWalk = Animate::create(animationRun);
+	//animateWalk->retain();
+	//this->runAnimate = animateWalk;
+
+	////Create animate Hit
+	//auto spriteCacheHit_MB1 = SpriteFrameCache::getInstance();
+	//spriteCacheHit_MB1->addSpriteFramesWithFile("Resources/sprites/KnightBoss/Hit/hit.plist", "Resources/sprites/KnightBoss/Hit/hit.png");
+	//char nameAnimateHit[50] = { 0 };
+	//Vector<SpriteFrame*> animHit;
+	//for (int i = 1; i < 4; i++)
+	//{
+	//	sprintf(nameAnimateHit, "hit_%d.png", i);
+	//	auto frame = spriteCacheHit_MB1->getSpriteFrameByName(nameAnimateHit);
+	//	animHit.pushBack(frame);
+	//}
+	//Animation* animationHit = Animation::createWithSpriteFrames(animHit, 0.3f);
+	//auto animateHit = Animate::create(animationHit);
+	//animateHit->retain();
+	//this->hitAnimate = animateHit;
+
+	this->sprite = Sprite::create("Resources/sprites/dMiniBoss/Idle/idle-1.png");
 	this->sprite->setScale(m_SCALE_32x32);
+	this->price = 500;
 	this->damage = Update::GetInstance()->getDamageOfMB1();
 	this->hP = Update::GetInstance()->getHPOfMB1();
-	this->price = rand() % 11 + 10;
-	this->isEvoled = false;
+
 	//Create animate attackA
-	auto spriteCacheAttack_MB1 = SpriteFrameCache::getInstance();
-	spriteCacheAttack_MB1->addSpriteFramesWithFile("Resources/sprites/KnightBoss/Attacks/attack4.plist", "Resources/sprites/KnightBoss/Attacks/attack4.png");
+	auto spriteCacheAttack_BHB = SpriteFrameCache::getInstance();
+	spriteCacheAttack_BHB->addSpriteFramesWithFile("Resources/sprites/dMiniBoss/Attack/attackA.plist", "Resources/sprites/dMiniBoss/Attack/attackA.png");
 	char nameAnimateAttack[50] = { 0 };
 	Vector<SpriteFrame*> animAttack;
-	for (int i = 1; i < 7; i++)
+	for (int i = 1; i < 13; i++)
 	{
-		sprintf(nameAnimateAttack, "attack4_%d.png", i);
-		auto frame = spriteCacheAttack_MB1->getSpriteFrameByName(nameAnimateAttack);
+		sprintf(nameAnimateAttack, "attack-A%d.png", i);
+		auto frame = spriteCacheAttack_BHB->getSpriteFrameByName(nameAnimateAttack);
 		animAttack.pushBack(frame);
 	}
-	Animation* animationAtack = Animation::createWithSpriteFrames(animAttack, 0.2f);
+	Animation* animationAtack = Animation::createWithSpriteFrames(animAttack, 0.1f);
 	auto animateAttack = Animate::create(animationAtack);
 	animateAttack->retain();
 	this->attackAnimate = animateAttack;
 	attackAnimate->retain();
-	
+
 	//Create animate idle
-	auto spriteCacheIdle_MB1 = SpriteFrameCache::getInstance();
-	spriteCacheIdle_MB1->addSpriteFramesWithFile("Resources/sprites/KnightBoss/Idle/ready.plist", "Resources/sprites/KnightBoss/Idle/ready.png");
+	auto spriteCacheIdle_BHB = SpriteFrameCache::getInstance();
+	spriteCacheIdle_BHB->addSpriteFramesWithFile("Resources/sprites/dMiniBoss/Idle/idle.plist", "Resources/sprites/dMiniBoss/Idle/idle.png");
 	char nameAnimateIdle[50] = { 0 };
 	Vector<SpriteFrame*> animIdle;
-	for (int i = 1; i < 4; i++)
+	for (int i = 1; i < 5; i++)
 	{
-		sprintf(nameAnimateIdle, "ready_%d.png", i);
-		auto frame = spriteCacheIdle_MB1->getSpriteFrameByName(nameAnimateIdle);
+		sprintf(nameAnimateIdle, "idle-%d.png", i);
+		auto frame = spriteCacheIdle_BHB->getSpriteFrameByName(nameAnimateIdle);
 		animIdle.pushBack(frame);
 	}
-	Animation* animationIdle = Animation::createWithSpriteFrames(animIdle, 0.2f);
+	Animation* animationIdle = Animation::createWithSpriteFrames(animIdle, 0.1f);
 	auto animateIdle = Animate::create(animationIdle);
 	animateIdle->retain();
 	this->idleAnimate = animateIdle;
 	idleAnimate->retain();
 
 	//Create animate dead
-	auto spriteCacheDead_MB1 = SpriteFrameCache::getInstance();
-	spriteCacheDead_MB1->addSpriteFramesWithFile("Resources/sprites/KnightBoss/Die/fall_back.plist", "Resources/sprites/KnightBoss/Die/fall_back.png");
+	auto spriteCacheDead_BHB = SpriteFrameCache::getInstance();
+	spriteCacheDead_BHB->addSpriteFramesWithFile("Resources/sprites/dMiniBoss/Dead/dead.plist", "Resources/sprites/dMiniBoss/Dead/dead.png");
 	char nameAnimateDead[50] = { 0 };
 	Vector<SpriteFrame*> animDead;
-	for (int i = 1; i < 6; i++)
+	for (int i = 1; i < 5; i++)
 	{
-		sprintf(nameAnimateDead, "fall_back_%d.png", i);
-		auto frame = spriteCacheDead_MB1->getSpriteFrameByName(nameAnimateDead);
+		sprintf(nameAnimateDead, "dead-%d.png", i);
+		auto frame = spriteCacheDead_BHB->getSpriteFrameByName(nameAnimateDead);
 		animDead.pushBack(frame);
 	}
 	Animation* animationDead = Animation::createWithSpriteFrames(animDead, 0.15f);
@@ -78,36 +167,38 @@ void KnightBoss::init()
 	deadAnimate->retain();
 
 	//Create animate run
-	auto spriteCacheRun_MB1 = SpriteFrameCache::getInstance();
-	spriteCacheRun_MB1->addSpriteFramesWithFile("Resources/sprites/KnightBoss/Run/run.plist", "Resources/sprites/KnightBoss/Run/run.png");
+	auto spriteCacheRun_BHB = SpriteFrameCache::getInstance();
+	spriteCacheRun_BHB->addSpriteFramesWithFile("Resources/sprites/dMiniBoss/Walk/walk.plist", "Resources/sprites/dMiniBoss/Walk/walk.png");
 	char nameAnimateRun[50] = { 0 };
 	Vector<SpriteFrame*> animRun;
 	for (int i = 1; i < 7; i++)
 	{
-		sprintf(nameAnimateRun, "run_%d.png", i);
-		auto frame = spriteCacheRun_MB1->getSpriteFrameByName(nameAnimateRun);
+		sprintf(nameAnimateRun, "walk-%d.png", i);
+		auto frame = spriteCacheRun_BHB->getSpriteFrameByName(nameAnimateRun);
 		animRun.pushBack(frame);
 	}
 	Animation* animationRun = Animation::createWithSpriteFrames(animRun, 0.1f);
 	auto animateWalk = Animate::create(animationRun);
 	animateWalk->retain();
 	this->runAnimate = animateWalk;
+	runAnimate->retain();
 
 	//Create animate Hit
-	auto spriteCacheHit_MB1 = SpriteFrameCache::getInstance();
-	spriteCacheHit_MB1->addSpriteFramesWithFile("Resources/sprites/KnightBoss/Hit/hit.plist", "Resources/sprites/KnightBoss/Hit/hit.png");
+	auto spriteCacheHit_BHB = SpriteFrameCache::getInstance();
+	spriteCacheHit_BHB->addSpriteFramesWithFile("Resources/sprites/dMiniBoss/Hit/hit.plist", "Resources/sprites/dMiniBoss/Hit/hit.png");
 	char nameAnimateHit[50] = { 0 };
 	Vector<SpriteFrame*> animHit;
 	for (int i = 1; i < 4; i++)
 	{
-		sprintf(nameAnimateHit, "hit_%d.png", i);
-		auto frame = spriteCacheHit_MB1->getSpriteFrameByName(nameAnimateHit);
+		sprintf(nameAnimateHit, "hit-%d.png", i);
+		auto frame = spriteCacheHit_BHB->getSpriteFrameByName(nameAnimateHit);
 		animHit.pushBack(frame);
 	}
-	Animation* animationHit = Animation::createWithSpriteFrames(animHit, 0.3f);
+	Animation* animationHit = Animation::createWithSpriteFrames(animHit, 0.1f);
 	auto animateHit = Animate::create(animationHit);
 	animateHit->retain();
 	this->hitAnimate = animateHit;
+	hitAnimate->retain();
 
 	// Add physics
 	addPhysic();
@@ -196,14 +287,6 @@ void KnightBoss::setAIforEnemy()
 				if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_RUN) > 0) {
 					this->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
 					this->getSprite()->runAction(rpAttackAnimate);
-				}
-			}
-			// When player die
-			else {
-				if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) > 0) {
-					this->getSprite()->stopAllActionsByTag(TAG_ANIMATE_ATTACK);
-					this->getSprite()->stopAllActionsByTag(TAG_ATTACK);
-					this->getSprite()->runAction(rpRunAnimate);
 				}
 			}
 		}
