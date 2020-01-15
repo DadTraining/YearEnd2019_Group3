@@ -105,8 +105,7 @@
  </layer>
  <objectgroup id="5" name="Objects">
   <object id="1" name="SpawnPoint" type="1" x="73" y="244"/>
-  <object id="47" name="ReturnBase" type="100" x="2228" y="347"/>
-  <object id="73" name="FinalBossPortal" type="99" x="2228" y="347"/>
+  <object id="73" name="FinalBossPortal" type="99" x="2178.83" y="329.5"/>
   <object id="74" name="KnightBoss" type="09" x="1885.33" y="217.333"/>
   <object id="75" name="KnightBoss" type="09" x="1873.33" y="376"/>
   <object id="76" name="BasePortal" type="102" x="46.6667" y="318.667"/>

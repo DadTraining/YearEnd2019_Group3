@@ -232,6 +232,7 @@ void KnightBoss::setAIforEnemy()
 
 void KnightBoss::evolve()
 {
+	Sound::GetInstance()->soundKnightBossAbsorb();
 	isEvoled = true;
 	this->setDamage(this->getDamage() * 2);
 	this->setHP(Update::GetInstance()->getHPOfKnightBoss() * 2);

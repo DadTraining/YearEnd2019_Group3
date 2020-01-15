@@ -86,6 +86,16 @@ void Sound::soundBossSkillHeal()
 	audio->playEffect("Resources/sounds/Boss/healSkill.wav", false, 1.0f, 1.0f, 1.0f);
 }
 
+void Sound::soundKnightBossAbsorb()
+{
+	if (this->isMute)
+	{
+		return;
+	}
+	auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
+	audio->playEffect("Resources/sounds/KnightBoss/absorb.wav", false, 1.0f, 1.0f, 1.0f);
+}
+
 void Sound::soundPlayerDie()
 {
 	if (this->isMute)
@@ -196,6 +206,7 @@ void Sound::preLoadSound()
 	audio->preloadEffect("Resources/sounds/Skeleton/die.wav");
 	audio->preloadEffect("Resources/sounds/Boss/fireSkill.wav");
 	audio->preloadEffect("Resources/sounds/Boss/healSkill.wav");
+	audio->preloadEffect("Resources/sounds/KnightBoss/absorb.wav");
 
 	audio->preloadBackgroundMusic("Resources/sounds/Background/176_Barren_Wastes.mp3");
 	audio->preloadBackgroundMusic("Resources/sounds/Background/Background_castle.mp3");

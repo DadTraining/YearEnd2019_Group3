@@ -27,6 +27,7 @@ public:
 	void soundMainMenu();
 	void soundBossSkillFire();
 	void soundBossSkillHeal();
+	void soundKnightBossAbsorb();
 	void stopSoundBackGround();
 	void Init();
 	// SkeletonSound
