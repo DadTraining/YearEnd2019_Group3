@@ -31,7 +31,7 @@ private:
 	vector<Enemy2*> enemys2;
 	vector<Enemy3*> enemys3;
 	vector<Enemy4*> enemys4;
-	vector<BlueBoss*> bosss;
+	BlueBoss* blueBoss;
 	Portal* portal;
 	vector<Portal*> portals;
 	HudLayer* HUD;

@@ -15,7 +15,6 @@ public:
 	void setHitAnimate(Animate* hitAnimate);
 	void setRunAnimate(Animate* runAnimate);
 	void setDeadAnimate(Animate* deadAnimate);
-	void setDefenceAnimate(Animate* defenceAnimate);
 	void setHP(float hP);
 	void setDamage(float damage);
 	void setPosSpawn(Point point);
@@ -28,7 +27,6 @@ public:
 	Animate* getHitAnimate();
 	Animate* getRunAnimate();
 	Animate* getDeadAnimate();
-	Animate* getDefenceAnimate();
 	float getHP();
 	float getDamage();
 	Point getPosSpawn();

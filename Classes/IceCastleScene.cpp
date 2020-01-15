@@ -162,13 +162,13 @@ void IceCastleScene::SpawnPlayer()
 		}
 		else if (type == Model::MAIN_BLUEBOSS_TYPE)
 		{
-			auto boss = new BlueBoss(this);
-			boss->setPosSpawn(Vec2(posX, posY));
-			boss->setIndex(bosss.size());
-			bosss.push_back(boss);
+			blueBoss = new BlueBoss(this);
+			blueBoss->setPosSpawn(Vec2(posX, posY));
 			SpriteFrameCache::getInstance()->removeSpriteFrames();
-			boss->getSprite()->setPosition(Vec2(posX, posY));
-			addChild(boss->getSprite());
+			blueBoss->getSprite()->setPosition(Vec2(posX, posY));
+			auto animation = RepeatForever::create(blueBoss->getIdleAnimate());
+			animation->setTag(TAG_ANIMATE_IDLE1);
+			addChild(blueBoss->getSprite());
 		}
 	}
 }
@@ -358,20 +358,18 @@ bool IceCastleScene::onContactBegin(cocos2d::PhysicsContact & contact)
 	{
 		if (a->getCollisionBitmask() == Model::BITMASK_BLUEBOSS)
 		{
-			auto boss = bosss.at(a->getGroup());
-			boss->gotHit(player->getSlash()->getDamge());
+			blueBoss->gotHit(player->getSlash()->getDamge());
 			if (b->getTag() == Model::KNOCKBACK)
 			{
-				boss->Stun();
+				blueBoss->Stun();
 			}
 		}
 		else if (b->getCollisionBitmask() == Model::BITMASK_BLUEBOSS)
 		{
-			auto boss = bosss.at(b->getGroup());
-			boss->gotHit(player->getSlash()->getDamge());
+			blueBoss->gotHit(player->getSlash()->getDamge());
 			if (a->getTag() == Model::KNOCKBACK)
 			{
-				boss->Stun();
+				blueBoss->Stun();
 			}
 		}
 	}
@@ -405,13 +403,11 @@ bool IceCastleScene::onContactBegin(cocos2d::PhysicsContact & contact)
 	{
 		if (a->getCollisionBitmask() == Model::BITMASK_BOSS_ATTACK)
 		{
-			auto currentEnemy3 = bosss.at(a->getGroup());
-			player->gotHit(currentEnemy3->getSlash()->getDamge());
+			player->gotHit(blueBoss->getSlash()->getDamge());
 		}
 		if (b->getCollisionBitmask() == Model::BITMASK_BOSS_ATTACK)
 		{
-			auto currentEnemy3 = bosss.at(b->getGroup());
-			player->gotHit(currentEnemy3->getSlash()->getDamge());
+			player->gotHit(blueBoss->getSlash()->getDamge());
 		}
 	}
 	// player attack enemy4
@@ -479,13 +475,7 @@ void IceCastleScene::enemyMoveToPlayer()
 		}
 		enemys3[i]->setAIforEnemy();
 	}
-	for (int i = 0; i < bosss.size(); i++) {
-		if (!bosss[i]->getAlive())
-		{
-			continue;
-		}
-		bosss[i]->setAIforEnemy();
-	}
+	blueBoss->setAIforEnemy();
 	for (int i = 0; i < enemys4.size(); i++) {
 		if (!enemys4[i]->getAlive())
 		{
@@ -535,10 +525,7 @@ void IceCastleScene::update(float dt)
 	{
 		villagers[i]->update(dt);
 	}
-	for (int i = 0; i < bosss.size(); i++)
-	{
-		bosss[i]->update(dt);
-	}
+	blueBoss->update(dt);
 	snowBackground->setPosition(m_player->getPosition()
 		+ Vec2(m_player->getContentSize().width, m_player->getContentSize().height));
 }
