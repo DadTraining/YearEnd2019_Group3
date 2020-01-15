@@ -114,19 +114,6 @@ void IceCastleScene::SpawnPlayer()
 			enemy->getSprite()->runAction(animation);
 			addChild(enemy->getSprite());
 		}
-		else if (type == Model::MAIN_ENEMY3_TYPE + 100)
-		{
-			auto enemy = new Enemy3(this);
-			enemy->setPosSpawn(Vec2(posX, posY));
-			enemy->setIndex(enemys3.size());
-			enemys3.push_back(enemy);
-			SpriteFrameCache::getInstance()->removeSpriteFrames();
-			enemy->getSprite()->setPosition(Vec2(posX, posY));
-			auto animation = RepeatForever::create(enemy->getIdleAnimate());
-			animation->setTag(TAG_ANIMATE_IDLE1);
-			enemy->getSprite()->runAction(animation);
-			addChild(enemy->getSprite());
-		}
 		else if (type == Model::MAIN_ENEMY4_TYPE)
 		{
 			auto enemy = new Enemy4(this);
@@ -314,44 +301,7 @@ bool IceCastleScene::onContactBegin(cocos2d::PhysicsContact & contact)
 			player->gotHit(currentEnemy2->getSlash()->getDamge());
 		}
 	}
-	// player attack enemy3
-	if ((a->getCollisionBitmask() == Model::BITMASK_ENEMY3 && b->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK)
-		|| (a->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK && b->getCollisionBitmask() == Model::BITMASK_ENEMY3))
-	{
-		if (a->getCollisionBitmask() == Model::BITMASK_ENEMY3)
-		{
-			auto currentEnemy3 = enemys3.at(a->getGroup());
-			currentEnemy3->gotHit(player->getSlash()->getDamge());
-			if (b->getTag() == Model::KNOCKBACK)
-			{
-				currentEnemy3->Stun();
-			}
-		}
-		else if (b->getCollisionBitmask() == Model::BITMASK_ENEMY3)
-		{
-			auto currentEnemy3 = enemys3.at(b->getGroup());
-			currentEnemy3->gotHit(player->getSlash()->getDamge());
-			if (a->getTag() == Model::KNOCKBACK)
-			{
-				currentEnemy3->Stun();
-			}
-		}
-	}
-	// enemy3 attack player
-	if ((a->getCollisionBitmask() == Model::BITMASK_ENEMY3_ATTACK && b->getCollisionBitmask() == Model::BITMASK_PLAYER)
-		|| (a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_ENEMY3_ATTACK))
-	{
-		if (a->getCollisionBitmask() == Model::BITMASK_ENEMY3_ATTACK)
-		{
-			auto currentEnemy3 = enemys3.at(a->getGroup());
-			player->gotHit(currentEnemy3->getSlash()->getDamge());
-		}
-		if (b->getCollisionBitmask() == Model::BITMASK_ENEMY3_ATTACK)
-		{
-			auto currentEnemy3 = enemys3.at(b->getGroup());
-			player->gotHit(currentEnemy3->getSlash()->getDamge());
-		}
-	}
+	
 	//Player attack boss
 	if ((a->getCollisionBitmask() == Model::BITMASK_BLUEBOSS && b->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK)
 		|| (a->getCollisionBitmask() == Model::BITMASK_NORMAL_ATTACK && b->getCollisionBitmask() == Model::BITMASK_BLUEBOSS))
@@ -398,14 +348,14 @@ bool IceCastleScene::onContactBegin(cocos2d::PhysicsContact & contact)
 		}
 	}
 	// enemy3 attack player
-	if ((a->getCollisionBitmask() == Model::BITMASK_BOSS_ATTACK && b->getCollisionBitmask() == Model::BITMASK_PLAYER)
-		|| (a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_BOSS_ATTACK))
+	if ((a->getCollisionBitmask() == Model::BITMASK_BLUEBOSS_ATTACK && b->getCollisionBitmask() == Model::BITMASK_PLAYER)
+		|| (a->getCollisionBitmask() == Model::BITMASK_PLAYER && b->getCollisionBitmask() == Model::BITMASK_BLUEBOSS_ATTACK))
 	{
-		if (a->getCollisionBitmask() == Model::BITMASK_BOSS_ATTACK)
+		if (a->getCollisionBitmask() == Model::BITMASK_BLUEBOSS_ATTACK)
 		{
 			player->gotHit(blueBoss->getSlash()->getDamge());
 		}
-		if (b->getCollisionBitmask() == Model::BITMASK_BOSS_ATTACK)
+		if (b->getCollisionBitmask() == Model::BITMASK_BLUEBOSS_ATTACK)
 		{
 			player->gotHit(blueBoss->getSlash()->getDamge());
 		}
@@ -448,6 +398,7 @@ bool IceCastleScene::onContactBegin(cocos2d::PhysicsContact & contact)
 			player->gotHit(currentEnemy4->getSlash()->getDamge());
 		}
 	}
+
 	return false;
 }
 
@@ -468,14 +419,7 @@ void IceCastleScene::enemyMoveToPlayer()
 		}
 		enemys2[i]->setAIforEnemy();
 	}
-	for (int i = 0; i < enemys3.size(); i++) {
-		if (!enemys3[i]->getAlive())
-		{
-			continue;
-		}
-		enemys3[i]->setAIforEnemy();
-	}
-	blueBoss->setAIforEnemy();
+
 	for (int i = 0; i < enemys4.size(); i++) {
 		if (!enemys4[i]->getAlive())
 		{
@@ -483,6 +427,7 @@ void IceCastleScene::enemyMoveToPlayer()
 		}
 		enemys4[i]->setAIforEnemy();
 	}
+	blueBoss->setAIforEnemy();
 }
 
 void IceCastleScene::addHud()
@@ -512,10 +457,6 @@ void IceCastleScene::update(float dt)
 	for (int i = 0; i < enemys2.size(); i++)
 	{
 		enemys2[i]->update(dt);
-	}
-	for (int i = 0; i < enemys3.size(); i++)
-	{
-		enemys3[i]->update(dt);
 	}
 	for (int i = 0; i < enemys4.size(); i++)
 	{

@@ -19,20 +19,20 @@ BlueBoss::~BlueBoss()
 
 void BlueBoss::init()
 {
-	this->sprite = Sprite::create("Resources/sprites/Blackhand/Idle/idle-1.png");
-	this->sprite->setScale(m_SCALE_32x32 / 2);
+	this->sprite = Sprite::create("Resources/sprites/dMiniBoss/Idle/idle-1.png");
+	this->sprite->setScale(m_SCALE_32x32*2);
 	this->price = 500;
 	this->damage = Update::GetInstance()->getDamageOfMB1();
 	this->hP = Update::GetInstance()->getHPOfMB1();
 
 	//Create animate attackA
 	auto spriteCacheAttack_BHB = SpriteFrameCache::getInstance();
-	spriteCacheAttack_BHB->addSpriteFramesWithFile("Resources/sprites/Blackhand/Attack/attack.plist", "Resources/sprites/Blackhand/Attack/attack.png");
+	spriteCacheAttack_BHB->addSpriteFramesWithFile("Resources/sprites/dMiniBoss/Attack/attackA.plist", "Resources/sprites/dMiniBoss/Attack/attackA.png");
 	char nameAnimateAttack[50] = { 0 };
 	Vector<SpriteFrame*> animAttack;
-	for (int i = 0; i < 12; i++)
+	for (int i = 1; i < 13; i++)
 	{
-		sprintf(nameAnimateAttack, "attack-%d.png", i);
+		sprintf(nameAnimateAttack, "attack-A%d.png", i);
 		auto frame = spriteCacheAttack_BHB->getSpriteFrameByName(nameAnimateAttack);
 		animAttack.pushBack(frame);
 	}
@@ -44,10 +44,10 @@ void BlueBoss::init()
 
 	//Create animate idle
 	auto spriteCacheIdle_BHB = SpriteFrameCache::getInstance();
-	spriteCacheIdle_BHB->addSpriteFramesWithFile("Resources/sprites/Blackhand/Idle/idle.plist", "Resources/sprites/Blackhand/Idle/idle.png");
+	spriteCacheIdle_BHB->addSpriteFramesWithFile("Resources/sprites/dMiniBoss/Idle/idle.plist", "Resources/sprites/dMiniBoss/Idle/idle.png");
 	char nameAnimateIdle[50] = { 0 };
 	Vector<SpriteFrame*> animIdle;
-	for (int i = 0; i < 5; i++)
+	for (int i = 1; i < 5; i++)
 	{
 		sprintf(nameAnimateIdle, "idle-%d.png", i);
 		auto frame = spriteCacheIdle_BHB->getSpriteFrameByName(nameAnimateIdle);
@@ -61,10 +61,10 @@ void BlueBoss::init()
 
 	//Create animate dead
 	auto spriteCacheDead_BHB = SpriteFrameCache::getInstance();
-	spriteCacheDead_BHB->addSpriteFramesWithFile("Resources/sprites/Blackhand/Dead/dead.plist", "Resources/sprites/Blackhand/Dead/dead.png");
+	spriteCacheDead_BHB->addSpriteFramesWithFile("Resources/sprites/dMiniBoss/Dead/dead.plist", "Resources/sprites/dMiniBoss/Dead/dead.png");
 	char nameAnimateDead[50] = { 0 };
 	Vector<SpriteFrame*> animDead;
-	for (int i = 0; i < 14; i++)
+	for (int i = 1; i < 5; i++)
 	{
 		sprintf(nameAnimateDead, "dead-%d.png", i);
 		auto frame = spriteCacheDead_BHB->getSpriteFrameByName(nameAnimateDead);
@@ -78,12 +78,12 @@ void BlueBoss::init()
 
 	//Create animate run
 	auto spriteCacheRun_BHB = SpriteFrameCache::getInstance();
-	spriteCacheRun_BHB->addSpriteFramesWithFile("Resources/sprites/Blackhand/Run/run.plist", "Resources/sprites/Blackhand/Run/run.png");
+	spriteCacheRun_BHB->addSpriteFramesWithFile("Resources/sprites/dMiniBoss/Walk/walk.plist", "Resources/sprites/dMiniBoss/Walk/walk.png");
 	char nameAnimateRun[50] = { 0 };
 	Vector<SpriteFrame*> animRun;
-	for (int i = 0; i < 5; i++)
+	for (int i = 1; i < 7; i++)
 	{
-		sprintf(nameAnimateRun, "run-%d.png", i);
+		sprintf(nameAnimateRun, "walk-%d.png", i);
 		auto frame = spriteCacheRun_BHB->getSpriteFrameByName(nameAnimateRun);
 		animRun.pushBack(frame);
 	}
@@ -95,10 +95,10 @@ void BlueBoss::init()
 
 	//Create animate Hit
 	auto spriteCacheHit_BHB = SpriteFrameCache::getInstance();
-	spriteCacheHit_BHB->addSpriteFramesWithFile("Resources/sprites/Blackhand/Hit/hit.plist", "Resources/sprites/Blackhand/Hit/hit.png");
+	spriteCacheHit_BHB->addSpriteFramesWithFile("Resources/sprites/dMiniBoss/Hit/hit.plist", "Resources/sprites/dMiniBoss/Hit/hit.png");
 	char nameAnimateHit[50] = { 0 };
 	Vector<SpriteFrame*> animHit;
-	for (int i = 0; i < 3; i++)
+	for (int i = 1; i < 4; i++)
 	{
 		sprintf(nameAnimateHit, "hit-%d.png", i);
 		auto frame = spriteCacheHit_BHB->getSpriteFrameByName(nameAnimateHit);
@@ -175,10 +175,10 @@ void BlueBoss::setAIforEnemy()
 	auto player = Update::GetInstance()->getPlayer();
 
 	auto range = std::sqrt(pow((this->getSprite()->getPosition().x - player->getSprite()->getPosition().x), 2) + pow((this->getSprite()->getPosition().y - player->getSprite()->getPosition().y), 2));
-	auto vectorMoveToSpawnPoint = Vec2(this->getPosSpawn().x - this->getSprite()->getPosition().x, this->getPosSpawn().y - this->getSprite()->getPosition().y);
-	auto vectorMoveToPlayer = Vec2(player->getSprite()->getPosition().x - this->getSprite()->getPosition().x, player->getSprite()->getPosition().y - this->getSprite()->getPosition().y);
+	auto vectorMoveToSpawnPoint = Vec2(this->getPosSpawn() - this->getSprite()->getPosition());
+	auto vectorMoveToPlayer = Vec2(player->getSprite()->getPosition()- this->getSprite()->getPosition());
 
-	if (range < VISION_OF_EM2) {
+	if (range < 800) {
 		if (player->getHP() > 0) {
 			this->getSprite()->getPhysicsBody()->setVelocity(vectorMoveToPlayer*SPEED_MB01);
 			if (player->getSprite()->getPosition().x < this->getSprite()->getPosition().x) {
@@ -269,7 +269,7 @@ Point BlueBoss::getPosSpawn()
 
 void BlueBoss::normalAttack()
 {
-	/*auto isLeft = this->getSprite()->isFlippedX();
+	auto isLeft = this->getSprite()->isFlippedX();
 	auto distance = this->getSprite()->getContentSize().width / 2;
 	if (isLeft)
 	{
@@ -277,7 +277,7 @@ void BlueBoss::normalAttack()
 	}
 	else {
 		m_slash->getSprite()->setPosition(this->getSprite()->getPosition() + Vec2(distance, 0));
-	}*/
+	}
 }
 
 void BlueBoss::gotHit(int damage)
@@ -328,7 +328,7 @@ void BlueBoss::update(float deltaTime)
 
 void BlueBoss::addPhysic()
 {
-	auto physicsBody = PhysicsBody::createBox(this->getSprite()->getContentSize(), PhysicsMaterial(1.0f, 0.0f, 1.0f));
+	auto physicsBody = PhysicsBody::createBox(this->getSprite()->getContentSize()-Size(100, 50), PhysicsMaterial(1.0f, 0.0f, 1.0f));
 	physicsBody->setGravityEnable(false);
 	physicsBody->setRotationEnable(false);
 	physicsBody->setContactTestBitmask(true);

@@ -19,6 +19,7 @@ void Boss::init()
 {
 	this->damage = Update::GetInstance()->getDamageOfBoss();
 	this->hP = Update::GetInstance()->getHPOfBoss();
+	this->price = 1000;
 	//Create sprite
 	this->sprite = Sprite::create("Resources/sprites/BossB/Idle/nyt1.png");
 	this->sprite->setScale(m_SCALE_32x32);
@@ -336,6 +337,7 @@ void Boss::Die()
 	this->isAlive = false;
 	this->fireSlash->getSprite()->setPosition(Vec2(-200, -200));
 	//this->fireSlash->getSprite()->removeFromParent();
+	Update::GetInstance()->getPlayer()->increaseVillager(this->price);
 	auto dieAnimation = this->getDeadAnimate();
 	auto spawn = Spawn::create(fade, dieAnimation, nullptr);
 	auto sequence = Sequence::create(spawn, callbackHide, nullptr);

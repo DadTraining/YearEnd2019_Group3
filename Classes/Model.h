@@ -64,7 +64,6 @@ public:
 	static const int MAIN_ENEMY4_TYPE = 7;
 	static const int MAIN_BLUEBOSS_TYPE = 8;
 	static const int MAIN_KNIGHTBOSS_TYPE = 9;
-
 	static const int FINAL_BOSS_PORTAL_TYPE = 99;
 	static const int ICE_BOSS_PORTAL_TYPE = FINAL_BOSS_PORTAL_TYPE + 1;
 	static const int LAVA_BOSS_PORTAL_TYPE = ICE_BOSS_PORTAL_TYPE + 1;

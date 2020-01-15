@@ -7,8 +7,6 @@
 #include "HUDLayer.h"
 #include "MiniBoss01.h"
 #include "Enemy2.h"
-#include "Enemy3.h"
-#include "Boss.h"
 #include "Villager.h"
 #include "Portal.h"
 #include "Enemy4.h"
@@ -29,7 +27,6 @@ private:
 	vector<MiniBoss01*> Skeletons;
 	vector<Villager*> villagers;
 	vector<Enemy2*> enemys2;
-	vector<Enemy3*> enemys3;
 	vector<Enemy4*> enemys4;
 	BlueBoss* blueBoss;
 	Portal* portal;

@@ -1,6 +1,7 @@
 #pragma once
 #include "Objects.h"
 #include "Slash.h"
+#define SKELETON_DAMGE 100.0f
 class BlueBoss : public Objects
 {
 public:
@@ -20,6 +21,8 @@ public:
 	void setPosSpawn(Point point);
 	void setAIforEnemy();
 	
+	// Got stun
+	void Stun();
 
 	Sprite* getSprite();
 	Animate* getAttackAnimate();
@@ -44,10 +47,10 @@ public:
 	void createSlash();
 	Slash* getSlash();
 	//---
-	void Stun();
+	
 private:
 	Sprite* sprite;
-	Animate *attackAnimate, *idleAnimate, *hitAnimate, *runAnimate, *deadAnimate, *defenceAnimate;
+	Animate *attackAnimate, *idleAnimate, *hitAnimate, *runAnimate, *deadAnimate;
 	float hP, damage;
 	Slash* m_slash;
 	Scene* targetScene;

@@ -157,16 +157,16 @@
     <ClInclude Include="..\Classes\Enemy4.h">
       <Filter>Class</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\IceCastleScene.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\LavaCastleScene.h">
       <Filter>Scene</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\BlueBoss.h">
-      <Filter>Class</Filter>
+    <ClInclude Include="..\Classes\IceCastleScene.h">
+      <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\KnightBoss.h">
+      <Filter>Class</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BlueBoss.h">
       <Filter>Class</Filter>
     </ClInclude>
   </ItemGroup>

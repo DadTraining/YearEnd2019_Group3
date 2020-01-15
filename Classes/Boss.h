@@ -69,4 +69,5 @@ private:
 	Scene* targetScene;
 	Point posSpawn;
 	bool isAlive;
+	int price;
 };
