@@ -427,7 +427,9 @@ void IceCastleScene::enemyMoveToPlayer()
 		}
 		enemys4[i]->setAIforEnemy();
 	}
-	blueBoss->setAIforEnemy();
+	if (blueBoss->getAlive()) {
+		blueBoss->setAIforEnemy();
+	}
 }
 
 void IceCastleScene::addHud()

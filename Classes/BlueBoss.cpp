@@ -22,8 +22,8 @@ void BlueBoss::init()
 	this->sprite = Sprite::create("Resources/sprites/dMiniBoss/Idle/idle-1.png");
 	this->sprite->setScale(m_SCALE_32x32*2);
 	this->price = 500;
-	this->damage = Update::GetInstance()->getDamageOfMB1();
-	this->hP = Update::GetInstance()->getHPOfMB1();
+	this->damage = 10;
+	this->hP =10;
 
 	//Create animate attackA
 	auto spriteCacheAttack_BHB = SpriteFrameCache::getInstance();
@@ -175,10 +175,10 @@ void BlueBoss::setAIforEnemy()
 	auto player = Update::GetInstance()->getPlayer();
 
 	auto range = std::sqrt(pow((this->getSprite()->getPosition().x - player->getSprite()->getPosition().x), 2) + pow((this->getSprite()->getPosition().y - player->getSprite()->getPosition().y), 2));
-	auto vectorMoveToSpawnPoint = Vec2(this->getPosSpawn() - this->getSprite()->getPosition());
-	auto vectorMoveToPlayer = Vec2(player->getSprite()->getPosition()- this->getSprite()->getPosition());
+	auto vectorMoveToSpawnPoint = Vec2(this->getPosSpawn().x - this->getSprite()->getPosition().x, this->getPosSpawn().y - this->getSprite()->getPosition().y);
+	auto vectorMoveToPlayer = Vec2(player->getSprite()->getPosition().x - this->getSprite()->getPosition().x, player->getSprite()->getPosition().y - this->getSprite()->getPosition().y);
 
-	if (range < 800) {
+	if (range < VISION_OF_MB) {
 		if (player->getHP() > 0) {
 			this->getSprite()->getPhysicsBody()->setVelocity(vectorMoveToPlayer*SPEED_MB01);
 			if (player->getSprite()->getPosition().x < this->getSprite()->getPosition().x) {
@@ -193,7 +193,7 @@ void BlueBoss::setAIforEnemy()
 			}
 			if ((player->getSprite()->getPosition().y < (this->getSprite()->getPosition().y + 50)) &&
 				player->getSprite()->getPosition().y >(this->getSprite()->getPosition().y - 50) &&
-				std::sqrt(pow(player->getSprite()->getPosition().x - this->getSprite()->getPosition().x, 2)) < 250) {
+				std::sqrt(pow(player->getSprite()->getPosition().x - this->getSprite()->getPosition().x, 2)) < RANGE_OF_MB) {
 				if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_RUN) > 0) {
 					this->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
 					this->getSprite()->runAction(rpAttackAnimate);
@@ -312,7 +312,7 @@ void BlueBoss::update(float deltaTime)
 	}
 	if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_ATTACK) == 0)
 	{
-		this->m_slash->getSprite()->setPosition(Vec2(-100, -100));
+		this->m_slash->getSprite()->setPosition(Vec2(-1000, -1000));
 	}
 	else {
 		this->normalAttack();
@@ -343,6 +343,10 @@ void BlueBoss::setIndex(int index)
 
 void BlueBoss::Die()
 {
+	Update::GetInstance()->setStatekSlow(1);
+	auto stateSlow = to_string(Update::GetInstance()->getStateSlow());
+	auto stateUlti = to_string(Update::GetInstance()->getStateUlti());
+	FileUtils::getInstance()->writeStringToFile(stateSlow + "\r\n" + stateUlti, Update::GetInstance()->getPathStateSkill());
 	Sound::GetInstance()->soundSkeletonDie();
 	this->getSprite()->stopAllActions();
 	auto mySprite = this->getSprite();
@@ -351,13 +355,18 @@ void BlueBoss::Die()
 		mySprite->removeFromParent();
 	});
 	this->isAlive = false;
-	this->m_slash->getSprite()->setPosition(Vec2(-100, -100));
+	this->m_slash->getSprite()->setPosition(Vec2(-1000, -1000));
 	this->m_slash->getSprite()->removeFromParent();
 	Update::GetInstance()->getPlayer()->increaseVillager(this->price);
-	auto fade = FadeOut::create(1.5f);
-	auto spawn = Spawn::create(fade, callbackHide, nullptr);
-	spawn->setTag(TAG_ANIMATE_DIE);
-	mySprite->runAction(spawn);
+	auto dieAnimation = this->getDeadAnimate();
+	auto sequence = Sequence::create(dieAnimation, callbackHide, nullptr);
+	sequence->setTag(TAG_ANIMATE_DIE);
+	mySprite->runAction(sequence);
+	auto emitter = CCParticleSystemQuad::create("Resources/Effect/KnightBoss/explode.plist");
+	emitter->setPosition(this->getSprite()->getPosition());
+	emitter->setScale(m_SCALE_32x32 / 8);
+	targetScene->addChild(emitter);
+	emitter->setAutoRemoveOnFinish(true);
 }
 
 void BlueBoss::setAlive(bool isAlive)

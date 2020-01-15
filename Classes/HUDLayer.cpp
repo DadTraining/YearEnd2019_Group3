@@ -165,13 +165,13 @@ void HudLayer::CreateSkillUltimate(Layer * layer)
 	skillABtn->setScale(SCALE_BUTTON);
 	layer->addChild(skillABtn);
 	skillABtn->setPosition(Vec2(1450, 400));
-	skillABtn->setBright(false);
+	skillABtn->setEnabled(false);
 	
 }
 
 void HudLayer::UpdateSkillUltimate(float dt)
 {
-	if (targetPlayer->getVillagersNum() >= 10) {
+	if (Update::GetInstance()->getStateUlti() == 1 && targetPlayer->getVillagersNum() >= 10) {
 		skillABtn->setEnabled(true);
 		skillABtn->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
 			auto rpAnimateSkillA = targetPlayer->getSkillAAnimate();
@@ -217,41 +217,48 @@ void HudLayer::CreateSkillSpear(Layer * layer)
 	// init attackButton
 	skillBBtn = ui::Button::create("Resources/Buttons/SkillButtonSpear.png");
 	skillBBtn->setScale(SCALE_BUTTON);
-
 	layer->addChild(skillBBtn);
 	skillBBtn->setPosition(Vec2(1200, 150));
-	skillBBtn->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
-		auto rpAnimateSkillB = targetPlayer->getSkillBAnimate();
-		rpAnimateSkillB->setTag(TAG_ANIMATE_ATTACK);
-		switch (type)
-		{
-			// In case when the player press on the screen
-		case ui::Widget::TouchEventType::BEGAN:
-		{
-			// If the player still have the Idle animation or run animation then remove it
-			if (targetPlayer->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_IDLE1) > 0 || targetPlayer->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_RUN) > 0) {
-				targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
-				targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
-				targetPlayer->getSprite()->stopAllActions();
-				targetPlayer->getSprite()->runAction(rpAnimateSkillB);
-				targetPlayer->spearAttack();
-				Sound::GetInstance()->soundPlayerAttack1();
-			}
+	skillBBtn->setEnabled(false);
 
-			break;
-		}
-		case ui::Widget::TouchEventType::ENDED:
-		{
-			if (rpAnimateSkillB->isDone()) {
-				targetPlayer->getSprite()->stopAllActions();
+}
+
+void HudLayer::UpdateSkillSpear(float dt)
+{
+	if (Update::GetInstance()->getStateSlow() == 1) {
+		skillBBtn->setEnabled(true);
+		skillBBtn->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+			auto rpAnimateSkillB = targetPlayer->getSkillBAnimate();
+			rpAnimateSkillB->setTag(TAG_ANIMATE_ATTACK);
+			switch (type)
+			{
+				// In case when the player press on the screen
+			case ui::Widget::TouchEventType::BEGAN:
+			{
+				// If the player still have the Idle animation or run animation then remove it
+				if (targetPlayer->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_IDLE1) > 0 || targetPlayer->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_RUN) > 0) {
+					targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
+					targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
+					targetPlayer->getSprite()->stopAllActions();
+					targetPlayer->getSprite()->runAction(rpAnimateSkillB);
+					targetPlayer->spearAttack();
+					Sound::GetInstance()->soundPlayerAttack1();
+				}
+
 				break;
 			}
-		}
-		default:
-			break;
-		}
-	});
-
+			case ui::Widget::TouchEventType::ENDED:
+			{
+				if (rpAnimateSkillB->isDone()) {
+					targetPlayer->getSprite()->stopAllActions();
+					break;
+				}
+			}
+			default:
+				break;
+			}
+		});
+	}
 }
 
 HudLayer::~HudLayer()
@@ -404,7 +411,7 @@ void HudLayer::update(float dt)
 		targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
 	}
 	UpdateSkillUltimate(dt);
-	
+	UpdateSkillSpear(dt);
 	healthBar->update(dt);
 
 	if (this->targetScene->getTag() != Model::FINAL_BOSS_PORTAL_TYPE)

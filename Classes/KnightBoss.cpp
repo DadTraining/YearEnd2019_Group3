@@ -111,8 +111,8 @@ void KnightBoss::init()
 
 	this->sprite = Sprite::create("Resources/sprites/dMiniBoss/Idle/idle-1.png");
 	this->sprite->setScale(m_SCALE_32x32);
-	this->damage = Update::GetInstance()->getDamageOfKnightBoss();
-	this->hP = Update::GetInstance()->getHPOfKnightBoss();
+	this->damage =10;
+	this->hP = 10;
 	this->price = rand() % 11 + 10;
 	this->isEvoled = false;
 	//Create animate attackA
@@ -481,6 +481,10 @@ void KnightBoss::setIndex(int index)
 
 void KnightBoss::Die()
 {
+	Update::GetInstance()->setStateUlti(1);
+	auto stateSlow = to_string(Update::GetInstance()->getStateSlow());
+	auto stateUlti = to_string(Update::GetInstance()->getStateUlti());
+	FileUtils::getInstance()->writeStringToFile(stateSlow + "\r\n" + stateUlti, Update::GetInstance()->getPathStateSkill());
 	Sound::GetInstance()->soundSkeletonDie();
 	this->getSprite()->stopAllActions();
 	auto mySprite = this->getSprite();

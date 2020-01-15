@@ -23,13 +23,19 @@ Update * Update::GetInstance()
 void Update::Init()
 {
 	this->path = "Resources/InformationOfPlayer.txt";
+	this->pathStateSkill = "Resources/StateSkill.txt";
 	readFile(path);
 
-		this->hpOfPlayer = allData[0];
-		this->damageOfPlayer = allData[1];
-		this->sumVillages = allData[2];
-		this->conditionUlti = allData[3];
-		this->stunTime = allData[4];
+	this->hpOfPlayer = allData[0];
+	this->damageOfPlayer = allData[1];
+	this->sumVillages = allData[2];
+	this->conditionUlti = allData[3];
+	this->stunTime = allData[4];
+
+	readFileStateSkill(pathStateSkill);
+
+	this->stateSlow = states[0];
+	this->stateUlti = states[1];
 
 	this->damageOfMB1 = 100.0f;
 	this->hpOfMB1 = 500.0f;
@@ -58,7 +64,7 @@ void Update::readFile(string path)
 	string text;
 	string numOfImage;
 	char* pch = strtok(cstr, "\r\n");
-	
+
 	while (pch != NULL)
 	{
 		std::string::size_type sz;
@@ -191,4 +197,47 @@ void Update::setTimeStun(float time)
 void Update::setUltiDame(float i)
 {
 	this->conditionUlti = i;
+}
+
+string Update::getPathStateSkill()
+{
+	return this->pathStateSkill;
+}
+
+void Update::readFileStateSkill(string path)
+{
+	bool isExist = FileUtils::getInstance()->isFileExist(path);
+	string data = FileUtils::getInstance()->getStringFromFile(path);
+	char* cstr = const_cast<char*>(data.c_str());
+	string text;
+	string numOfImage;
+	char* pch = strtok(cstr, "\r\n");
+
+	while (pch != NULL)
+	{
+		std::string::size_type sz;
+		float dt = std::stoi(pch, &sz);
+		states.push_back(dt);
+		pch = strtok(NULL, "\r\n");
+	}
+}
+
+int Update::getStateUlti()
+{
+	return stateUlti;
+}
+
+int Update::getStateSlow()
+{
+	return stateSlow;
+}
+
+void Update::setStateUlti(int i)
+{
+	this->stateUlti = i;
+}
+
+void Update::setStatekSlow(int i)
+{
+	this->stateSlow = i;
 }

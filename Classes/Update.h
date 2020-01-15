@@ -29,7 +29,10 @@ private:
 	int sumVillages;
 	float stunTime;
 	int conditionUlti;
-
+	//skill
+	int stateUlti, stateSlow;
+	string pathStateSkill;
+	vector<int> states;
 
 public:
 	Update();
@@ -63,4 +66,11 @@ public:
 	void setDamageOfPlayer(float damage);
 	void setTimeStun(float time);
 	void setUltiDame(float i);
+	//skill
+	string getPathStateSkill();
+	void readFileStateSkill(string path);
+	int getStateUlti();
+	int getStateSlow();
+	void setStateUlti(int i);
+	void setStatekSlow(int i);
 };

@@ -36,6 +36,7 @@ public:
 	void CreateSkillUltimate(Layer * layer);
 	void UpdateSkillUltimate(float dt);
 	void CreateSkillSpear(Layer * layer);
+	void UpdateSkillSpear(float dt);
 	void CreateJoystick(Layer * layer);
 	void UpdateJoystick(float dt);
 	void update(float deltaTime);
