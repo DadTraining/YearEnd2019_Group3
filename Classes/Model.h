@@ -17,8 +17,9 @@
 #define VISION_OF_EM2 300
 #define VISION_OF_EM3 600
 #define RANGE_OF_MB 100
-#define VISION_OF_EM3 700
 #define VISION_OF_EM4 300
+#define VISION_OF_KNIGHT 600
+#define RANGE_OF_KNIGHT 300
 #define TIME_ONE_ATTACK 0.1f
 #define TIME_ONE_HIT 0.1f
 #define TIME_ONE_IDLE 0.2f

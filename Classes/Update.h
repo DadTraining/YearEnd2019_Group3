@@ -21,8 +21,8 @@ private:
 	float damageOfBoss;
 	float hpOfBoss;
 
-	float damageOfKnightBoss;
-	float hpOfKnightBoss;
+	float damageOfBlueBoss;
+	float hpOfBlueBoss;
 	Player* player;
 	string path;
 	vector<float> allData;
@@ -53,8 +53,8 @@ public:
 	float getDamageOfBoss();
 	float getHPOfBoss();
 
-	float getDamageOfKnightBoss();
-	float getHPOfKnightBoss();
+	float getDamageOfBlueBoss();
+	float getHPOfBlueBoss();
 	Player * getPlayer();
 	void setPlayer(Player* player);
 	string getPath();

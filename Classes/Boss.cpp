@@ -357,17 +357,24 @@ bool Boss::getAlive()
 
 void Boss::attack()
 {
-	auto callbackHide = CallFunc::create([this]()
+	auto maxHealth = this->getHP() / Update::GetInstance()->getHPOfBoss();
+	auto callbackHide = CallFunc::create([this, maxHealth]()
 	{
-		auto random = rand() % 2;
-		switch (random)
+		if (maxHealth < 0.5)
 		{
-		case 0:
+			auto random = rand() % 2;
+			switch (random)
+			{
+			case 0:
+				this->AttackFire();
+				break;
+			case 1:
+				this->AttackHeal();
+				break;
+			}
+		}
+		else {
 			this->AttackFire();
-			break;
-		case 1:
-			this->AttackHeal();
-			break;
 		}
 	});
 	auto delay = DelayTime::create(2.0f);
