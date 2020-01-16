@@ -373,6 +373,10 @@ float Player::getRatioUlti()
 
 void Player::Die()
 {
+	if (!this->isAlive)
+	{
+		return;
+	}
 	this->getSprite()->stopAllActions();
 	auto mySprite = this->getSprite();
 	mySprite->getPhysicsBody()->setVelocity(Vec2(0, 0));

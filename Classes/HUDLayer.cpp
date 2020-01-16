@@ -147,7 +147,7 @@ void HudLayer::CreateAttackNormal(Layer * layer)
 		}
 		case ui::Widget::TouchEventType::ENDED:
 		{
-			if (rpAnimateAttack->isDone()) {
+			if (rpAnimateAttack->isDone() && targetPlayer->getAlive()) {
 				targetPlayer->getSprite()->stopAllActions();
 				break;
 			}
@@ -184,7 +184,8 @@ void HudLayer::UpdateSkillUltimate(float dt)
 				skillABtn->setScale(SCALE_BUTTON*1.1);
 				// If the player still have the Idle animation or run animation then remove it
 				if (targetPlayer->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_IDLE1) > 0
-					|| targetPlayer->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_RUN) > 0) {
+					|| targetPlayer->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_RUN) > 0
+					&& targetPlayer->getAlive()) {
 					targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
 					targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
 					targetPlayer->getSprite()->stopAllActions();
@@ -198,7 +199,7 @@ void HudLayer::UpdateSkillUltimate(float dt)
 			case ui::Widget::TouchEventType::ENDED:
 			{
 				skillABtn->setScale(SCALE_BUTTON);
-				if (rpAnimateSkillA->isDone()) {
+				if (rpAnimateSkillA->isDone() && targetPlayer->getAlive()) {
 					targetPlayer->getSprite()->stopAllActions();
 					break;
 				}
@@ -251,7 +252,8 @@ void HudLayer::UpdateSkillSpear(float dt)
 			{
 				skillBBtn->setScale(SCALE_BUTTON*1.1);
 				// If the player still have the Idle animation or run animation then remove it
-				if (targetPlayer->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_IDLE1) > 0 || targetPlayer->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_RUN) > 0) {
+				if (targetPlayer->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_IDLE1) > 0 || targetPlayer->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_RUN) > 0
+					&& targetPlayer->getAlive()) {
 					targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
 					targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
 					targetPlayer->getSprite()->stopAllActions();
@@ -265,7 +267,7 @@ void HudLayer::UpdateSkillSpear(float dt)
 			case ui::Widget::TouchEventType::ENDED:
 			{
 				skillBBtn->setScale(SCALE_BUTTON);
-				if (rpAnimateSkillB->isDone()) {
+				if (rpAnimateSkillB->isDone() && targetPlayer->getAlive()) {
 					targetPlayer->getSprite()->stopAllActions();
 					break;
 				}
