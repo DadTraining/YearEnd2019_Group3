@@ -105,7 +105,7 @@ void KnightBoss::init()
 		auto frame = spriteCacheHit_Player->getSpriteFrameByName(nameAnimateHit);
 		animHit.pushBack(frame);
 	}
-	Animation* animationHit = Animation::createWithSpriteFrames(animHit, TIME_ONE_HIT);
+	Animation* animationHit = Animation::createWithSpriteFrames(animHit, 0.15f);
 	auto animateHit = Animate::create(animationHit);
 	animateHit->retain();
 	this->hitAnimate = animateHit;

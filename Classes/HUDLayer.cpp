@@ -171,7 +171,7 @@ void HudLayer::CreateSkillUltimate(Layer * layer)
 
 void HudLayer::UpdateSkillUltimate(float dt)
 {
-	if (Update::GetInstance()->getStateUlti() == 1 && targetPlayer->getVillagersNum() >= 10) {
+	if (Update::GetInstance()->getStateUlti() == 1 && targetPlayer->getVillagersNum() >= 300) {
 		skillABtn->setEnabled(true);
 		skillABtn->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
 			auto rpAnimateSkillA = targetPlayer->getSkillAAnimate();
@@ -190,7 +190,7 @@ void HudLayer::UpdateSkillUltimate(float dt)
 					targetPlayer->getSprite()->stopAllActionsByTag(TAG_ANIMATE_RUN);
 					targetPlayer->getSprite()->stopAllActions();
 					targetPlayer->getSprite()->runAction(rpAnimateSkillA);
-					targetPlayer->increaseVillager(-10);
+					targetPlayer->increaseVillager(0);
 					targetPlayer->UltimateAttack();
 					Sound::GetInstance()->soundPlayerAttack1();
 				}

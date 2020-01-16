@@ -101,7 +101,21 @@ bool MainMenu::init()
 			this->curHP = Update::GetInstance()->getHPOfPlayer();
 			this->curNorAtk = Update::GetInstance()->getDamageOfPlayer();
 			this->curSlowAtk = Update::GetInstance()->getStunTime();
+			auto strSlow = to_string(curSlowAtk);
+			int offset = 1;
+			if (strSlow.find_last_not_of('0') == strSlow.find('.'))
+			{
+				offset = 0;
+			}
+			strSlow.erase(strSlow.find_last_not_of('0') + offset, std::string::npos);
 			this->curUltilAtk = Update::GetInstance()->getConditionUlti();
+			auto strUltimate = to_string(curSlowAtk);
+			offset = 1;
+			if (strUltimate.find_last_not_of('0') == strUltimate.find('.'))
+			{
+				offset = 0;
+			}
+			strUltimate.erase(strUltimate.find_last_not_of('0') + offset, std::string::npos);
 			this->totalVillager = Update::GetInstance()->getSumVillages();
 			updateLayer = LayerColor::create(Color4B(0, 0, 0, 100));
 			updateLayer->setTag(01);
@@ -145,12 +159,12 @@ bool MainMenu::init()
 			norAtkInfo->setAnchorPoint(Vec2(0, 0));
 			norAtkInfo->setPosition(250, 50);
 
-			slowAtkInfo = Label::create(to_string(curSlowAtk) + "s", "Resources/fonts/VCR_OSD_MONO.ttf", 96);
+			slowAtkInfo = Label::create(strSlow + "s", "Resources/fonts/VCR_OSD_MONO.ttf", 96);
 
 			slowAtkInfo->setAnchorPoint(Vec2(0, 0));
 			slowAtkInfo->setPosition(260, 50);
 
-			ultilAtkInfo = Label::create(to_string(curUltilAtk), "Resources/fonts/VCR_OSD_MONO.ttf", 96);
+			ultilAtkInfo = Label::create(strUltimate, "Resources/fonts/VCR_OSD_MONO.ttf", 96);
 
 			ultilAtkInfo->setAnchorPoint(Vec2(0, 0));
 			ultilAtkInfo->setPosition(250, 50);
@@ -271,10 +285,17 @@ bool MainMenu::init()
 						if (this->totalVillager >= 500) {
 							curSlowAtk += 0.1;
 							totalVillager -= 500;
+							auto str = to_string(curSlowAtk);
+							int offset = 1;
+							if (str.find_last_not_of('0') == str.find('.'))
+							{
+								offset = 0;
+							}
+							str.erase(str.find_last_not_of('0') + offset, std::string::npos);
 							updateTimeStunToFile(curSlowAtk);
 							updateSumVillagesToFile(totalVillager);
 							this->totalVillagerLabel->setString(to_string(totalVillager));
-							this->slowAtkInfo->setString(to_string(curSlowAtk));
+							this->slowAtkInfo->setString(str);
 							if (this->totalVillager < 100) {
 								hpUpdate->setEnabled(false);
 								hpUpdate->setVisible(false);
@@ -324,10 +345,17 @@ bool MainMenu::init()
 						if (this->totalVillager >= 1000) {
 							curUltilAtk += 0.125;
 							totalVillager -= 1000;
+							auto str = to_string(curUltilAtk);
+							int offset = 1;
+							if (str.find_last_not_of('0') == str.find('.'))
+							{
+								offset = 0;
+							}
+							str.erase(str.find_last_not_of('0') + offset, std::string::npos);
 							updateUltiToFile(curUltilAtk);
 							updateSumVillagesToFile(totalVillager);
 							this->totalVillagerLabel->setString(to_string(totalVillager));
-							this->ultilAtkInfo->setString(to_string(curUltilAtk));
+							this->ultilAtkInfo->setString(str);
 							if (this->totalVillager < 100) {
 								hpUpdate->setEnabled(false);
 								hpUpdate->setVisible(false);

@@ -104,7 +104,7 @@ void BlueBoss::init()
 		auto frame = spriteCacheHit_BHB->getSpriteFrameByName(nameAnimateHit);
 		animHit.pushBack(frame);
 	}
-	Animation* animationHit = Animation::createWithSpriteFrames(animHit, 0.1f);
+	Animation* animationHit = Animation::createWithSpriteFrames(animHit, 0.2f);
 	auto animateHit = Animate::create(animationHit);
 	animateHit->retain();
 	this->hitAnimate = animateHit;
@@ -287,6 +287,9 @@ void BlueBoss::gotHit(int damage)
 	}
 	Sound::GetInstance()->soundSkeletonHit();
 	this->sprite->stopAllActions();
+	auto animation = this->getHitAnimate();
+	animation->setTag(TAG_ANIMATE_HIT);
+	this->sprite->runAction(animation);
 	// Adding the effect
 	auto dtHP = this->getHP() - damage;
 	this->setHP(dtHP);

@@ -49,7 +49,7 @@ void Update::Init()
 	this->hpOfBoss = 5000.0f;
 
 	this->damageOfBlueBoss = 400.0f;
-	this->hpOfBlueBoss = 5000.0f;
+	this->hpOfBlueBoss = 3000.0f;
 	CCLOG("------- Done Update");
 
 }

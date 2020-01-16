@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="60" height="60" tilewidth="32" tileheight="32" infinite="0" nextlayerid="31" nextobjectid="404">
+<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="60" height="60" tilewidth="32" tileheight="32" infinite="0" nextlayerid="31" nextobjectid="423">
  <tileset firstgid="1" name="meta_tiles" tilewidth="32" tileheight="32" spacing="1" margin="1" tilecount="2" columns="2">
   <image source="meta_tiles.png" width="67" height="34"/>
   <tile id="0">
@@ -1121,5 +1121,24 @@
   <object id="401" name="Villager" type="3" x="1138.67" y="501.333"/>
   <object id="402" name="Villager" type="3" x="780" y="653.333"/>
   <object id="403" name="Villager" type="3" x="866.667" y="1385.33"/>
+  <object id="404" name="Enemy2" type="4" x="528" y="436"/>
+  <object id="405" name="Enemy2" type="4" x="552" y="513.333"/>
+  <object id="406" name="Enemy2" type="4" x="793.333" y="461.333"/>
+  <object id="407" name="Enemy2" type="4" x="786.667" y="493.333"/>
+  <object id="408" name="Enemy" type="2" x="464" y="1528"/>
+  <object id="409" name="Enemy" type="2" x="1289.33" y="1654.67"/>
+  <object id="410" name="Enemy" type="2" x="1406.67" y="1602.67"/>
+  <object id="411" name="Enemy" type="2" x="1673.33" y="1237.33"/>
+  <object id="412" name="Enemy" type="2" x="1590.67" y="1325.33"/>
+  <object id="413" name="Enemy" type="2" x="1544" y="944"/>
+  <object id="414" name="Enemy" type="2" x="1692" y="780"/>
+  <object id="415" name="Enemy" type="2" x="1512" y="714.667"/>
+  <object id="416" name="Enemy" type="2" x="1541.33" y="589.333"/>
+  <object id="417" name="Enemy" type="2" x="1268" y="818.667"/>
+  <object id="418" name="Enemy2" type="4" x="1702.67" y="1542.67"/>
+  <object id="419" name="Enemy2" type="4" x="1433.33" y="1633.33"/>
+  <object id="420" name="Enemy2" type="4" x="561.333" y="728"/>
+  <object id="421" name="Enemy2" type="4" x="1073.33" y="733.333"/>
+  <object id="422" name="Enemy2" type="4" x="1042.67" y="530.667"/>
  </objectgroup>
 </map>

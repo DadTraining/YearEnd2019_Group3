@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="140" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="20" nextobjectid="75">
+<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="140" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="20" nextobjectid="78">
  <tileset firstgid="1" name="mainlevbuild" tilewidth="16" tileheight="16" tilecount="1702" columns="37">
   <image source="mainlevbuild.png" width="592" height="736"/>
   <terraintypes>
@@ -104,6 +104,9 @@
   <object id="72" name="ArmorSkeleton" type="4" x="1408.67" y="180.667"/>
   <object id="73" name="BlueBoss" type="8" x="1939" y="331"/>
   <object id="74" name="BasePortal" type="102" x="81" y="329"/>
+  <object id="75" name="Mage" type="7" x="928.667" y="320"/>
+  <object id="76" name="Mage" type="7" x="381.333" y="401.333"/>
+  <object id="77" name="Mage" type="7" x="1641.33" y="452"/>
  </objectgroup>
  <layer id="2" name="Background" width="140" height="40">
   <data encoding="csv">
