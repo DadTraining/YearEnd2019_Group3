@@ -317,10 +317,12 @@ void Enemy2::gotHit(int damage)
 		return;
 	}
 	Sound::GetInstance()->soundSkeletonHit();
-	this->sprite->stopAllActions();
-	auto animation = this->getHitAnimate();
-	animation->setTag(TAG_ANIMATE_HIT);
-	this->sprite->runAction(animation);
+	if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_FREEZER) == 0)
+	{
+		auto animation = this->getHitAnimate();
+		animation->setTag(TAG_ANIMATE_HIT);
+		this->sprite->runAction(animation);
+	}
 	// Adding the effect
 	auto dtHP = this->getHP() - damage;
 	this->setHP(dtHP);
@@ -389,6 +391,7 @@ void Enemy2::Die()
 	Update::GetInstance()->getPlayer()->increaseVillager(this->price);
 	auto dieAnimation = this->getDeadAnimate();
 	auto sequence = Sequence::create(dieAnimation, callbackHide, nullptr);
+	sequence->setTag(TAG_ANIMATE_DIE);
 	mySprite->runAction(sequence);
 }
 
@@ -417,10 +420,26 @@ Slash * Enemy2::getSlash()
 
 void Enemy2::Stun()
 {
+	if (!this->isAlive)
+	{
+		return;
+	}
 	auto delay = DelayTime::create(Update::GetInstance()->getStunTime());
-	sprite->stopAllActions();
+	sprite->stopAllActionsByTag(TAG_ANIMATE_ATTACK);
+	sprite->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
+	sprite->stopAllActionsByTag(TAG_ANIMATE_RUN);
 	sprite->getPhysicsBody()->setVelocity(Vec2(0, 0));
-	sprite->runAction(delay);
+	auto turnBlue = CallFunc::create([this]()
+	{
+		this->sprite->setColor(Color3B(0, 0, 255));
+	});
+	auto turnBackColor = CallFunc::create([this]()
+	{
+		this->getSprite()->setColor(Color3B(255, 255, 255));
+	});
+	auto sequence = Sequence::create(turnBlue, delay, turnBackColor, nullptr);
+	sequence->setTag(TAG_ANIMATE_FREEZER);
+	sprite->runAction(sequence);
 	auto emitter = CCParticleSystemQuad::create("Resources/Effect/Monster/freezer.plist");
 	emitter->setPosition(this->getSprite()->getPosition());
 	targetScene->addChild(emitter);

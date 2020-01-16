@@ -20,6 +20,7 @@ public:
 	void setDamage(float damage);
 	void setPosSpawn(Point point);
 	void setAIforEnemy();
+	void setOriginColor(Color3B color);
 	void evolve();
 	// Got stun
 	void Stun();
@@ -57,4 +58,5 @@ private:
 	Point posSpawn;
 	int price;
 	bool isAlive, isEvoled;
+	Color3B originColor;
 };

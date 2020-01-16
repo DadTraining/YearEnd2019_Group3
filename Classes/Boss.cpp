@@ -192,12 +192,19 @@ void Boss::setAIforEnemy()
 void Boss::Stun()
 {
 	auto delay = DelayTime::create(Update::GetInstance()->getStunTime());
-	if (sprite->getNumberOfRunningActionsByTag(TAG_ANIMATE_DIE) == 0)
-	{
-		sprite->stopAllActions();
-	}
+	sprite->stopAllActions();
 	sprite->getPhysicsBody()->setVelocity(Vec2(0, 0));
-	sprite->runAction(delay);
+	auto turnBlue = CallFunc::create([this]()
+	{
+		this->sprite->setColor(Color3B(0, 0, 255));
+	});
+	auto turnBackColor = CallFunc::create([this]()
+	{
+		this->getSprite()->setColor(Color3B(255, 255, 255));
+	});
+	auto sequence = Sequence::create(turnBlue, delay, turnBackColor, nullptr);
+	sequence->setTag(TAG_ANIMATE_FREEZER);
+	sprite->runAction(sequence);
 	auto emitter = CCParticleSystemQuad::create("Resources/Effect/Monster/freezer.plist");
 	emitter->setPosition(this->getSprite()->getPosition());
 	//emitter->setScale(m_SCALE / 8);

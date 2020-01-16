@@ -286,10 +286,15 @@ void BlueBoss::gotHit(int damage)
 		return;
 	}
 	Sound::GetInstance()->soundSkeletonHit();
-	this->sprite->stopAllActions();
-	auto animation = this->getHitAnimate();
-	animation->setTag(TAG_ANIMATE_HIT);
-	this->sprite->runAction(animation);
+	this->sprite->stopAllActionsByTag(TAG_ANIMATE_ATTACK);
+	this->sprite->stopAllActionsByTag(TAG_ANIMATE_RUN);
+	this->sprite->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
+	if (this->getSprite()->getNumberOfRunningActionsByTag(TAG_ANIMATE_FREEZER) == 0)
+	{
+		auto animation = this->getHitAnimate();
+		animation->setTag(TAG_ANIMATE_HIT);
+		this->sprite->runAction(animation);
+	}
 	// Adding the effect
 	auto dtHP = this->getHP() - damage;
 	this->setHP(dtHP);
@@ -398,9 +403,21 @@ Slash * BlueBoss::getSlash()
 void BlueBoss::Stun()
 {
 	auto delay = DelayTime::create(Update::GetInstance()->getStunTime());
-	sprite->stopAllActions();
+	sprite->stopAllActionsByTag(TAG_ANIMATE_ATTACK);
+	sprite->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
+	sprite->stopAllActionsByTag(TAG_ANIMATE_RUN);
+	auto turnBlue = CallFunc::create([this]()
+	{
+		this->sprite->setColor(Color3B(0, 0, 255));
+	});
+	auto turnBackColor = CallFunc::create([this]()
+	{
+		this->getSprite()->setColor(Color3B(255, 255, 255));
+	});
+	auto sequence = Sequence::create(turnBlue, delay, turnBackColor, nullptr);
+	sequence->setTag(TAG_ANIMATE_FREEZER);
+	sprite->runAction(sequence);
 	sprite->getPhysicsBody()->setVelocity(Vec2(0, 0));
-	sprite->runAction(delay);
 	auto emitter = CCParticleSystemQuad::create("Resources/Effect/Monster/freezer.plist");
 	emitter->setPosition(this->getSprite()->getPosition());
 	targetScene->addChild(emitter);

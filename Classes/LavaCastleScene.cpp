@@ -173,6 +173,10 @@ void LavaCastleScene::SpawnPlayer()
 			bosss.push_back(boss);
 			if (bosss.size() == 2)
 			{
+				bosss[0]->getSprite()->setColor(Color3B(0, 0, 0));
+				bosss[0]->setOriginColor(Color3B(0, 0, 0));
+				bosss[1]->getSprite()->setColor(Color3B(255, 0, 0));
+				bosss[1]->setOriginColor(Color3B(255, 0, 0));
 				bosss[1]->setHP(bosss[1]->getHP() * 1.5);
 				bosss[1]->getSprite()->setScale(bosss[1]->getSprite()->getScale() * 1.5);
 			}

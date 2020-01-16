@@ -242,12 +242,20 @@ void Enemy3::setAIforEnemy()
 void Enemy3::Stun()
 {
 	auto delay = DelayTime::create(Update::GetInstance()->getStunTime());
-	if (sprite->getNumberOfRunningActionsByTag(TAG_ANIMATE_DIE) == 0)
-	{
-		sprite->stopAllActions();
-	}
+	sprite->stopAllActionsByTag(TAG_ANIMATE_ATTACK);
+	sprite->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
+	sprite->stopAllActionsByTag(TAG_ANIMATE_RUN);
 	sprite->getPhysicsBody()->setVelocity(Vec2(0, 0));
-	sprite->runAction(delay);
+	auto turnBlue = CallFunc::create([this]()
+	{
+		this->sprite->setColor(Color3B(0, 0, 255));
+	});
+	auto turnBackColor = CallFunc::create([this]()
+	{
+		this->getSprite()->setColor(Color3B(255, 255, 255));
+	});
+	auto sequence = Sequence::create(turnBlue, delay, turnBackColor, nullptr);
+	sprite->runAction(sequence);
 	auto emitter = CCParticleSystemQuad::create("Resources/Effect/Monster/freezer.plist");
 	emitter->setPosition(this->getSprite()->getPosition());
 	//emitter->setScale(m_SCALE / 8);
@@ -321,7 +329,9 @@ void Enemy3::gotHit(int damage)
 		return;
 	}
 	Sound::GetInstance()->soundSkeletonHit();
-	this->sprite->stopAllActions();
+	this->sprite->stopAllActionsByTag(TAG_ANIMATE_ATTACK);
+	this->sprite->stopAllActionsByTag(TAG_ANIMATE_RUN);
+	this->sprite->stopAllActionsByTag(TAG_ANIMATE_IDLE1);
 	auto animation = this->getHitAnimate();
 	animation->setTag(TAG_ANIMATE_HIT);
 	this->sprite->runAction(animation);

@@ -21,7 +21,6 @@ Player::~Player()
 
 void Player::init()
 {
-
 	this->damage = Update::GetInstance()->getDamageOfPlayer();
 	this->hP = Update::GetInstance()->getHPOfPlayer();
 	this->timeStun = Update::GetInstance()->getStunTime();
@@ -29,7 +28,7 @@ void Player::init()
 	this->villagersNum = 0;
 	this->isAlive = true;
 	//Create sprite
-	this->playerSprite = Sprite::create("Resources/sprites/Player/idle-with-weapon-1.png");
+	this->playerSprite = Sprite::create("Resources/sprites/Player/idle-with-weapon-1.png");	
 	this->playerSprite->retain();
 	this->playerSprite->setAnchorPoint(Vec2(0.5f, 0.5f));
 	//Create animate attack
