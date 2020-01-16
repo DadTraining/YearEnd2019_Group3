@@ -39,7 +39,7 @@ LOCAL_SRC_FILES := $(LOCAL_PATH)/hellocpp/main.cpp \
 		   $(LOCAL_PATH)/../../../Classes/Sound.cpp \
            $(LOCAL_PATH)/../../../Classes/Update.cpp \
 		   $(LOCAL_PATH)/../../../Classes/MiniMapLayer.cpp \
-           $(LOCAL_PATH)/../../../Classes/Villager.cpp
+           $(LOCAL_PATH)/../../../Classes/Villager.cpp\
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../Classes
 
