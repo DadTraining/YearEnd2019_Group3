@@ -156,117 +156,213 @@ bool MainMenu::init()
 			ultilAtkInfo->setPosition(250, 50);
 
 			hpUpdate = ui::Button::create("Resources/ui/button/ui_ocean_button_update.png", "Resources/ui/button/ui_blue_button_update.png");
-			hpUpdate->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
-				switch (type)
-				{
-				case ui::Widget::TouchEventType::BEGAN:
-				{
-					if (this->totalVillager >= 100) {
-						curHP += 10;
-						totalVillager -= 100;
-						updateHPToFile(curHP);
-						updateSumVillagesToFile(totalVillager);
-						this->totalVillagerLabel->setString(to_string(totalVillager));
-						this->hpInfo->setString(to_string(curHP));
-					}
+			if (this->totalVillager >= 100 && hpUpdate->isEnabled()) {
+				hpUpdate->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+					switch (type)
+					{
+					case ui::Widget::TouchEventType::BEGAN:
+					{
+						if (this->totalVillager >= 100) {
+							curHP += 10;
+							totalVillager -= 100;
+							updateHPToFile(curHP);
+							updateSumVillagesToFile(totalVillager);
+							this->totalVillagerLabel->setString(to_string(totalVillager));
+							this->hpInfo->setString(to_string(curHP));
+							if (this->totalVillager < 100) {
+								hpUpdate->setEnabled(false);
+								hpUpdate->setVisible(false);
+							}
+							if (this->totalVillager<500) {
+								slowAtkUpdate->setEnabled(false);
+								slowAtkUpdate->setVisible(false);
+							}
+							if (this->totalVillager < 200) {
+								norAtkUpdate->setEnabled(false);
+								norAtkUpdate->setVisible(false);
+							}
+							if (this->totalVillager < 1000) {
+								ultilAtkUpdate->setEnabled(false);
+								ultilAtkUpdate->setVisible(false);
+							}
+						}
 
-					break;
+						break;
+					}
+					case ui::Widget::TouchEventType::MOVED:
+						break;
+					case ui::Widget::TouchEventType::ENDED:
+						break;
+					default:
+						break;
+					}
+				});
+			}
+			else {
+				if (hpUpdate->isEnabled()) {
+					hpUpdate->setEnabled(false);
+					hpUpdate->setVisible(false);
 				}
-				case ui::Widget::TouchEventType::MOVED:
-					break;
-				case ui::Widget::TouchEventType::ENDED:
-					break;
-				default:
-					break;
-				}
-			});
+			}
 			hpUpdate->setAnchorPoint(Vec2(0, 0.25));
 			hpUpdate->setPosition(Vec2(400, 0));
 			hpUpdate->setScale(0.5);
 
 			norAtkUpdate = ui::Button::create("Resources/ui/button/ui_ocean_button_update.png", "Resources/ui/button/ui_blue_button_update.png");
-			norAtkUpdate->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
-				switch (type)
-				{
-				case ui::Widget::TouchEventType::BEGAN:
-				{
-					if (this->totalVillager >= 200) {
-						curNorAtk += 5;
-						totalVillager -= 200;
-						updateDamageToFile(curNorAtk);
-						updateSumVillagesToFile(totalVillager);
-						this->totalVillagerLabel->setString(to_string(totalVillager));
-						this->norAtkInfo->setString(to_string(curNorAtk));
-					}
+			if (this->totalVillager >= 200 && norAtkUpdate->isEnabled()) {
+				norAtkUpdate->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+					switch (type)
+					{
+					case ui::Widget::TouchEventType::BEGAN:
+					{
+						if (this->totalVillager >= 200) {
+							curNorAtk += 5;
+							totalVillager -= 200;
+							updateDamageToFile(curNorAtk);
+							updateSumVillagesToFile(totalVillager);
+							this->totalVillagerLabel->setString(to_string(totalVillager));
+							this->norAtkInfo->setString(to_string(curNorAtk));
+							if (this->totalVillager < 100) {
+								hpUpdate->setEnabled(false);
+								hpUpdate->setVisible(false);
+							}
+							if (this->totalVillager<500) {
+								slowAtkUpdate->setEnabled(false);
+								slowAtkUpdate->setVisible(false);
+							}
+							if (this->totalVillager < 200) {
+								norAtkUpdate->setEnabled(false);
+								norAtkUpdate->setVisible(false);
+							}
+							if (this->totalVillager < 1000) {
+								ultilAtkUpdate->setEnabled(false);
+								ultilAtkUpdate->setVisible(false);
+							}
+						}
 
-					break;
+						break;
+					}
+					case ui::Widget::TouchEventType::MOVED:
+						break;
+					case ui::Widget::TouchEventType::ENDED:
+						break;
+					default:
+						break;
+					}
+				});
+			}
+			else {
+				if (norAtkUpdate->isEnabled()) {
+					norAtkUpdate->setEnabled(false);
+					norAtkUpdate->setVisible(false);
 				}
-				case ui::Widget::TouchEventType::MOVED:
-					break;
-				case ui::Widget::TouchEventType::ENDED:
-					break;
-				default:
-					break;
-				}
-			});
+			}
 			norAtkUpdate->setAnchorPoint(Vec2(0, 0.25));
 			norAtkUpdate->setPosition(Vec2(400, 0));
 			norAtkUpdate->setScale(0.5);
 
 			slowAtkUpdate = ui::Button::create("Resources/ui/button/ui_ocean_button_update.png", "Resources/ui/button/ui_blue_button_update.png");
-			slowAtkUpdate->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
-				switch (type)
-				{
-				case ui::Widget::TouchEventType::BEGAN:
-				{
-					if (this->totalVillager >= 500) {
-						curSlowAtk += 0.1;
-						totalVillager -= 500;
-						updateTimeStunToFile(curSlowAtk);
-						updateSumVillagesToFile(totalVillager);
-						this->totalVillagerLabel->setString(to_string(totalVillager));
-						this->slowAtkInfo->setString(to_string(curSlowAtk));
-					}
+			if (this->totalVillager >= 100 && slowAtkUpdate->isEnabled()) {
+				slowAtkUpdate->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+					switch (type)
+					{
+					case ui::Widget::TouchEventType::BEGAN:
+					{
+						if (this->totalVillager >= 500) {
+							curSlowAtk += 0.1;
+							totalVillager -= 500;
+							updateTimeStunToFile(curSlowAtk);
+							updateSumVillagesToFile(totalVillager);
+							this->totalVillagerLabel->setString(to_string(totalVillager));
+							this->slowAtkInfo->setString(to_string(curSlowAtk));
+							if (this->totalVillager < 100) {
+								hpUpdate->setEnabled(false);
+								hpUpdate->setVisible(false);
+							}
+							if (this->totalVillager<500) {
+								slowAtkUpdate->setEnabled(false);
+								slowAtkUpdate->setVisible(false);
+							}
+							if (this->totalVillager < 200) {
+								norAtkUpdate->setEnabled(false);
+								norAtkUpdate->setVisible(false);
+							}
+							if (this->totalVillager < 1000) {
+								ultilAtkUpdate->setEnabled(false);
+								ultilAtkUpdate->setVisible(false);
+							}
+						}
 
-					break;
+						break;
+					}
+					case ui::Widget::TouchEventType::MOVED:
+						break;
+					case ui::Widget::TouchEventType::ENDED:
+						break;
+					default:
+						break;
+					}
+				});
+			}
+			else {
+				if (slowAtkUpdate->isEnabled()) {
+					slowAtkUpdate->setEnabled(false);
+					slowAtkUpdate->setVisible(false);
 				}
-				case ui::Widget::TouchEventType::MOVED:
-					break;
-				case ui::Widget::TouchEventType::ENDED:
-					break;
-				default:
-					break;
-				}
-			});
+			}
 			slowAtkUpdate->setAnchorPoint(Vec2(0, 0.25));
 			slowAtkUpdate->setPosition(Vec2(400, 0));
 			slowAtkUpdate->setScale(0.5);
 
 			ultilAtkUpdate = ui::Button::create("Resources/ui/button/ui_ocean_button_update.png", "Resources/ui/button/ui_blue_button_update.png");
-			ultilAtkUpdate->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
-				switch (type)
-				{
-				case ui::Widget::TouchEventType::BEGAN:
-				{
-					if (this->totalVillager >= 500) {
-						curUltilAtk += 0.125;
-						totalVillager -= 500;
-						updateUltiToFile(curUltilAtk);
-						updateSumVillagesToFile(totalVillager);
-						this->totalVillagerLabel->setString(to_string(totalVillager));
-						this->ultilAtkInfo->setString(to_string(curUltilAtk));
-					}
+			if (this->totalVillager >= 500 && ultilAtkUpdate->isEnabled()) {
+				ultilAtkUpdate->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+					switch (type)
+					{
+					case ui::Widget::TouchEventType::BEGAN:
+					{
+						if (this->totalVillager >= 1000) {
+							curUltilAtk += 0.125;
+							totalVillager -= 1000;
+							updateUltiToFile(curUltilAtk);
+							updateSumVillagesToFile(totalVillager);
+							this->totalVillagerLabel->setString(to_string(totalVillager));
+							this->ultilAtkInfo->setString(to_string(curUltilAtk));
+							if (this->totalVillager < 100) {
+								hpUpdate->setEnabled(false);
+								hpUpdate->setVisible(false);
+							}
+							if (this->totalVillager<500) {
+								slowAtkUpdate->setEnabled(false);
+								slowAtkUpdate->setVisible(false);
+							}
+							if (this->totalVillager < 200) {
+								norAtkUpdate->setEnabled(false);
+								norAtkUpdate->setVisible(false);
+							}
+							if (this->totalVillager < 1000) {
+								ultilAtkUpdate->setEnabled(false);
+								ultilAtkUpdate->setVisible(false);
+							}
+						}
 
-					break;
+						break;
+					}
+					case ui::Widget::TouchEventType::MOVED:
+						break;
+					case ui::Widget::TouchEventType::ENDED:
+						break;
+					default:
+						break;
+					}
+				});
+			}
+			else {
+				if (ultilAtkUpdate->isEnabled()) {
+					ultilAtkUpdate->setEnabled(false);
+					ultilAtkUpdate->setVisible(false);
 				}
-				case ui::Widget::TouchEventType::MOVED:
-					break;
-				case ui::Widget::TouchEventType::ENDED:
-					break;
-				default:
-					break;
-				}
-			});
+			}
 			ultilAtkUpdate->setAnchorPoint(Vec2(0, 0.25));
 			ultilAtkUpdate->setPosition(Vec2(400, 0));
 			ultilAtkUpdate->setScale(0.5);
