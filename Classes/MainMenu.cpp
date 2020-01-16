@@ -426,6 +426,7 @@ bool MainMenu::init()
 		};
 	});
 	this->addChild(flameBtn);
+
 	scheduleUpdate();
 	return true;
 }
