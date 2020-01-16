@@ -135,7 +135,9 @@ void IceCastleScene::SpawnPlayer()
 			portal->getSprite()->setPosition(posX, posY);
 			addChild(portal->getSprite(), -1);
 			portal->setIndex(portals.size());
-			portals.push_back(portal);
+			portals.push_back(portal);			
+			portal->getSprite()->setVisible(false);
+			portal->getSprite()->getPhysicsBody()->setEnabled(false);
 		}
 		else if (type == Model::BASE_PORTAL_TYPE)
 		{
@@ -145,7 +147,9 @@ void IceCastleScene::SpawnPlayer()
 			portal->getSprite()->setPosition(posX, posY);
 			addChild(portal->getSprite(), -1);
 			portal->setIndex(portals.size());
-			portals.push_back(portal);
+			portals.push_back(portal);			
+			portal->getSprite()->setVisible(false);
+			portal->getSprite()->getPhysicsBody()->setEnabled(false);
 		}
 		else if (type == Model::MAIN_BLUEBOSS_TYPE)
 		{
@@ -471,4 +475,12 @@ void IceCastleScene::update(float dt)
 	blueBoss->update(dt);
 	snowBackground->setPosition(m_player->getPosition()
 		+ Vec2(m_player->getContentSize().width, m_player->getContentSize().height));
+	if (!blueBoss->getAlive())
+	{
+		for (int i = 0; i < this->portals.size(); i++)
+		{
+			portals.at(i)->getSprite()->setVisible(true);
+			portals.at(i)->getSprite()->getPhysicsBody()->setEnabled(true);
+		}
+	}
 }

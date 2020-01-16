@@ -48,8 +48,8 @@ void Update::Init()
 	this->damageOfBoss = 1000.0f;
 	this->hpOfBoss = 5000.0f;
 
-	this->damageOfKnightBoss = 300.0f;
-	this->hpOfKnightBoss = 2000.0f;
+	this->damageOfBlueBoss = 400.0f;
+	this->hpOfBlueBoss = 5000.0f;
 	CCLOG("------- Done Update");
 
 }
@@ -134,14 +134,14 @@ float Update::getHPOfBoss()
 	return this->hpOfBoss;
 }
 
-float Update::getDamageOfKnightBoss()
+float Update::getDamageOfBlueBoss()
 {
-	return this->damageOfKnightBoss;
+	return this->damageOfBlueBoss;
 }
 
-float Update::getHPOfKnightBoss()
+float Update::getHPOfBlueBoss()
 {
-	return this->hpOfKnightBoss;
+	return this->hpOfBlueBoss;
 }
 
 Player* Update::getPlayer()
