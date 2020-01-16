@@ -113,7 +113,7 @@ void Enemy2::init()
 		auto frame = spriteCacheHit_MB1->getSpriteFrameByName(nameAnimateHit);
 		animHit.pushBack(frame);
 	}
-	Animation* animationHit = Animation::createWithSpriteFrames(animHit, 0.3f);
+	Animation* animationHit = Animation::createWithSpriteFrames(animHit, 0.2f);
 	auto animateHit = Animate::create(animationHit);
 	animateHit->retain();
 	this->hitAnimate = animateHit;
