@@ -101,6 +101,7 @@ bool MainMenu::init()
 			this->curHP = Update::GetInstance()->getHPOfPlayer();
 			this->curNorAtk = Update::GetInstance()->getDamageOfPlayer();
 			this->curSlowAtk = Update::GetInstance()->getStunTime();
+			this->curSlowAtk = (int)(this->curSlowAtk * 100.0) / 100.0;
 			auto strSlow = to_string(curSlowAtk);
 			int offset = 1;
 			if (strSlow.find_last_not_of('0') == strSlow.find('.'))
@@ -109,7 +110,7 @@ bool MainMenu::init()
 			}
 			strSlow.erase(strSlow.find_last_not_of('0') + offset, std::string::npos);
 			this->curUltilAtk = Update::GetInstance()->getConditionUlti();
-			auto strUltimate = to_string(curSlowAtk);
+			auto strUltimate = to_string(curUltilAtk);
 			offset = 1;
 			if (strUltimate.find_last_not_of('0') == strUltimate.find('.'))
 			{
@@ -181,6 +182,7 @@ bool MainMenu::init()
 							totalVillager -= 100;
 							updateHPToFile(curHP);
 							updateSumVillagesToFile(totalVillager);
+							CCLOG("------------ End");
 							this->totalVillagerLabel->setString(to_string(totalVillager));
 							this->hpInfo->setString(to_string(curHP));
 							if (this->totalVillager < 100) {
@@ -234,6 +236,7 @@ bool MainMenu::init()
 							totalVillager -= 200;
 							updateDamageToFile(curNorAtk);
 							updateSumVillagesToFile(totalVillager);
+							CCLOG("------------ End");
 							this->totalVillagerLabel->setString(to_string(totalVillager));
 							this->norAtkInfo->setString(to_string(curNorAtk));
 							if (this->totalVillager < 100) {
@@ -283,7 +286,8 @@ bool MainMenu::init()
 					case ui::Widget::TouchEventType::BEGAN:
 					{
 						if (this->totalVillager >= 500) {
-							curSlowAtk += 0.1;
+							curSlowAtk += 0.1f;
+							curSlowAtk = (int)(curSlowAtk * 100.0) / 100.0;
 							totalVillager -= 500;
 							auto str = to_string(curSlowAtk);
 							int offset = 1;
@@ -294,6 +298,8 @@ bool MainMenu::init()
 							str.erase(str.find_last_not_of('0') + offset, std::string::npos);
 							updateTimeStunToFile(curSlowAtk);
 							updateSumVillagesToFile(totalVillager);
+							CCLOG("------------ End");
+
 							this->totalVillagerLabel->setString(to_string(totalVillager));
 							this->slowAtkInfo->setString(str);
 							if (this->totalVillager < 100) {
@@ -354,6 +360,8 @@ bool MainMenu::init()
 							str.erase(str.find_last_not_of('0') + offset, std::string::npos);
 							updateUltiToFile(curUltilAtk);
 							updateSumVillagesToFile(totalVillager);
+							CCLOG("------------ End");
+
 							this->totalVillagerLabel->setString(to_string(totalVillager));
 							this->ultilAtkInfo->setString(str);
 							if (this->totalVillager < 100) {

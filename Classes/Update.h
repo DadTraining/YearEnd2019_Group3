@@ -28,7 +28,7 @@ private:
 	vector<float> allData;
 	int sumVillages;
 	float stunTime;
-	int conditionUlti;
+	float conditionUlti;
 	//skill
 	int stateUlti, stateSlow;
 	string pathStateSkill;
@@ -60,7 +60,7 @@ public:
 	string getPath();
 	int getSumVillages();
 	float getStunTime();
-	int getConditionUlti();
+	float getConditionUlti();
 	void setSumVillages(int sumVillages);
 	void setHpOfPlayer(float hp);
 	void setDamageOfPlayer(float damage);

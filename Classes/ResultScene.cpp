@@ -21,7 +21,7 @@ bool ResultScene::init()
 	auto rsLayer = cocos2d::LayerColor::create(cocos2d::Color4B(255, 0, 0, 255));
 	rsLayer->setPosition(cocos2d::Vec2(0, visibleSize.height*0.2));
 	rsLayer->setContentSize(cocos2d::Size(visibleSize.width, visibleSize.height*0.6));
-	std::string noti = (!isAlive)?"DEAD!!!":"VICTORY!!!";
+	std::string noti = (!isAlive)?"DEAD!!!":"YOU'RE SAFE!!!";
 	if (isAlive) {
 		auto hp = to_string(Update::GetInstance()->getHPOfPlayer());
 		auto damage = to_string(Update::GetInstance()->getDamageOfPlayer());

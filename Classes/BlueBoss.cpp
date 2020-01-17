@@ -20,7 +20,7 @@ BlueBoss::~BlueBoss()
 void BlueBoss::init()
 {
 	this->sprite = Sprite::create("Resources/sprites/dMiniBoss/Idle/idle-1.png");
-	this->sprite->setScale(m_SCALE_32x32*2);
+	this->sprite->setScale(m_SCALE_32x32 * 1.5);
 	this->price = 500;
 	this->damage = Update::GetInstance()->getDamageOfBlueBoss();
 	this->hP =Update::GetInstance()->getHPOfBlueBoss();
@@ -36,7 +36,7 @@ void BlueBoss::init()
 		auto frame = spriteCacheAttack_BHB->getSpriteFrameByName(nameAnimateAttack);
 		animAttack.pushBack(frame);
 	}
-	Animation* animationAtack = Animation::createWithSpriteFrames(animAttack, 0.1f);
+	Animation* animationAtack = Animation::createWithSpriteFrames(animAttack, 0.15f);
 	auto animateAttack = Animate::create(animationAtack);
 	animateAttack->retain();
 	this->attackAnimate = animateAttack;
@@ -104,7 +104,7 @@ void BlueBoss::init()
 		auto frame = spriteCacheHit_BHB->getSpriteFrameByName(nameAnimateHit);
 		animHit.pushBack(frame);
 	}
-	Animation* animationHit = Animation::createWithSpriteFrames(animHit, 0.2f);
+	Animation* animationHit = Animation::createWithSpriteFrames(animHit, 0.25f);
 	auto animateHit = Animate::create(animationHit);
 	animateHit->retain();
 	this->hitAnimate = animateHit;
@@ -388,7 +388,7 @@ bool BlueBoss::getAlive()
 
 void BlueBoss::createSlash()
 {
-	m_slash = new Slash(500, 350);
+	m_slash = new Slash(400, 250);
 	m_slash->getSprite()->getPhysicsBody()->setCollisionBitmask(Model::BITMASK_BLUEBOSS_ATTACK);
 	m_slash->getSprite()->getPhysicsBody()->setContactTestBitmask(true);
 	targetScene->addChild(m_slash->getSprite());

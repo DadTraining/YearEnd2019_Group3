@@ -169,7 +169,7 @@ float Update::getStunTime()
 	return this->stunTime;
 }
 
-int Update::getConditionUlti()
+float Update::getConditionUlti()
 {
 	return this->conditionUlti;
 }
